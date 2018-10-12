@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FAQS|HK Express</title>
+    <link rel="stylesheet" href="/css/assets/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <script src="/js/assets/jquery.js"></script>
+    <script src="/js/layer/layer.js"></script>
+    <script src="/js/assets/angular.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/common.js"></script>
+
+</head>
+<body ng-app="myapp" ng-controller="indexDetailedController">
+<div class="content">
+    <div class="header">
+        <div class="header-loagin">
+            <img src="/img/faq_top3.png"/>
+        </div>
+    </div>
+    <div class="nav-tab">
+        <ul>
+            <li ng-repeat="categorie in result.categories" ng-click="clickCategory($index,categorie)">
+                <div class="nav-tab-bor">{{categorie.title}}</div>
+            </li>
+        </ul>
+    </div>
+    <div class="content-type">{{problem}}</div>
+    <div class="content-type-test"><div class="content-type-test-div">{{detailed.title}}</div></div>
+
+    <div ng-bind-html="content">
+    </div>
+
+</div>
+
+</body>
+</html>

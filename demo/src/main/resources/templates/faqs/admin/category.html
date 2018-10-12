@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>FAQS | HK Express</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/css/assets/bootstrap.min.css" rel="stylesheet">
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <link href="/css/assets/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="/css/assets/dashboard.css" rel="stylesheet">
+        <script src="/js/assets/jquery.js"></script>
+        <script src="/js/layer/layer.js"></script>
+        <script src="/js/assets/angular.js"></script>
+        <script src="/js/admin/index.js"></script>
+        <script src="/js/common.js"></script>
+
+        <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+        <!--[if lt IE 9]><script src="/js/assets/ie8-responsive-file-warning.js"></script><![endif]-->
+        <script src="/js/assets/ie-emulation-modes-warning.js"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+          <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+      </head>
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="categoryController">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar">1</span>
+            <span class="icon-bar">2</span>
+            <span class="icon-bar">3</span>
+          </button>
+          <a class="navbar-brand" href="#">FAQs</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+              <li><a href="/faqs/admin/language">Language Maintenance</a></li>
+              <li class="active"><a href="/faqs/admin/category">Category Maintenance</a></li>
+              <li><a href="/faqs/admin/detailed">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header">Category</h1>
+          <div class="row">
+            <!-- language select -->
+            <label style="margin-top: 5px;margin-left: 200px;float: left;">Language: </label>
+            <div class="col-md-2">
+              <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
+                      ng-options="language.id  as language.title for language in result.languages">
+              </select>
+            </div>
+
+            <div class="col-lg-4" style="float: right;">
+              <div class="input-group">
+                <input ng-model="searchTest" type="text" class="form-control" placeholder="Search for..." ng-keyup="onKeyup(event)">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="getSearchTitle()">Go!</button>
+                </span>
+                <button class="btn btn-default" type="button" style="float:right;" ng-click="getEdit(0)">Add</button>
+              </div><!-- /input-group -->
+            </div><!-- /.col-lg-6 -->
+          </div><!-- /.row -->
+
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Update Date</th>
+                <!--  <th>Status</th>-->
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="categorie in categories">
+                  <td>{{categorie.title}}</td>
+                  <td>{{categorie.updateDate.substring(0,10)}}</td>
+         <!--         <td ng-if="categorie.status == 1">Published</td>
+                  <td ng-if="categorie.status == 0">Unpublish</td>-->
+                  <td style="text-align: right;">
+       <!--             <button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(categorie.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;
+                    <button class="btn btn-default" type="button" ng-if="categorie.status == 1" ng-click="editStatus(categorie.id,0)">Unpublish</button>&lt;!&ndash;已发表&ndash;&gt;
+                    <button class="btn btn-default" type="button" ng-if="categorie.status == 0" ng-click="editStatus(categorie.id,1)">Published</button>&lt;!&ndash;未发表&ndash;&gt;-->
+                    <button class="btn btn-default" type="button" ng-click="getEdit(categorie.id)" >Edit</button>
+                    <button class="btn btn-default" type="button" ng-click="getDelete(categorie.id)">Delete</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/assets/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/js/assets/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/js/assets/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/js/assets/ie10-viewport-bug-workaround.js"></script>
+  
+</body>
+</html>
