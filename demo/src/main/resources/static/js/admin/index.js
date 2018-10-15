@@ -1,5 +1,7 @@
-var myapp = angular.module("myapp",[]);
-
+// 初始化样式
+$(function () {
+    $(".categoryPage").addClass("active");
+})
 // admin/category
 myapp.controller("categoryController",["$scope","$http",function ($scope, $http) {
     // 设置默认,langId==1语言，第一个

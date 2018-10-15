@@ -103,4 +103,10 @@ body {
     display: inline-block;
     border-radius: 50%;
   }
+
+@media (min-width: 768px) {
+  #topTest-hide {
+    display:none;
+  }
+}
   
