@@ -98,13 +98,18 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
             $scope.getSearchTitle();
         }
     }
-    
 
+    // 退出
+    $scope.goCancel = function(url){
+        clicked(url); // 跳url
+    }
 }]);
 
 myapp.controller("languageEditController",["$scope","$http",function ($scope, $http) {
     $scope.langId = GetUrlParam("langId")==""?1:GetUrlParam("langId");
     $scope.language = {};
+    $scope.languageCheck = {};
+    var person = "";
     $scope.editType = "";
     if($scope.langId != 0){
         $scope.addType = false;
@@ -117,6 +122,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
             if(data){
                 /* 成功*/
                 $scope.language = data;
+                person = JSON.stringify(data);
                 $scope.editType = "< Edit < " + $scope.language.title;
             }
         })
@@ -175,5 +181,16 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
                 location.reload();
             });
         });
+    }
+
+    // 退出，校验是否有修改
+    $scope.goCancel = function(url){
+        if("" != person && person != JSON.stringify($scope.language)){
+            comGoCancel(url);
+        }else if("" != url){
+            clicked(url); // 跳url
+        }else{
+            goBack(); // 返回上一页
+        }
     }
 }]);

@@ -168,7 +168,10 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
         }
     }
 
-
+    // 退出，校验是否有修改
+    $scope.goCancel = function(url){
+        clicked(url); // 跳url
+    }
 }]);
 
 // admin/categoryEdit
@@ -178,6 +181,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
     $scope.editType = "";
     $scope.language = {};
     $scope.categorie = {};
+    var person = "";
     if($scope.catId != 0){
         $scope.addType = false;
         var url = "/json/admin/getCategory";
@@ -189,6 +193,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             if(data){
                 /* 成功*/
                 $scope.categorie = data.result.categorie;
+                person = JSON.stringify(data.result.categorie);
                 $scope.language = data.result.language;
                 $scope.editType ="< Edit < "+data.result.categorie.title;
             }
@@ -278,6 +283,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
         }
     }
 
+    // 判断title是否为空
     function chekFrom() {
         if(undefined == $scope.categorie.title || $scope.categorie.title == ""){
             layer.alert( 'The title should not be empty.', {
@@ -290,4 +296,15 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
         return true;
     }
 
+
+    // 退出，校验是否有修改
+    $scope.goCancel = function(url){
+        if("" != person && person != JSON.stringify($scope.categorie)){
+            comGoCancel(url);
+        }else if("" != url){
+            clicked(url); // 跳url
+        }else{
+            goBack(); // 返回上一页
+        }
+    }
 }]);

@@ -115,7 +115,10 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         }
     }
 
-
+    // 退出
+    $scope.goCancel = function(url){
+        clicked(url); // 跳url
+    }
 }]);
 
 
@@ -127,6 +130,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     $scope.langId = GetUrlParam("langId")==""?1:GetUrlParam("langId");
     $scope.editType = "";
     $scope.detailed = {};
+    var person = "";
     $scope.categories = {};
     $scope.language = {};
     $scope.languages = {};
@@ -143,6 +147,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             if(data){
                 /* 成功*/
                 $scope.detailed = data.result.detailed;
+                person = JSON.stringify(data.result.detailed);
                 $scope.language = data.result.language;
                 $scope.categories = data.result.categories;
                 $scope.editType ="< Edit < " + data.result.category.title+" < " + $scope.detailed.title;
@@ -275,7 +280,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
 
     }
 
-    
+    // 判断title是否为空
     function chekFrom() {
        if($scope.detailed.title == ""){
            layer.alert( 'The title should not be empty.', {
@@ -288,6 +293,15 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
         return true;
     }
 
-
-
+    // 退出，校验是否有修改
+    $scope.goCancel = function(url){
+        $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
+        if("" != person && person != JSON.stringify($scope.detailed)){
+            comGoCancel(url);
+        }else if("" != url){
+            clicked(url); // 跳url
+        }else{
+            goBack(); // 返回上一页
+        }
+    }
 }]);
