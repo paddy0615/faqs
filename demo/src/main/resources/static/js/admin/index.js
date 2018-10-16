@@ -6,11 +6,15 @@ $(function () {
 myapp.controller("categoryController",["$scope","$http",function ($scope, $http) {
     // 设置默认,langId==1语言，第一个
     $scope.langId = GetUrlParam("langId")==""?1:GetUrlParam("langId");
+    $scope.selLangId = Number(GetUrlParam("selLangId")==""?0:GetUrlParam("selLangId")); // 做跳转准备
     $scope.isGetUrl = false;
     $scope.categories = {};
     $scope.categoriesTemp = {}; //用于空的搜索
     var url = "/json/admin/getCategoryPage";
     // 初始化
+    if($scope.selLangId != 0){
+        $scope.langId = $scope.selLangId;
+    }
     into($scope.langId);
     function into(langID){
         $http({
@@ -38,7 +42,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
 
     // 编辑
     $scope.getEdit = function(catId){
-        clicked("/faqs/admin/categoryEdit?catId="+catId);
+        clicked("/faqs/admin/categoryEdit?catId="+catId+"&selLangId="+$scope.langId);
     }
 
     // 删除
@@ -176,6 +180,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
 
 // admin/categoryEdit
 myapp.controller("categoryEditController",["$scope","$http",function ($scope, $http) {
+    $scope.selLangId = Number(GetUrlParam("selLangId")==""?0:GetUrlParam("selLangId")); // 做跳转准备
     $scope.catId = GetUrlParam("catId")==""?0:GetUrlParam("catId");
     $scope.langId = GetUrlParam("langId")==""?1:GetUrlParam("langId");
     $scope.editType = "";
@@ -208,9 +213,13 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             if(data){
                 /* 成功*/
                 $scope.languages = data;
+                if($scope.selLangId != 0){
+                    $scope.langId = $scope.selLangId;
+                }
                 $scope.editType ="< Add";
             }
         })
+
 
     }
 
@@ -222,6 +231,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             return;
         };
         if(!lock1) {
+            var index =  layer.load(0, {shade: false});
             lock1 = true; // 锁定
             $http({
                 method : 'post',
@@ -233,9 +243,10 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/category";
+                    var url = "/faqs/admin/category?selLangId="+$scope.categorie.langId;
                     clicked(url);
                 });
+                layer.close(index);
             },function(resp){
                 layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
                     title:'Information',
@@ -244,6 +255,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                 },function () {
                     reloadRoute();
                 });
+                layer.close(index);
             });
         }
 
@@ -257,6 +269,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             return;
         };
         if(!lock) {
+            var index =  layer.load(0, {shade: false});
             lock = true; // 锁定
             $http({
                 method : 'post',
@@ -268,9 +281,10 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/category";
+                    var url = "/faqs/admin/category?selLangId="+$scope.langId;
                     clicked(url);
                 });
+                layer.close(index);
             },function(resp){
                 layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
                     title:'Information',
@@ -279,6 +293,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                 },function () {
                     reloadRoute();
                 });
+                layer.close(index);
             });
         }
     }
@@ -295,7 +310,6 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
         }
         return true;
     }
-
 
     // 退出，校验是否有修改
     $scope.goCancel = function(url){

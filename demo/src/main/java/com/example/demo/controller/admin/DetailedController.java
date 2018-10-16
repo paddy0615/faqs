@@ -109,12 +109,15 @@ public class DetailedController {
     /* 添加页面*/
     @ResponseBody
     @RequestMapping("/getDetailedAdd")
-    public RestResultModule getDetailedAdd(){
+    public RestResultModule getDetailedAdd(@RequestParam(name = "langId",defaultValue = "0",required = true) long langId){
         RestResultModule module = new RestResultModule();
         // 获取语言
         List<Language> languages = languageDao.findAll();
         // 获取类别集合-默认第一个
-        List<Category> categories = categoryDao.findByLangId(languages.get(0).getId());
+        if(langId == 0){
+            langId = languages.get(0).getId();
+        }
+        List<Category> categories = categoryDao.findByLangId(langId);
         // 移除第一个（主页）
         categories.remove(0);
         module.setCode(200);
