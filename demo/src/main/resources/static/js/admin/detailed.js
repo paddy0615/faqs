@@ -122,13 +122,15 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
             url : "/json/admin/detailed/delete",
             params:{"dlIds": dlIds}
         }).success(function (data) {
-            reloadRoute();
+            $scope.into($scope.langId,$scope.catId);
         })
     }
 
     /* 搜索框  */
     $scope.searchTest = "";
     $scope.getSearchTitle = function () {
+        $scope.selected = [];
+        $("[name='checkboxAll']:checkbox").prop("checked", false);
         if($scope.searchTest == ""){
             $scope.detaileds = $scope.detailedsTemp;
             return;
