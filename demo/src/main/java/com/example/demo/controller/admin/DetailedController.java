@@ -162,8 +162,11 @@ public class DetailedController {
     /* 删除*/
     @ResponseBody
     @RequestMapping(value = "/detailed/delete")
-    public void delete(@RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
-        detailedService.deleteById(dlId);
+    public void delete(@RequestParam(name = "dlIds",defaultValue = "0",required = true) String dlIds){
+        String [] dlId = dlIds.split("-");
+        for (String id : dlId) {
+            detailedService.deleteById(Long.parseLong(id));
+        }
     }
 
     /* 按title模糊查询*/

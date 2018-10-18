@@ -40,27 +40,28 @@
       <h1 class="page-header">FAQ</h1>
       <div class="row">
         <!-- language select -->
-        <label style="margin-top: 5px;margin-left: 100px;float: left;">Language: </label>
+        <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
         <div class="col-md-2">
           <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
-                  ng-options="language.id  as language.title for language in result.languages">
+                  ng-options="language.id  as language.title for language in languages">
           </select>
         </div>
 
         <!-- category select -->
-        <label style="margin-top: 5px;margin-left: 50px;float: left;">Category: </label>
+        <label style="margin-top: 5px;margin-left: 30px;float: left;">Category: </label>
         <div class="col-md-2">
           <select ng-model="catId" class="form-control" ng-change="clickCategory()"
-                  ng-options="categorie.id  as categorie.title for categorie in result.categories">
+                  ng-options="categorie.id  as categorie.title for categorie in categories">
           </select>
         </div>
 
-        <div class="col-lg-4" style="float: right;">
+        <div class="col-lg-5" style="float: right;">
           <div class="input-group">
             <input ng-model="searchTest" type="text" class="form-control" placeholder="Search for..."  ng-keyup="onKeyup(event)">
             <span class="input-group-btn">
                   <button class="btn btn-default" type="button" ng-click="getSearchTitle()">Go!</button>
             </span>
+            <button class="btn btn-default" type="button" style="float:right;" ng-click="getDelete(0)">Delete all</button>
             <button class="btn btn-default" type="button" style="float:right;" ng-click="getEdit(0)">Add</button>
           </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
@@ -70,6 +71,7 @@
         <table class="table table-striped">
           <thead>
           <tr>
+            <th><input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)"></th>
             <th>Title</th>
             <th>Update Date</th>
           <!--  <th>Status</th>-->
@@ -78,6 +80,7 @@
           </thead>
           <tbody>
           <tr ng-repeat="detailed in detaileds">
+            <td> <input type="checkbox" name="checkboxClien" ng-click="updateSelection($event,detailed.id)" value="{{detailed.id}}"></td>
             <td>{{detailed.title}}</td>
             <td>{{detailed.updateDate.substring(0,10)}}</td>
      <!--       <td ng-if="detailed.status == 1">Published</td>

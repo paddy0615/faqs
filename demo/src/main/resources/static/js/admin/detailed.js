@@ -10,24 +10,24 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
     $scope.selLangId = Number(GetUrlParam("selLangId")==""?0:GetUrlParam("selLangId")); // 做跳转准备
     $scope.selCatId = Number(GetUrlParam("selCatId")==""?0:GetUrlParam("selCatId")); // 做跳转准备
     $scope.isGetUrl = false;
+    $scope.categories = {};
+    $scope.languages = {};
     $scope.detaileds = {};
     $scope.detailedsTemp = {};
-    var url = "/json/admin/getDetailedPage";
-    // 初始化
     if($scope.selLangId != 0 && $scope.selCatId != 0 ){
         $scope.langId = $scope.selLangId;
         $scope.catId = $scope.selCatId;
     }
-    into($scope.langId,$scope.catId);
-    function into(langID,catId){
+    $scope.into = function(langID,catId) {
         $http({
             method : 'post',
-            url : url,
+            url : "/json/admin/getDetailedPage",
             params:{"langId": langID,"catId": catId}
         }).success(function (data) {
             if(data){
                 /* 成功*/
-                $scope.result = data.result;
+                $scope.languages = data.result.languages;
+                $scope.categories = data.result.categories;
                 $scope.detaileds = data.result.detaileds;
                 $scope.detailedsTemp = data.result.detaileds;
                 $scope.isGetUrl =true;
@@ -39,24 +39,33 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         })
     }
 
+    // 初始化
+    $scope.into($scope.langId,$scope.catId);
+
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            $scope.result.detaileds = null;
-            $scope.result.categories = null;
+            $scope.detaileds = {};
+            $scope.categories = {};
             $scope.selCatId = 0;
-            into($scope.langId,0);
+            $scope.into($scope.langId,0);
+            $scope.selected = [];
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
         }
     }
 
     // 类别事件
     $scope.clickCategory = function() {
+        if(null == $scope.catId){
+            return; // 语言切换，避免数据为空
+        }
         if($scope.isGetUrl){
-            $scope.detaileds = null;
-            var url = "/json/admin/getDetaileds";
+            $scope.selected = [];
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
+            $scope.detaileds = {};
             $http({
                 method : 'post',
-                url : url,
+                url : "/json/admin/getDetaileds",
                 params:{"langId": $scope.langId,"catId": $scope.catId}
             }).success(function (data) {
                 if(data){
@@ -75,14 +84,30 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
 
     // 删除
     $scope.getDelete = function(id){
+        var delId = id;
+        var txt = "Are you sure you want to delete it?";
+        if(id == 0){
+            delId = $scope.selected.join("-");
+            txt = "Do you want to delete the following checks?";
+            var i = 0;
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                if(each.checked){
+                    i++;
+                }
+            })
+            if(i==0){
+                layer.alert("Please check out");
+                return;
+            }
+        }
         var lock = false; //默认未锁定
-        var myconfirm = layer.confirm("Are you sure you want to delete it?", {
+        var myconfirm = layer.confirm(txt, {
             title:'Information',
             btn: ['OK','Cancel'] //按钮
         }, function(){
             if(!lock) {
                 lock = true; // 锁定
-                Candelete(id);
+                Candelete(delId);
             }
             layer.close(myconfirm);
         }, function(){
@@ -91,11 +116,11 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
 
     }
     // 能删除
-    function  Candelete(id) {
+    function  Candelete(dlIds) {
         $http({
             method : 'post',
             url : "/json/admin/detailed/delete",
-            params:{"dlId": id}
+            params:{"dlIds": dlIds}
         }).success(function (data) {
             reloadRoute();
         })
@@ -122,6 +147,42 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         var s = $scope.searchText;
         if(e && e.keyCode==13){ // enter 键
             $scope.getSearchTitle();
+        }
+    }
+
+    // 复选框
+    $scope.selected = [];
+    $scope.updateSelection = function($event, id){
+        var checkbox = $event.target;
+        var action = (checkbox.checked?'add':'remove');
+        if(action == 'add' && $scope.selected.indexOf(id) == -1){
+            $scope.selected.push(id);
+            var flag = true;
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                if(!each.checked){
+                    flag = false;
+                }
+            })
+            $("[name='checkboxAll']:checkbox").prop("checked", flag);
+        }
+        if(action == 'remove' && $scope.selected.indexOf(id)!=-1){
+            var idx = $scope.selected.indexOf(id);
+            $scope.selected.splice(idx,1);
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
+        }
+    }
+    $scope.updateSelectionAll = function($event){
+        var checkbox = $event.target;
+        var action = (checkbox.checked?'add':'remove');
+        if(action == 'add'){
+            $("[name='checkboxClien']:checkbox").prop("checked", true);
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                $scope.selected.push(Number(each.value));
+            })
+        }
+        if(action == 'remove'){
+            $("[name='checkboxClien']:checkbox").prop("checked", false);
+            $scope.selected = [];
         }
     }
 
