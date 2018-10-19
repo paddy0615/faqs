@@ -103,7 +103,7 @@ public class DetailedController {
         RestResultModule module = new RestResultModule();
         if(!"".equals(serach)){
             List<Detailed> detaileds = null;
-            detaileds = detailedDao.findAllByTitleContaining(serach);
+            detaileds = detailedDao.findAllByStatusAndTitleContaining(1,serach);
             module.putData("detaileds",detaileds);
         }
         return module;

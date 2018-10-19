@@ -60,9 +60,9 @@ public class CategoryController {
         // 获取详情集合，categories大于1(除首页)，为了获取默认第二个类型的详情集合
         List<Detailed> detaileds = null;
         if(catId == 0 && categories.size()>1){
-            detaileds = detailedDao.findAllByLangIdAndCatId(langId,categories.get(1).getId());
+            detaileds = detailedDao.findAllByLangIdAndCatIdAndStatus(langId,categories.get(1).getId(),1);
         }else{
-            detaileds = detailedDao.findAllByLangIdAndCatId(langId,catId);
+            detaileds = detailedDao.findAllByLangIdAndCatIdAndStatus(langId,catId,1);
         }
         module.setCode(200);
         module.putData("languages",languages);

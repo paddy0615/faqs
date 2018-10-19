@@ -54,7 +54,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
             lock = true; // 锁定
             $http({
                 method : 'post',
-                url : "/faqs/addHotspot",
+                url : "/json/addHotspot",
                 params:{"dlId" : dlId}
             }).success(function (data) {
                 if(data){

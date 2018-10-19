@@ -162,7 +162,7 @@ public class DetailedController {
     /* 删除*/
     @ResponseBody
     @RequestMapping(value = "/detailed/delete")
-    public void delete(@RequestParam(name = "dlIds",defaultValue = "0",required = true) String dlIds){
+    public void delete(@RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds){
         String [] dlId = dlIds.split("-");
         for (String id : dlId) {
             detailedService.deleteById(Long.parseLong(id));
@@ -183,9 +183,12 @@ public class DetailedController {
     /* 修改状态*/
     @ResponseBody
     @RequestMapping(value = "/detailed/editStatus")
-    public void editStatus(@RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId,
+    public void editStatus(@RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds,
                            @RequestParam(name = "status",defaultValue = "0",required = true) long status){
-        detailedService.saveStatus(dlId,status);
+        String [] dlId = dlIds.split("-");
+        for (String id : dlId) {
+            detailedService.saveStatus(Long.parseLong(id),status);
+        }
     }
 
     /* 置顶*/

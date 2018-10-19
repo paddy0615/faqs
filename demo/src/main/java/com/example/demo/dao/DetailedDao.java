@@ -18,15 +18,18 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
 
     List<Detailed> findAllByLangIdAndCatId(long longId,long catId);
 
-    @Query("select new Detailed(d.id,d.title) from Detailed d where d.langId = :langId  and (d.title like %:search%  or d.contentTxt like %:search%)")
+    List<Detailed> findAllByLangIdAndCatIdAndStatus(long longId,long catId,long status);
+
+    @Query("select new Detailed(d.id,d.title) from Detailed d where d.langId = :langId  and (d.title like %:search%  or d.contentTxt like %:search%) and d.status = 1")
     List<Detailed> getSearch(@Param("langId")long langId, @Param("search")String search);
 
     List<Detailed> findAllByTitleContaining(String s);
+    List<Detailed> findAllByStatusAndTitleContaining(long status,String s);
 
     int countByCatId(long id);
 
     // 按搜索点击数量获取
-    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId  order by h.searchCount desc ")
+    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc ")
     List<Detailed> getHpSearchCount();
 
     List<Detailed> findAllByCatId(long catId);

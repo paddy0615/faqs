@@ -188,6 +188,68 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         }
     }
 
+    // 修改状态
+    var lock2 = false; //默认未锁定
+    $scope.editStatus = function (id,status,type) {
+        if(!lock2){
+            lock2 = true;  // 锁定
+            var delId = id;
+            if(id == 0){// 全部
+                var txt = "Do you want to show all of the following?";
+                if(type){
+                    txt = "Do you want to hide all of the following?";
+                }
+                delId = $scope.selected.join("-");
+                var i = 0;
+                angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                    if(each.checked){
+                        i++;
+                    }
+                })
+                if(i==0){
+                    layer.alert("Please check out");
+                    lock2 = false;
+                    return;
+                }
+                var myconfirm = layer.confirm(txt, {
+                    title:'Information',
+                    btn: ['OK','Cancel'] //按钮
+                }, function(){
+                    CanEditStatus(delId,status);
+                    layer.close(myconfirm);
+                }, function(){
+                    lock2 = false;
+                    layer.close(myconfirm);
+                });
+            }else{ // 单个
+                CanEditStatus(delId,status);
+            }
+
+
+        };
+    }
+    // 能编辑状态
+    function  CanEditStatus(dlIds,status) {
+        $http({
+            method : 'post',
+            url : "/json/admin/detailed/editStatus",
+            params:{"dlIds": dlIds ,"status" : status}
+        }).success(function (data) {
+            /* 成功*/
+            var index = layer.alert( 'Success', {
+                title:'Information',
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+            },function () {
+                lock2 = false;
+                $scope.into($scope.langId,$scope.catId);
+                $scope.selected = [];
+                $("[name='checkboxAll']:checkbox").prop("checked", false);
+                layer.close(index);
+            });
+        })
+    }
+
     // 退出
     $scope.goCancel = function(url){
         clicked(url); // 跳url
@@ -381,8 +443,12 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     }
 
     // 退出，校验是否有修改
-    $scope.goCancel = function(url){
-        $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
+    $scope.goCancel = function(url,type){
+        if(type && type == 0){
+            $scope.detailed.content = UE.getEditor('editorADD').getContent();
+        }else if(type == 1){
+            $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
+        }
         if("" != person && person != JSON.stringify($scope.detailed)){
             comGoCancel(url);
         }else if("" != url){
