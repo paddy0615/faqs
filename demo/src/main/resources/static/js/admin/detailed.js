@@ -349,7 +349,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
 
     // update
     var lock1 = false; //默认未锁定
-    $scope.submitUpdate = function () {
+    $scope.submitUpdate = function (ind) {
         //判断
         if(!chekFrom()){
             return;
@@ -369,8 +369,12 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
-                    clicked(url);
+                    if(ind == 1){
+                        location.reload();
+                    }else{
+                        var url = "/faqs/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
+                        clicked(url);
+                    }
                 });
                 layer.close(index);
             },function(resp){
@@ -456,5 +460,8 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
         }else{
             goBack(); // 返回上一页
         }
+    }
+    $scope.goCancel1 = function(url){
+        clicked(url); // 跳url
     }
 }]);
