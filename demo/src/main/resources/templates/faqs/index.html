@@ -13,15 +13,21 @@
     <script src="/js/assets/angular.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/common.js"></script>
-
+    <!--Chinese Simplified begin code -->
+    <style>
+        #SnapABug_bImg{
+            width:100%;
+        }
+    </style>
+    <!-- end code -->
 </head>
 <body ng-app="myapp" ng-controller="indexController">
 <div class="content">
     <div class="header">
         <div class="header-loagin">
-            <img src="/img/faq_top3.png"/>
+            <a href="javascript:void(0);" ng-click="clickCategory(0)"><img src="/img/faq_top3.png"/></a>
         </div>
-        <div class="col-sm-5" id="so" style="width: 300px;margin-left: 350px;margin-top: 7px;">
+        <div class="col-sm-5" id="so" style="width: 300px;margin-left: 300px;margin-top: 7px;">
             <div class="input-group">
                 <input ng-model="searchTest" id="search" type="text" placeholder="Search..." class="form-control" ng-keyup="onKeyup(event)">
                 <span class="input-group-addon"><a href="javascript:;" ng-click="getSearch()"><span>搜索</span></a></span>
