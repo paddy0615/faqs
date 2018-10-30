@@ -3,7 +3,7 @@ server:
   port: 8080
   address: 0.0.0.0
   ##servlet:
-    ##context-path: /faqs
+    ##path: /hkexpress
 ##thymeleaf页面模板配置
 web:
   upload-path: C:/faqsonic/faq
@@ -18,7 +18,8 @@ spring:
   tomcat:
     uri-encoding: UTF-8
   datasource:
-    url: jdbc:mysql://118.143.2.3:3306/faqsdatetest?characterEncoding=UTF-8
+    ## 118.143.2.7 -> faqsDate
+    url: jdbc:mysql://118.143.2.7:3306/faqsDate?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver

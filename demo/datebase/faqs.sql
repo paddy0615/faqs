@@ -1,7 +1,7 @@
 -- 创建数据库faqsDate
-CREATE DATABASE `faqsDateTest`;
+CREATE DATABASE `faqsDate`;
 
-USE faqsDateTest;
+USE faqsDate;
 
 -- faq 管理用户表					
 DROP TABLE IF EXISTS `faqs_user`;

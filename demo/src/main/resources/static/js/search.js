@@ -58,7 +58,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
                 params:{"dlId" : dlId}
             }).success(function (data) {
                 if(data){
-                    var url = "/faqs/indexDetailed?dlId="+dlId+"&serch=true";
+                    var url = "/hkexpress/indexDetailed?dlId="+dlId+"&serch=true";
                     clicked(url);
                 }else{
                     layer.alert( 'Abnormal error, please contact the administrator or refresh page', {

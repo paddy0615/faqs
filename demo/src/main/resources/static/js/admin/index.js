@@ -42,7 +42,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
 
     // 编辑
     $scope.getEdit = function(catId){
-        clicked("/faqs/admin/categoryEdit?catId="+catId+"&selLangId="+$scope.langId);
+        clicked("/hkexpress/admin/categoryEdit?catId="+catId+"&selLangId="+$scope.langId);
     }
 
     // 删除
@@ -243,7 +243,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/category?selLangId="+$scope.categorie.langId;
+                    var url = "/hkexpress/admin/category?selLangId="+$scope.categorie.langId;
                     clicked(url);
                 });
                 layer.close(index);
@@ -281,7 +281,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/category?selLangId="+$scope.langId;
+                    var url = "/hkexpress/admin/category?selLangId="+$scope.langId;
                     clicked(url);
                 });
                 layer.close(index);

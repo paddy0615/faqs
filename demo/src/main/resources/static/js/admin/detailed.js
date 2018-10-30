@@ -35,6 +35,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
                 if($scope.selCatId != 0){
                     $scope.catId = $scope.selCatId;
                 }
+                $("[name='checkboxAll']:checkbox").prop("checked", false);
             }
         })
     }
@@ -79,7 +80,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
 
     // 编辑url
     $scope.getEdit = function(dlId){
-        clicked("/faqs/admin/detailedEdit?dlId="+dlId+"&selLangId="+$scope.langId+"&selCatId="+$scope.catId);
+        clicked("/hkexpress/admin/detailedEdit?dlId="+dlId+"&selLangId="+$scope.langId+"&selCatId="+$scope.catId);
     }
 
     // 删除
@@ -372,7 +373,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     if(ind == 1){
                         location.reload();
                     }else{
-                        var url = "/faqs/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
+                        var url = "/hkexpress/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
                         clicked(url);
                     }
                 });
@@ -415,7 +416,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/faqs/admin/detailed?selLangId="+$scope.langId+"&selCatId="+$scope.catId;
+                    var url = "/hkexpress/admin/detailed?selLangId="+$scope.langId+"&selCatId="+$scope.catId;
                     clicked(url);
                 });
                 layer.close(index);

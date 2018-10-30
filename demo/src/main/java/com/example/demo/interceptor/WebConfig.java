@@ -22,15 +22,15 @@ public class WebConfig implements WebMvcConfigurer {
         LoginInterceptor loginInterceptor = new LoginInterceptor();
         InterceptorRegistration loginRegistry = registry.addInterceptor(loginInterceptor);
         // 拦截路径
-        loginRegistry.addPathPatterns("/faqs/**");
+        loginRegistry.addPathPatterns("/hkexpress/**");
         // 排除路径
         loginRegistry.excludePathPatterns("/");
         // 排除登陆
-        loginRegistry.excludePathPatterns("/faqs/admin/login");
+        loginRegistry.excludePathPatterns("/hkexpress/admin/login");
         // 排除客户前端
-        loginRegistry.excludePathPatterns("/faqs/index");
-        loginRegistry.excludePathPatterns("/faqs/indexDetailed");
-        loginRegistry.excludePathPatterns("/faqs/search");
+        loginRegistry.excludePathPatterns("/hkexpress/index");
+        loginRegistry.excludePathPatterns("/hkexpress/indexDetailed");
+        loginRegistry.excludePathPatterns("/hkexpress/search");
 
         // 排除资源请求
         loginRegistry.excludePathPatterns("/css/**");

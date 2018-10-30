@@ -164,7 +164,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = "/faqs/index?langId="+$scope.langId+"&catId="+0;
+            var url = "/hkexpress/index?langId="+$scope.langId+"&catId="+0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -176,7 +176,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
-                var url = "/faqs/index?langId="+cat.langId+"&catId="+cat.id;
+                var url = "/hkexpress/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
         }
@@ -184,7 +184,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
 
     // 详情事件
     $scope.getDetailed = function (dlId) {
-        var url = "/faqs/indexDetailed?dlId="+dlId;
+        var url = "/hkexpress/indexDetailed?dlId="+dlId;
         clicked(url);
     }
 
@@ -260,7 +260,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
-                var url = "/faqs/index?langId="+cat.langId+"&catId="+cat.id;
+                var url = "/hkexpress/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
         }

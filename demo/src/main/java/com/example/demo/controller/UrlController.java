@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping(value = "/faqs")
+@RequestMapping(value = "/hkexpress")
 public class UrlController {
 
     @RequestMapping("/index")
@@ -25,7 +25,7 @@ public class UrlController {
 
     @RequestMapping("/goLogin")
     public String goLogin(){
-        return "redirect:/faqs/admin/login";
+        return "redirect:/hkexpress/admin/login";
     }
 
     @RequestMapping("/admin/category")

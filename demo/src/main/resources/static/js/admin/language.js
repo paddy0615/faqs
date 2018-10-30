@@ -24,7 +24,7 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
 
     // 编辑
     $scope.getEdit = function(id){
-        clicked("/faqs/admin/languageEdit?langId="+id);
+        clicked("/hkexpress/admin/languageEdit?langId="+id);
     }
 
     // 删除
@@ -143,7 +143,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
                 skin: 'layui-layer-lan'
                 ,closeBtn: 0
             },function () {
-                var url = "/faqs/admin/language";
+                var url = "/hkexpress/admin/language";
                 clicked(url);
             });
         },function(resp){
@@ -169,7 +169,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
                 skin: 'layui-layer-lan'
                 ,closeBtn: 0
             },function () {
-                var url = "/faqs/admin/language";
+                var url = "/hkexpress/admin/language";
                 clicked(url);
             });
         },function(resp){
