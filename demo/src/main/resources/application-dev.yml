@@ -18,8 +18,8 @@ spring:
   tomcat:
     uri-encoding: UTF-8
   datasource:
-    ## 118.143.2.3 -> faqsdatetest
-    url: jdbc:mysql://118.143.2.3:3306/faqsdatetest?characterEncoding=UTF-8
+    ## 118.143.2.3 -> faqsdatetest(开发) , faqsdate(测试)
+    url: jdbc:mysql://118.143.2.3:3306/faqsdate?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver

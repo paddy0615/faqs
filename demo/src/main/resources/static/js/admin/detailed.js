@@ -449,10 +449,10 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
 
     // 退出，校验是否有修改
     $scope.goCancel = function(url,type){
-        if(type && type == 0){
-            $scope.detailed.content = UE.getEditor('editorADD').getContent();
-        }else if(type == 1){
+        if($scope.dlId != 0){
             $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
+        }else{
+            $scope.detailed.content = UE.getEditor('editorADD').getContent();
         }
         if("" != person && person != JSON.stringify($scope.detailed)){
             comGoCancel(url);

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>FAQS|HK Express</title>
+    <title>FAQS | HK Express</title>
     <link rel="stylesheet" href="/css/assets/bootstrap.min.css">
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/index.css">
@@ -13,13 +13,34 @@
     <script src="/js/assets/angular.js"></script>
     <script src="/js/index.js"></script>
     <script src="/js/common.js"></script>
-    <!--Chinese Simplified begin code -->
     <style>
         #SnapABug_bImg{
             width:100%;
         }
+        .scrollToTop > img {
+            position: fixed;
+            z-index: 10;
+            bottom: 20px;
+            left: 30px;
+            cursor: pointer;
+        }
     </style>
-    <!-- end code -->
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollToTop').fadeIn();
+                } else {
+                    $('.scrollToTop').fadeOut();
+                }
+            });
+
+            $('.scrollToTop').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+                return false;
+            });
+        });
+    </script>
 </head>
 <body ng-app="myapp" ng-controller="indexDetailedController">
 <div class="content">
@@ -36,12 +57,15 @@
         </ul>
     </div>
     <div class="content-type">{{problem}}</div>
-    <div class="content-type-test"><div class="content-type-test-div">{{detailed.title}}</div></div>
-
-    <div ng-bind-html="content">
+    <div style="padding: 20px 12px;">
+        <div class="content-type-test"><div class="content-type-test-div">{{detailed.title}}</div></div>
+        <div ng-bind-html="content" style="padding: 0px 8px;">
+        </div>
+        <hr style="width:100%px;border:none; border-bottom:2px solid #BA2E90;">
     </div>
-
 </div>
-
+<div class="scrollToTop" style="display: none;">
+    <img src="/img/scroll-to-top.png" alt="Back To Top">
+</div>
 </body>
 </html>

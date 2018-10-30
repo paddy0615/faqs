@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `faqs_category`;
 CREATE TABLE `faqs_category` (
  `cat_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
  `cat_lang_id` INT NOT NULL COMMENT 'faq语言ID',
- `cat_title` VARCHAR(100) NOT NULL COMMENT '类别名称',
+ `cat_title` NVARCHAR(500) NOT NULL COMMENT '类别名称',
  `cat_createdate` DATETIME COMMENT '创建时间',
  `cat_updatedate` DATETIME COMMENT '修改时间',
  `cat_createuser` INT COMMENT '创建人',
@@ -47,7 +47,7 @@ CREATE TABLE `faqs_detailed` (
  `dl_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
  `dl_lang_id` INT NOT NULL COMMENT 'faq语言ID',
  `dl_cat_id` INT NOT NULL COMMENT 'faq类别ID',
- `dl_title` VARCHAR(100) NOT NULL COMMENT '详情标题',
+ `dl_title` NVARCHAR(500) NOT NULL COMMENT '详情标题',
  `dl_content` TEXT NULL COMMENT '详情内容,带html',
  `dl_contenttxt` TEXT NULL COMMENT '详情内容,纯文本',
  `dl_createdate` DATETIME COMMENT '创建时间',
@@ -80,16 +80,19 @@ insert into faqs_language (lang_title,lang_problem,lang_createdate,lang_updateda
 
 insert into faqs_category (cat_lang_id,cat_title,cat_createdate,cat_updatedate,cat_createuser,cat_updateuser,cat_status,cat_ordertopdate) values 
 (1,'主頁',now(),now(),1,1,1,now())
+,(1,'颱風期間',now(),now(),1,1,1,now())
 ,(1,'訂票規則',now(),now(),1,1,1,now())
 ,(1,'預訂信息',now(),now(),1,1,1,now())
 ,(1,'在線客服',now(),now(),1,1,1,now())
 ,(1,'一般查詢',now(),now(),1,1,1,now())
 ,(2,'主页',now(),now(),1,1,1,now())
+,(2,'台风期间',now(),now(),1,1,1,now())
 ,(2,'订票规则',now(),now(),1,1,1,now())
 ,(2,'预订信息',now(),now(),1,1,1,now())
 ,(2,'在线客服',now(),now(),1,1,1,now())
 ,(2,'一般查询',now(),now(),1,1,1,now())
 ,(3,'主頁',now(),now(),1,1,1,now())
+,(3,'颱風期間',now(),now(),1,1,1,now())
 ,(3,'訂票規則',now(),now(),1,1,1,now())
 ,(3,'預訂信息',now(),now(),1,1,1,now())
 ,(3,'在線客服',now(),now(),1,1,1,now())
@@ -105,6 +108,7 @@ insert into faqs_category (cat_lang_id,cat_title,cat_createdate,cat_updatedate,c
 ,(5,'온라인서비스',now(),now(),1,1,1,now())
 ,(5,'일반조회',now(),now(),1,1,1,now())
 ,(6,'Home',now(),now(),1,1,1,now())
+,(6,'During Typhoon',now(),now(),1,1,1,now())
 ,(6,'Fare Rules',now(),now(),1,1,1,now())
 ,(6,'Booking Information',now(),now(),1,1,1,now())
 ,(6,'Online Services',now(),now(),1,1,1,now())

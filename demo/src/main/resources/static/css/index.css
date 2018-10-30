@@ -54,18 +54,18 @@ body{
     letter-spacing: 1px;
 }
 .content-type-test{
-    line-height: 36px;
     margin-bottom: 20px;
-    height: 36px;
     background-color: #BA2E90;
     border-top-left-radius: 25px;
 }
 .content-type-test-div{
     width: 94%;
     background-color: #71288E;
-    text-indent: 2em;
+    text-indent: 1em;
     color: white;
     border-top-left-radius: 25px;
+    padding: 8px 4px;
+    font-size: 15px;
 }
 
 .content-box{
@@ -75,10 +75,9 @@ body{
     color: #501275;
     line-height: 22px;
     margin-bottom: 20px;
-    text-indent: 1em;
     border: 1px solid #501275;
     cursor: pointer;
-    padding: 8px 0px;
+    padding: 8px 6px;
 }
 .content-box ul li a{
     color: #702c91;
