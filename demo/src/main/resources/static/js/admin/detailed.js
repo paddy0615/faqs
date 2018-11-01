@@ -452,7 +452,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
         if($scope.dlId != 0){
             $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
         }else{
-            $scope.detailed.content = UE.getEditor('editorADD').getContent();
+            $scope.detailed.content = UE.getEditor('editorAdd').getContent();
         }
         if("" != person && person != JSON.stringify($scope.detailed)){
             comGoCancel(url);
