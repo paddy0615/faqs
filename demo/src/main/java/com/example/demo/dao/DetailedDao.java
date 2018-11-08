@@ -26,6 +26,11 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     List<Detailed> findAllByTitleContaining(String s);
     List<Detailed> findAllByStatusAndTitleContaining(long status,String s);
 
+    List<Detailed> findAllByLangIdAndCatIdAndTitleContainingOrContentTxt(long langId,long catId,String s,String sx);
+
+    @Query("select d from Detailed d where d.langId = :langId and d.catId = :catId and (d.title like %:search%  or d.contentTxt like %:search%)")
+    List<Detailed> getSerDateAll(@Param("langId")long langId,@Param("catId")long catId,@Param("search")String search);
+
     int countByCatId(long id);
 
     // 按搜索点击数量获取

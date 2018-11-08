@@ -116,13 +116,15 @@ public class CategoryController {
         categoryService.deleteById(catId);
     }
 
-    /* 按title模糊查询*/
+    /* 按title模糊查询,带语言*/
     @ResponseBody
     @RequestMapping("/category/getSearchTitle")
-    public RestResultModule getSearchTitle(@RequestParam(name = "serach",required = false,defaultValue = "")String serach){
+    public RestResultModule getSearchTitle(
+            @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
+            @RequestParam(name = "serach",required = false,defaultValue = "")String serach){
         RestResultModule module = new RestResultModule();
         List<Category> categories = null;
-        categories = categoryDao.findAllByTitleContaining(serach);
+        categories = categoryDao.findAllByLangIdAndTitleContaining(langId,serach);
         module.putData("categories",categories);
         return module;
     }

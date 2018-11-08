@@ -169,13 +169,16 @@ public class DetailedController {
         }
     }
 
-    /* 按title模糊查询*/
+    /* 按title模糊查询,带语言,类别*/
     @ResponseBody
     @RequestMapping("/detailed/getSearchTitle")
-    public RestResultModule getSearchTitle(@RequestParam(name = "serach",required = false,defaultValue = "")String serach){
+    public RestResultModule getSearchTitle(
+            @RequestParam(name = "langId",defaultValue = "0",required = true) long langId,
+            @RequestParam(name = "catId",defaultValue = "0",required = true) long catId,
+            @RequestParam(name = "serach",required = false,defaultValue = "")String serach){
         RestResultModule module = new RestResultModule();
         List<Detailed> detaileds = null;
-        detaileds = detailedDao.findAllByTitleContaining(serach);
+        detaileds = detailedDao.getSerDateAll(langId,catId,serach);
         module.putData("detaileds",detaileds);
         return module;
     }

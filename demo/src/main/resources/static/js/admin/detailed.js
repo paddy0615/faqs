@@ -35,6 +35,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
                 if($scope.selCatId != 0){
                     $scope.catId = $scope.selCatId;
                 }
+                $scope.selectTest = selectTest($scope.langId);
                 $("[name='checkboxAll']:checkbox").prop("checked", false);
             }
         })
@@ -51,6 +52,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
             $scope.selCatId = 0;
             $scope.into($scope.langId,0);
             $scope.selected = [];
+            $scope.searchTest = "";
             $("[name='checkboxAll']:checkbox").prop("checked", false);
         }
     }
@@ -61,6 +63,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
             return; // 语言切换，避免数据为空
         }
         if($scope.isGetUrl){
+            $scope.searchTest = "";
             $scope.selected = [];
             $("[name='checkboxAll']:checkbox").prop("checked", false);
             $scope.detaileds = {};
@@ -139,7 +142,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         $http({
             method : 'post',
             url : "/json/admin/detailed/getSearchTitle",
-            params:{"serach": $scope.searchTest}
+            params:{"langId":$scope.langId,"catId":$scope.catId,"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
             $scope.detaileds = data.result.detaileds;

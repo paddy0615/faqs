@@ -49,3 +49,20 @@ function comGoCancel(url) {
         layer.close(myconfirm);
     });
 }
+
+// 搜索框文字
+function selectTest(langId){
+    var t = "Search";
+    if(langId == 1){
+        t = "搜索";
+    }else if(langId == 2){
+        t = "搜索";
+    }else if(langId == 3){
+        t = "搜索";
+    }else if(langId == 4){
+        t = "検索";
+    }else if(langId == 5){
+        t = "검색";
+    }
+    return t+"...";
+}

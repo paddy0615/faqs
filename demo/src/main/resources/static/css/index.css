@@ -28,21 +28,30 @@ body{
     background-color: #BA2E90;
 }
 .nav-tab ul li{
-    width: calc(924px / 6);
     float: left;
     text-align: center;
-    line-height: 42px;
     color: #fff;
     margin-right: 4px;
     padding: 2px;
     border: 1px solid #E3E3E3;
     cursor: pointer;
 }
+.nav-li-text{
+    width: 180px;
+    height: 42px;
+    line-height: 13px;
+    vertical-align: middle;
+    display: table-cell;
+}
 .nav-tab ul li .nav-tab-bor{
     background-color: #501275;
 }
 .nav-tab ul li:first-child .nav-tab-bor{
     background-color: #BA2E90;
+}
+.nav-select{
+    width: 60%;
+    margin: 5px auto;
 }
 
 

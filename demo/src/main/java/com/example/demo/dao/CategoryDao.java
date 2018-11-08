@@ -22,7 +22,7 @@ public interface CategoryDao extends JpaRepository<Category,Long> {
 
     int countByLangId(long id);
 
-    List<Category> findAllByTitleContaining(String s);
+    List<Category> findAllByLangIdAndTitleContaining(long longId,String s);
 
     @Modifying
     @Query("update Category c set c.status = :status , c.updateDate = :date where c.id = :catId")

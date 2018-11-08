@@ -58,6 +58,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
                 params:{"dlId" : dlId}
             }).success(function (data) {
                 if(data){
+                    $scope.addip(0,dlId);
                     var url = "/hkexpress/indexDetailed?dlId="+dlId+"&serch=true";
                     clicked(url);
                 }else{
@@ -69,6 +70,17 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
                 }
             })
         }
+    }
+
+    // 添加流量数
+    $scope.addip = function (catId,dlId) {
+        $http({
+            method : "post",
+            url : "/json/addip",
+            params : {"catId":catId,"dlId": dlId}
+        }).success(function (data) {
+
+        })
     }
 
 

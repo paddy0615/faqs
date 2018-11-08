@@ -126,3 +126,15 @@ insert into faqs_detailed (dl_lang_id,dl_cat_id,dl_title,dl_content,dl_contenttx
 ,(6,27,'Q: Can I change the origin/destination of my flight?','eeeee','123123',now(),now(),1,1,1,now())
 ,(6,28,'Q: How do I make a booking? ','eeeee','123123',now(),now(),1,1,1,now());
 ----- 以上基本完成
+
+-- faq 流量数记录
+DROP TABLE IF EXISTS `faqs_monitor`;
+CREATE TABLE `faqs_monitor` (
+ `m_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `m_clientip` VARCHAR(200) NULL COMMENT 'ip',
+ `m_lang_id` INT NULL COMMENT 'faq语言ID',
+ `m_cat_id` INT NULL COMMENT 'faq类别ID',
+ `m_dl_id` INT NULL COMMENT 'faq答案ID',
+ `m_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`m_id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

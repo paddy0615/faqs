@@ -1,4 +1,18 @@
 var myapp = angular.module("myapp",[]);
+myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope,element,attr) {
+            if (scope.$last === true) {
+                var finishFunc=scope.$parent[attr.onFinishRenderFilters];
+                if(finishFunc)
+                {
+                    finishFunc();
+                }
+            }
+        }
+    };
+}])
 // online chat
 function onlineChat(langId) {
     if(langId == 1){
@@ -117,7 +131,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
-    var url = "/json/getIndex";
+    $scope.lang_cout = 5;
     $scope.isGetUrl = false;
     $scope.cat_title = "";
     //indexShow 显示
@@ -129,7 +143,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     function into(langID,catId){
         $http({
             method : 'post',
-            url : url,
+            url : "/json/getIndex",
             params:{"langId": langID,"catId" : catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
@@ -137,6 +151,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
+                $scope.selectTest = selectTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {
                     if($scope.langId == each.id){
                         $scope.problem = each.problem;
@@ -149,6 +164,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
                         return;
                     }
                 })
+                $scope.lang_cout = data.result.categories.length;
                 if($scope.cat_title == ""){
                     $scope.cat_title = data.result.categories[1].title;
                 }
@@ -160,6 +176,12 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
                 });
             }
         })
+    }
+    // 改导航宽
+    $scope.completeRepeat= function(){
+        if($scope.lang_cout > 5 ){
+            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+        }
     }
     // 语言事件
     $scope.clickLanguage = function() {
@@ -176,6 +198,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
+                $scope.addip(cat.id,0);
                 var url = "/hkexpress/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
@@ -184,8 +207,19 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
 
     // 详情事件
     $scope.getDetailed = function (dlId) {
+        $scope.addip(0,dlId);
         var url = "/hkexpress/indexDetailed?dlId="+dlId;
         clicked(url);
+    }
+    // 添加流量数
+    $scope.addip = function (catId,dlId) {
+        $http({
+            method : "post",
+            url : "/json/addip",
+            params : {"catId":catId,"dlId": dlId}
+        }).success(function (data) {
+
+        })
     }
 
     /* 搜索框  */
@@ -218,15 +252,18 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     $scope.dlId = GetUrlParam("dlId");
     $scope.langId = 6;
     $scope.catId = 0;
-    var url = "/json/getByDetailed";
+    $scope.lang_cout = 5 ;
     $scope.isGetUrl = false;
     $scope.detailed ={};
+    //indexShow 显示
+    $scope.indexShow = true;
+    $scope.searchShow = false;
     // 初始化
     into($scope.dlId);
     function into(dlId){
         $http({
             method : 'post',
-            url : url,
+            url : "/json/getByDetailed",
             params:{"dlId": dlId}
         }).success(function (data) {
             $scope.isGetUrl = true;
@@ -234,6 +271,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
+                $scope.selectTest = selectTest($scope.langId);
                 onlineChat($scope.langId);
                 $scope.detailed = data.result.detailed;
                 // 显示内容
@@ -244,6 +282,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                         return;
                     }
                 })
+                $scope.lang_cout = data.result.categories.length;
             }else{
                 /* 失败*/
                 layer.alert( 'Abnormal error.', {
@@ -252,6 +291,22 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 });
             }
         })
+    }
+
+    // 改导航宽
+    $scope.completeRepeat= function(){
+        if($scope.lang_cout > 5 ){
+            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+        }
+    }
+
+    // 语言事件
+    $scope.clickLanguage = function() {
+        if($scope.isGetUrl){
+            var url = "/hkexpress/index?langId="+$scope.langId+"&catId="+0;
+            clicked(url);
+        }
+        // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
@@ -264,6 +319,44 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 clicked(url);
             }
         }
+    }
+
+    /* 搜索框  */
+    $scope.searchTest = "";
+    $scope.getSearch = function (){
+        if($scope.searchTest == ""){
+            return;
+        };
+        $http({
+            method : "post",
+            url : "/json/getSearch",
+            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+        }).success(function (data) {
+            $scope.searchShow = true;
+            $scope.indexShow = false;
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+    $scope.onKeyup = function(event){
+        // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        $scope.getSearch();
+    }
+    // 详情事件
+    $scope.getDetailed = function (dlId) {
+        $scope.addip(dlId);
+        var url = "/hkexpress/indexDetailed?dlId="+dlId;
+        clicked(url);
+    }
+    // 添加流量数
+    $scope.addip = function (dlId) {
+        $http({
+            method : "post",
+            url : "/json/addip",
+            params : {"dlId": dlId}
+        }).success(function (data) {
+
+        })
     }
 
 }]);

@@ -32,6 +32,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
                 $scope.searchType = false;
             }
         })
+        $scope.selectTest = selectTest(langID);
     }
     // 语言事件
     $scope.clickLanguage = function() {
@@ -157,7 +158,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
         $http({
             method : 'post',
             url : "/json/admin/category/getSearchTitle",
-            params:{"serach": $scope.searchTest}
+            params:{"langId":$scope.langId,"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
             $scope.categories = data.result.categories;

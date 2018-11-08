@@ -1,13 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.bean.Category;
-import com.example.demo.bean.Detailed;
-import com.example.demo.bean.Language;
-import com.example.demo.bean.RestResultModule;
+import com.example.demo.bean.*;
 import com.example.demo.dao.CategoryDao;
 import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.LanguageDao;
+import com.example.demo.dao.MonitorDao;
 import com.example.demo.service.DetailedService;
+import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -36,6 +37,10 @@ public class DetailedController {
     LanguageDao languageDao;
     @Resource
     private DetailedService detailedService;
+    @Resource
+    IpUtil ipUtil;
+    @Resource
+    MonitorDao monitorDao;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -54,7 +59,7 @@ public class DetailedController {
     /* 获取某个类别*/
     @ResponseBody
     @RequestMapping("/getByDetailed")
-    public RestResultModule getByDetailed(@RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
+    public RestResultModule getByDetailed(@RequestParam(name = "dlId", defaultValue = "0", required = true) long dlId){
         RestResultModule module = new RestResultModule();
         if(dlId == 0){
             module.setCode(404);
@@ -127,6 +132,35 @@ public class DetailedController {
         return flag;
     }
 
-
+    /* 添加流量数*/
+    @ResponseBody
+    @RequestMapping("/addip")
+    public boolean addip(HttpServletRequest request,
+                         @RequestParam(name = "catId",required = true,defaultValue = "0")long catId,
+                         @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId){
+        Monitor monitor = new Monitor();
+        String ip = ipUtil.getIpAddr(request);
+        monitor.setClientip(ip);
+        monitor.setCreateDate(new Date());
+        if(catId > 0){
+            Category category = categoryDao.findById(catId);
+            if(null != category){
+                monitor.setLangId(category.getLangId());
+                monitor.setCatId(category.getId());
+                monitorDao.save(monitor);
+                return true;
+            }
+        }else if(dlId > 0){
+            Detailed detailed = detailedDao.findById(dlId);
+            if(null != detailed){
+                monitor.setLangId(detailed.getLangId());
+                monitor.setCatId(detailed.getCatId());
+                monitor.setDlId(detailed.getId());
+                monitorDao.save(monitor);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
