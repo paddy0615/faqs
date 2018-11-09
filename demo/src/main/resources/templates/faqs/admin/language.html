@@ -62,7 +62,7 @@
                     <tbody>
                     <tr ng-repeat="language in languages">
                         <td>{{language.title}}</td>
-                        <td>{{language.updateDate.substring(0,10)}}</td>
+                        <td>{{language.updateDate.substring(0,16)}}</td>
                         <td style="text-align: right;">
                             <button class="btn btn-default" type="button" ng-click="getEdit(language.id)" >Edit</button>
                             <button class="btn btn-default" type="button" ng-click="getDelete(language.id)">Delete</button>

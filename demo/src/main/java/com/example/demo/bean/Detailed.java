@@ -1,5 +1,7 @@
 package com.example.demo.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -32,6 +34,7 @@ public class Detailed implements Serializable {
     @Column(name = "dl_createdate")
     private Date createDate;
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "dl_updatedate")
     private Date updateDate;
 

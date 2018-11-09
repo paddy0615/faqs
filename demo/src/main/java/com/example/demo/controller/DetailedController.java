@@ -75,7 +75,7 @@ public class DetailedController {
             module.setMsg("Detailed is null");
             return module;
         }
-        List<Category> categories = categoryDao.findByLangId(detailed.getLangId());
+        List<Category> categories = categoryDao.findAllByLangIdAndStatus(detailed.getLangId(),1);
 
         module.setCode(200);
         module.putData("languages",languages);

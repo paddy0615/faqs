@@ -35,6 +35,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
                 if($scope.selCatId != 0){
                     $scope.catId = $scope.selCatId;
                 }
+                $scope.searchTest = "";
                 $scope.selectTest = selectTest($scope.langId);
                 $("[name='checkboxAll']:checkbox").prop("checked", false);
             }

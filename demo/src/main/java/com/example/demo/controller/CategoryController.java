@@ -55,8 +55,8 @@ public class CategoryController {
         }
         // 获取语言集合
         List<Language> languages = languageDao.findAll();
-        // 获取类别集合
-        List<Category> categories = categoryDao.findByLangId(langId);
+        // 获取类别集合,发布状态
+        List<Category> categories = categoryDao.findAllByLangIdAndStatus(langId,1);
         // 获取详情集合，categories大于1(除首页)，为了获取默认第二个类型的详情集合
         List<Detailed> detaileds = null;
         if(catId == 0 && categories.size()>1){

@@ -37,7 +37,21 @@
       <div class="row">
         <left-Directive></left-Directive>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Category</h1>
+          <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
+              <div class="col-lg-6">
+                  <span style="font-size: 36px;">Category</span>
+              </div>
+              <div class="col-lg-4" style="float: right;top: 20px;">
+                  <div class="input-group">
+                      <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}"  ng-keyup="onKeyup(event)">
+                      <span class="input-group-btn">
+                  <button class="btn btn-default" type="button" ng-click="getSearchTitle()"><i class="glyphicon glyphicon-search"></i></button>
+            </span>
+                  </div>
+              </div>
+          </div>
+
+
           <div class="row">
             <!-- language select -->
             <label style="margin-top: 5px;margin-left: 200px;float: left;">Language: </label>
@@ -46,38 +60,37 @@
                       ng-options="language.id  as language.title for language in result.languages">
               </select>
             </div>
-
-            <div class="col-lg-4" style="float: right;">
-              <div class="input-group">
-                <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}" ng-keyup="onKeyup(event)">
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" ng-click="getSearchTitle()"><i class="glyphicon glyphicon-search"></i></button>
-                </span>
-                <button class="btn btn-default" type="button" style="float:right;" ng-click="getEdit(0)">Add</button>
-              </div><!-- /input-group -->
-            </div><!-- /.col-lg-6 -->
+            <!-- button -->
+            <div class="col-lg-5" style="float: right;text-align: right;">
+              <button class="btn btn-default" type="button" ng-click="getEdit(0)">Add</button>
+              <button class="btn btn-default" type="button" ng-click="getDelete(0)">Delete Selected</button>
+              <button class="btn btn-default" type="button" ng-click="editStatus(0,1)">Show Selected</button>
+              <button class="btn btn-default" type="button" ng-click="editStatus(0,0,1)">Hide Selected</button>
+            </div>
           </div><!-- /.row -->
 
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th><input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)"></th>
                   <th>Title</th>
                   <th>Update Date</th>
-                <!--  <th>Status</th>-->
+                  <th>Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="categorie in categories">
-                  <td>{{categorie.title}}</td>
-                  <td>{{categorie.updateDate.substring(0,10)}}</td>
-         <!--         <td ng-if="categorie.status == 1">Published</td>
-                  <td ng-if="categorie.status == 0">Unpublish</td>-->
+                  <td><input style="vertical-align:top;" type="checkbox" name="checkboxClien" ng-click="updateSelection($event,categorie.id)" value="{{categorie.id}}">{{$index+1}}</td>
+                  <td class="col-md-4">{{categorie.title}}</td>
+                  <td>{{categorie.updateDate.substring(0,16)}}</td>
+                  <td ng-if="categorie.status == 1">Show</td>
+                  <td ng-if="categorie.status == 0">Hide</td>
                   <td style="text-align: right;">
-       <!--             <button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(categorie.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;
-                    <button class="btn btn-default" type="button" ng-if="categorie.status == 1" ng-click="editStatus(categorie.id,0)">Unpublish</button>&lt;!&ndash;已发表&ndash;&gt;
-                    <button class="btn btn-default" type="button" ng-if="categorie.status == 0" ng-click="editStatus(categorie.id,1)">Published</button>&lt;!&ndash;未发表&ndash;&gt;-->
+              <!--      <button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(categorie.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;-->
+                    <button class="btn btn-default" type="button" ng-if="categorie.status == 1" ng-click="editStatus(categorie.id,0)">Hide</button><!--已发表-->
+                    <button class="btn btn-default" type="button" ng-if="categorie.status == 0" ng-click="editStatus(categorie.id,1)">Show</button><!--未发表-->
                     <button class="btn btn-default" type="button" ng-click="getEdit(categorie.id)" >Edit</button>
                     <button class="btn btn-default" type="button" ng-click="getDelete(categorie.id)">Delete</button>
                   </td>

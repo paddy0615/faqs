@@ -112,8 +112,11 @@ public class CategoryController {
     /* 删除*/
     @ResponseBody
     @RequestMapping(value = "/category/delete")
-    public void delete(@RequestParam(name = "catId",defaultValue = "0",required = true) long catId){
-        categoryService.deleteById(catId);
+    public void delete(@RequestParam(name = "catIds",defaultValue = "",required = true) String catIds){
+        String [] catId = catIds.split("-");
+        for (String id : catId) {
+            categoryService.deleteById(Long.parseLong(id));
+        }
     }
 
     /* 按title模糊查询,带语言*/
@@ -132,9 +135,12 @@ public class CategoryController {
     /* 修改状态*/
     @ResponseBody
     @RequestMapping(value = "/category/editStatus")
-    public void editStatus(@RequestParam(name = "catId",defaultValue = "0",required = true) long catId,
+    public void editStatus(@RequestParam(name = "catIds",defaultValue = "",required = true) String catIds,
                     @RequestParam(name = "status",defaultValue = "0",required = true) long status){
-        categoryService.saveStatus(catId,status);
+        String [] catId = catIds.split("-");
+        for (String id : catId) {
+            categoryService.saveStatus(Long.parseLong(id),status);
+        }
     }
 
     /* 置顶*/

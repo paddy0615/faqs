@@ -241,7 +241,9 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     $scope.onKeyup = function(event){
        // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        $scope.getSearch();
+        if(e && e.keyCode==13){ // enter 键
+            $scope.getSearch();
+        }
     }
 
 }]);
@@ -340,7 +342,10 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     $scope.onKeyup = function(event){
         // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        $scope.getSearch();
+        if(e && e.keyCode==13){ // enter 键
+            $scope.getSearch();
+        }
+
     }
     // 详情事件
     $scope.getDetailed = function (dlId) {

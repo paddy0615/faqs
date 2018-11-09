@@ -16,6 +16,8 @@ public interface CategoryDao extends JpaRepository<Category,Long> {
     Category findById(long catId);
     // 按id获取类别集合
     List<Category> findByLangId(long longId);
+    // 按状态获取集合
+    List<Category> findAllByLangIdAndStatus(long longId,long status);
 
     // 按id获取类别集合,排序top
     List<Category> findAllByLangIdOrderByOrdertopdateDesc(long longId);

@@ -90,9 +90,9 @@
           </thead>
           <tbody>
           <tr ng-repeat="detailed in detaileds">
-            <td> <input type="checkbox" name="checkboxClien" ng-click="updateSelection($event,detailed.id)" value="{{detailed.id}}"></td>
+            <td> <input style="vertical-align:top;"  type="checkbox" name="checkboxClien" ng-click="updateSelection($event,detailed.id)" value="{{detailed.id}}">{{$index+1}}</td>
             <td class="col-md-6">{{detailed.title}}</td>
-            <td>{{detailed.updateDate.substring(0,10)}}</td>
+            <td>{{detailed.updateDate.substring(0,16)}}</td>
             <td ng-if="detailed.status == 1">Show</td>
             <td ng-if="detailed.status == 0">Hide</td>
             <td style="text-align: right;">

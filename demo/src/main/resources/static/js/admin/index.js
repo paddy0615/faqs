@@ -30,6 +30,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
                 $scope.isGetUrl =true;
                 $scope.searchTest = "";
                 $scope.searchType = false;
+                $("[name='checkboxAll']:checkbox").prop("checked", false);
             }
         })
         $scope.selectTest = selectTest(langID);
@@ -38,6 +39,8 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
             into($scope.langId);
+            $scope.selected = [];
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
         }
     }
 
@@ -47,88 +50,144 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     }
 
     // 删除
-    var lock = false; //默认未锁定
     $scope.getDelete = function(id){
-      /*  $http({
-            method : 'post',
-            url : "/faqs/admin/detailed/countDlByCatId",
-            params:{"catId": id}
-        }).success(function (data) {
-            if(data){
-                /!* 没数据*!/
-                var myconfirm = layer.confirm("Are you sure you want to delete it?", {
-                    title:'Information',
-                    btn: ['OK','Cancel'] //按钮
-                }, function(){
-                    if(!lock) {
-                        lock = true; // 锁定
-                        Candelete(id);
-                    }
-                    layer.close(myconfirm);
-                }, function(){
-                    layer.close(myconfirm);
-                });
-            }else{
-                /!* 有数据*!/
-                Nodelete();
+        var delId = id;
+        var txt = "Are you sure you want to delete it?";
+        if(id == 0){
+            delId = $scope.selected.join("-");
+            txt = "Do you want to delete the following checks?";
+            var i = 0;
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                if(each.checked){
+                    i++;
+                }
+            })
+            if(i==0){
+                layer.alert("Please check out");
+                return;
             }
-        })*/
-        var myconfirm = layer.confirm("Are you sure you want to delete it?", {
+        }
+        var lock = false; //默认未锁定
+        var myconfirm = layer.confirm(txt, {
             title:'Information',
             btn: ['OK','Cancel'] //按钮
         }, function(){
             if(!lock) {
                 lock = true; // 锁定
-                Candelete(id);
+                Candelete(delId);
             }
             layer.close(myconfirm);
         }, function(){
             layer.close(myconfirm);
         });
+
     }
     // 能删除
-    function  Candelete(id) {
+    function  Candelete(dlIds) {
         $http({
             method : 'post',
             url : "/json/admin/category/delete",
-            params:{"catId": id}
+            params:{"catIds": dlIds}
         }).success(function (data) {
-            lock = false;
             into($scope.langId);
         })
-
-    }
-    // 不能删除
-    function  Nodelete() {
-        layer.alert( 'There is information correlation and cannot be deleted. I suggest you modify the release status.', {
-            title:'Information',
-            skin: 'layui-layer-lan'
-            ,closeBtn: 0
-        });
     }
 
     // 修改状态
-    var lock1 = false; //默认未锁定
-    $scope.editStatus = function (id,status) {
-        if(!lock1){
-            lock1 = true;  // 锁定
-            $http({
-                method : 'post',
-                url : "/json/admin/category/editStatus",
-                params:{"catId": id ,"status" : status}
-            }).success(function (data) {
-                /* 成功*/
-                var index = layer.alert( 'Success', {
+    var lock2 = false; //默认未锁定
+    $scope.editStatus = function (id,status,type) {
+        if(!lock2){
+            lock2 = true;  // 锁定
+            var delId = id;
+            if(id == 0){// 全部
+                var txt = "Do you want to show all of the following?";
+                if(type){
+                    txt = "Do you want to hide all of the following?";
+                }
+                delId = $scope.selected.join("-");
+                var i = 0;
+                angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                    if(each.checked){
+                        i++;
+                    }
+                })
+                if(i==0){
+                    layer.alert("Please check out");
+                    lock2 = false;
+                    return;
+                }
+                var myconfirm = layer.confirm(txt, {
                     title:'Information',
-                    skin: 'layui-layer-lan'
-                    ,closeBtn: 0
-                },function () {
-                    lock1 = false;
-                    into($scope.langId);
-                    layer.close(index);
+                    btn: ['OK','Cancel'] //按钮
+                }, function(){
+                    CanEditStatus(delId,status);
+                    layer.close(myconfirm);
+                }, function(){
+                    lock2 = false;
+                    layer.close(myconfirm);
                 });
-            })
+            }else{ // 单个
+                CanEditStatus(delId,status);
+            }
         };
+    }
+    // 能编辑状态
+    function  CanEditStatus(catIds,status) {
+        $http({
+            method : 'post',
+            url : "/json/admin/category/editStatus",
+            params:{"catIds": catIds ,"status" : status}
+        }).success(function (data) {
+            /* 成功*/
+            var index = layer.alert( 'Success', {
+                title:'Information',
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+            },function () {
+                lock2 = false;
+                into($scope.langId);
+                $scope.selected = [];
+                $("[name='checkboxAll']:checkbox").prop("checked", false);
+                layer.close(index);
+            });
+        })
+    }
+
+
+    // 复选框
+    $scope.selected = [];
+    $scope.updateSelection = function($event, id){
+        var checkbox = $event.target;
+        var action = (checkbox.checked?'add':'remove');
+        if(action == 'add' && $scope.selected.indexOf(id) == -1){
+            $scope.selected.push(id);
+            var flag = true;
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                if(!each.checked){
+                    flag = false;
+                }
+            })
+            $("[name='checkboxAll']:checkbox").prop("checked", flag);
+        }
+        if(action == 'remove' && $scope.selected.indexOf(id)!=-1){
+            var idx = $scope.selected.indexOf(id);
+            $scope.selected.splice(idx,1);
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
+        }
+    }
+    $scope.updateSelectionAll = function($event){
+        var checkbox = $event.target;
+        var action = (checkbox.checked?'add':'remove');
+        if(action == 'add'){
+            $("[name='checkboxClien']:checkbox").prop("checked", true);
+            angular.forEach($("[name='checkboxClien']:checkbox"), function (each) {
+                $scope.selected.push(Number(each.value));
+            })
+        }
+        if(action == 'remove'){
+            $("[name='checkboxClien']:checkbox").prop("checked", false);
+            $scope.selected = [];
+        }
     }
 
     // 置顶
@@ -151,6 +210,8 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     $scope.searchTest = "";
     $scope.searchType = false;
     $scope.getSearchTitle = function () {
+        $scope.selected = [];
+        $("[name='checkboxAll']:checkbox").prop("checked", false);
         if($scope.searchTest == ""){
             $scope.categories = $scope.categoriesTemp;
             return;
