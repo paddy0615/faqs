@@ -10,7 +10,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     $scope.isGetUrl = false;
     $scope.categories = {};
     $scope.categoriesTemp = {}; //用于空的搜索
-    var url = "/json/admin/getCategoryPage";
+    var url = ctx + "appJson/admin/getCategoryPage";
     // 初始化
     if($scope.selLangId != 0){
         $scope.langId = $scope.selLangId;
@@ -46,7 +46,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
 
     // 编辑
     $scope.getEdit = function(catId){
-        clicked("/hkexpress/admin/categoryEdit?catId="+catId+"&selLangId="+$scope.langId);
+        clicked(ctx + "appPage/admin/categoryEdit?catId="+catId+"&selLangId="+$scope.langId);
     }
 
     // 删除
@@ -86,7 +86,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     function  Candelete(dlIds) {
         $http({
             method : 'post',
-            url : "/json/admin/category/delete",
+            url : ctx + "appJson/admin/category/delete",
             params:{"catIds": dlIds}
         }).success(function (data) {
             into($scope.langId);
@@ -135,7 +135,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
     function  CanEditStatus(catIds,status) {
         $http({
             method : 'post',
-            url : "/json/admin/category/editStatus",
+            url : ctx + "appJson/admin/category/editStatus",
             params:{"catIds": catIds ,"status" : status}
         }).success(function (data) {
             /* 成功*/
@@ -197,7 +197,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
             lock2 = true;  // 锁定
             $http({
                 method : 'post',
-                url : "/json/admin/category/editTop",
+                url : ctx + "appJson/admin/category/editTop",
                 params:{"firstId" : $scope.categories[0].id , "catId" : id}
             }).success(function (data) {
                 lock2 = false;
@@ -218,7 +218,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
         };
         $http({
             method : 'post',
-            url : "/json/admin/category/getSearchTitle",
+            url : ctx + "appJson/admin/category/getSearchTitle",
             params:{"langId":$scope.langId,"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
@@ -251,7 +251,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
     var person = "";
     if($scope.catId != 0){
         $scope.addType = false;
-        var url = "/json/admin/getCategory";
+        var url = ctx + "appJson/admin/getCategory";
         $http({
             method : 'post',
             url : url,
@@ -267,7 +267,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
         })
     }else{
         $scope.addType =true;
-        var url = "/json/getLanguageAll";
+        var url = ctx + "appJson/getLanguageAll";
         $http({
             method : 'post',
             url : url,
@@ -297,7 +297,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             lock1 = true; // 锁定
             $http({
                 method : 'post',
-                url : '/json/admin/category/update',
+                url : ctx + 'appJson/admin/category/update',
                 data : $scope.categorie
             }).then(function(resp){
                 layer.alert( 'Success', {
@@ -305,7 +305,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/hkexpress/admin/category?selLangId="+$scope.categorie.langId;
+                    var url = ctx + "appPage/admin/category?selLangId="+$scope.categorie.langId;
                     clicked(url);
                 });
                 layer.close(index);
@@ -335,7 +335,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
             lock = true; // 锁定
             $http({
                 method : 'post',
-                url : '/json/admin/category/add',
+                url : ctx + 'appJson/admin/category/add',
                 params : {"langId" :$scope.langId ,"categorieTitle" : $scope.categorie.title}
             }).then(function(resp){
                 layer.alert( 'Success', {
@@ -343,7 +343,7 @@ myapp.controller("categoryEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/hkexpress/admin/category?selLangId="+$scope.langId;
+                    var url = ctx + "appPage/admin/category?selLangId="+$scope.langId;
                     clicked(url);
                 });
                 layer.close(index);

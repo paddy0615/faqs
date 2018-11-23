@@ -21,7 +21,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
     $scope.into = function(langID,catId) {
         $http({
             method : 'post',
-            url : "/json/admin/getDetailedPage",
+            url : ctx + "appJson/admin/getDetailedPage",
             params:{"langId": langID,"catId": catId}
         }).success(function (data) {
             if(data){
@@ -70,7 +70,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
             $scope.detaileds = {};
             $http({
                 method : 'post',
-                url : "/json/admin/getDetaileds",
+                url : ctx + "appJson/admin/getDetaileds",
                 params:{"langId": $scope.langId,"catId": $scope.catId}
             }).success(function (data) {
                 if(data){
@@ -84,7 +84,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
 
     // 编辑url
     $scope.getEdit = function(dlId){
-        clicked("/hkexpress/admin/detailedEdit?dlId="+dlId+"&selLangId="+$scope.langId+"&selCatId="+$scope.catId);
+        clicked(ctx + "appPage/admin/detailedEdit?dlId="+dlId+"&selLangId="+$scope.langId+"&selCatId="+$scope.catId);
     }
 
     // 删除
@@ -124,7 +124,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
     function  Candelete(dlIds) {
         $http({
             method : 'post',
-            url : "/json/admin/detailed/delete",
+            url : ctx + "appJson/admin/detailed/delete",
             params:{"dlIds": dlIds}
         }).success(function (data) {
             $scope.into($scope.langId,$scope.catId);
@@ -142,7 +142,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         };
         $http({
             method : 'post',
-            url : "/json/admin/detailed/getSearchTitle",
+            url : ctx + "appJson/admin/detailed/getSearchTitle",
             params:{"langId":$scope.langId,"catId":$scope.catId,"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
@@ -237,7 +237,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
     function  CanEditStatus(dlIds,status) {
         $http({
             method : 'post',
-            url : "/json/admin/detailed/editStatus",
+            url : ctx + "appJson/admin/detailed/editStatus",
             params:{"dlIds": dlIds ,"status" : status}
         }).success(function (data) {
             /* 成功*/
@@ -279,7 +279,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     // 初始化
     if($scope.dlId != 0){
         $scope.addType = false;
-        var url = "/json/admin/getDetailedUpdate";
+        var url = ctx + "appJson/admin/getDetailedUpdate";
         $http({
             method : 'post',
             url : url,
@@ -298,7 +298,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     }else{
         $scope.addType =true;
         $scope.detailed.title = "";
-        var url = "/json/admin/getDetailedAdd";
+        var url = ctx + "appJson/admin/getDetailedAdd";
         if($scope.selLangId != 0){
             url += "?langId="+$scope.selLangId;
         }
@@ -337,7 +337,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
 
     // 语言事件
     $scope.clickLanguage = function() {
-        var url = "/json/admin/getCategoryByLangId";
+        var url = ctx + "appJson/admin/getCategoryByLangId";
         $scope.categories ={};
             $http({
             method : 'post',
@@ -366,7 +366,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             $scope.detailed.contentTxt = UE.getEditor('editorUpdate').getContentTxt();
             $http({
                 method : 'post',
-                url : '/json/admin/detailed/update',
+                url : ctx + 'appJson/admin/detailed/update',
                 data : $scope.detailed
             }).then(function(resp){
                 layer.alert( 'Success', {
@@ -377,7 +377,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     if(ind == 1){
                         location.reload();
                     }else{
-                        var url = "/hkexpress/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
+                        var url = ctx + "appPage/admin/detailed?selLangId="+$scope.detailed.langId+"&selCatId="+$scope.detailed.catId;
                         clicked(url);
                     }
                 });
@@ -412,7 +412,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             $scope.detailed.contentTxt = UE.getEditor('editorAdd').getContentTxt();
             $http({
                 method : 'post',
-                url : '/json/admin/detailed/add',
+                url : ctx + 'appJson/admin/detailed/add',
                 data : $scope.detailed
             }).then(function(resp){
                 layer.alert( 'Success', {
@@ -420,7 +420,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     skin: 'layui-layer-lan'
                     ,closeBtn: 0
                 },function () {
-                    var url = "/hkexpress/admin/detailed?selLangId="+$scope.langId+"&selCatId="+$scope.catId;
+                    var url = ctx + "appPage/admin/detailed?selLangId="+$scope.langId+"&selCatId="+$scope.catId;
                     clicked(url);
                 });
                 layer.close(index);

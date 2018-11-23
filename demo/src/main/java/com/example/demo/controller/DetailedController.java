@@ -25,7 +25,7 @@ import java.util.List;
  * paddy 2018/9/17
  * */
 @Controller()
-@RequestMapping(value = "/json")
+@RequestMapping(value = "/appJson")
 @Component("DetailedController")
 public class DetailedController {
     private  static Logger logger = LoggerFactory.getLogger(DetailedController.class);
@@ -124,6 +124,7 @@ public class DetailedController {
         module.putData("detaileds",detaileds);
         return module;
     }
+
     /* 搜索页-添加热点数量*/
     @ResponseBody
     @RequestMapping("/addHotspot")
@@ -161,6 +162,18 @@ public class DetailedController {
             }
         }
         return false;
+    }
+
+    /* 自定义修改后台数据,因域名变化,图片位置也变化*/
+    @ResponseBody
+    @RequestMapping("/xiugaishujuYuming")
+    public List<Detailed> addHotspot(){
+        List<Detailed> detaileds = detailedDao.findAll();
+        for (Detailed d:detaileds) {
+            //d.setContent(d.getContent().replace("/ueditor/jsp", "/hkexpress/ueditor/jsp"));
+            //detailedDao.save(d);
+        }
+        return detaileds;
     }
 
 }

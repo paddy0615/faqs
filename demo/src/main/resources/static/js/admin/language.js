@@ -9,7 +9,7 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
     $scope.languagesTemp = {}; //用于空的搜索
     into();
     function into(){
-        var url = "/json/getLanguageAll";
+        var url = ctx + "appJson/getLanguageAll";
         $http({
             method : 'post',
             url : url,
@@ -24,14 +24,14 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
 
     // 编辑
     $scope.getEdit = function(id){
-        clicked("/hkexpress/admin/languageEdit?langId="+id);
+        clicked(ctx + "appPage/admin/languageEdit?langId="+id);
     }
 
     // 删除
     $scope.getDelete = function(id){
         $http({
             method : 'post',
-            url : "/json/admin/category/countCatByLangId",
+            url : ctx + "appJson/admin/category/countCatByLangId",
             params:{"langId": id}
         }).success(function (data) {
             if(data){
@@ -59,7 +59,7 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
     function  Candelete(id) {
         $http({
             method : 'post',
-            url : "/json/language/delete",
+            url : ctx + "appJson/language/delete",
             params:{"langId": id}
         }).success(function (data) {
             reloadRoute();
@@ -84,7 +84,7 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
         };
         $http({
             method : 'post',
-            url : "/json/language/getSearchTitle",
+            url : ctx + "appJson/language/getSearchTitle",
             params:{"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
@@ -113,7 +113,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
     $scope.editType = "";
     if($scope.langId != 0){
         $scope.addType = false;
-        var url = "/json/getLanguage";
+        var url = ctx + "appJson/getLanguage";
         $http({
             method : 'post',
             url : url,
@@ -135,7 +135,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
     $scope.submitUpdate = function () {
         $http({
             method : 'post',
-            url : '/json/language/update',
+            url : ctx + 'appJson/language/update',
             data : $scope.language
         }).then(function(resp){
             layer.alert( 'Success', {
@@ -143,7 +143,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
                 skin: 'layui-layer-lan'
                 ,closeBtn: 0
             },function () {
-                var url = "/hkexpress/admin/language";
+                var url = ctx + "appPage/admin/language";
                 clicked(url);
             });
         },function(resp){
@@ -161,7 +161,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
     $scope.submitAdd = function () {
         $http({
             method : 'post',
-            url : '/json/language/add',
+            url : ctx + 'appJson/language/add',
             params : {"title" : $scope.language.title,"problem" : $scope.language.problem}
         }).then(function(resp){
             layer.alert( 'Success', {
@@ -169,7 +169,7 @@ myapp.controller("languageEditController",["$scope","$http",function ($scope, $h
                 skin: 'layui-layer-lan'
                 ,closeBtn: 0
             },function () {
-                var url = "/hkexpress/admin/language";
+                var url = ctx + "appPage/admin/language";
                 clicked(url);
             });
         },function(resp){

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,21 +9,24 @@
   <meta name="author" content="">
   <title>FAQS | HK Express</title>
   <!-- Bootstrap core CSS -->
-  <link href="/css/assets/bootstrap.min.css" rel="stylesheet">
+  <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <link href="/css/assets/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link th:href="@{/css/assets/ie10-viewport-bug-workaround.css}" rel="stylesheet">
   <!-- Custom styles for this template -->
-  <link href="/css/assets/dashboard.css" rel="stylesheet">
-  <script src="/js/assets/jquery.js"></script>
-  <script src="/js/layer/layer.js"></script>
-  <script src="/js/assets/angular.js"></script>
-  <script src="/js/admin/directive.js"></script>
-  <script src="/js/admin/detailed.js"></script>
-  <script src="/js/common.js"></script>
+  <link th:href="@{/css/assets/dashboard.css}" rel="stylesheet">
+  <script th:src="@{/js/assets/jquery.js}"></script>
+  <script th:src="@{/js/layer/layer.js}"></script>
+  <script th:src="@{/js/assets/angular.js}"></script>
+  <script th:src="@{/js/admin/directive.js}"></script>
+  <script th:src="@{/js/admin/detailed.js}"></script>
+  <script th:src="@{/js/common.js}"></script>
+  <script th:inline="javascript">
+      var ctx = [[@{/}]];
+  </script>
 
   <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-  <!--[if lt IE 9]><script src="/js/assets/ie8-responsive-file-warning.js"></script><![endif]-->
-  <script src="/js/assets/ie-emulation-modes-warning.js"></script>
+  <!--[if lt IE 9]><script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
+  <script th:src="@{/js/assets/ie-emulation-modes-warning.js}"></script>
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -115,12 +118,12 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="/js/assets/vendor/jquery.min.js"><\/script>')</script>
-<script src="/js/assets/bootstrap.min.js"></script>
+<script>window.jQuery || document.write('<script  th:src="@{/js/assets/vendor/jquery.min.js}"><\/script>')</script>
+<script th:src="@{/js/assets/bootstrap.min.js}"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="/js/assets/holder.min.js"></script>
+<script th:src="@{/js/assets/holder.min.js}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="/js/assets/ie10-viewport-bug-workaround.js"></script>
+<script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
 
 </body>
 </html>

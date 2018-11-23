@@ -2,13 +2,16 @@
 server:
   port: 8080
   address: 0.0.0.0
-    ##servlet:
-  ##context-path: /faqs
+  servlet:
+    context-path: /hkexpress
 ##thymeleaf页面模板配置
 web:
   upload-path: C:/faqsonic/faq
 
 spring:
+  # 多个springboot项目部署,需加
+  jmx:
+    enabled: false
   #jpa配置
   jpa:
     database: mysql
@@ -19,12 +22,14 @@ spring:
     uri-encoding: UTF-8
   datasource:
     ## 118.143.2.3 -> faqsdatetest(开发) , faqsDate(测试)
-    url: jdbc:mysql://118.143.2.3:3306/faqsDate?characterEncoding=UTF-8
+    url: jdbc:mysql://118.143.2.3:3306/faqsdatetest?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver
   mvc:
     static-path-pattern: /**
+  thymeleaf:
+    cache: false
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
   servlet:
@@ -55,6 +60,7 @@ mybatis:
   type-aliases-package: com.example.demo.bean
   configuration:
     map-underscore-to-camel-case: true
+
 
 
 stmp:

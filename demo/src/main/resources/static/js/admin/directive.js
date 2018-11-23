@@ -3,9 +3,9 @@ var myapp = angular.module("myapp",[]);
 myapp.directive('leftDirective', function() {
     var templateHtml = " <div class=\"col-sm-3 col-md-2 sidebar\">" +
         "                <ul class=\"nav nav-sidebar\">\n" +
-        "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/language')\">Language Maintenance</a></li>\n" +
-        "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/category')\">Category Maintenance</a></li>\n" +
-        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/detailed')\">FAQ</a></li>\n" +
+        "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/language')\">Language Maintenance</a></li>\n" +
+        "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/category')\">Category Maintenance</a></li>\n" +
+        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ</a></li>\n" +
         "            </ul></div>";
     return {
         restrict: 'E',
@@ -28,9 +28,9 @@ myapp.directive('topDirective', function() {
         "        </div>\n" +
         "        <div id=\"navbar\" class=\"navbar-collapse collapse\">\n" +
         "            <ul id=\"topTest-hide\" class=\"nav navbar-nav navbar-right\">\n" +
-        "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/language')\">Language Maintenance</a></li>\n" +
-        "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/category')\">Category Maintenance</a></li>\n" +
-        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('/hkexpress/admin/detailed')\">FAQ</a></li>\n" +
+        "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/language')\">Language Maintenance</a></li>\n" +
+        "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/category')\">Category Maintenance</a></li>\n" +
+        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ</a></li>\n" +
         "            </ul>\n" +
         "        </div>\n" +
         "    </div>\n" +

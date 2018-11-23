@@ -143,7 +143,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     function into(langID,catId){
         $http({
             method : 'post',
-            url : "/json/getIndex",
+            url : ctx + "appJson/getIndex",
             params:{"langId": langID,"catId" : catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
@@ -186,7 +186,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = "/hkexpress/index?langId="+$scope.langId+"&catId="+0;
+            var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -199,7 +199,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
         }else{
             if($scope.isGetUrl){
                 $scope.addip(cat.id,0);
-                var url = "/hkexpress/index?langId="+cat.langId+"&catId="+cat.id;
+                var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
         }
@@ -208,14 +208,14 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     // 详情事件
     $scope.getDetailed = function (dlId) {
         $scope.addip(0,dlId);
-        var url = "/hkexpress/indexDetailed?dlId="+dlId;
+        var url = ctx + "appPage/indexDetailed?dlId="+dlId;
         clicked(url);
     }
     // 添加流量数
     $scope.addip = function (catId,dlId) {
         $http({
             method : "post",
-            url : "/json/addip",
+            url : ctx + "appJson/addip",
             params : {"catId":catId,"dlId": dlId}
         }).success(function (data) {
 
@@ -230,7 +230,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
         };
         $http({
             method : "post",
-            url : "/json/getSearch",
+            url : ctx + "appJson/getSearch",
             params : {"search": $scope.searchTest,"langId" : $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
@@ -265,7 +265,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     function into(dlId){
         $http({
             method : 'post',
-            url : "/json/getByDetailed",
+            url : ctx + "appJson/getByDetailed",
             params:{"dlId": dlId}
         }).success(function (data) {
             $scope.isGetUrl = true;
@@ -305,7 +305,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = "/hkexpress/index?langId="+$scope.langId+"&catId="+0;
+            var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -317,7 +317,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
-                var url = "/hkexpress/index?langId="+cat.langId+"&catId="+cat.id;
+                var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
         }
@@ -331,7 +331,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
         };
         $http({
             method : "post",
-            url : "/json/getSearch",
+            url : ctx + "appJson/getSearch",
             params : {"search": $scope.searchTest,"langId" : $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
@@ -350,14 +350,14 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     // 详情事件
     $scope.getDetailed = function (dlId) {
         $scope.addip(dlId);
-        var url = "/hkexpress/indexDetailed?dlId="+dlId;
+        var url = ctx + "appPage/indexDetailed?dlId="+dlId;
         clicked(url);
     }
     // 添加流量数
     $scope.addip = function (dlId) {
         $http({
             method : "post",
-            url : "/json/addip",
+            url : ctx + "appJson/addip",
             params : {"dlId": dlId}
         }).success(function (data) {
 

@@ -2,13 +2,16 @@
 server:
   port: 8080
   address: 0.0.0.0
-  ##servlet:
-    ##path: /hkexpress
+  servlet:
+    context-path: /hkexpress
 ##thymeleaf页面模板配置
 web:
   upload-path: C:/faqsonic/faq
 
 spring:
+  # 多个springboot项目部署,需加
+  jmx:
+    enabled: false
   #jpa配置
   jpa:
     database: mysql
@@ -18,13 +21,15 @@ spring:
   tomcat:
     uri-encoding: UTF-8
   datasource:
-    ## 118.143.2.7 -> faqsDate
-    url: jdbc:mysql://118.143.2.7:3306/faqsDate?characterEncoding=UTF-8
+    ## 118.143.2.7 -> faqsDate , faqsDate208,给192.168.172.208机用
+    url: jdbc:mysql://118.143.2.7:3306/faqsDate208?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver
   mvc:
     static-path-pattern: /**
+  thymeleaf:
+    cache: false
   resources:
     static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
   servlet:

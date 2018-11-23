@@ -32,7 +32,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         User user = (User)request.getSession().getAttribute("userSession");
         if(null == user){
             // 获取request返回页面到登录页
-            response.sendRedirect("/hkexpress/admin/login");
+            //response.sendRedirect("/appPage/admin/login");
+            System.out.println(request.getContextPath()+"/appPage/admin/login");     // 工程名
+            response.sendRedirect(request.getContextPath()+"/appPage/admin/login");
             flag = false;
         }else{
             flag = true;

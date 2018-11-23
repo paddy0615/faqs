@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FAQS | HK Express</title>
-    <link rel="stylesheet" href="/css/assets/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <script src="/js/assets/jquery.js"></script>
-    <script src="/js/layer/layer.js"></script>
-    <script src="/js/assets/angular.js"></script>
-    <script src="/js/index.js"></script>
-    <script src="/js/common.js"></script>
+    <link rel="stylesheet" th:href="@{/css/assets/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/index.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
     <style>
         #SnapABug_bImg{
             width:100%;
@@ -46,10 +49,10 @@
 <div class="content">
     <div class="header">
         <div class="header-loagin">
-            <a href="javascript:void(0);" ng-click="clickCategory(0)"><img src="/img/faq_top3.png"/></a>
+            <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"/></a>
         </div>
         <div class="header-lan">
-            <img src="/img/globe1.png"/>
+            <img th:src="@{/img/globe1.png}"/>
             <select ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in result.languages">
             </select>
         </div>
@@ -86,7 +89,7 @@
     </div>
 </div>
 <div class="scrollToTop" style="display: none;">
-    <img src="/img/scroll-to-top.png" alt="Back To Top">
+    <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
 </div>
 </body>
 </html>

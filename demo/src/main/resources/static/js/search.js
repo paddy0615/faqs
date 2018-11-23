@@ -24,7 +24,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
         if($scope.searchText == "") return;
         $http({
             method : 'post',
-            url : "/json/getSerDetaileds",
+            url : ctx + "appJson/getSerDetaileds",
             params:{"serach" : $scope.searchText}
         }).success(function (data) {
             if(data){
@@ -39,7 +39,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
     function info(){
         $http({
             method : 'post',
-            url : "/json/getHotspot"
+            url : ctx + "appJson/getHotspot"
         }).success(function (data) {
             if(data){
                 $scope.hotspots = data.result.detaileds;
@@ -54,12 +54,12 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
             lock = true; // 锁定
             $http({
                 method : 'post',
-                url : "/json/addHotspot",
+                url : ctx + "appJson/addHotspot",
                 params:{"dlId" : dlId}
             }).success(function (data) {
                 if(data){
                     $scope.addip(0,dlId);
-                    var url = "/hkexpress/indexDetailed?dlId="+dlId+"&serch=true";
+                    var url = ctx + "appPage/indexDetailed?dlId="+dlId+"&serch=true";
                     clicked(url);
                 }else{
                     layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
@@ -76,7 +76,7 @@ myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
     $scope.addip = function (catId,dlId) {
         $http({
             method : "post",
-            url : "/json/addip",
+            url : ctx + "appJson/addip",
             params : {"catId":catId,"dlId": dlId}
         }).success(function (data) {
 

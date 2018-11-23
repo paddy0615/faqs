@@ -8,11 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping(value = "/hkexpress")
+@RequestMapping("appPage")
 public class UrlController {
 
+    @RequestMapping("/")
+    public String index(){return "/faqs/index";}
+
     @RequestMapping("/index")
-    public String index(){return "faqs/index";}
+    public String index1(){return "/faqs/index";}
 
     @RequestMapping("/search")
     public String search(){return "faqs/search";}
@@ -25,7 +28,7 @@ public class UrlController {
 
     @RequestMapping("/goLogin")
     public String goLogin(){
-        return "redirect:/hkexpress/admin/login";
+        return "redirect:/appPage/admin/login";
     }
 
     @RequestMapping("/admin/category")

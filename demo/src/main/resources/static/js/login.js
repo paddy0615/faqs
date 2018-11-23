@@ -5,7 +5,7 @@ myapp.controller("loginController",["$scope","$http","$location",function ($scop
         var index =  layer.load(0, {shade: false});
         $http({
             method : 'post',
-            url : "/json/admin/userlogin",
+            url : ctx + "appJson/admin/userlogin",
             data : $scope.user
         }).success(function (data) {
             if(data){

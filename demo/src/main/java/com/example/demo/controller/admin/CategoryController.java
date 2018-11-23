@@ -21,7 +21,7 @@ import java.util.List;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping(value = "/json/admin")
+@RequestMapping(value = "/appJson/admin")
 @Component("AdminCategoryController")
 public class CategoryController {
     private  static Logger logger = LoggerFactory.getLogger(CategoryController.class);
