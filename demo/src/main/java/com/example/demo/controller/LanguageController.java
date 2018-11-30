@@ -18,7 +18,7 @@ import java.util.List;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping(value = "/appJson")
+@RequestMapping(value = "appJson")
 public class LanguageController {
     private  static Logger logger = LoggerFactory.getLogger(LanguageController.class);
 

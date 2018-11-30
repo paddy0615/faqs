@@ -126,6 +126,8 @@ function getHKE(langId){
     clicked("https://www.hkexpress.com/"+suffix);
 }
 
+
+
 // index
 myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
@@ -152,6 +154,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
                 $scope.selectTest = selectTest($scope.langId);
+                $scope.hotspotTest = hotspotTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {
                     if($scope.langId == each.id){
                         $scope.problem = each.problem;
@@ -206,11 +209,30 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
     }
 
     // 详情事件
+    var lock = false; //默认未锁定
     $scope.getDetailed = function (dlId) {
-        $scope.addip(0,dlId);
-        var url = ctx + "appPage/indexDetailed?dlId="+dlId;
-        clicked(url);
+        if(!lock) {
+            lock = true; // 锁定
+            $http({
+                method : 'post',
+                url : ctx + "appJson/addHotspot",
+                params:{"dlId" : dlId}
+            }).success(function (data) {
+                if(data){
+                    $scope.addip(0,dlId);
+                    var url = ctx + "appPage/indexDetailed?dlId="+dlId+"&serch=true";
+                    clicked(url);
+                }else{
+                    layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
+                        title:'Information',
+                        skin: 'layui-layer-lan'
+                        ,closeBtn: 0
+                    });
+                }
+            })
+        }
     }
+
     // 添加流量数
     $scope.addip = function (catId,dlId) {
         $http({
@@ -230,7 +252,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
         };
         $http({
             method : "post",
-            url : ctx + "appJson/getSearch",
+            url : ctx + "appJson/getSearchTags",
             params : {"search": $scope.searchTest,"langId" : $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
@@ -246,6 +268,21 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
         }
     }
 
+
+
+    function info1(){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getHotspot"
+        }).success(function (data) {
+            if(data){
+                $scope.hotspots = data.result.detaileds;
+            }
+        })
+    }
+    // 热点初始化
+    info1();
+
 }]);
 
 // indexDetailed
@@ -257,8 +294,6 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     $scope.lang_cout = 5 ;
     $scope.isGetUrl = false;
     $scope.detailed ={};
-    //indexShow 显示
-    $scope.indexShow = true;
     $scope.searchShow = false;
     // 初始化
     into($scope.dlId);
@@ -273,7 +308,10 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
+                $scope.dfcount = data.result.dfcount;
                 $scope.selectTest = selectTest($scope.langId);
+                $scope.hotspotTest = hotspotTest($scope.langId);
+                $scope.feedbackTest = feedbackTest($scope.langId);
                 onlineChat($scope.langId);
                 $scope.detailed = data.result.detailed;
                 // 显示内容
@@ -317,6 +355,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
+                $scope.addip(cat.id,0);
                 var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
@@ -331,11 +370,10 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
         };
         $http({
             method : "post",
-            url : ctx + "appJson/getSearch",
+            url : ctx + "appJson/getSearchTags",
             params : {"search": $scope.searchTest,"langId" : $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
-            $scope.indexShow = false;
             $scope.detaileds =  data.result.detaileds;
         })
     }
@@ -348,19 +386,143 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
 
     }
     // 详情事件
+    var lock = false; //默认未锁定
     $scope.getDetailed = function (dlId) {
-        $scope.addip(dlId);
-        var url = ctx + "appPage/indexDetailed?dlId="+dlId;
-        clicked(url);
+        if(!lock) {
+            lock = true; // 锁定
+            $http({
+                method : 'post',
+                url : ctx + "appJson/addHotspot",
+                params:{"dlId" : dlId}
+            }).success(function (data) {
+                if(data){
+                    $scope.addip(0,dlId);
+                    var url = ctx + "appPage/indexDetailed?dlId="+dlId+"&serch=true";
+                    clicked(url);
+                }else{
+                    layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
+                        title:'Information',
+                        skin: 'layui-layer-lan'
+                        ,closeBtn: 0
+                    });
+                }
+            })
+        }
     }
+
+    function info1(){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getHotspot"
+        }).success(function (data) {
+            if(data){
+                $scope.hotspots = data.result.detaileds;
+            }
+        })
+    }
+    // 热点初始化
+    info1();
     // 添加流量数
-    $scope.addip = function (dlId) {
+    $scope.addip = function (catId,dlId) {
         $http({
             method : "post",
             url : ctx + "appJson/addip",
-            params : {"dlId": dlId}
+            params : {"catId":catId,"dlId": dlId}
         }).success(function (data) {
 
+        })
+    }
+
+    <!-- 反馈:支持-->
+    $("#praise").click(function(){
+        var praise_img = $("#praise-img");
+        var text_box = $("#add-num");
+        var praise_txt = $("#praise-txt");
+        var num=parseInt(praise_txt.text());
+        if(praise_img.attr("src") == (ctx + "img/zan1.png")){
+            $(this).html("<img src='"+ctx + "img/hui1.png' id='praise-img' class='animation' />");
+            praise_txt.removeClass("hover");
+            text_box.show().html("<em class='add-animation'>-1</em>");
+            $(".add-animation").removeClass("hover");
+            num -=1;
+            praise_txt.text(num);
+            delFeedback($scope.dfId1);
+            $scope.dfId1 = 0;
+        }else{
+            $(this).html("<img src='"+ctx + "img/zan1.png' id='praise-img' class='animation' />");
+            praise_txt.addClass("hover");
+            text_box.show().html("<em class='add-animation'>+1</em>");
+            $(".add-animation").addClass("hover");
+            num +=1;
+            praise_txt.text(num)
+            addFeedback(1,"");
+        }
+    });
+    <!-- 反馈:反对-->
+    $("#praiseNayTest").hide();
+    $("#praise1").click(function(){
+        var praise_img = $("#praise-img1");
+        var text_box = $("#add-num1");
+        var praise_txt = $("#praise-txt1");
+        var num=parseInt(praise_txt.text());
+        if(praise_img.attr("src") == (ctx + "img/zan2.png")){
+            $(this).html("<img src='"+ctx + "img/hui2.png' id='praise-img1' class='animation' />");
+            text_box.show().html("<em class='add-animation'>-1</em>");
+            $(".add-animation").removeClass("hover");
+            $("#praiseNayTest").hide();
+            delFeedback($scope.dfId2);
+            $scope.dfId2 = 0;
+        }else{
+            $(this).html("<img src='"+ctx + "img/zan2.png' id='praise-img1' class='animation' />");
+            text_box.show().html("<em class='add-animation'>+1</em>");
+            $(".add-animation").addClass("hover");
+            $("#praiseNayTest").show();
+            addFeedback(2,"");
+        }
+    });
+    <!-- 反馈:add异步-->
+    $scope.dfId1 = 0;
+    $scope.dfId2 = 0;
+    function addFeedback(type,content) {
+        $http({
+            method : "post",
+            url : ctx + "appJson/addFeedback",
+            data : {"type" : type,"dlId" : $scope.dlId,"content" : content}
+        }).success(function (data) {
+            if(data.result.type == 1){
+                $scope.dfId1 = data.result.id;
+            }else{
+                $scope.dfId2 = data.result.id;
+            }
+        })
+    }
+    function delFeedback(dfId) {
+        if(dfId == 0){
+            return;
+        }
+        $http({
+            method : "post",
+            url : ctx + "appJson/delFeedback",
+            data : {"id" : dfId}
+        }).success(function (data) {
+        })
+    }
+    $scope.dfContent = "";
+    $scope.addDfContent = function () {
+        var index = layer.load(0, {shade: false});
+        $http({
+            method : "post",
+            url : ctx + "appJson/updateFeedback",
+            data : {"id":$scope.dfId2,"type" : 2,"dlId" : $scope.dlId,"content" : $scope.dfContent}
+        }).success(function (data) {
+            layer.close(index);
+            if(data.code == 200){
+                layer.msg('OK', {icon: 1});
+                $scope.dfContent = "";
+                $scope.dfId2 = 0;
+            }else{
+                layer.msg("Error", {icon: 5});
+            }
         })
     }
 

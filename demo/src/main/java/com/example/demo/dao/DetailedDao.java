@@ -1,6 +1,8 @@
 package com.example.demo.dao;
 
 import com.example.demo.bean.Detailed;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,11 +33,25 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Query("select d from Detailed d where d.langId = :langId and d.catId = :catId and (d.title like %:search%  or d.contentTxt like %:search%)")
     List<Detailed> getSerDateAll(@Param("langId")long langId,@Param("catId")long catId,@Param("search")String search);
 
+    @Query(value = "SELECT d.* FROM  faqs_detailed d\n" +
+            "            INNER JOIN faqs_dtags_relation dr ON (dr.dr_dl_id = d.dl_id)\n" +
+            "            INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
+            "            WHERE d.dl_lang_id = :langId and d.dl_cat_id = :catId  and dt.dt_title IN(:searchs)\n" +
+            "            GROUP BY d.dl_id\n" +
+            "            ORDER BY COUNT(d.dl_id) DESC",nativeQuery = true)
+    List<Detailed> getAdminSetTags(@Param("langId")long langId,@Param("catId")long catId,@Param("searchs")List<String> searchs);
+
+
+
+
     int countByCatId(long id);
 
     // 按搜索点击数量获取
-    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc ")
+    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc")
     List<Detailed> getHpSearchCount();
+    // 按搜索点击数量获取
+    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc")
+    Page<Detailed> getHpSearchCount1(Pageable pageable);
 
     List<Detailed> findAllByCatId(long catId);
 

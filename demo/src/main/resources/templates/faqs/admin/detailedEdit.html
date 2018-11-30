@@ -8,6 +8,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>FAQS | HK Express</title>
+        <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
         <script th:inline="javascript">
             var ctx = [[@{/}]];
         </script>
@@ -22,14 +23,16 @@
         <script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/zh-cn/zh-cn.js}"></script>
         <!--<script type="text/javascript" charset="utf-8" th:src="@{/ueditor/lang/en/en.js}"></script>-->
 
+
         <link th:href="@{/css/assets/dashboard.css}" rel="stylesheet">
         <script th:src="@{/js/assets/jquery.js}"></script>
         <script th:src="@{/js/layer/layer.js}"></script>
+        <link th:href="@{/css/assets/jquery.tag-editor.css}" rel="stylesheet">
+        <script th:src="@{/js/assets/jquery.tag-editor.js}"></script>
         <script th:src="@{/js/assets/angular.js}"></script>
         <script th:src="@{/js/admin/directive.js}"></script>
         <script th:src="@{/js/admin/detailed.js}"></script>
         <script th:src="@{/js/common.js}"></script>
-
 
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
@@ -42,7 +45,10 @@
         <style>
             .row{margin-right: 0px;}
         </style>
-      </head>
+
+
+
+    </head>
 <body cz-shortcut-listen="true" ng-app="myapp" ng-controller="detailedEditController">
 <top-Directive></top-Directive>
 
@@ -77,6 +83,13 @@
                       <label for="inputTitle" class="col-sm-2 control-label">Title :</label>
                       <div class="col-sm-4">
                           <input type="text" class="form-control" id="inputTitle" ng-model="detailed.title">
+                      </div>
+                  </div>
+                  <!-- tags -->
+                  <div class="form-group">
+                      <label for="inputTitle" class="col-sm-2 control-label">Tags :</label>
+                      <div class="col-sm-8">
+                          <textarea class="demo1" readonly="readonly" style="display: block;"></textarea>
                       </div>
                   </div>
                   <!-- content -->
@@ -120,6 +133,13 @@
                         <input type="text" class="form-control" id="inputTitle" ng-model="detailed.title">
                     </div>
                 </div>
+              <!-- tags -->
+              <div class="form-group">
+                  <label for="inputTitle" class="col-sm-2 control-label">Tags :</label>
+                  <div class="col-sm-8">
+                          <textarea class="demo2" readonly="readonly" style="display: block;"></textarea>
+                  </div>
+              </div>
                 <!-- content -->
                 <div class="form-group">
                           <label for="inputTitle" class="col-sm-2 control-label">Content :</label>
@@ -141,22 +161,9 @@
             </form>
         </div>
 
-
-
         </div>
       </div>
     </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script  th:src="@{/js/assets/vendor/jquery.min.js}"><\/script>')</script>
-<script th:src="@{/js/assets/bootstrap.min.js}"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script th:src="@{/js/assets/holder.min.js}"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
-  
 </body>
 </html>

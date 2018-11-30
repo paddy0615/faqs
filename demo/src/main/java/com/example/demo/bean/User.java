@@ -5,6 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * 管理员表
+ */
 @Entity
 @Table(name="faqs_user")
 public class User {

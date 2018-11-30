@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping(value = "/appJson/admin")
+@RequestMapping(value = "appJson/admin")
 public class UserController {
     private  static Logger logger = LoggerFactory.getLogger(UserController.class);
 

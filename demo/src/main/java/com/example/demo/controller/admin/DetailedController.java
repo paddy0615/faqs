@@ -1,12 +1,10 @@
 package com.example.demo.controller.admin;
 
-import com.example.demo.bean.Category;
-import com.example.demo.bean.Detailed;
-import com.example.demo.bean.Language;
-import com.example.demo.bean.RestResultModule;
+import com.example.demo.bean.*;
 import com.example.demo.dao.CategoryDao;
 import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.LanguageDao;
+import com.example.demo.entity.Tags;
 import com.example.demo.service.DetailedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +22,7 @@ import java.util.List;
  * paddy 2018/9/17
  * */
 @Controller()
-@RequestMapping(value = "/appJson/admin")
+@RequestMapping(value = "appJson/admin")
 @Component("AdminDetailedController")
 public class DetailedController {
     private  static Logger logger = LoggerFactory.getLogger(DetailedController.class);
@@ -98,11 +97,16 @@ public class DetailedController {
         Category category = categoryDao.findById(detailed.getCatId().longValue());
         // 移除第一个（主页）
         categories.remove(0);
+
+        // 获取标签
+        String [] tags = detailedService.getTags(dlId);
+
         module.setCode(200);
         module.putData("detailed",detailed);
         module.putData("language",language);
         module.putData("category",category);
         module.putData("categories",categories);
+        module.putData("tags",tags);
         return module;
     }
 
@@ -127,21 +131,33 @@ public class DetailedController {
         return module;
     }
 
-    /* 更新*/
+    /**
+     * 更新
+     * @param tags 公共,标签
+     */
     @ResponseBody
     @RequestMapping(value = "/detailed/update",method= RequestMethod.POST)
-    public void update(@RequestBody  Detailed detailed){
+    public void update(@RequestBody Tags tags){
+        Detailed detailed = tags.getDetailed();
         if(null != detailed){
             detailed.setUpdateDate(new Date());
             detailed.setOrderTopDate(new Date());
             detailedService.save(detailed);
+            // 更新标签
+            if(tags.getTagsArr().length > 0){
+                detailedService.saveTags(detailed.getId(),tags.getTagsArr());
+            }
         }
     }
 
-    /* 添加*/
+    /**
+     * 添加
+     * @param tags 公共,标签
+     */
     @ResponseBody
     @RequestMapping(value = "/detailed/add",method= RequestMethod.POST)
-    public void add(@RequestBody  Detailed detailed){
+    public void add(@RequestBody Tags tags){
+        Detailed detailed = tags.getDetailed();
         if(null != detailed){
             detailed.setCreateDate(new Date());
             detailed.setUpdateDate(new Date());
@@ -149,6 +165,10 @@ public class DetailedController {
             detailed.setUpdateUser(Long.parseLong("1"));
             detailed.setOrderTopDate(new Date());
             detailedService.save(detailed);
+            // 更新标签
+            if(tags.getTagsArr().length > 0){
+                detailedService.saveTags(detailed.getId(),tags.getTagsArr());
+            }
         }
     }
 
@@ -179,6 +199,28 @@ public class DetailedController {
         RestResultModule module = new RestResultModule();
         List<Detailed> detaileds = null;
         detaileds = detailedDao.getSerDateAll(langId,catId,serach);
+        module.putData("detaileds",detaileds);
+        return module;
+    }
+
+    /**
+     * 按标签搜索
+     * @param langId
+     * @param catId
+     * @param serach
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/detailed/getSearchTags")
+    public RestResultModule getSearchTags(
+            @RequestParam(name = "langId",defaultValue = "0",required = true) long langId,
+            @RequestParam(name = "catId",defaultValue = "0",required = true) long catId,
+            @RequestParam(name = "serach",required = false,defaultValue = "")String serach){
+        RestResultModule module = new RestResultModule();
+        String [] sarr = serach.split(" ");
+        List<String> searchs = Arrays.asList(sarr);
+        List<Detailed> detaileds = null;
+        detaileds = detailedDao.getAdminSetTags(langId,catId,searchs);
         module.putData("detaileds",detaileds);
         return module;
     }

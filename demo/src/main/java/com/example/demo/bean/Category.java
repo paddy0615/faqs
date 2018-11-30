@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 类别表
+ */
 @Entity
 @Table(name="faqs_category")
 public class Category implements Serializable {
@@ -18,10 +20,10 @@ public class Category implements Serializable {
     private Long id;
 
     @Column(name = "cat_lang_id")
-    private Long langId;
+    private Long langId;    // 语言ID
 
     @Column(name = "cat_title")
-    private String title;
+    private String title;       //标题
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "cat_createdate")
@@ -42,7 +44,7 @@ public class Category implements Serializable {
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "cat_ordertopdate")
-    private Date ordertopdate;
+    private Date ordertopdate;  // 排序头
 
 
 

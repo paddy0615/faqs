@@ -24,7 +24,7 @@ import java.util.List;
  * paddy 2018/9/17
 * */
 @Controller()
-@RequestMapping(value = "/appJson")
+@RequestMapping(value = "appJson")
 @Component("CategoryController")
 public class CategoryController {
     private  static Logger logger = LoggerFactory.getLogger(CategoryController.class);

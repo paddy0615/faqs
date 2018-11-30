@@ -3,6 +3,9 @@ package com.example.demo.bean;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 返回前端类
+ */
 public class RestResultModule {
     private int code;
     private Map result;

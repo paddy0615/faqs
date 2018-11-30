@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>FAQS | HK Express</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
     <link rel="stylesheet" th:href="@{/css/assets/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/index.css}">
@@ -64,14 +65,14 @@
         </div>
     </div>
     <div style="clear: both;margin-bottom: 12px;"></div>
-    <div class="nav-tab">
+    <!--<div class="nav-tab">
         <ul>
             <li ng-repeat="categorie in result.categories" ng-click="clickCategory($index,categorie)"  on-finish-render-filters="completeRepeat">
                 <div class="nav-li-text nav-tab-bor">{{categorie.title}}</div>
             </li>
         </ul>
-    </div>
-    <div ng-show="indexShow">
+    </div>-->
+<!--    <div ng-show="indexShow">
         <div class="content-type">{{problem}}</div>
         <div class="content-type-test"><div class="content-type-test-div">{{cat_title}}</div></div>
         <div class="content-box">
@@ -79,15 +80,22 @@
                 <li ng-repeat="detailed in result.detaileds"><a href="javascript:;" ng-click="getDetailed(detailed.id)">{{detailed.title}}</a></li>
             </ul>
         </div>
-    </div>
+    </div>-->
     <div ng-show="searchShow">
-    <div class="content-box" style="padding: 50px;">
-        <ul>
-            <li ng-repeat="detailed in detaileds"><a href="javascript:;" ng-click="getDetailed(detailed.id)">{{detailed.title}}</a></li>
-        </ul>
+        <div class="content-box" style="padding: 0px 50px;">
+            <ul>
+                <li ng-repeat="detailed in detaileds"><a href="javascript:;" ng-click="getDetailed(detailed.id)">{{detailed.title}}</a></li>
+            </ul>
+        </div>
     </div>
-</div>
-
+    <div class="content-box" style="padding: 50px;margin-top: 100px;">
+        <div class="list-group">
+            <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
+                {{hotspotTest}}
+            </a>
+            <a ng-repeat="detailed in hotspots" class="list-group-item" href="javascript:;" ng-click="getDetailed(detailed.id)">{{detailed.title}}</a>
+        </div>
+    </div>
 </div>
 <div class="scrollToTop" style="display: none;">
     <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">

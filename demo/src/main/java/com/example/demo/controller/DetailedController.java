@@ -5,18 +5,21 @@ import com.example.demo.dao.CategoryDao;
 import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.dao.MonitorDao;
+import com.example.demo.entity.DetailedEntity;
 import com.example.demo.service.DetailedService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +28,7 @@ import java.util.List;
  * paddy 2018/9/17
  * */
 @Controller()
-@RequestMapping(value = "/appJson")
+@RequestMapping(value = "appJson")
 @Component("DetailedController")
 public class DetailedController {
     private  static Logger logger = LoggerFactory.getLogger(DetailedController.class);
@@ -77,11 +80,14 @@ public class DetailedController {
         }
         List<Category> categories = categoryDao.findAllByLangIdAndStatus(detailed.getLangId(),1);
 
+        long dfcount = detailedService.getFeedbackCnt(dlId);
+
         module.setCode(200);
         module.putData("languages",languages);
         module.putData("categories",categories);
         module.putData("detailed",detailed);
         module.putData("langId",detailed.getLangId());
+        module.putData("dfcount",dfcount);
 
         return module;
     }
@@ -95,6 +101,24 @@ public class DetailedController {
         RestResultModule module = new RestResultModule();
         List<Detailed> detaileds = null;
         detaileds = detailedDao.getSearch(langId,search);
+        module.setCode(200);
+        module.putData("detaileds",detaileds);
+        return module;
+    }
+
+    /**
+     * 按标签搜索
+     * @param search 内容
+     */
+    @ResponseBody
+    @RequestMapping("/getSearchTags")
+    public RestResultModule getSearchTags(
+            @RequestParam(name = "search",required = false,defaultValue = "")String search){
+        RestResultModule module = new RestResultModule();
+        String [] sarr = search.split(" ");
+        List<String> searchs = Arrays.asList(sarr);
+        List<DetailedEntity> detaileds = null;
+        detaileds = detailedService.getSearchTags(searchs);
         module.setCode(200);
         module.putData("detaileds",detaileds);
         return module;
@@ -119,9 +143,11 @@ public class DetailedController {
     @RequestMapping("/getHotspot")
     public RestResultModule getHotspot(){
         RestResultModule module = new RestResultModule();
-        List<Detailed> detaileds = null;
-        detaileds = detailedDao.getHpSearchCount();
-        module.putData("detaileds",detaileds);
+        Pageable pageable = new PageRequest(0,10);
+        Page<Detailed> ds = detailedDao.getHpSearchCount1(pageable);
+        //List<Detailed> detaileds = null;
+        //detaileds = detailedDao.getHpSearchCount();
+        module.putData("detaileds",ds.getContent());
         return module;
     }
 
@@ -162,6 +188,62 @@ public class DetailedController {
             }
         }
         return false;
+    }
+
+    /**
+     * 添加反馈信息, 按IP记录
+     * @param request
+     * @param feedback 反馈对象
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addFeedback",method= RequestMethod.POST)
+    public RestResultModule addFeedback(HttpServletRequest request,@RequestBody DetailedFeedback feedback){
+        RestResultModule module = new RestResultModule();
+        if(null == feedback && feedback.getDlId() == 0){
+            module.setMessage(400,"传参有误!");
+            return module;
+        }
+        feedback.setIp(ipUtil.getIpAddr(request));
+        long dfId =  detailedService.addFeedback(feedback);
+        module.putData("id",dfId);
+        module.putData("type",feedback.getType());
+        return module;
+    }
+
+    /**
+     * 更新反馈信息, 按id
+     * @param feedback 反馈对象
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/updateFeedback",method= RequestMethod.POST)
+    public RestResultModule updateFeedback(HttpServletRequest request,@RequestBody DetailedFeedback feedback){
+        RestResultModule module = new RestResultModule();
+        if("" == feedback.getContent()){
+            module.setMessage(400,"内容为空!");
+            return module;
+        }
+        if(feedback.getId() == 0){
+            feedback.setIp(ipUtil.getIpAddr(request));
+            feedback.setCreateDate(new Date());
+        }
+        detailedService.updateFeedback(feedback);
+        return module;
+    }
+
+    /**
+     * 删除反馈信息, 按id
+     * @param feedback 反馈对象
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delFeedback",method= RequestMethod.POST)
+    public void delFeedback(@RequestBody DetailedFeedback feedback){
+        if(null == feedback && feedback.getId() == 0){
+            return;
+        }
+        detailedService.delFeedback(feedback);
     }
 
     /* 自定义修改后台数据,因域名变化,图片位置也变化*/

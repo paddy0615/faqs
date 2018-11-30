@@ -1,24 +1,16 @@
 var myapp = angular.module("myapp",[]);
 
 myapp.controller("serachController",["$scope","$http",function ($scope, $http) {
+    $scope.cat_title = "";
 
     /* 搜索框  */
     $scope.searchText = "";
     $scope.onKeyup = function(event){
         var e = event || window.event || arguments.callee.caller.arguments[0];
         var s = $scope.searchText;
-      /*  if(e && e.keyCode==27){ // 按 Esc
-            //要做的事情
-            getSearch(s);
-        }
-        if(e && e.keyCode==113){ // 按 F2
-            //要做的事情
-            getSearch(s);
-        }
         if(e && e.keyCode==13){ // enter 键
-            getSearch(s);
-        }*/
-        $scope.getSearch();
+            $scope.getSearch();
+        }
     }
     $scope.getSearch = function () {
         if($scope.searchText == "") return;

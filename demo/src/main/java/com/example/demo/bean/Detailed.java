@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * FAQ详情表
+ */
 @Entity
 @Table(name="faqs_detailed")
 public class Detailed implements Serializable {

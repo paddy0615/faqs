@@ -3,6 +3,9 @@ package com.example.demo.bean;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * FAQ热点表
+ */
 @Entity
 @Table(name="faqs_dl_hotspot")
 public class Hotspot implements Serializable {

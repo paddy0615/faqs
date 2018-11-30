@@ -33,7 +33,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
                 $("[name='checkboxAll']:checkbox").prop("checked", false);
             }
         })
-        $scope.selectTest = selectTest(langID);
+        $scope.selectTest = selectTest1(langID);
     }
     // 语言事件
     $scope.clickLanguage = function() {

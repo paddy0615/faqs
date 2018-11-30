@@ -4,6 +4,9 @@ package com.example.demo.bean;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * 类别,FAQ详情IP记录表
+ */
 @Entity
 @Table(name="faqs_monitor")
 public class Monitor {
@@ -15,7 +18,7 @@ public class Monitor {
     private Long id;
 
     @Column(name = "m_clientip")
-    private String clientip;
+    private String clientip;    // IP
 
     @Column(name = "m_lang_id")
     private Long langId;

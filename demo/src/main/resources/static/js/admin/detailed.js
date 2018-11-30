@@ -142,7 +142,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
         };
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/detailed/getSearchTitle",
+            url : ctx + "appJson/admin/detailed/getSearchTags",
             params:{"langId":$scope.langId,"catId":$scope.catId,"serach": $scope.searchTest}
         }).success(function (data) {
             /* 成功*/
@@ -292,6 +292,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                 $scope.language = data.result.language;
                 $scope.categories = data.result.categories;
                 $scope.editType ="< Edit < " + data.result.category.title+" < " + $scope.detailed.title;
+                showTags(2,data.result.tags);
                 into2();
             }
         })
@@ -316,6 +317,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                     $scope.catId = $scope.selCatId
                 }
                 $scope.editType ="< Add";
+                showTags(1);
                 into2();
             }
         })
@@ -360,6 +362,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             return;
         };
         if(!lock1) {
+            var tags = $('.demo2').tagEditor('getTags')[0].tags;
             var index =  layer.load(0, {shade: false});
             lock1 = true; // 锁定
             $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
@@ -367,7 +370,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             $http({
                 method : 'post',
                 url : ctx + 'appJson/admin/detailed/update',
-                data : $scope.detailed
+                data : JSON.stringify({'detailed':$scope.detailed,'tagsArr':tags})
             }).then(function(resp){
                 layer.alert( 'Success', {
                     title:'Information',
@@ -404,6 +407,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             return;
         };
         if(!lock) {
+            var tags = $('.demo1').tagEditor('getTags')[0].tags;
             var index =  layer.load(0, {shade: false});
             lock = true; // 锁定
             $scope.detailed.catId = $scope.catId;
@@ -413,7 +417,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             $http({
                 method : 'post',
                 url : ctx + 'appJson/admin/detailed/add',
-                data : $scope.detailed
+                data : JSON.stringify({'detailed':$scope.detailed,'tagsArr':tags})
             }).then(function(resp){
                 layer.alert( 'Success', {
                     title:'Information',
@@ -469,4 +473,16 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     $scope.goCancel1 = function(url){
         clicked(url); // 跳url
     }
+
+
+
+    // 标签
+    function showTags(demo,tags) {
+        $('.demo'+demo).tagEditor({
+            initialTags: tags,
+            delimiter: ', ', /* space and comma */
+            placeholder: 'Enter tags ...'
+        });
+    }
+
 }]);

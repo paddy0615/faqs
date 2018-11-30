@@ -6,6 +6,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 语言表
+ */
 @Entity
 @Table(name="faqs_language")
 public class Language implements Serializable {
