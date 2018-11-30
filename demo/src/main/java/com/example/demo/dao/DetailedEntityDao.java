@@ -17,7 +17,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
             "WHERE d.dl_status = 1 AND dt.dt_title IN(:searchs)\n" +
             "GROUP BY d.dl_id\n" +
-            "ORDER BY cnt DESC\n" +
+            "ORDER BY cnt DESC,d.dl_updatedate desc\n" +
             ") a", nativeQuery = true)
     List<DetailedEntity> getSearchTags(@Param("searchs")List<String> searchs);
 

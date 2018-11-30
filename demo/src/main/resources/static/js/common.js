@@ -81,6 +81,21 @@ function selectTest1(langId){
     }
     return t+"...";
 }
+function selectTestUnll(langId){
+    var t = "Sorry, no record found.  Please try another keyword";
+    if(langId == 1){
+        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索";
+    }else if(langId == 2){
+        t = "抱歉未能找到相關結果，请试试输入其他关键字再进行搜索";
+    }else if(langId == 3){
+        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索";
+    }else if(langId == 4){
+        t = "恐れ入りますが、ただいまお調べたいことについて結果が見つからなっかたため、別のキーワードで入力し、もう一度検索してください";
+    }else if(langId == 5){
+        t = "죄송합니다.해당 검색어가 검색이 안됩니다.다른 검색어로 해보시기 바랍니다";
+    }
+    return t+".";
+}
 
 // 热点laber
 function hotspotTest(langId){

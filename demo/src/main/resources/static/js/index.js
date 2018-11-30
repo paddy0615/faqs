@@ -154,6 +154,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
                 $scope.selectTest = selectTest($scope.langId);
+                $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {
                     if($scope.langId == each.id){
@@ -310,6 +311,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 $scope.langId = data.result.langId;
                 $scope.dfcount = data.result.dfcount;
                 $scope.selectTest = selectTest($scope.langId);
+                $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.feedbackTest = feedbackTest($scope.langId);
                 onlineChat($scope.langId);

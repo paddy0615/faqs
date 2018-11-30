@@ -77,6 +77,7 @@
     <div ng-show="searchShow">
         <div class="content-box" style="padding: 0px 50px;">
             <ul>
+                <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
                 <li ng-repeat="detailed in detaileds"><a href="javascript:;" ng-click="getDetailed(detailed.id)">{{detailed.title}}</a></li>
             </ul>
         </div>

@@ -23741,7 +23741,6 @@ UE.plugin.register('autoupload', function (){
             loadingHtml, errorHandler, successHandler,
             filetype = /image\/\w+/i.test(file.type) ? 'image':'file',
             loadingId = 'loading_' + (+new Date()).toString(36);
-
         fieldName = me.getOpt(filetype + 'FieldName');
         urlPrefix = me.getOpt(filetype + 'UrlPrefix');
         maxSize = me.getOpt(filetype + 'MaxSize');
