@@ -61,4 +61,14 @@ public class UrlController {
         return "faqs/admin/detailedEdit";
     }
 
+    @RequestMapping("/admin/feedback")
+    public String feedback(){
+        return "faqs/admin/feedback";
+    }
+
+    @RequestMapping("/admin/feedbackSet")
+    public String feedbackSet(){
+        return "faqs/admin/feedbackSet";
+    }
+
 }

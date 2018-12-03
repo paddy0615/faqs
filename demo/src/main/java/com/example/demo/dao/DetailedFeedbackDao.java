@@ -23,4 +23,6 @@ public interface DetailedFeedbackDao extends JpaRepository<DetailedFeedback,Long
 
     @Query(value = "select * from faqs_detailed_feedback where df_id = :id", nativeQuery = true)
     DetailedFeedback getById(@Param("id")long id);
+
+
 }

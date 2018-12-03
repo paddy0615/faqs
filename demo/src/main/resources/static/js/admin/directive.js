@@ -6,6 +6,7 @@ myapp.directive('leftDirective', function() {
         "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/language')\">Language Maintenance</a></li>\n" +
         "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/category')\">Category Maintenance</a></li>\n" +
         "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ</a></li>\n" +
+        "                <li class=\"feedbackPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/feedback')\">FAQ Feedback</a></li>\n" +
         "            </ul></div>";
     return {
         restrict: 'E',
@@ -31,6 +32,7 @@ myapp.directive('topDirective', function() {
         "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/language')\">Language Maintenance</a></li>\n" +
         "                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/category')\">Category Maintenance</a></li>\n" +
         "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ</a></li>\n" +
+        "                <li class=\"feedbackPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/feedback')\">FAQ Feedback</a></li>\n" +
         "            </ul>\n" +
         "        </div>\n" +
         "    </div>\n" +
