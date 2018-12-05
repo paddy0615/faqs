@@ -36,9 +36,13 @@ public class FeedbackController {
     public RestResultModule getFeedbackPage(
             @RequestParam(name = "df_type",defaultValue = "0",required = true) long df_type,
             @RequestParam(name = "CurrentPage",defaultValue = "1",required = true) int CurrentPage,
-            @RequestParam(name = "PageSize",defaultValue = "10",required = true) int PageSize){
+            @RequestParam(name = "PageSize",defaultValue = "10",required = true) int PageSize,
+            @RequestParam(name = "startTime",defaultValue = "",required = true) String startTime,
+            @RequestParam(name = "endTime",defaultValue = "",required = true) String endTime){
+
         RestResultModule module = new RestResultModule();
         System.out.println(CurrentPage+","+PageSize);
+   /*   分页
         Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
         Page<Feedback> feedbacks = null;
         if(df_type > 0){
@@ -47,7 +51,11 @@ public class FeedbackController {
             feedbacks = dfeedbackDao.getAllBy(pageable);
         }
         module.putData("feedbacks",feedbacks.getContent());
-        module.putData("PageCount",feedbacks.getTotalElements());
+        module.putData("PageCount",feedbacks.getTotalElements());*/
+
+        // 原查询 , 后可删jpa
+        List<Feedback> feedbacks = dfeedbackDao.getAllByDfType1(df_type,startTime,endTime);
+        module.putData("feedbacks",feedbacks);
         return module;
     }
 
@@ -60,7 +68,6 @@ public class FeedbackController {
     @RequestMapping("/getFeedbackById")
     public RestResultModule getFeedbackById(@RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id){
         RestResultModule module = new RestResultModule();
-        System.out.println(df_id);
         Feedback feedback  = dfeedbackDao.getAllById(df_id);
         module.putData("feedback",feedback);
         return module;

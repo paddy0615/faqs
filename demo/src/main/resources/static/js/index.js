@@ -314,6 +314,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.feedbackTest = feedbackTest($scope.langId);
+                $scope.commonLabel1 = commonLabel1($scope.langId);
                 onlineChat($scope.langId);
                 $scope.detailed = data.result.detailed;
                 // 显示内容

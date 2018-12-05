@@ -130,3 +130,20 @@ function feedbackTest(langId){
     }
     return t;
 }
+
+// laber1 提交
+function commonLabel1(langId) {
+    var t = "submit";
+    if(langId == 1){
+        t = "提交";
+    }else if(langId == 2){
+        t = "提交";
+    }else if(langId == 3){
+        t = "提交";
+    }else if(langId == 4){
+        t = "確認";
+    }else if(langId == 5){
+        t = "제출";
+    }
+    return t;
+}

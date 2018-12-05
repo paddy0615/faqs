@@ -6,8 +6,8 @@ $(function () {
 myapp.controller("feedbackController",["$scope","$http",function ($scope, $http) {
     $scope.df_types = [
         {id : 0, name : "All"},
-        {id : 1, name : "Support(+1)"},
-        {id : 2, name : "Not support(-1)"}
+        {id : 1, name : "Useful(+1)"},
+        {id : 2, name : "Not Useful(-1)"}
     ];
     $scope.df_type = 0;
     $scope.feedbacks = {};
@@ -18,21 +18,26 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
 
     // 初始化
     $scope.into = function(type,CurrentPage,PageSize){
+        var start = $("#ladate1").val();
+        var end = $("#ladate2").val();
+        if(end != ""){
+            end = end +" 23:59:59";
+        }
         $http({
             method : 'post',
             url : ctx + "appJson/admin/getFeedbackPage",
-            params :{"df_type": type,"CurrentPage": CurrentPage,"PageSize": PageSize}
+            params :{"df_type": type,"CurrentPage": CurrentPage,"PageSize": PageSize,"startTime":start,"endTime":end}
         }).success(function (data) {
             if(data){
                 /* 成功*/
                 $scope.feedbacks = data.result.feedbacks;
-                $scope.PageCount = data.result.PageCount;
-                if($scope.PageCount > 0){
-                    $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
-                }else{
-                    // 没有数据时不显示
-                    $('#pagination').jqPaginator('destroy');
-                }
+                /*   $scope.PageCount = data.result.PageCount;
+                   if($scope.PageCount > 0){
+                       $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
+                   }else{
+                       // 没有数据时不显示
+                       $('#pagination').jqPaginator('destroy');
+                   }*/
             }
         })
     }
@@ -73,6 +78,19 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
                 }
             }
         });
+    }
+
+    // laydate国际版
+    laydate.render({
+        elem: '#ladate1'
+        ,lang: 'en'
+    });
+    laydate.render({
+        elem: '#ladate2'
+        ,lang: 'en'
+    });
+    $scope.getLayDate = function(){
+        $scope.into($scope.df_type,$scope.CurrentPage,$scope.PageSize);
     }
 
 
