@@ -202,47 +202,10 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
-                $scope.addip(cat.id,0);
                 var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
         }
-    }
-
-    // 详情事件
-    var lock = false; //默认未锁定
-    $scope.getDetailed = function (dlId) {
-        if(!lock) {
-            lock = true; // 锁定
-            $http({
-                method : 'post',
-                url : ctx + "appJson/addHotspot",
-                params:{"dlId" : dlId}
-            }).success(function (data) {
-                if(data){
-                    $scope.addip(0,dlId);
-                    var url = ctx + "appPage/indexDetailed?dlId="+dlId+"&serch=true";
-                    clicked(url);
-                }else{
-                    layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
-                        title:'Information',
-                        skin: 'layui-layer-lan'
-                        ,closeBtn: 0
-                    });
-                }
-            })
-        }
-    }
-
-    // 添加流量数
-    $scope.addip = function (catId,dlId) {
-        $http({
-            method : "post",
-            url : ctx + "appJson/addip",
-            params : {"catId":catId,"dlId": dlId}
-        }).success(function (data) {
-
-        })
     }
 
     /* 搜索框  */
@@ -358,7 +321,6 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
             getHKE($scope.langId);
         }else{
             if($scope.isGetUrl){
-                $scope.addip(cat.id,0);
                 var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
                 clicked(url);
             }
@@ -388,30 +350,6 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
         }
 
     }
-    // 详情事件
-    var lock = false; //默认未锁定
-    $scope.getDetailed = function (dlId) {
-        if(!lock) {
-            lock = true; // 锁定
-            $http({
-                method : 'post',
-                url : ctx + "appJson/addHotspot",
-                params:{"dlId" : dlId}
-            }).success(function (data) {
-                if(data){
-                    $scope.addip(0,dlId);
-                    var url = ctx + "appPage/indexDetailed?dlId="+dlId+"&serch=true";
-                    clicked(url);
-                }else{
-                    layer.alert( 'Abnormal error, please contact the administrator or refresh page', {
-                        title:'Information',
-                        skin: 'layui-layer-lan'
-                        ,closeBtn: 0
-                    });
-                }
-            })
-        }
-    }
 
     function info1(){
         $http({
@@ -425,16 +363,6 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
     }
     // 热点初始化
     info1();
-    // 添加流量数
-    $scope.addip = function (catId,dlId) {
-        $http({
-            method : "post",
-            url : ctx + "appJson/addip",
-            params : {"catId":catId,"dlId": dlId}
-        }).success(function (data) {
-
-        })
-    }
 
     <!-- 反馈:支持-->
     $("#praise").click(function(){

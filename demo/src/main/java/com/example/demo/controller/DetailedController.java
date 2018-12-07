@@ -4,7 +4,6 @@ import com.example.demo.bean.*;
 import com.example.demo.dao.CategoryDao;
 import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.LanguageDao;
-import com.example.demo.dao.MonitorDao;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.service.DetailedService;
 import com.example.demo.util.IpUtil;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -42,8 +42,6 @@ public class DetailedController {
     private DetailedService detailedService;
     @Resource
     IpUtil ipUtil;
-    @Resource
-    MonitorDao monitorDao;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -151,45 +149,6 @@ public class DetailedController {
         return module;
     }
 
-    /* 搜索页-添加热点数量*/
-    @ResponseBody
-    @RequestMapping("/addHotspot")
-    public boolean addHotspot(@RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId){
-        boolean flag = detailedService.addHotspot(dlId);
-        return flag;
-    }
-
-    /* 添加流量数*/
-    @ResponseBody
-    @RequestMapping("/addip")
-    public boolean addip(HttpServletRequest request,
-                         @RequestParam(name = "catId",required = true,defaultValue = "0")long catId,
-                         @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId){
-        Monitor monitor = new Monitor();
-        String ip = ipUtil.getIpAddr(request);
-        monitor.setClientip(ip);
-        monitor.setCreateDate(new Date());
-        if(catId > 0){
-            Category category = categoryDao.findById(catId);
-            if(null != category){
-                monitor.setLangId(category.getLangId());
-                monitor.setCatId(category.getId());
-                monitorDao.save(monitor);
-                return true;
-            }
-        }else if(dlId > 0){
-            Detailed detailed = detailedDao.findById(dlId);
-            if(null != detailed){
-                monitor.setLangId(detailed.getLangId());
-                monitor.setCatId(detailed.getCatId());
-                monitor.setDlId(detailed.getId());
-                monitorDao.save(monitor);
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * 添加反馈信息, 按IP记录
      * @param request
@@ -245,6 +204,32 @@ public class DetailedController {
         }
         detailedService.delFeedback(feedback);
     }
+
+    /**
+     * 新:跳转详情页,添加IP数,添加热点数
+     * @param dlId 详情ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexDetailed",method= RequestMethod.GET)
+    public String indexDetailed(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId)throws Exception {
+        if(dlId > 0){
+            // 添加IP数
+            if(!detailedService.addip(request,0,dlId)){
+                logger.error("---------添加IP数错误,dlId="+dlId+",IP="+ipUtil.getIpAddr(request));
+            }
+            // 添加热点数
+            if(!detailedService.addHotspot(dlId)){
+                logger.error("---------添加热点数错误,dlId="+dlId+",IP="+ipUtil.getIpAddr(request));
+            }
+        }
+
+        response.sendRedirect(request.getContextPath()+"/appPage/indexDetailed?dlId="+dlId);
+        return "";
+    }
+
+
+
 
     /* 自定义修改后台数据,因域名变化,图片位置也变化*/
     @ResponseBody

@@ -4,10 +4,15 @@ import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.mapper.DetailedMapper;
+import com.example.demo.util.IpUtil;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +31,12 @@ public class DetailedService {
     DetailedEntityDao detailedEntityDao;
     @Resource
     DetailedFeedbackDao feedbackDao;
+    @Resource
+    IpUtil ipUtil;
+    @Resource
+    MonitorDao monitorDao;
+    @Resource
+    CategoryDao categoryDao;
 
 
     @Resource
@@ -105,7 +116,11 @@ public class DetailedService {
     }
 
 
-    // 添加搜索数量
+    /**
+     * 添加搜索数量
+     * @param id
+     * @return
+     */
     public boolean addHotspot(long id){
         boolean flag = false;
         try {
@@ -188,6 +203,40 @@ public class DetailedService {
      */
     public long getFeedbackCnt(long id){
         return feedbackDao.getByTepeCount(id);
+    }
+
+
+    /**
+     * 添加IP数
+     * @param request
+     * @param catId
+     * @param dlId
+     * @return
+     */
+    public boolean addip(HttpServletRequest request,long catId,long dlId){
+        Monitor monitor = new Monitor();
+        String ip = ipUtil.getIpAddr(request);
+        monitor.setClientip(ip);
+        monitor.setCreateDate(new Date());
+        if(catId > 0){
+            Category category = categoryDao.findById(catId);
+            if(null != category){
+                monitor.setLangId(category.getLangId());
+                monitor.setCatId(category.getId());
+                monitorDao.save(monitor);
+                return true;
+            }
+        }else if(dlId > 0){
+            Detailed detailed = detailedDao.findById(dlId);
+            if(null != detailed){
+                monitor.setLangId(detailed.getLangId());
+                monitor.setCatId(detailed.getCatId());
+                monitor.setDlId(detailed.getId());
+                monitorDao.save(monitor);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
