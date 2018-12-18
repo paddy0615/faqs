@@ -1,4 +1,12 @@
 var myapp = angular.module("myapp",[]);
+// 路由
+myapp.config(['$locationProvider', function($locationProvider) {
+    // $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
 // 左导航  <left-Directive></left-Directive>
 myapp.directive('leftDirective', function() {
     var templateHtml = " <div class=\"col-sm-3 col-md-2 sidebar\">" +

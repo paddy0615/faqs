@@ -13,6 +13,8 @@
 
 })(window);
 
+// 对字符串;转义,解义escape 和 unescape; encodeURI 和 decodeURI
+
 // 获取url参数
 function GetUrlParam(paraName) {
     var url = document.location.toString();

@@ -223,7 +223,6 @@ public class DetailedController {
                 logger.error("---------添加热点数错误,dlId="+dlId+",IP="+ipUtil.getIpAddr(request));
             }
         }
-
         response.sendRedirect(request.getContextPath()+"/appPage/indexDetailed?dlId="+dlId);
         return "";
     }

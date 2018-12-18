@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UrlController {
 
     @RequestMapping("/")
-    public String index(){return "/faqs/index";}
+    public String index(){return "faqs/index";}
 
     @RequestMapping("/index")
-    public String index1(){return "/faqs/index";}
+    public String index1(){return "faqs/index";}
 
     @RequestMapping("/search")
     public String search(){return "faqs/search";}

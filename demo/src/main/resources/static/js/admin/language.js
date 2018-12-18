@@ -3,16 +3,15 @@ $(function () {
     $(".languagePage").addClass("active");
 })
 // admin/category
-myapp.controller("languageController",["$scope","$http",function ($scope, $http) {
+myapp.controller("languageController",["$scope","$http","$location",function ($scope, $http, $location) {
     // 初始化
     $scope.languages = {};
     $scope.languagesTemp = {}; //用于空的搜索
-    into();
+
     function into(){
-        var url = ctx + "appJson/getLanguageAll";
         $http({
             method : 'post',
-            url : url,
+            url : ctx + "appJson/getLanguageAll",
         }).success(function (data) {
             if(data){
                 /* 成功*/
@@ -74,14 +73,8 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
             ,closeBtn: 0
         });
     }
-
-    /* 搜索框  */
-    $scope.searchTest = "";
-    $scope.getSearchTitle = function () {
-        if($scope.searchTest == ""){
-            $scope.languages = $scope.languagesTemp;
-            return;
-        };
+    /* 搜索框  开始*/
+    $scope.getSearchTitleq = function () {
         $http({
             method : 'post',
             url : ctx + "appJson/language/getSearchTitle",
@@ -91,13 +84,26 @@ myapp.controller("languageController",["$scope","$http",function ($scope, $http)
             $scope.languages = data.result.languages;
         })
     }
+    $scope.searchTest = "";
+    $scope.getSearchTitle = function () {
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/admin/language?q="+q;
+        clicked(encodeURI(url));
+    }
     $scope.onKeyup = function(event){
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        var s = $scope.searchText;
         if(e && e.keyCode==13){ // enter 键
             $scope.getSearchTitle();
         }
     }
+    var sq = $location.search().q;
+    if(undefined != sq && "" != sq){
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTitleq();
+    }else{
+        into();
+    }
+    /* 搜索框  结束*/
 
     // 退出
     $scope.goCancel = function(url){

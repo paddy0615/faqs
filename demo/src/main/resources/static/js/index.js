@@ -126,10 +126,16 @@ function getHKE(langId){
     clicked("https://www.hkexpress.com/"+suffix);
 }
 
-
-
+// 路由
+myapp.config(['$locationProvider', function($locationProvider) {
+    // $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
 // index
-myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
+myapp.controller("indexController",["$scope","$http","$location",function ($scope, $http,$location) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
@@ -208,12 +214,8 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
         }
     }
 
-    /* 搜索框  */
-    $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            return;
-        };
+    /* 搜索框 开始*/
+    $scope.getSearchTags = function(){
         $http({
             method : "post",
             url : ctx + "appJson/getSearchTags",
@@ -224,14 +226,28 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
             $scope.detaileds =  data.result.detaileds;
         })
     }
+    $scope.searchTest = "";
+    $scope.getSearch = function (){
+        if($scope.searchTest == ""){
+            $scope.detaileds =  {};
+            return;
+        };
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0+"&q="+q;
+        clicked(encodeURI(url));
+    }
     $scope.onKeyup = function(event){
-       // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
         var e = event || window.event || arguments.callee.caller.arguments[0];
         if(e && e.keyCode==13){ // enter 键
             $scope.getSearch();
         }
     }
-
+    var sq = $location.search().q;
+    if(undefined != sq && "" != sq){
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTags();
+    }
+    /* 搜索框 结束*/
 
 
     function info1(){
@@ -250,7 +266,7 @@ myapp.controller("indexController",["$scope","$http",function ($scope, $http) {
 }]);
 
 // indexDetailed
-myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($scope, $http, $sce) {
+myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",function ($scope, $http, $sce,$location) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
     $scope.langId = 6;
@@ -327,12 +343,8 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
         }
     }
 
-    /* 搜索框  */
-    $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            return;
-        };
+    /* 搜索框  开始*/
+    $scope.getSearchTags = function(){
         $http({
             method : "post",
             url : ctx + "appJson/getSearchTags",
@@ -342,6 +354,16 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
             $scope.detaileds =  data.result.detaileds;
         })
     }
+    $scope.searchTest = "";
+    $scope.getSearch = function (){
+        if($scope.searchTest == ""){
+            $scope.detaileds =  {};
+            return;
+        };
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&q="+q;
+        clicked(encodeURI(url));
+    }
     $scope.onKeyup = function(event){
         // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
         var e = event || window.event || arguments.callee.caller.arguments[0];
@@ -350,6 +372,12 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce",function ($s
         }
 
     }
+    var sq = $location.search().q;
+    if(undefined != sq && "" != sq){
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTags();
+    }
+    /* 搜索框  结束*/
 
     function info1(){
         $http({

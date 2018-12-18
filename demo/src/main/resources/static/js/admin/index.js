@@ -3,7 +3,7 @@ $(function () {
     $(".categoryPage").addClass("active");
 })
 // admin/category
-myapp.controller("categoryController",["$scope","$http",function ($scope, $http) {
+myapp.controller("categoryController",["$scope","$http","$location",function ($scope, $http, $location) {
     // 设置默认,langId==1语言，第一个
     $scope.langId = GetUrlParam("langId")==""?1:GetUrlParam("langId");
     $scope.selLangId = Number(GetUrlParam("selLangId")==""?0:GetUrlParam("selLangId")); // 做跳转准备
@@ -206,7 +206,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
         }
     }
 
-    /* 搜索框  */
+    /* 搜索框  开始*/
     $scope.searchTest = "";
     $scope.searchType = false;
     $scope.getSearchTitle = function () {
@@ -233,6 +233,7 @@ myapp.controller("categoryController",["$scope","$http",function ($scope, $http)
             $scope.getSearchTitle();
         }
     }
+    /* 搜索框  结束*/
 
     // 退出，校验是否有修改
     $scope.goCancel = function(url){
