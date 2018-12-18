@@ -84,17 +84,17 @@ function selectTest1(langId){
     return t+"...";
 }
 function selectTestUnll(langId){
-    var t = "Sorry, no record found.  Please try another keyword";
+    var t = "Sorry for not finding relevant results, please try to enter other keywords to search or try to use the blank key to separate keywords, such as query change flight, try to search change flight";
     if(langId == 1){
-        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索";
+        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索或嘗試用空白鍵隔開關鍵字，例如查詢更改航班，試試搜索更改 航班";
     }else if(langId == 2){
-        t = "抱歉未能找到相關結果，请试试输入其他关键字再进行搜索";
+        t = "抱歉未能找到相关结果，请试试输入其他关键词再进行搜索或尝试用空格键隔开关键词，例如查询更改航班，试试搜索更改 航班";
     }else if(langId == 3){
-        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索";
+        t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索或嘗試用空白鍵隔開關鍵字，例如查詢更改航班，試試搜索更改 航班";
     }else if(langId == 4){
-        t = "恐れ入りますが、ただいまお調べたいことについて結果が見つからなっかたため、別のキーワードで入力し、もう一度検索してください";
+        t = "申し訳ございません、これに关しての検査结果がございません、もし良ければ他のキーワードで検索し、もしくはスペース键でご検索くださいませ、例えば、航空便を変更する时には、“変更、便”で検索をお试しくださいませ。";
     }else if(langId == 5){
-        t = "죄송합니다.해당 검색어가 검색이 안됩니다.다른 검색어로 해보시기 바랍니다";
+        t = "죄송합니다. 검색 결과가 없습니다 .일반적인 검색어로 다시 검색해 보세요.";
     }
     return t+".";
 }
