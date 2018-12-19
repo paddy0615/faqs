@@ -122,6 +122,20 @@ public class DetailedController {
         return module;
     }
 
+    /**
+     * 前台-检查搜索结果是否存在
+     * @param search 内容
+     */
+    @ResponseBody
+    @RequestMapping("/checkSearchTags")
+    public RestResultModule checkSearchTags(HttpServletRequest request,
+            @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
+            @RequestParam(name = "search",required = false,defaultValue = "")String search){
+        RestResultModule module = new RestResultModule();
+        detailedService.getNoTagsCount(request,langId,search);
+        return module;
+    }
+
 
     /* 首页搜索*/
     @ResponseBody

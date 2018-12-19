@@ -19,7 +19,7 @@
         <script th:src="@{/js/laydate/laydate.js}"></script>
         <script th:src="@{/js/assets/angular.js}"></script>
         <script th:src="@{/js/admin/directive.js}"></script>
-        <script th:src="@{/js/admin/feedback.js}"></script>
+        <script th:src="@{/js/admin/notags.js}"></script>
         <script th:src="@{/js/common.js}"></script>
         <script th:src="@{/js/assets/myPage.js}"></script>
         <script th:inline="javascript">
@@ -35,7 +35,7 @@
         <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
       </head>
-<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="feedbackController">
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="notagsController">
     <top-Directive></top-Directive>
 
     <div class="container-fluid">
@@ -44,20 +44,17 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
               <div class="col-lg-5">
-                  <span style="font-size: 36px;">FAQ Feedback</span>
+                  <span style="font-size: 36px;">No Result Key Words</span>
               </div>
-          </div>
-          <div class="row" style="padding-left: 18px;color: red;padding-bottom: 20px;">
-            * Each IP address can rate good for each question is maximum 5 times for ach day and can also rate bad for ach question is also maximum times for each day
           </div>
           <div class="row">
             <!-- Status select -->
-            <label style="margin-top: 5px;margin-left:50px;float: left;">Status: </label>
-            <div class="col-md-2">
-              <select ng-model="df_type" class="form-control" ng-change="clickLanguage()"
-                      ng-options="d.id as d.name for d in df_types">
-              </select>
-            </div>
+            <label style="margin-top: 5px;margin-left:50px;float: left;">Language: </label>
+              <div class="col-md-2">
+                  <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
+                          ng-options="language.id  as language.title for language in languages">
+                  </select>
+              </div>
             <!-- start time -->
             <label style="margin-top: 5px;margin-left:50px;float: left;">start time: </label>
             <div class="col-md-2">
@@ -80,24 +77,21 @@
               <thead>
                 <tr>
                   <th><!--<input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)">--></th>
-                  <th>Title</th>
-                  <th>Create Date</th>
                   <th>IP</th>
-                  <th>Status</th>
-                  <th></th>
+                  <th>Serach Date</th>
+                  <th>Language</th>
+                  <th>Key words</th>
+                  <th>searching times</th>
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="f in feedbacks">
+                <tr ng-repeat="f in notags">
                   <td><!--<input style="vertical-align:top;" type="checkbox" name="checkboxClien" ng-click="updateSelection($event,categorie.id)" value="{{categorie.id}}">-->{{$index+1}}</td>
-                  <td class="col-md-5">{{f.dlTitle}}</td>
-                  <td>{{f.createDate.substring(0,16)}}</td>
                   <td>{{f.ip}}</td>
-                  <td ng-if="f.dfType == 1">+1</td>
-                  <td ng-if="f.dfType == 2">-1</td>
-                  <td style="text-align: right;">
-                    <button class="btn btn-default" type="button"  ng-if="f.dfType == 2" ng-click="getSet(f.id)" >Select</button>
-                  </td>
+                  <td>{{f.createDate.substring(0,16)}}</td>
+                  <td>{{f.lang_title}}</td>
+                  <td>{{f.title}}</td>
+                  <td>{{f.count}}</td>
                 </tr>
 
               </tbody>
@@ -112,6 +106,7 @@
         </div>
       </div>
     </div>
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

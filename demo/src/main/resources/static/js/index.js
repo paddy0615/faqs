@@ -215,6 +215,14 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
     }
 
     /* 搜索框 开始*/
+    $scope.checkSearchTags = function(){
+        $http({
+            method : "post",
+            url : ctx + "appJson/checkSearchTags",
+            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+        }).success(function (data) {
+        })
+    }
     $scope.getSearchTags = function(){
         $http({
             method : "post",
@@ -232,6 +240,7 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
             $scope.detaileds =  {};
             return;
         };
+        $scope.checkSearchTags();
         var q = escape($scope.searchTest);
         var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0+"&q="+q;
         clicked(encodeURI(url));

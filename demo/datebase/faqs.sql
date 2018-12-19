@@ -146,3 +146,15 @@ CREATE TABLE `faqs_detailed_feedback` (
  `df_createdate` DATETIME COMMENT '创建时间',
   PRIMARY KEY (`df_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `faqs_no_tags`;
+CREATE TABLE `faqs_no_tags` (
+ `nt_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `nt_lang_id` INT NULL COMMENT '语言Id',
+ `nt_ip` VARCHAR(100) NULL COMMENT 'IP',
+ `nt_title` VARCHAR(100) NULL COMMENT '标题',
+ `nt_count` INT NULL COMMENT '数量',
+ `nt_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`nt_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;

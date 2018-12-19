@@ -71,4 +71,10 @@ public class UrlController {
         return "faqs/admin/feedbackSet";
     }
 
+
+    @RequestMapping("/admin/notags")
+    public String notags(){
+        return "faqs/admin/notags";
+    }
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class DetailedService {
     HotspotDao hotspotDao;
     @Resource
     DetailedTagsDao detailedTagsDao;
+    @Resource
+    DetailedNoTagsDao detailedNoTagsDao;
     @Resource
     DtagsRelationDao dtagsRelationDao;
     @Resource
@@ -159,6 +162,55 @@ public class DetailedService {
     public List<DetailedEntity> getSearchTags(List<String> srr){
         return detailedEntityDao.getSearchTags(srr);
     }
+
+    /**
+     * 前台-操作搜索不出结果,存值
+     * @param srr
+     * @return
+     */
+    public void getNoTagsCount(HttpServletRequest request,long langId,String srr){
+        String [] sarr = srr.split(" ");
+        List<String> searchs = Arrays.asList(sarr);
+        long cut1 = detailedEntityDao.getNoTagsCounts(searchs);
+        if(cut1 == 0){ // 不存在
+            DetailedNoTags noTags1 = detailedNoTagsDao.findByTitle(srr);
+            if(null == noTags1){
+                noTags1 = new DetailedNoTags();
+                noTags1.setCreateDate(new Date());
+                noTags1.setIp(ipUtil.getIpAddr(request));
+                noTags1.setCount(1);
+                noTags1.setLangId(langId);
+                noTags1.setTitle(srr);
+            }else{
+                noTags1.setCount(noTags1.getCount()+1);
+            }
+            detailedNoTagsDao.save(noTags1);
+            return;
+        }
+        if(searchs.size() > 1){
+            for (String s : searchs) {
+                if(("").equals(s)){
+                    continue;
+                }
+                long cut2 = detailedEntityDao.getNoTagsCount(s);
+                if(cut2 == 0){
+                    DetailedNoTags noTags1 = detailedNoTagsDao.findByTitle(s);
+                    if(null == noTags1){
+                        noTags1 = new DetailedNoTags();
+                        noTags1.setCreateDate(new Date());
+                        noTags1.setIp(ipUtil.getIpAddr(request));
+                        noTags1.setCount(1);
+                        noTags1.setLangId(langId);
+                        noTags1.setTitle(s);
+                    }else{
+                        noTags1.setCount(noTags1.getCount()+1);
+                    }
+                    detailedNoTagsDao.save(noTags1);
+                }
+            }
+        }
+    }
+
 
     /**
      * add反馈信息
