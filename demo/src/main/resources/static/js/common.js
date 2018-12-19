@@ -163,7 +163,7 @@ function commonLabel2(langId) {
     }else if(langId == 5){
         t = "나중에 잘할 수 있도록 고객님의 의견을 남겨주세요";
     }
-    return " "+t;
+    return t;
 }
 // laber3
 function commonLabel3(langId) {
