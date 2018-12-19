@@ -120,6 +120,7 @@ myapp.controller("feedbackSetController",["$scope","$http",function ($scope, $ht
                 /* 成功*/
                 $scope.feedback = data.result.feedback;
             }
+
         })
     }
     $scope.into($scope.dfId);

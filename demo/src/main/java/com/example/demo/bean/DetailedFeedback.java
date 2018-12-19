@@ -31,9 +31,20 @@ public class DetailedFeedback implements Serializable {
     @Column(name = "df_nay_content")
     private String content;  // 反对内容
 
+    @Column(name = "df_nay_email")
+    private String email;  // 反对email
+
+    @Column(name = "df_nay_number")
+    private String number;  // 反对number
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "df_createdate")
     private Date createDate;
+
+    @Transient
+    private String lang_title;  // langTitle
+    @Transient
+    private String detailed_title;  // detailed_title
 
 
     public Long getId() {
@@ -84,4 +95,35 @@ public class DetailedFeedback implements Serializable {
         this.ip = ip;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getLang_title() {
+        return lang_title;
+    }
+
+    public void setLang_title(String lang_title) {
+        this.lang_title = lang_title;
+    }
+
+    public String getDetailed_title() {
+        return detailed_title;
+    }
+
+    public void setDetailed_title(String detailed_title) {
+        this.detailed_title = detailed_title;
+    }
 }

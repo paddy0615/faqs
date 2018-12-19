@@ -117,10 +117,22 @@
                 <span id="add-num1" style="display: inline;"></span>
             </div>
         </div>
-        <div  style="width: 180px;float: left;margin-left: 40px;margin-top: 88px;">
-            <div id="praiseNayTest">
-            <textarea rows="6" cols="25" ng-model="dfContent"></textarea>
-            <button class="btn btn-default" type="button" ng-click="addDfContent()">{{commonLabel1}}</button>
+        <div style="width: 180px;float: left;margin-left: 40px;margin-top: 88px;">
+            <div id="praiseNayTest" style="width: 730px;">
+                <div style="float: left;">
+                    <div style="font-weight: bold;">{{commonLabel6}}</div>
+                    <textarea style="margin-bottom: 10px;" rows="6" cols="25" ng-model="dfContent" placeholder="{{commonLabel2}}"></textarea>
+                </div>
+                <div style="float: left;margin-left: 50px;width: 350px;">
+                    <div style="margin-bottom: 8px;font-weight: bold;">{{commonLabel3}}</div>
+                    <input style="width: 220px;" type="text" class="form-control" ng-model="dfContentEmail" placeholder="{{commonLabel4}}">
+                    <div style="font-weight: bold;">Or</div>
+                    <input style="width: 220px;margin-bottom: 10px;" type="text" class="form-control" ng-model="dfContentNumber" placeholder="{{commonLabel5}}">
+                </div>
+                <div style="clear: both;padding-top: 20px;margin-left: 250px;">
+                    <button class="btn btn-default" type="button" ng-click="addDfContent()">{{commonLabel1}}</button>
+                </div>
+
             </div>
         </div>
     </div>

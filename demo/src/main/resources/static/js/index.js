@@ -303,6 +303,13 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.feedbackTest = feedbackTest($scope.langId);
                 $scope.commonLabel1 = commonLabel1($scope.langId);
+                $scope.commonLabel2 = commonLabel2($scope.langId);
+                $scope.commonLabel3 = commonLabel3($scope.langId);
+                $scope.commonLabel4 = commonLabel4($scope.langId);
+                $scope.commonLabel5 = commonLabel5($scope.langId);
+                $scope.commonLabel6 = commonLabel6($scope.langId);
+
+
                 onlineChat($scope.langId);
                 $scope.detailed = data.result.detailed;
                 // 显示内容
@@ -476,17 +483,21 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         })
     }
     $scope.dfContent = "";
+    $scope.dfContentEmail = "";
+    $scope.dfContentNumber = "";
     $scope.addDfContent = function () {
         var index = layer.load(0, {shade: false});
         $http({
             method : "post",
             url : ctx + "appJson/updateFeedback",
-            data : {"id":$scope.dfId2,"type" : 2,"dlId" : $scope.dlId,"content" : $scope.dfContent}
+            data : {"id":$scope.dfId2,"type" : 2,"dlId" : $scope.dlId,"content" : $scope.dfContent,"email":$scope.dfContentEmail,"number":$scope.dfContentNumber}
         }).success(function (data) {
             layer.close(index);
             if(data.code == 200){
                 layer.msg('OK', {icon: 1});
                 $scope.dfContent = "";
+                $scope.dfContentEmail = "";
+                $scope.dfContentNumber = "";
                 $scope.dfId2 = 0;
             }else{
                 layer.msg("Error", {icon: 5});

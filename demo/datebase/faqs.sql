@@ -147,6 +147,7 @@ CREATE TABLE `faqs_detailed_feedback` (
   PRIMARY KEY (`df_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+--------------- 2.2版
 
 DROP TABLE IF EXISTS `faqs_no_tags`;
 CREATE TABLE `faqs_no_tags` (
@@ -158,3 +159,10 @@ CREATE TABLE `faqs_no_tags` (
  `nt_createdate` DATETIME COMMENT '创建时间',
   PRIMARY KEY (`nt_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- faqs_detailed_feedback表添加,email收集,电话收集
+ALTER TABLE faqs_detailed_feedback ADD df_nay_email VARCHAR(100) NULL;
+ALTER TABLE faqs_detailed_feedback ADD df_nay_number VARCHAR(100) NULL;
+
+

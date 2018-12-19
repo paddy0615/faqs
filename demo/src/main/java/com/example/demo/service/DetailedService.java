@@ -235,10 +235,14 @@ public class DetailedService {
             return;
         }
         String conten = feedback.getContent();
+        String email = feedback.getEmail();
+        String number = feedback.getNumber();
         if(feedback.getId() != 0){
             feedback = feedbackDao.getById(feedback.getId());
         }
         feedback.setContent(conten);
+        feedback.setEmail(email);
+        feedback.setNumber(number);
         feedbackDao.save(feedback);
     }
 

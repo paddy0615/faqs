@@ -1,8 +1,12 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.bean.Detailed;
+import com.example.demo.bean.DetailedFeedback;
 import com.example.demo.bean.RestResultModule;
+import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.DetailedFeedbackDao;
 import com.example.demo.dao.DfeedbackDao;
+import com.example.demo.dao.LanguageDao;
 import com.example.demo.entity.Feedback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +33,10 @@ public class FeedbackController {
     DfeedbackDao dfeedbackDao;
     @Resource
     DetailedFeedbackDao detailedFeedbackDao;
+    @Resource
+    LanguageDao languageDao;
+    @Resource
+    DetailedDao detailedDao;
 
     /* 初始化*/
     @ResponseBody
@@ -68,7 +76,16 @@ public class FeedbackController {
     @RequestMapping("/getFeedbackById")
     public RestResultModule getFeedbackById(@RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id){
         RestResultModule module = new RestResultModule();
-        Feedback feedback  = dfeedbackDao.getAllById(df_id);
+       /* Feedback feedback  = dfeedbackDao.getAllById(df_id);
+        module.putData("feedback",feedback);*/
+        DetailedFeedback feedback = detailedFeedbackDao.getById(df_id);
+        if(null != feedback){
+            Detailed detailed = detailedDao.findById((long)feedback.getDlId());
+            if(null != detailed){
+                feedback.setLang_title(languageDao.getByTitle(detailed.getLangId()));
+                feedback.setDetailed_title(detailed.getTitle());
+            }
+        }
         module.putData("feedback",feedback);
         return module;
     }

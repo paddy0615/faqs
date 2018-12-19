@@ -149,3 +149,83 @@ function commonLabel1(langId) {
     }
     return t;
 }
+// laber2
+function commonLabel2(langId) {
+    var t = "Please give us your comment so that we can do better in the future";
+    if(langId == 1){
+        t = "請留下您的意見或建議讓我們將來不斷改善";
+    }else if(langId == 2){
+        t = "请留下您的意见或建议让我们将来不断改善";
+    }else if(langId == 3){
+        t = "請留下您的意見或建議讓我們將來不斷改善";
+    }else if(langId == 4){
+        t = "今后もっと质が良いサービスのため、贵重なご意见を教えてください";
+    }else if(langId == 5){
+        t = "나중에 잘할 수 있도록 고객님의 의견을 남겨주세요";
+    }
+    return " "+t;
+}
+// laber3
+function commonLabel3(langId) {
+    var t = "Please leave your contact information so that we can further assist on your inquiry";
+    if(langId == 1){
+        t = "請留下您的聯繫方式以便我們進一步協助您的查詢";
+    }else if(langId == 2){
+        t = "请留下您的联系方式以便我们进一步协助您的查询";
+    }else if(langId == 3){
+        t = "請留下您的聯繫方式以便我們進一步協助您的查詢";
+    }else if(langId == 4){
+        t = "お客様のお问い合わせもっと详しく说明できるため、连络先をお愿いいたします";
+    }else if(langId == 5){
+        t = "문의하는 것을 잘 해결드리기  위해서 연락처를 남겨주세요";
+    }
+    return t;
+}
+// laber4
+function commonLabel4(langId) {
+    var t = "Your Contact Email";
+    if(langId == 1){
+        t = "您的聯絡郵箱";
+    }else if(langId == 2){
+        t = "您的联络邮箱";
+    }else if(langId == 3){
+        t = "您的聯絡郵箱";
+    }else if(langId == 4){
+        t = "おメールアドレス";
+    }else if(langId == 5){
+        t = "당신의 연락 이메일 주소";
+    }
+    return t;
+}
+// laber5
+function commonLabel5(langId) {
+    var t = "Your Contact Number";
+    if(langId == 1){
+        t = "您的聯絡電話";
+    }else if(langId == 2){
+        t = "您的联络电话";
+    }else if(langId == 3){
+        t = "您的聯絡電話";
+    }else if(langId == 4){
+        t = "お電話番号";
+    }else if(langId == 5){
+        t = "당신의 연락처 번호";
+    }
+    return t;
+}
+// laber6
+function commonLabel6(langId) {
+    var t = "Your Comments";
+    if(langId == 1){
+        t = "您的建議:";
+    }else if(langId == 2){
+        t = "您的建议:";
+    }else if(langId == 3){
+        t = "您的建議:";
+    }else if(langId == 4){
+        t = "ご意見";
+    }else if(langId == 5){
+        t = "당신의 건의";
+    }
+    return t;
+}
