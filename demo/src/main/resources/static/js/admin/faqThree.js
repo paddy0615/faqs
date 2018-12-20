@@ -202,6 +202,8 @@ myapp.controller("faqTwoController",["$scope","$http",function ($scope, $http) {
             params:{"dlIds": dlIds}
         }).success(function (data) {
             $scope.info1();
+            $scope.selected = [];
+            $("[name='checkboxAll']:checkbox").prop("checked", false);
         })
     }
 
@@ -252,7 +254,6 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
             params:{"dlId": $scope.dlId,"flId":$scope.fl_id,"langId":$scope.langId}
         }).success(function (data) {
             /* 成功*/
-            console.log(data)
             var editor = UE.getEditor('editorEdit',{initialFrameWidth: null});
             $scope.detailed = data.result.detailed;
             person = JSON.stringify(data.result.detailed);
@@ -280,7 +281,7 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
 
     // 判断title是否为空
     function chekFrom() {
-        if($scope.detailed.title == ""){
+        if( "" == $("#inputTitle").val()){
             layer.alert( 'The title should not be empty.', {
                 title:'Information',
                 skin: 'layui-layer-lan'
