@@ -18,6 +18,8 @@ import java.util.List;
 public interface DetailedDao extends JpaRepository<Detailed,Long> {
     Detailed findById(long id);
 
+    Detailed getByFlIdAndLangId(long flId,long longId);
+
     List<Detailed> findAllByLangIdAndCatId(long longId,long catId);
 
     List<Detailed> findAllByLangIdAndCatIdAndStatus(long longId,long catId,long status);
@@ -63,5 +65,19 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Modifying
     @Query("update Detailed d set d.orderTopDate = :date where d.id = :dlId")
     void saveTop(@Param("dlId")long dlId,@Param("date")Date date);
+
+
+
+    /* 2.2*/
+    @Query(value = "SELECT new Detailed(d.id,d.title)" +
+  /*          " d.dl_id," +
+            " d.dl_title," +
+            " d.dl_lang_id," +
+            " d.dl_updatedate," +
+            " d.dl_status " +*/
+            " FROM faqs_detailed d,faqs_librabry fl" +
+            " WHERE d.dl_fl_id = fl.fl_id" +
+            " ORDER BY fl.fl_id",nativeQuery = true)
+    List<Detailed> getLibDetaileds();
 
 }

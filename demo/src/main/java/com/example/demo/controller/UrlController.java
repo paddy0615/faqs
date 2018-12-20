@@ -77,4 +77,18 @@ public class UrlController {
         return "faqs/admin/notags";
     }
 
+    @RequestMapping("/admin/faqOne")
+    public String faqOne(){
+        return "faqs/admin/faqOne";
+    }
+
+    @RequestMapping("/admin/faqTwo")
+    public String faqTwo(){return "faqs/admin/faqTwo";}
+
+
+    @RequestMapping("/admin/faqThree")
+    public String faqThree(){
+        return "faqs/admin/faqThree";
+    }
+
 }

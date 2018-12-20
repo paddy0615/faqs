@@ -40,6 +40,8 @@ public class DetailedService {
     MonitorDao monitorDao;
     @Resource
     CategoryDao categoryDao;
+    @Resource
+    LibrabryDao librabryDao;
 
 
     @Resource
@@ -293,6 +295,25 @@ public class DetailedService {
             }
         }
         return false;
+    }
+
+
+    /**
+     * 2.2
+     * 查询F全部AQ父级
+     * @return
+     */
+    public List<Librabry> getLibrabrys(){
+        return librabryDao.findAll();
+    }
+
+    /**
+     * 2.2
+     * 按父级,语言查询所有
+     * @return
+     */
+    public List<Detailed> getLibDetaileds(){
+        return detailedDao.getLibDetaileds();
     }
 
 }

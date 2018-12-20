@@ -172,6 +172,34 @@ public class DetailedController {
         }
     }
 
+    /**
+     * 2.2添加,编辑统一
+     * @param tags 公共,标签
+     */
+    @ResponseBody
+    @RequestMapping(value = "/detailed/faqThreeUpdate",method= RequestMethod.POST)
+    public RestResultModule faqThreeUpdate(@RequestBody Tags tags){
+        RestResultModule module = new RestResultModule();
+        Detailed detailed = tags.getDetailed();
+        if(null != detailed){
+            detailed.setUpdateDate(new Date());
+            detailed.setOrderTopDate(new Date());
+            detailed.setUpdateUser(Long.parseLong("1"));
+            if(null == detailed.getId()){
+                detailed.setCreateDate(new Date());
+                detailed.setCreateUser(Long.parseLong("1"));
+            }
+            detailedService.save(detailed);
+            // 更新标签
+            if(tags.getTagsArr().length > 0){
+                detailedService.saveTags(detailed.getId(),tags.getTagsArr());
+            }
+        }
+        System.out.println("id="+detailed.getId());
+        module.putData("dlId",detailed.getId());
+        return module;
+    }
+
     /* 是否存在某个类别下的详情集合*/
     @ResponseBody
     @RequestMapping(value = "/detailed/countDlByCatId")

@@ -84,7 +84,7 @@ function selectTest1(langId){
     return t+"...";
 }
 function selectTestUnll(langId){
-    var t = "Sorry for not finding relevant results, please try to enter other keywords to search or try to use the blank key to separate keywords, such as query change flight, try to search change flight";
+    var t = "There is no result found for such keyword. Please try to enter another word or put a space between the keywords.";
     if(langId == 1){
         t = "抱歉未能找到相關結果，請試試輸入其他關鍵字再進行搜索或嘗試用空白鍵隔開關鍵字，例如查詢更改航班，試試搜索更改 航班";
     }else if(langId == 2){
@@ -96,7 +96,7 @@ function selectTestUnll(langId){
     }else if(langId == 5){
         t = "죄송합니다. 검색 결과가 없습니다 .일반적인 검색어로 다시 검색해 보세요.";
     }
-    return t+".";
+    return t;
 }
 
 // 热点laber

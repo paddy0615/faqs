@@ -53,11 +53,32 @@ public class Detailed implements Serializable {
     @Column(name = "dl_status")
     private long status;   //'状态（1发布，0未发布默认）'
 
+    @Column(name = "dl_fl_id")
+    private long flId;   // 父级
+
+    @Transient
+    private String flTitle;  // flTitle
 
     public Detailed(){}
     public Detailed(long id,String title){
         this.id = id;
         this.title = title;
+    }
+
+    public String getFlTitle() {
+        return flTitle;
+    }
+
+    public void setFlTitle(String flTitle) {
+        this.flTitle = flTitle;
+    }
+
+    public long getFlId() {
+        return flId;
+    }
+
+    public void setFlId(long flId) {
+        this.flId = flId;
     }
 
     public long getStatus() {
