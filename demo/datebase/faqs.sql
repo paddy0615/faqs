@@ -194,3 +194,6 @@ INSERT  INTO faqs_librabry (fl_title,fl_createdate,fl_updatedate) VALUES
 ALTER TABLE faqs_detailed ADD dl_fl_id INT DEFAULT 0;
 --  修改faqs_detailed表, dl_cat_id可以为空 , 防止出错
 ALTER TABLE faqs_detailed MODIFY COLUMN dl_cat_id INT DEFAULT NULL COMMENT '类别可以为空,字段已不用';
+
+-- 添加权重, 用搜索排序
+ALTER TABLE faqs_detailed ADD dl_weights INT DEFAULT 0;

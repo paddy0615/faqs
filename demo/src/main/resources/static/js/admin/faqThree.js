@@ -4,7 +4,7 @@ $(function () {
 })
 
 // faqTwo
-myapp.controller("faqTwoController",["$scope","$http",function ($scope, $http) {
+myapp.controller("faqTwoController",["$scope","$http","$location",function ($scope, $http,$location) {
     // 状态下拉
     $scope.dl_statuss = [
         {id : -1, name : "All"},
@@ -47,7 +47,7 @@ myapp.controller("faqTwoController",["$scope","$http",function ($scope, $http) {
             $scope.detaileds = data.result.detaileds;
         })
     }
-    $scope.info1();
+    //$scope.info1();
 
     // 下拉事件
     $scope.clickLanguage = function() {
@@ -208,6 +208,52 @@ myapp.controller("faqTwoController",["$scope","$http",function ($scope, $http) {
     }
 
 
+    /* 搜索框 开始*/
+    $scope.checkSearchTags = function(){
+        $http({
+            method : "post",
+            url : ctx + "appJson/checkSearchTags",
+            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+        }).success(function (data) {
+        })
+    }
+    $scope.getSearchTags = function(){
+        $http({
+            method : "post",
+            url : ctx + "appJson/admin/getSearchTagsNew",
+            params : {"search": $scope.searchTest}
+        }).success(function (data) {
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+    $scope.searchTest = "";
+    $scope.getSearch = function (){
+        if($scope.searchTest == ""){
+            $scope.detaileds =  {};
+            $scope.info1();
+            return;
+        };
+        //$scope.checkSearchTags();
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/admin/faqTwo?q="+q;
+        clicked(encodeURI(url));
+    }
+    $scope.onKeyup = function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            $scope.getSearch();
+        }
+    }
+    var sq = $location.search().q;
+    if(undefined != sq && "" != sq){
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTags();
+    }else{
+        $scope.info1();
+    }
+    /* 搜索框 结束*/
+
+
     // 退出
     $scope.goCancel = function(url){
         clicked(url); // 跳url
@@ -261,7 +307,7 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
                 $scope.editType ="< Edit < " + $scope.detailed.flTitle+" < " + $scope.detailed.title;
                 $scope.fl_id = $scope.detailed.flId;
                 $scope.langId = $scope.detailed.langId;
-
+                $scope.detailed.weights =  $scope.detailed.weights==0?"":$scope.detailed.weights;
                 $scope.showTags(data.result.tags);
                 editor.ready(function() {
                     if($scope.detailed.content){
@@ -319,6 +365,7 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
             $scope.detailed.langId = $scope.langId;
             $scope.detailed.content = UE.getEditor('editorEdit').getContent();
             $scope.detailed.contentTxt = UE.getEditor('editorEdit').getContentTxt();
+            $scope.detailed.weights =  $scope.detailed.weights==""?0:$scope.detailed.weights;
             $http({
                 method : 'post',
                 url : ctx + 'appJson/admin/detailed/faqThreeUpdate',

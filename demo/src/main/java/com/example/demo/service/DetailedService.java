@@ -161,8 +161,8 @@ public class DetailedService {
      * @param srr
      * @return
      */
-    public List<DetailedEntity> getSearchTags(List<String> srr){
-        return detailedEntityDao.getSearchTags(srr);
+    public List<DetailedEntity> getSearchTags(long status,List<String> srr){
+        return detailedEntityDao.getSearchTags(status,srr);
     }
 
     /**

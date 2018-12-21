@@ -105,7 +105,7 @@ public class DetailedController {
     }
 
     /**
-     * 按标签搜索
+     * 按标签搜索 (标签数, 权重 , 热点 , 更新时间)
      * @param search 内容
      */
     @ResponseBody
@@ -116,7 +116,7 @@ public class DetailedController {
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
         List<DetailedEntity> detaileds = null;
-        detaileds = detailedService.getSearchTags(searchs);
+        detaileds = detailedService.getSearchTags(1,searchs);
         module.setCode(200);
         module.putData("detaileds",detaileds);
         return module;

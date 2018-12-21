@@ -56,6 +56,10 @@ public class Detailed implements Serializable {
     @Column(name = "dl_fl_id")
     private long flId;   // 父级
 
+    @Column(name = "dl_weights")
+    private long weights;   // 权重
+
+
     @Transient
     private String flTitle;  // flTitle
 
@@ -175,5 +179,13 @@ public class Detailed implements Serializable {
 
     public void setOrderTopDate(Date orderTopDate) {
         this.orderTopDate = orderTopDate;
+    }
+
+    public long getWeights() {
+        return weights;
+    }
+
+    public void setWeights(long weights) {
+        this.weights = weights;
     }
 }

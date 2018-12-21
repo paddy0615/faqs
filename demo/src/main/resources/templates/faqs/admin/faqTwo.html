@@ -49,7 +49,7 @@
                     <div class="input-group">
                         <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}"  ng-keyup="onKeyup(event)">
                         <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" ng-click="getSearchTitle()"><i class="glyphicon glyphicon-search"></i></button>
+                              <button class="btn btn-default" type="button" ng-click="getSearch()"><i class="glyphicon glyphicon-search"></i></button>
                         </span>
                     </div>
                 </div>
@@ -103,6 +103,7 @@
                         <th>Language</th>
                         <th>Status</th>
                         <th>Update Date</th>
+                        <th>Weights</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -115,6 +116,7 @@
                         <td ng-if="detailed.dl_status == 1">Show</td>
                         <td ng-if="detailed.dl_status == 0">Hide</td>
                         <td>{{detailed.dl_updatedate.substring(0,16)}}</td>
+                        <td>999</td>
                         <td style="text-align: right;">
                             <!--<button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(detailed.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;-->
                             <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button><!--已发表-->

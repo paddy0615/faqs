@@ -19,7 +19,7 @@ public class LibrabryEntity implements Serializable {
     private String dl_title;  //详情标题
 
     @Column(name = "fl_title")
-    private String fl_title;  //librabry_title
+    private String fl_title;  //fl_title
 
     @Column(name = "lang_title")
     private String lang_title;  //lang_title
