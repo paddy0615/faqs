@@ -111,6 +111,16 @@
             <!-- update -->
         <div class="row" ng-show="!addType">
             <form class="form-horizontal" ng-submit="submitUpdate()">
+                          <!-- Librabry select -->
+                          <div class="form-group">
+                          <label class="col-sm-2 control-label">Librabry :</label>
+                      <div class="col-md-2">
+                          <select ng-model="fl_id" class="form-control"
+                      ng-options="l.id  as l.title for l in librabries">
+                          </select>
+                          </div>
+                          </div>
+
                  <!-- language select -->
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Language :</label>

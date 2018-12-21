@@ -82,6 +82,11 @@ public class UrlController {
         return "faqs/admin/faqOne";
     }
 
+    @RequestMapping("/admin/faqOneEdit")
+    public String faqOneEdit(){
+        return "faqs/admin/faqOneEdit";
+    }
+
     @RequestMapping("/admin/faqTwo")
     public String faqTwo(){return "faqs/admin/faqTwo";}
 

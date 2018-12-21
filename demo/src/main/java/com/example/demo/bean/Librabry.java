@@ -29,6 +29,10 @@ public class Librabry implements Serializable {
     @Column(name = "fl_createdate")
     private Date createDate;
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "fl_updatedate")
+    private Date updatedate;
+
     public Long getId() {
         return id;
     }
@@ -59,5 +63,13 @@ public class Librabry implements Serializable {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public Date getUpdatedate() {
+        return updatedate;
+    }
+
+    public void setUpdatedate(Date updatedate) {
+        this.updatedate = updatedate;
     }
 }

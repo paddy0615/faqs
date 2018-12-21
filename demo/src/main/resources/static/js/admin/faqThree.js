@@ -281,7 +281,7 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
 
     // 判断title是否为空
     function chekFrom() {
-        if( "" == $("#inputTitle").val()){
+        if( "" == $("#inputTitle").val().trim()){
             layer.alert( 'The title should not be empty.', {
                 title:'Information',
                 skin: 'layui-layer-lan'

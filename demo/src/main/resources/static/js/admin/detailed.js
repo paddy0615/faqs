@@ -276,6 +276,21 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
     $scope.categories = {};
     $scope.language = {};
     $scope.languages = {};
+    // ---------------------方便迁移数据,添加父级
+    $scope.info5 = function(){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/admin/getLibrabryInfo",
+            params:{"dlId": $scope.dlId}
+        }).success(function (data) {
+            /* 成功*/
+            $scope.librabries = data.result.librabries;
+        })
+    }
+    $scope.info5();
+    $scope.fl_id = 1 ;
+
+
     // 初始化
     if($scope.dlId != 0){
         $scope.addType = false;
@@ -292,6 +307,8 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
                 $scope.language = data.result.language;
                 $scope.categories = data.result.categories;
                 $scope.editType ="< Edit < " + data.result.category.title+" < " + $scope.detailed.title;
+                $scope.fl_id = $scope.detailed.flId==0?1:$scope.detailed.flId;
+                console.log($scope.fl_id )
                 showTags(2,data.result.tags);
                 into2();
             }
@@ -365,6 +382,7 @@ myapp.controller("detailedEditController",["$scope","$http",function ($scope, $h
             var tags = $('.demo2').tagEditor('getTags')[0].tags;
             var index =  layer.load(0, {shade: false});
             lock1 = true; // 锁定
+            $scope.detailed.flId = $scope.fl_id;
             $scope.detailed.content = UE.getEditor('editorUpdate').getContent();
             $scope.detailed.contentTxt = UE.getEditor('editorUpdate').getContentTxt();
             $http({

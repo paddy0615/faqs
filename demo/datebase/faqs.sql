@@ -173,25 +173,24 @@ CREATE TABLE `faqs_librabry` (
  `fl_title` VARCHAR(100) NULL COMMENT '标题',
  `fl_remarks` VARCHAR(200) NULL COMMENT '备注',
  `fl_createdate` DATETIME COMMENT '创建时间',
+ `fl_updatedate` DATETIME COMMENT '更新时间',
   PRIMARY KEY (`fl_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-INSERT  INTO faqs_librabry (fl_title,fl_createdate) VALUES
-('Q001',NOW()),
-('Q002',NOW()),
-('Q003',NOW()),
-('Q004',NOW()),
-('Q005',NOW()),
-('Q006',NOW()),
-('Q007',NOW()),
-('Q008',NOW()),
-('Q009',NOW()),
-('Q010',NOW());
+INSERT  INTO faqs_librabry (fl_title,fl_createdate,fl_updatedate) VALUES
+('Q001',NOW(),NOW()),
+('Q002',NOW(),NOW()),
+('Q003',NOW(),NOW()),
+('Q004',NOW(),NOW()),
+('Q005',NOW(),NOW()),
+('Q006',NOW(),NOW()),
+('Q007',NOW(),NOW()),
+('Q008',NOW(),NOW()),
+('Q009',NOW(),NOW()),
+('Q010',NOW(),NOW());
 
 
 -- 添加父级字段
 ALTER TABLE faqs_detailed ADD dl_fl_id INT DEFAULT 0;
 --  修改faqs_detailed表, dl_cat_id可以为空 , 防止出错
 ALTER TABLE faqs_detailed MODIFY COLUMN dl_cat_id INT DEFAULT NULL COMMENT '类别可以为空,字段已不用';
-
-

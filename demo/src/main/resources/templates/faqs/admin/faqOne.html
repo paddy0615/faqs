@@ -49,9 +49,9 @@
           </div>
           <div class="row" style="text-align: right;padding-right: 20px;">
             <!-- add -->
-         <!--   <div>
-                <button class="btn btn-default" type="button" ng-click="getLayDate()">Add</button>
-            </div>-->
+          <div>
+              <a class="btn btn-default" th:href="@{'/appPage/admin/faqOneEdit?fl_id=0'}" >Add</a>
+          </div>
 
           </div>
 
@@ -59,9 +59,9 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th><!--<input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)">--></th>
+                  <th></th>
                   <th>Series</th>
-                  <th>Create Date</th>
+                  <th>Update Date</th>
                   <th></th>
                 </tr>
               </thead>
@@ -72,6 +72,7 @@
                   <td>{{l.createDate.substring(0,16)}}</td>
                   <td style="text-align: right;">
                       <a class="btn btn-default" th:href="@{'/appPage/admin/faqTwo?fl_id={{l.id}}'}" >Select</a>
+                      <a class="btn btn-default" th:href="@{'/appPage/admin/faqOneEdit?fl_id={{l.id}}'}" >Edit</a>
                   </td>
                 </tr>
 
