@@ -31,6 +31,9 @@ public class LibrabryEntity implements Serializable {
     @Column(name = "dl_status")
     private long dl_status;   //'状态（1发布，0未发布默认）'
 
+    @Column(name = "dl_weights")
+    private long dl_weights;   // 权重
+
 
     public Long getDl_id() {
         return dl_id;
@@ -78,5 +81,13 @@ public class LibrabryEntity implements Serializable {
 
     public void setLang_title(String lang_title) {
         this.lang_title = lang_title;
+    }
+
+    public long getDl_weights() {
+        return dl_weights;
+    }
+
+    public void setDl_weights(long dl_weights) {
+        this.dl_weights = dl_weights;
     }
 }

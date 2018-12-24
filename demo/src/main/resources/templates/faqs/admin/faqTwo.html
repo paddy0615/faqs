@@ -42,10 +42,10 @@
         <left-Directive></left-Directive>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
-                <div class="col-lg-2">
-                    <span style="font-size: 36px;">FAQ</span>
+                <div class="col-lg-3">
+                    <span style="font-size: 36px;">Question List</span>
                 </div>
-                <div class="col-lg-10" style="float: right;top: 20px;">
+                <div class="col-lg-9" style="float: right;top: 20px;">
                     <div class="input-group">
                         <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}"  ng-keyup="onKeyup(event)">
                         <span class="input-group-btn">
@@ -116,7 +116,7 @@
                         <td ng-if="detailed.dl_status == 1">Show</td>
                         <td ng-if="detailed.dl_status == 0">Hide</td>
                         <td>{{detailed.dl_updatedate.substring(0,16)}}</td>
-                        <td>999</td>
+                        <td>{{detailed.dl_weights}}</td>
                         <td style="text-align: right;">
                             <!--<button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(detailed.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;-->
                             <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button><!--已发表-->

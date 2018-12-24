@@ -20,7 +20,8 @@ public interface LibrabryEntityDao extends JpaRepository<LibrabryEntity,Long> {
             " d.dl_updatedate," +
             " d.dl_status," +
             " fl.fl_title," +
-            " l.lang_title" +
+            " l.lang_title," +
+            " d.dl_weights" +
             " FROM faqs_detailed d,faqs_librabry fl,faqs_language l" +
             " WHERE d.dl_fl_id = fl.fl_id AND d.dl_lang_id = l.lang_id" +
             " AND if(:fl_id > 0,fl.fl_id = :fl_id,1=1)"+
@@ -42,7 +43,8 @@ public interface LibrabryEntityDao extends JpaRepository<LibrabryEntity,Long> {
             " d.dl_updatedate,\n" +
             " d.dl_status,\n" +
             " fl.fl_title,\n" +
-            " l.lang_title\n" +
+            " l.lang_title,\n" +
+            " d.dl_weights\n" +
             "FROM  faqs_detailed d\n" +
             "INNER JOIN faqs_dtags_relation dr ON (dr.dr_dl_id = d.dl_id)\n" +
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +

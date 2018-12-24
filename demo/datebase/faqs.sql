@@ -116,6 +116,8 @@ CREATE TABLE `faqs_user` (
 
 insert  into `faqs_user`(`usr_id`,`usr_login_id`,`usr_password`,`usr_role`) values (1,'admin','admin','admin');
 
+-- 标签表
+
 DROP TABLE IF EXISTS `faqs_detailed_tags`;
 CREATE TABLE `faqs_detailed_tags` (
  `dt_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -124,6 +126,7 @@ CREATE TABLE `faqs_detailed_tags` (
   PRIMARY KEY (`dt_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+-- 标签和问题的关系表
 
 DROP TABLE IF EXISTS `faqs_dtags_relation`;
 CREATE TABLE `faqs_dtags_relation` (
@@ -197,3 +200,8 @@ ALTER TABLE faqs_detailed MODIFY COLUMN dl_cat_id INT DEFAULT NULL COMMENT '类�
 
 -- 添加权重, 用搜索排序
 ALTER TABLE faqs_detailed ADD dl_weights INT DEFAULT 0;
+
+
+-- 父级数据错乱
+UPDATE faqs_librabry SET fl_title = CONCAT('Q',fl_id);
+
