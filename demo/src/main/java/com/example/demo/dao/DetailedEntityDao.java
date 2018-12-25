@@ -24,11 +24,12 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
             "LEFT JOIN faqs_dl_hotspot ON (d.dl_id = dlh_dl_id)\n" +
             "WHERE 1=1\n" +
+            "AND if(:langId > 0,d.dl_lang_id = :langId,1=1)\n"+
             "AND if(:status > 0,d.dl_status = :status,1=1)\n"+
             "AND dt.dt_title IN(:searchs)\n" +
             "GROUP BY d.dl_id\n" +
             "ORDER BY COUNT(d.dl_id) DESC,d.dl_weights DESC,dlh_search_count DESC,d.dl_updatedate DESC", nativeQuery = true)
-    List<DetailedEntity> getSearchTags(@Param("status") long status,@Param("searchs")List<String> searchs);
+    List<DetailedEntity> getSearchTags(@Param("langId") long langId,@Param("status") long status,@Param("searchs")List<String> searchs);
 
     @Query(value = "SELECT count(*) FROM (\n" +
             "SELECT d.dl_id,d.dl_title\n" +

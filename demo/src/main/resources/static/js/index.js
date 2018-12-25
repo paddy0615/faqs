@@ -262,7 +262,8 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
     function info1(){
         $http({
             method : 'post',
-            url : ctx + "appJson/getHotspot"
+            url : ctx + "appJson/getHotspot",
+            params:{"langId": $scope.langId}
         }).success(function (data) {
             if(data){
                 $scope.hotspots = data.result.detaileds;
@@ -308,6 +309,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 $scope.commonLabel4 = commonLabel4($scope.langId);
                 $scope.commonLabel5 = commonLabel5($scope.langId);
                 $scope.commonLabel6 = commonLabel6($scope.langId);
+                $scope.commonLabel7 = commonLabel7($scope.langId);
 
 
                 onlineChat($scope.langId);
@@ -407,7 +409,8 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
     function info1(){
         $http({
             method : 'post',
-            url : ctx + "appJson/getHotspot"
+            url : ctx + "appJson/getHotspot",
+            params:{"langId": $scope.langId}
         }).success(function (data) {
             if(data){
                 $scope.hotspots = data.result.detaileds;
@@ -495,6 +498,9 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
     $scope.dfContentEmail = "";
     $scope.dfContentNumber = "";
     $scope.addDfContent = function () {
+        if(!check1()){
+            return;
+        }
         var index = layer.load(0, {shade: false});
         $http({
             method : "post",
@@ -513,5 +519,20 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             }
         })
     }
+
+    function check1() {
+        var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+        var reg2 =  /^\d*$/
+        if("" != $("#dfContentEmail").val() && !reg1.test($("#dfContentEmail").val())){ //正则验证不通过，格式不对
+            alert(commonLabel8($scope.langId));
+            return false;
+        }
+        if("" != $("#dfContentNumber").val() && !reg2.test($("#dfContentNumber").val())){ //正则验证不通过，格式不对
+            alert(commonLabel9($scope.langId));
+            return false;
+        }
+        return true;
+    }
+
 
 }]);

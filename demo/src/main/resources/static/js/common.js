@@ -229,3 +229,51 @@ function commonLabel6(langId) {
     }
     return t;
 }
+// laber7
+function commonLabel7(langId) {
+    var t = "Or";
+    if(langId == 1){
+        t = "或";
+    }else if(langId == 2){
+        t = "或";
+    }else if(langId == 3){
+        t = "或";
+    }else if(langId == 4){
+        t = "または";
+    }else if(langId == 5){
+        t = "또는";
+    }
+    return t;
+}
+// laber8
+function commonLabel8(langId) {
+    var t = "Please input the correct email address";
+    if(langId == 1){
+        t = "請填寫正確的電郵地址";
+    }else if(langId == 2){
+        t = "请填写正确的邮箱地址";
+    }else if(langId == 3){
+        t = "請填寫正確的電郵地址";
+    }else if(langId == 4){
+        t = "正しいメールアドレスをご記入ください";
+    }else if(langId == 5){
+        t = "정확한 메일박스 주소를 기입해 주십시오";
+    }
+    return t;
+}
+// laber9
+function commonLabel9(langId) {
+    var t = "Please input the correct contact number";
+    if(langId == 1){
+        t = "請填寫正確的電話號碼";
+    }else if(langId == 2){
+        t = "请填写正确的电话号码";
+    }else if(langId == 3){
+        t = "請填寫正確的電話號碼";
+    }else if(langId == 4){
+        t = "正しい電話番号を記入してください";
+    }else if(langId == 5){
+        t = "정확한 전화번호를 기입해 주세요";
+    }
+    return t;
+}

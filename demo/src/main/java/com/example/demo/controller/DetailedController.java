@@ -111,12 +111,13 @@ public class DetailedController {
     @ResponseBody
     @RequestMapping("/getSearchTags")
     public RestResultModule getSearchTags(
+            @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
             @RequestParam(name = "search",required = false,defaultValue = "")String search){
         RestResultModule module = new RestResultModule();
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
         List<DetailedEntity> detaileds = null;
-        detaileds = detailedService.getSearchTags(1,searchs);
+        detaileds = detailedService.getSearchTags(langId,1,searchs);
         module.setCode(200);
         module.putData("detaileds",detaileds);
         return module;
@@ -153,10 +154,10 @@ public class DetailedController {
     /* 搜索页-获取热点数据*/
     @ResponseBody
     @RequestMapping("/getHotspot")
-    public RestResultModule getHotspot(){
+    public RestResultModule getHotspot(@RequestParam(name = "langId",required = true,defaultValue = "0")long langId){
         RestResultModule module = new RestResultModule();
         Pageable pageable = new PageRequest(0,10);
-        Page<Detailed> ds = detailedDao.getHpSearchCount1(pageable);
+        Page<Detailed> ds = detailedDao.getHpSearchCount1(langId,pageable);
         //List<Detailed> detaileds = null;
         //detaileds = detailedDao.getHpSearchCount();
         module.putData("detaileds",ds.getContent());

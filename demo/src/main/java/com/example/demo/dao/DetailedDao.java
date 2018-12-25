@@ -52,8 +52,8 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc")
     List<Detailed> getHpSearchCount();
     // 按搜索点击数量获取
-    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1  order by h.searchCount desc")
-    Page<Detailed> getHpSearchCount1(Pageable pageable);
+    @Query("select new Detailed(d.id,d.title) from Detailed d,Hotspot h where d.id = h.dlId and d.status = 1 and d.langId = :langId  order by h.searchCount desc")
+    Page<Detailed> getHpSearchCount1(@Param("langId")long langId,Pageable pageable);
 
     List<Detailed> findAllByCatId(long catId);
 

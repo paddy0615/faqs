@@ -205,3 +205,9 @@ ALTER TABLE faqs_detailed ADD dl_weights INT DEFAULT 0;
 -- 父级数据错乱
 UPDATE faqs_librabry SET fl_title = CONCAT('Q',fl_id);
 
+SET @rownum=0;
+UPDATE faqs_librabry
+SET fl_title = CONCAT('Q',(
+SELECT @rownum := @rownum +1 AS nid)
+);
+
