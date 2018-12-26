@@ -1,4 +1,4 @@
-##开发环境
+##生产环境
 server:
   port: 8080
   address: 0.0.0.0
@@ -21,8 +21,8 @@ spring:
   tomcat:
     uri-encoding: UTF-8
   datasource:
-    ## 118.143.2.3 -> faqsdatetest(开发) , faqsDate(测试)
-    url: jdbc:mysql://118.143.2.7:3306/faqsDateDev208?characterEncoding=UTF-8
+    ## 118.143.2.10
+    url: jdbc:mysql://118.143.2.10:3306/faqsDate208?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver
@@ -40,21 +40,6 @@ spring:
       max-file-size: 80Mb
       #总数据的大小
       max-request-size: 200Mb
-  # JavaMailSender 邮件发送的配置
-  mail:
-    host: smtp.163.com
-    username: sonicpaddy@163.com
-    password: qq123456
-    default-encoding: UTF-8
-    port: 25
-    protocol: smtp
-    properties:
-      mail:
-        smtp:
-          auth: true
-        starttls:
-          enable: true
-          required: true
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.example.demo.bean
