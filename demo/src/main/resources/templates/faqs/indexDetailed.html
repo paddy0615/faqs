@@ -76,13 +76,13 @@
 
     <!-- 搜索-->
     <div ng-show="searchShow">
-        <div class="content-box" style="padding: 0px 50px;">
+        <div class="content-box" style="padding: 0px 12px;">
             <ul>
                 <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
                 <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a></li>
             </ul>
         </div>
-        <div class="content-box" style="padding: 50px;margin-top: 100px;">
+        <div class="content-box" style="padding: 0px 12px;margin-top: 100px;">
             <div class="list-group">
                 <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
                     {{hotspotTest}}

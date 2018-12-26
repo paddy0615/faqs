@@ -50,7 +50,7 @@ body{
     background-color: #BA2E90;
 }
 .nav-select{
-    width: 89%;
+    padding: 0px 12px;
     margin: 0px auto;
     margin-top: 140px;
 }
