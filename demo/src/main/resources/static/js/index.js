@@ -279,7 +279,7 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
 myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",function ($scope, $http, $sce,$location) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
-    $scope.langId = 6;
+    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
     $scope.catId = 0;
     $scope.lang_cout = 5 ;
     $scope.isGetUrl = false;
@@ -388,7 +388,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         };
         $scope.checkSearchTags();
         var q = escape($scope.searchTest);
-        var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&q="+q;
+        var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&langId="+$scope.langId+"&q="+q;
         clicked(encodeURI(url));
     }
     $scope.onKeyup = function(event){
