@@ -13,7 +13,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
 
 
     /**
-     * 2.2前台搜索
+     * 2.2前台搜索(注意langId <0,开放跨语言搜索)
      * @param status
      * @param searchs
      * @return
@@ -24,7 +24,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
             "LEFT JOIN faqs_dl_hotspot ON (d.dl_id = dlh_dl_id)\n" +
             "WHERE 1=1\n" +
-            "AND if(:langId > 0,d.dl_lang_id = :langId,1=1)\n"+
+            "AND if(:langId < 0,d.dl_lang_id = :langId,1=1)\n"+
             "AND if(:status > 0,d.dl_status = :status,1=1)\n"+
             "AND dt.dt_title IN(:searchs)\n" +
             "GROUP BY d.dl_id\n" +
