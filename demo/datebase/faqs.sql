@@ -193,3 +193,9 @@ SET fl_title = CONCAT('Q',(
 SELECT @rownum := @rownum +1 AS nid)
 );
 
+-- 反对内容字段变大
+ALTER TABLE faqs_detailed_feedback MODIFY COLUMN df_nay_content VARCHAR(500) NULL COMMENT '反对内容';
+
+-- 反馈表,添加状态(有反馈信息case)
+ALTER TABLE faqs_detailed_feedback ADD df_nay_status INT DEFAULT 0;
+

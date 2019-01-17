@@ -15,10 +15,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /*
  * FeedbackController 反馈信息
@@ -41,29 +43,24 @@ public class FeedbackController {
     /* 初始化*/
     @ResponseBody
     @RequestMapping("/getFeedbackPage")
-    public RestResultModule getFeedbackPage(
-            @RequestParam(name = "df_type",defaultValue = "0",required = true) long df_type,
-            @RequestParam(name = "CurrentPage",defaultValue = "1",required = true) int CurrentPage,
-            @RequestParam(name = "PageSize",defaultValue = "10",required = true) int PageSize,
-            @RequestParam(name = "startTime",defaultValue = "",required = true) String startTime,
-            @RequestParam(name = "endTime",defaultValue = "",required = true) String endTime){
-
+    public RestResultModule getFeedbackPage(@RequestBody Map<String,Object> map){
         RestResultModule module = new RestResultModule();
-        System.out.println(CurrentPage+","+PageSize);
-   /*   分页
+        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
+        int PageSize = Integer.parseInt(map.get("PageSize").toString());
+        long langId = Long.parseLong(map.get("langId").toString());
+        long comment = Long.parseLong(map.get("comment").toString());
+        long df_type = Long.parseLong(map.get("df_type").toString());
+        long commentStatu = Long.parseLong(map.get("commentStatu").toString());
+        String startTime = map.get("startTime").toString();
+        String endTime = map.get("endTime").toString();
+        //分页
         Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
         Page<Feedback> feedbacks = null;
-        if(df_type > 0){
-            feedbacks = dfeedbackDao.getAllByDfType(df_type,pageable);
-        }else{
-            feedbacks = dfeedbackDao.getAllBy(pageable);
-        }
-        module.putData("feedbacks",feedbacks.getContent());
-        module.putData("PageCount",feedbacks.getTotalElements());*/
+        feedbacks = dfeedbackDao.getAllByDfType(langId,comment,commentStatu,df_type,startTime,endTime,pageable);
 
-        // 原查询 , 后可删jpa
-        List<Feedback> feedbacks = dfeedbackDao.getAllByDfType1(df_type,startTime,endTime);
-        module.putData("feedbacks",feedbacks);
+        module.putData("feedbacks",feedbacks.getContent());
+        module.putData("PageCount",feedbacks.getTotalElements());
+        module.putData("languages",languageDao.findAll());
         return module;
     }
 
@@ -87,6 +84,26 @@ public class FeedbackController {
             }
         }
         module.putData("feedback",feedback);
+        return module;
+    }
+
+    /**
+     * 按ID查询
+     * @param df_id
+     * @return
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/updateFeedbackStatus")
+    public RestResultModule updateFeedbackStatus(
+            @RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id,
+            @RequestParam(name = "df_nay_status",defaultValue = "0",required = true) long df_nay_status){
+        RestResultModule module = new RestResultModule();
+        if(df_id > 0){
+            detailedFeedbackDao.updateFeedbackStatus(df_id,df_nay_status);
+        }else{
+            module.setCode(500);
+        }
         return module;
     }
 

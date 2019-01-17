@@ -21,7 +21,6 @@
         <script th:src="@{/js/admin/directive.js}"></script>
         <script th:src="@{/js/admin/feedback.js}"></script>
         <script th:src="@{/js/common.js}"></script>
-        <script th:src="@{/js/assets/myPage.js}"></script>
         <script th:inline="javascript">
             var ctx = [[@{/}]];
         </script>
@@ -48,11 +47,37 @@
               </div>
           </div>
           <div class="row" style="padding-left: 18px;color: red;padding-bottom: 20px;">
-            * Each IP address can rate good for each question is maximum 5 times for each day and can also rate bad for ach question is also maximum times for each day
+            * Each IP address can rate good for each question is maximum 5 times for each day and can also rate bad for each question is also maximum times for each day
           </div>
-          <div class="row">
-            <!-- Status select -->
-            <label style="margin-top: 5px;margin-left:50px;float: left;">Status: </label>
+        <div class="row">
+            <!-- language select -->
+            <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
+            <div class="col-md-2">
+                <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
+                        ng-options="language.id  as language.title for language in languages">
+                </select>
+            </div>
+
+            <!-- comment select -->
+            <label style="margin-top: 5px;margin-left: 50px;float: left;">Comment: </label>
+            <div class="col-md-2">
+                <select ng-model="comment" class="form-control" ng-change="clickLanguage()"
+                        ng-options="c.id  as c.name for c in comments">
+                </select>
+            </div>
+            <!-- comment Status -->
+            <label style="margin-top: 5px;margin-left: 50px;float: left;">Comment Status: </label>
+            <div class="col-md-2">
+                <select ng-model="commentStatu" class="form-control" ng-change="clickLanguage()"
+                        ng-options="c.id  as c.name for c in commentsStatus">
+                </select>
+            </div>
+
+        </div>
+
+          <div class="row" style="margin-top: 20px">
+              <!-- Rating select -->
+            <label style="margin-top: 5px;margin-left:50px;float: left;">Rating: </label>
             <div class="col-md-2">
               <select ng-model="df_type" class="form-control" ng-change="clickLanguage()"
                       ng-options="d.id as d.name for d in df_types">
@@ -79,24 +104,36 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th><!--<input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)">--></th>
+                  <th>ID</th>
                   <th>Title</th>
                   <th>Create Date</th>
                   <th>IP</th>
-                  <th>Status</th>
+                  <th>Rating</th>
+                  <th>Comment Status</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="f in feedbacks">
-                  <td><!--<input style="vertical-align:top;" type="checkbox" name="checkboxClien" ng-click="updateSelection($event,categorie.id)" value="{{categorie.id}}">-->{{$index+1}}</td>
-                  <td class="col-md-5">{{f.dlTitle}}</td>
+                  <td>{{f.id}}</td>
+                  <td class="col-md-4">{{f.dlTitle}}</td>
                   <td>{{f.createDate.substring(0,16)}}</td>
                   <td>{{f.ip}}</td>
-                  <td ng-if="f.dfType == 1">+1</td>
-                  <td ng-if="f.dfType == 2">-1</td>
+                  <td>
+                     <element ng-if="f.dfType == 1">+1</element>
+                     <element ng-if="f.dfType == 2">-1</element>
+                  </td>
+                  <td>
+                      <div ng-if="f.dfType == 2 && f.content != '' && f.contentStatus == 0" style="color:red;">Open</div>
+                      <div ng-if="f.dfType == 2 && f.content != '' && f.contentStatus == 1">Close</div>
+                  </td>
                   <td style="text-align: right;">
-                    <button class="btn btn-default" type="button"  ng-if="f.dfType == 2" ng-click="getSet(f.id)" >Select</button>
+                      <button class="btn btn-default" type="button"  ng-if="f.dfType == 2 && f.content != ''" ng-click="getSet(f.id)" >Select</button>
+                      <element ng-if="f.dfType == 2 && f.content != ''">
+                          <button class="btn btn-default" type="button"  ng-if="f.contentStatus == 0" ng-click="updateFeedbackStatus(f.id,1)" >Close</button>
+                          <button class="btn btn-default" type="button"  ng-if="f.contentStatus == 1" ng-click="updateFeedbackStatus(f.id,0)" >Open</button>
+                      </element>
+
                   </td>
                 </tr>
 
@@ -115,9 +152,9 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script  th:src="@{/js/assets/vendor/jquery.min.js}"><\/script>')</script>
-    <script th:src="@{/js/assets/bootstrap.min.js}"></script>
+    <!--<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    -->
+   <!-- <script th:src="@{/js/assets/bootstrap.min.js}"></script>-->
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script th:src="@{/js/assets/holder.min.js}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

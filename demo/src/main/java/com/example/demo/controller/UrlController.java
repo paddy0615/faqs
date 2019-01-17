@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("appPage")
 public class UrlController {
-
     @RequestMapping("/")
     public String index(){return "faqs/index";}
 

@@ -41,11 +41,23 @@ public class DetailedFeedback implements Serializable {
     @Column(name = "df_createdate")
     private Date createDate;
 
+    @Column(name = "df_nay_status",columnDefinition="long default 0")
+    private Long contentStatus = (long)0;  // 反馈信息状态（0关闭,1打开）
+
+
     @Transient
     private String lang_title;  // langTitle
     @Transient
     private String detailed_title;  // detailed_title
 
+
+    public Long getContentStatus() {
+        return contentStatus;
+    }
+
+    public void setContentStatus(Long contentStatus) {
+        this.contentStatus = contentStatus;
+    }
 
     public Long getId() {
         return id;

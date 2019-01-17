@@ -30,13 +30,25 @@ public class Feedback implements Serializable {
     private String content;  // 反对内容
 
     @Column(name = "lang_title")
-    private String langTitle;  // 反对内容
+    private String langTitle;  // 语言标题
     @Column(name = "cat_title")
-    private String catTitle;  // 反对内容
+    private String catTitle;  // 内容标题
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "df_createdate")
     private Date createDate;
+
+    @Column(name = "df_nay_status")
+    private Long contentStatus;  // 反馈信息状态（0关闭,1打开）
+
+
+    public Long getContentStatus() {
+        return contentStatus;
+    }
+
+    public void setContentStatus(Long contentStatus) {
+        this.contentStatus = contentStatus;
+    }
 
     public String getDlTitle() {
         return dlTitle;

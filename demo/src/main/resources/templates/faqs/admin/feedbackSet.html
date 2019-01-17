@@ -46,10 +46,6 @@
                         <label class="col-sm-2 control-label">Language :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.lang_title}}</label>
                     </div>
-                <!--    <div class="form-group">
-                        <label class="col-sm-2 control-label">Category :</label>
-                        <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.catTitle}}</label>
-                    </div>-->
                     <div class="form-group">
                         <label class="col-sm-2 control-label">FAQ Title :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.detailed_title}}</label>
@@ -59,13 +55,11 @@
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.ip}}</label>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Status :</label>
+                        <label class="col-sm-2 control-label">Rating :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">-1</label>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Comment :</label>
-                       <!-- <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.content}}</label>
-                    -->
                         <div style="display: -webkit-box;width: 700px;margin-top: 8px;text-indent: 2em;">{{feedback.content}}</div>
                     </div>
                     <div class="form-group">
@@ -76,6 +70,33 @@
                         <label class="col-sm-2 control-label">Contact Number :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{feedback.number}}</label>
                     </div>
+                    <element ng-if="feedback.type == 2 && feedback.content != ''">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Comment Status :</label>
+                            <label style="text-indent: 2em;font-weight: normal;" class="control-label">
+                                <element ng-if="feedback.contentStatus == 0">
+                                    <div style="color:red;">Open</div>
+                                </element>
+                                <element ng-if="feedback.contentStatus == 1">
+                                    Close
+                                </element>
+                            </label>
+                        </div>
+                    </element>
+                    <element ng-if="feedback.type == 2 && feedback.content != ''">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <label style="text-indent: 2em;font-weight: normal;" class="control-label">
+                                <element ng-if="feedback.contentStatus == 0">
+                                    <button class="btn btn-default" type="button"  ng-click="updateFeedbackStatus(feedback.id,1)" >Close</button>
+                                </element>
+                                <element ng-if="feedback.contentStatus == 1">
+                                    <button class="btn btn-default" type="button"  ng-click="updateFeedbackStatus(feedback.id,0)" >Open</button>
+                                </element>
+                            </label>
+                        </div>
+                    </element>
+
                 </form>
             </div>
 
