@@ -58,4 +58,16 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "ORDER BY COUNT(d.dl_id) DESC,d.dl_weights DESC,dlh_search_count DESC,d.dl_updatedate DESC\n" +
             ") a", nativeQuery = true)
     long getNoTagsCount(@Param("s")String s);
+
+    @Query(value = "SELECT d.dl_id,d.dl_title FROM faqs_detailed d" +
+            " INNER JOIN (" +
+            " SELECT m_dl_id,m_dl_id_father,COUNT(1) FROM faqs_monitor" +
+            " WHERE m_dl_id_father > 0" +
+            " AND m_dl_id_father = :dlId" +
+            " GROUP BY m_dl_id,m_dl_id_father" +
+            " ORDER BY COUNT(1) DESC,m_createdate DESC " +
+            " LIMIT 0,5" +
+            " ) a" +
+            " ON a.m_dl_id = d.dl_id",nativeQuery = true)
+    List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId);
 }

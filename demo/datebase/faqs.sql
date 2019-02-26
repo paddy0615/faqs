@@ -199,3 +199,7 @@ ALTER TABLE faqs_detailed_feedback MODIFY COLUMN df_nay_content VARCHAR(500) NUL
 -- 反馈表,添加状态(有反馈信息case)
 ALTER TABLE faqs_detailed_feedback ADD df_nay_status INT DEFAULT 0;
 
+-- 添加父级(用程序去跑添加 , 时间不超一天.)
+ALTER TABLE faqs_monitor ADD m_dl_id_father INT DEFAULT 0;
+
+

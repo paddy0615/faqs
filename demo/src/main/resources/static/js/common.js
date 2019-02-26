@@ -277,3 +277,19 @@ function commonLabel9(langId) {
     }
     return t;
 }
+// laber10
+function commonLabel10(langId) {
+    var t = "You may also want to check below questions for reference";
+    if(langId == 1){
+        t = "您可能會想要查詢以下問題";
+    }else if(langId == 2){
+        t = "您可能会想要查询以下问题";
+    }else if(langId == 3){
+        t = "您可能會想要查詢以下問題";
+    }else if(langId == 4){
+        t = "また、下記のFAQをご参考ください";
+    }else if(langId == 5){
+        t = "아래의 같은 문제를 참고할 수 있습니다";
+    }
+    return t;
+}

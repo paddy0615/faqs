@@ -260,6 +260,7 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
 
 
     function info1(){
+        // 热点数
         $http({
             method : 'post',
             url : ctx + "appJson/getHotspot",
@@ -310,7 +311,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 $scope.commonLabel5 = commonLabel5($scope.langId);
                 $scope.commonLabel6 = commonLabel6($scope.langId);
                 $scope.commonLabel7 = commonLabel7($scope.langId);
-
+                $scope.commonLabel10 = commonLabel10($scope.langId);
 
                 onlineChat($scope.langId);
                 $scope.detailed = data.result.detailed;
@@ -414,6 +415,21 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         }).success(function (data) {
             if(data){
                 $scope.hotspots = data.result.detaileds;
+            }
+        })
+        // 智能向导
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getSmartGuide",
+            params:{"dlId": $scope.dlId}
+        }).success(function (data) {
+            if(data){
+                $scope.smartGuide = data.result.detaileds;
+                if($scope.smartGuide.length > 0){
+                    $scope.smartGuideType = true;
+                }else{
+                    $scope.smartGuideType = false;
+                }
             }
         })
     }

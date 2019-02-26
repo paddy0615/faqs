@@ -80,4 +80,5 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
             " ORDER BY fl.fl_id",nativeQuery = true)
     List<Detailed> getLibDetaileds();
 
+
 }

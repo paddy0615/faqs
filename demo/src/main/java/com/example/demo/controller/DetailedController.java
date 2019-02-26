@@ -165,6 +165,23 @@ public class DetailedController {
     }
 
     /**
+     * 详细页- 智能向导
+     * @param dlId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/getSmartGuide")
+    public RestResultModule getSmartGuide(@RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId){
+        RestResultModule module = new RestResultModule();
+        List<DetailedEntity> detaileds = null;
+        if(dlId > 0){
+            detaileds = detailedService.getSmartGuide(dlId);
+        }
+        module.putData("detaileds",detaileds);
+        return module;
+    }
+
+    /**
      * 添加反馈信息, 按IP记录
      * @param request
      * @param feedback 反馈对象

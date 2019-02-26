@@ -1,6 +1,8 @@
 package com.example.demo.bean;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -29,8 +31,21 @@ public class Monitor {
     @Column(name = "m_dl_id")
     private Long dlId;
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "m_createdate")
     private Date createDate;
+
+
+    @Column(name = "m_dl_id_father",columnDefinition="long default 0")
+    private Long dlIdFather = (long)0;  // 反馈信息状态（0关闭,1打开）
+
+    public Long getDlIdFather() {
+        return dlIdFather;
+    }
+
+    public void setDlIdFather(Long dlIdFather) {
+        this.dlIdFather = dlIdFather;
+    }
 
     public Long getId() {
         return id;

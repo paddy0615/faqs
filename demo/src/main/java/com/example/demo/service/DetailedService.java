@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -271,11 +272,12 @@ public class DetailedService {
      * @param dlId
      * @return
      */
-    public boolean addip(HttpServletRequest request,long catId,long dlId){
+    public boolean addip(HttpServletRequest request,long catId,long dlId) throws Exception{
         Monitor monitor = new Monitor();
         String ip = ipUtil.getIpAddr(request);
         monitor.setClientip(ip);
-        monitor.setCreateDate(new Date());
+        Date date = new Date();
+        monitor.setCreateDate(date);
         if(catId > 0){
             Category category = categoryDao.findById(catId);
             if(null != category){
@@ -287,6 +289,15 @@ public class DetailedService {
         }else if(dlId > 0){
             Detailed detailed = detailedDao.findById(dlId);
             if(null != detailed){
+                // 添加父ID
+                Monitor monitor1 = monitorDao.getAllByClientip(ip);
+                if(null != monitor1){
+                    // 已上一次浏览时间比较 ,一天内
+                    //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    //if(judgmentDate(df.format(date),monitor1.getCreateDate().toString())){
+                        monitor.setDlIdFather(monitor1.getDlId());
+                    //}
+                }
                 monitor.setLangId(detailed.getLangId());
                 monitor.setCatId(detailed.getCatId());
                 monitor.setDlId(detailed.getId());
@@ -297,10 +308,36 @@ public class DetailedService {
         return false;
     }
 
+    /**
+     * 判断两个时间是否在一天内
+     * @param date1
+     * @param date2
+     * @return
+     * @throws Exception
+     */
+    public static boolean judgmentDate(String date1, String date2) throws Exception {
+        boolean falg = true;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d HH:mm:ss");
+        Date start = sdf.parse(date1);
+        Date end = sdf.parse(date2);
+        long cha = end.getTime() - start.getTime();
+        if(cha<0){
+            falg = false;
+        }
+        double result = cha * 1.0 / (1000 * 60 * 60);
+        if(result<=24){
+            falg = true;
+        }else{
+            falg = false;
+        }
+        return falg;
+
+    }
+
 
     /**
      * 2.2
-     * 查询F全部AQ父级
+     * 查询全部父级
      * @return
      */
     public List<Librabry> getLibrabrys(){
@@ -314,6 +351,15 @@ public class DetailedService {
      */
     public List<Detailed> getLibDetaileds(){
         return detailedDao.getLibDetaileds();
+    }
+
+    /**
+     * 2.2
+     * 按父级,语言查询所有
+     * @return
+     */
+    public List<DetailedEntity> getSmartGuide(long id){
+        return detailedEntityDao.getSmartGuide(id);
     }
 
 }
