@@ -64,6 +64,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             " SELECT m_dl_id,m_dl_id_father,COUNT(1) FROM faqs_monitor" +
             " WHERE m_dl_id_father > 0" +
             " AND m_dl_id_father = :dlId" +
+            " AND m_dl_id != :dlId" +
             " GROUP BY m_dl_id,m_dl_id_father" +
             " ORDER BY COUNT(1) DESC,m_createdate DESC " +
             " LIMIT 0,5" +
