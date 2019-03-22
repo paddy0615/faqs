@@ -69,6 +69,13 @@ public class Detailed implements Serializable {
         this.title = title;
     }
 
+    public Detailed(String flTitle,long id,String title,String contentTxt){
+        this.flTitle = flTitle;
+        this.id = id;
+        this.title = title;
+        this.contentTxt = contentTxt;
+    }
+
     public String getFlTitle() {
         return flTitle;
     }

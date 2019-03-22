@@ -346,12 +346,13 @@ public class DetailedService {
 
     /**
      * 2.2
-     * 按父级,语言查询所有
+     * 报表
      * @return
      */
-    public List<Detailed> getLibDetaileds(){
-        return detailedDao.getLibDetaileds();
+    public List<Detailed> getAllByLangId(long id){
+        return detailedDao.getAllByLangId(id);
     }
+
 
     /**
      * 2.2

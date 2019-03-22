@@ -67,18 +67,7 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     void saveTop(@Param("dlId")long dlId,@Param("date")Date date);
 
 
-
-    /* 2.2*/
-    @Query(value = "SELECT new Detailed(d.id,d.title)" +
-  /*          " d.dl_id," +
-            " d.dl_title," +
-            " d.dl_lang_id," +
-            " d.dl_updatedate," +
-            " d.dl_status " +*/
-            " FROM faqs_detailed d,faqs_librabry fl" +
-            " WHERE d.dl_fl_id = fl.fl_id" +
-            " ORDER BY fl.fl_id",nativeQuery = true)
-    List<Detailed> getLibDetaileds();
-
-
+    @Query(value = "select new Detailed(l.title,d.id,d.title,d.contentTxt) from Detailed d,Librabry l" +
+            " where d.flId = l.id and  d.status = 1 and d.langId = :langId")
+    List<Detailed> getAllByLangId(@Param("langId")long langId);
 }

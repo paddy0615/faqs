@@ -89,10 +89,52 @@ public class UrlController {
     @RequestMapping("/admin/faqTwo")
     public String faqTwo(){return "faqs/admin/faqTwo";}
 
-
     @RequestMapping("/admin/faqThree")
     public String faqThree(){
         return "faqs/admin/faqThree";
     }
+
+    /**
+     * Resend Itinerary 重新發送行程單
+     * @return
+     */
+    @RequestMapping("/eForm1")
+    public String eForm1(){return "faqs/eForm1";}
+
+    /**
+     * Duplicate Mulitiple Booking 重復訂單
+     * @return
+     */
+    @RequestMapping("/eForm2")
+    public String eForm2(){return "faqs/eForm2";}
+
+    /**
+     * Request for Certificate   證明申請
+     * @return
+     */
+    @RequestMapping("/eForm3")
+    public String eForm3(){return "faqs/eForm3";}
+
+    /**
+     * Name Correction    姓名修正
+     * @return
+     */
+    @RequestMapping("/eForm4")
+    public String eForm4(){return "faqs/eForm4";}
+
+
+    /**
+     * Payment Failure   支付失敗
+     * @return
+     */
+    @RequestMapping("/eForm5")
+    public String eForm5(){return "faqs/eForm5";}
+
+    /**
+     * Reconfirm Flight 確認航班
+     * @return
+     */
+    @RequestMapping("/eForm6")
+    public String eForm6(){return "faqs/eForm6";}
 
 }
