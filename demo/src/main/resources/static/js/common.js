@@ -35,6 +35,32 @@ function GetUrlParam(paraName) {
     }
 }
 
+
+// www.hkexpress.com
+function getHKE(langId){
+    var suffix = "";
+    if(langId == 1){
+        // 香港 (繁體)
+        suffix = "zh-hk";
+    }else if(langId == 2){
+        // 中国 简体
+        suffix = "zh-cn";
+    }else if(langId == 3){
+        // 台灣 (繁體)
+        suffix = "zh-tw";
+    }else if(langId == 4){
+        // 日本 (日本語))
+        suffix = "ja";
+    }else if(langId == 5){
+        // 대한민국(한국어)
+        suffix = "ko";
+    }else if(langId == 6){
+        // Hong Kong (EN)
+        suffix = "en-hk";
+    }
+    clicked("https://www.hkexpress.com/"+suffix);
+}
+
 // 编辑页，判断是否有修改
 function comGoCancel(url) {
     var myconfirm = layer.confirm("Has the content been modified, is it determined to leave?", {

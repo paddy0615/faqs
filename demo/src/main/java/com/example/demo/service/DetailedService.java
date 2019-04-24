@@ -43,6 +43,11 @@ public class DetailedService {
     CategoryDao categoryDao;
     @Resource
     LibrabryDao librabryDao;
+    @Resource
+    E_form_typeDao e_form_typeDao;
+    @Resource
+    DeFormTypeRelationDao deFormTypeRelationDao;
+
 
 
     @Resource
@@ -87,8 +92,29 @@ public class DetailedService {
         }
     }
 
+    @Transactional
+    public void saveEformType(Long dlId,long [] tags){
+        // 删除全部关联
+        deFormTypeRelationDao.deleteAllByDlId(dlId);
+        for (long t : tags) {
+            // 添加标签关系
+            DeFormTypeRelation relation = new DeFormTypeRelation();
+            relation.setDlId(dlId);
+            relation.setEtId(t);
+            deFormTypeRelationDao.save(relation);
+        }
+    }
+
     public  String [] getTags(long dlId){
         return detailedTagsDao.getAllByDlId(dlId);
+    }
+
+    public List<DeFormTypeRelation> getDeFormTypeRelation(long dlId){
+        return deFormTypeRelationDao.findAllByDlId(dlId);
+    }
+
+    public List<E_form_type> getEformTypeByDlId(long dlId){
+        return e_form_typeDao.getAllByDlId(dlId);
     }
 
     public boolean countByCatId(long id){

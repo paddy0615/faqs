@@ -1,14 +1,14 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.bean.*;
-import com.example.demo.dao.DetailedDao;
-import com.example.demo.dao.LanguageDao;
-import com.example.demo.dao.LibrabryDao;
-import com.example.demo.dao.LibrabryEntityDao;
+import com.example.demo.dao.*;
 import com.example.demo.entity.LibrabryEntity;
 import com.example.demo.service.DetailedService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /*
  * 后台-新:重新整理FAQ逻辑 , 有个父级
@@ -37,6 +38,8 @@ public class LibrabryController {
     LibrabryEntityDao librabryEntityDao;
     @Resource
     LibrabryDao librabryDao;
+    @Resource
+    E_form_typeDao e_form_typeDao;
 
 
     /**
@@ -62,6 +65,7 @@ public class LibrabryController {
         RestResultModule module = new RestResultModule();
         module.putData("librabries",detailedService.getLibrabrys());
         module.putData("languages",languageDao.findAll());
+        module.putData("eFormTypes",e_form_typeDao.findAll());
         return module;
     }
 
@@ -71,11 +75,19 @@ public class LibrabryController {
      */
     @ResponseBody
     @RequestMapping("/getLibrabryPage")
-    public RestResultModule getLibrabryPage(@RequestParam(name = "fl_id",defaultValue = "0",required = true) long fl_id,
-                                            @RequestParam(name = "langId",defaultValue = "0",required = true) long langId,
-                                            @RequestParam(name = "dl_status",defaultValue = "0",required = true) long dl_status){
+    public RestResultModule getLibrabryPage(@RequestBody Map<String,Object> map){
         RestResultModule module = new RestResultModule();
-        module.putData("detaileds",librabryEntityDao.getLibrabryEntity(fl_id,langId,dl_status));
+        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
+        int PageSize = Integer.parseInt(map.get("PageSize").toString());
+        long fl_id = Long.parseLong(map.get("fl_id").toString());
+        long langId = Long.parseLong(map.get("langId").toString());
+        long dl_status = Long.parseLong(map.get("dl_status").toString());
+        //分页
+        Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
+        Page<LibrabryEntity> detaileds = null;
+        detaileds = librabryEntityDao.getLibrabryEntity(fl_id,langId,dl_status,pageable);
+        module.putData("detaileds",detaileds.getContent());
+        module.putData("PageCount",detaileds.getTotalElements());
         return module;
     }
 
@@ -112,6 +124,7 @@ public class LibrabryController {
         // 获取详情
         Detailed detailed = null;
         String [] tags = new String[]{};
+        List<DeFormTypeRelation> deFormType = null;
         if(dlId > 0){
             detailed = detailedDao.findById(dlId);
             // 获取标签
@@ -119,10 +132,13 @@ public class LibrabryController {
             if(null != detailed && detailed.getFlId() > 0){
                 detailed.setFlTitle(librabryDao.getByTitle(detailed.getFlId()));
             }
+            deFormType = detailedService.getDeFormTypeRelation(dlId);
+
         }
 
         module.putData("detailed",detailed);
         module.putData("tags",tags);
+        module.putData("deFormType",deFormType);
         return module;
     }
 
@@ -136,13 +152,16 @@ public class LibrabryController {
         // 获取详情
         Detailed detailed = detailedDao.getByFlIdAndLangId(flId,langId);;
         String [] tags = new String[]{};
+        List<DeFormTypeRelation> deFormType = null;
         if(null != detailed){
             // 获取标签
             tags = detailedService.getTags(detailed.getId());
             detailed.setFlTitle(librabryDao.getByTitle(detailed.getFlId()));
+            deFormType = detailedService.getDeFormTypeRelation(detailed.getId());
         }
         module.putData("detailed",detailed);
         module.putData("tags",tags);
+        module.putData("deFormType",deFormType);
         return module;
     }
 

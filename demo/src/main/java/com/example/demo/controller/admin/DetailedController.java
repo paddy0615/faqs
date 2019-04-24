@@ -197,8 +197,12 @@ public class DetailedController {
             if(tags.getTagsArr().length > 0){
                 detailedService.saveTags(detailed.getId(),tags.getTagsArr());
             }
+            // 更新eformtype
+            if(tags.getEformtypeArr().length > 0){
+                detailedService.saveEformType(detailed.getId(),tags.getEformtypeArr());
+            }
+
         }
-        System.out.println("id="+detailed.getId());
         module.putData("dlId",detailed.getId());
         return module;
     }

@@ -40,6 +40,15 @@ spring:
       max-file-size: 80Mb
       #总数据的大小
       max-request-size: 200Mb
+  # JavaMailSender 邮件发送的配置
+  mail:
+    host: mail.sonic-teleservices.com
+    username: hke_smartform@sonic-teleservices.com
+    password: sonic
+    default-encoding: UTF-8
+    properties:
+      mail.smtp.socketFactory.fallback: true
+      mail.smtp.starttls.enable: true
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.example.demo.bean

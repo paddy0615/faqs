@@ -77,6 +77,8 @@ public class DetailedController {
             return module;
         }
         List<Category> categories = categoryDao.findAllByLangIdAndStatus(detailed.getLangId(),1);
+        List<E_form_type> eFormTypes = detailedService.getEformTypeByDlId(dlId);
+
 
         long dfcount = detailedService.getFeedbackCnt(dlId);
 
@@ -86,6 +88,7 @@ public class DetailedController {
         module.putData("detailed",detailed);
         module.putData("langId",detailed.getLangId());
         module.putData("dfcount",dfcount);
+        module.putData("eFormTypes",eFormTypes);
 
         return module;
     }

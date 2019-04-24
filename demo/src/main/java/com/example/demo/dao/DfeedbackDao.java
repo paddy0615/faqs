@@ -63,4 +63,6 @@ public interface DfeedbackDao extends JpaRepository<Feedback,Long> {
             " ORDER BY f.df_createdate DESC"
             , nativeQuery = true)
     Page<Feedback> getAllByDfType(@Param("langId") long langId,@Param("comment") long comment,@Param("commentStatu") long commentStatu,@Param("type") long type,@Param("startTime") String startTime,@Param("endTime") String endTime,Pageable pageable);
+
+
 }

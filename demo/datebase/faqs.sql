@@ -203,3 +203,131 @@ ALTER TABLE faqs_detailed_feedback ADD df_nay_status INT DEFAULT 0;
 ALTER TABLE faqs_monitor ADD m_dl_id_father INT DEFAULT 0;
 
 
+
+-- e-form 地区名
+DROP TABLE IF EXISTS `e_area_name`;
+CREATE TABLE `e_area_name` (
+ `a_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `a_group_hk` VARCHAR(200) NULL COMMENT '标题分类-繁体',
+ `a_group_cn` VARCHAR(200) NULL COMMENT '标题分类-简体',
+ `a_group_en` VARCHAR(200) NULL COMMENT '标题分类-英文',
+ `a_key` VARCHAR(100) NULL COMMENT '表示',
+ `a_title_hk` VARCHAR(200) NULL COMMENT '繁体-名',
+ `a_title_cn` VARCHAR(200) NULL COMMENT '简体-名',
+ `a_title_en` VARCHAR(200) NULL COMMENT '英文-名',
+ `a_updatedate` TIMESTAMP  NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`a_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT  INTO `e_area_name`(`a_group_hk`,`a_group_cn`,`a_group_en`,`a_key`,`a_title_hk`,`a_title_cn`,`a_title_en`)
+VALUES ('香港特別行政區','中国香港','Hong Kong SAR','HKG','香港(HKG)','香港(HKG)','Hong Kong(HKG)'),
+('柬埔寨','柬埔寨','Cambodia','REP','暹粒(REP)','暹粒(REP)','Siem Reap(REP)'),
+('中國大陸','中国大陆','Mainland China','NGB','寧波(NGB)','宁波(NGB)','Ningbo(NGB)'),
+('日本','日本','Japan','FUK','福岡(FUK)','福冈(FUK)','Fukuoka(FUK)'),
+('日本','日本','Japan','HIJ','廣島(HIJ)','广岛(HIJ)','Hiroshima(HIJ)'),
+('日本','日本','Japan','ISG','石垣島(ISG)','石垣岛(ISG)','Ishigaki(ISG)'),
+('日本','日本','Japan','KOJ','鹿兒島(KOJ)','鹿儿岛(KOJ)','Kagoshima(KOJ)'),
+('日本','日本','Japan','KMJ','熊本(KMJ)','熊本(KMJ)','Kumamoto(KMJ)'),
+('日本','日本','Japan','NGS','長崎(NGS)','长崎(NGS)','Nagasaki(NGS)'),
+('日本','日本','Japan','NGO','名古屋(NGO)','名古屋(NGO)','Nagoya-Chubu(NGO)'),
+('日本','日本','Japan','KIX','大阪-關西(KIX)','大阪-关西(KIX)','Osaka-Kansai(KIX)'),
+('日本','日本','Japan','SHI','宮古 (下地島)(SHI)','宫古（下地岛）(SHI)','Miyako (Shimojishima)(SHI)'),
+('日本','日本','Japan','TAK','高松(TAK)','高松(TAK)','Takamatsu(TAK)'),
+('日本','日本','Japan','HND','東京-羽田(HND)','东京-羽田(HND)','Tokyo-Haneda(HND)'),
+('日本','日本','Japan','NRT','東京-成田(NRT)','东京-成田(NRT)','Tokyo-Narita(NRT)'),
+('韓國','韩国','South Korea','PUS','釜山(PUS)','釜山(PUS)','Busan-Gimhae(PUS)'),
+('韓國','韩国','South Korea','CJU','濟州(CJU)','济州(CJU)','Jeju(CJU)'),
+('韓國','韩国','South Korea','ICN','首爾-仁川(ICN)','首尔-仁川(ICN)','Seoul-Incheon(ICN)'),
+('中國台灣','中国台湾','Taiwan, China','RMQ','台中(RMQ)','台中(RMQ)','Taichung(RMQ)'),
+('泰國','泰国','Thailand','BKK','曼谷(BKK)','曼谷(BKK)','Bangkok(BKK)'),
+('泰國','泰国','Thailand','CNX','清邁(CNX)','清迈(CNX)','Chiang Mai(CNX)'),
+('泰國','泰国','Thailand','CEI','清萊(CEI)','清莱(CEI)','Chiang Rai(CEI)'),
+('泰國','泰国','Thailand','HKT','布吉(HKT)','普吉(HKT)','Phuket(HKT)'),
+('美國屬地','美国属地','Northern Mariana Islands','DAD','峴港(DAD)','岘港(DAD)','Da Nang(DAD)'),
+('越南','越南','Vietnam','CXR','芽莊(CXR)','芽庄(CXR)','Nha Trang(CXR)'),
+('越南','越南','Vietnam','SPN','塞班(SPN)','塞班(SPN)','Saipan(SPN)');
+
+
+
+
+-- e_currency 货币
+DROP TABLE IF EXISTS `e_currency`;
+CREATE TABLE `e_currency` (
+ `ec_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `ec_title` VARCHAR(200) NULL COMMENT '标题'
+  PRIMARY KEY (`ec_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- e-form 记录表
+DROP TABLE IF EXISTS `e_form`;
+CREATE TABLE `e_form` (
+ `e_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `e_lang_id` INT NULL COMMENT '语言Id',
+ `e_type` INT(11) NOT NULL COMMENT '类型(1:Resend Itinerary重新發送行程單 , 2:Duplicate Mulitiple Booking重復訂單,
+				3:Request for Certificate證明申請 , 4:Name Correction姓名修正 ,
+				5:Payment Failure支付失敗 , 6:Reconfirm Flight 確認航班 )',
+ `e_pnr` VARCHAR(100) NULL COMMENT 'PNR',
+ `e_first_name` VARCHAR(50) NULL COMMENT '名',
+ `e_last_name` VARCHAR(50) NULL COMMENT '性',
+ `e_email` VARCHAR(200) NULL COMMENT '邮箱',
+ `e_trip_type` INT(11) DEFAULT 0 COMMENT '旅行类型[1返往(默认)，2单程, 3多城市]',
+ `e_trip_departing` VARCHAR(200) NULL COMMENT '出发地',
+ `e_trip_going` VARCHAR(200) NULL COMMENT '目的地',
+ `e_trip_departingdate` DATETIME COMMENT '出发日期',
+ `e_trip_goingdate` DATETIME COMMENT '回程日期',
+ `e_trip_departing_new` VARCHAR(200) NULL COMMENT '出发地1',
+ `e_trip_going_new` VARCHAR(200) NULL COMMENT '目的地1',
+ `e_relation` INT(11) DEFAULT 0 COMMENT '是否有关系(0无,1第一,2第二)',
+ `e_relation_eid` INT(11) DEFAULT 0 COMMENT '关系的id',
+ `e_certificate_type` INT(11) DEFAULT 0 COMMENT '证书类型(1:证明类别 , 2:搭乘航班证明 , 3:无搭乘航班證明 , 4:航班延误证明[默认])',
+ `e_first_name_new` VARCHAR(50) NULL COMMENT '新-名',
+ `e_last_name_new` VARCHAR(50) NULL COMMENT '新-性',
+ `e_flie` VARCHAR(200) NULL COMMENT '文件名',
+ `e_payment_type` INT(11) DEFAULT 0 COMMENT '支付类型(1:支付宝,2:信用卡,3:微信)',
+ `e_payment_transaction` VARCHAR(200) NULL COMMENT '交易号',
+ `e_payment_amount` VARCHAR(200) NULL COMMENT '支付金额',
+ `e_currency_id` INT(11) DEFAULT 0 NULL COMMENT 'e_currency货币外表',
+ `e_payment_accounts` VARCHAR(200) NULL COMMENT '账号',
+ `e_random` INT(11) DEFAULT 0 NULL COMMENT 'e_currency货币外表',
+ `e_updatedate` TIMESTAMP  NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`e_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+-- e_form_result 对接口返回记录
+DROP TABLE IF EXISTS `e_form_result`;
+CREATE TABLE `e_form_result` (
+ `er_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `er_e_id` INT NULL COMMENT 'e-form表单ID',
+ `er_result` VARCHAR(100) NULL COMMENT '解析接口返回值(0:Matched;其它值表示Not Matched)',
+ `er_result_xml` VARCHAR(200) NULL COMMENT '接口返回值',
+  PRIMARY KEY (`er_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- e_form_type 分类
+DROP TABLE IF EXISTS `e_form_type`;
+CREATE TABLE `e_form_type` (
+ `et_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `et_title_hk` VARCHAR(200) NULL COMMENT '繁体-名',
+ `et_title_cn` VARCHAR(200) NULL COMMENT '简体-名',
+ `et_title_en` VARCHAR(200) NULL COMMENT '英文-名',
+  PRIMARY KEY (`et_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
+VALUES ('重新發送行程單','重新发送行程单','Request for itinerary'),
+('重復訂單','重复订单','Duplicate Booking'),
+('證明申請','证明申请','Request for Certificate'),
+('姓名修正','姓名修正','Name Correction'),
+('支付失敗','支付失敗','Payment Failure'),
+('確認航班','确认航班','Reconfirm Flight');
+
+-- e-form和问题的关系表
+DROP TABLE IF EXISTS `faqs_eform_relation`;
+CREATE TABLE `faqs_eform_relation` (
+ `er_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `er_et_id` INT NULL COMMENT 'e-form类型',
+ `er_dl_id` INT NULL COMMENT 'faq详细ID',
+  PRIMARY KEY (`er_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;

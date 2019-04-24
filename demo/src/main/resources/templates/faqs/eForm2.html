@@ -61,8 +61,8 @@
             <div class="row" style="margin-top: 50px;">
                 <div class="col-md-6 col-md-offset-3">
                     <ul id="progressbar">
-                        <li>{{'lab1'|translate}}</li>
-                        <li>{{'lab22'|translate}}</li>
+                        <li id="progressbarLi1">{{'lab1'|translate}}</li>
+                        <li id="progressbarLi2">{{'lab22'|translate}}</li>
                     </ul>
                 </div>
 
@@ -74,24 +74,23 @@
                             {{'lab54'|translate}} <span style="font-size: 14px;">{{'lab27'|translate}}</span>
                         </p>
                         <div style="padding: 10px;">
-                            <p style="margin: 5px 0px;font-size: 18px;font-weight: bold;">{{'lab26'|translate}}
-                            </p>
-                            <div class="form-group">
+                            <p style="margin: 5px 0px;font-size: 18px;font-weight: bold;">{{'lab26'|translate}}</p>
+                            <div class="form-group pnr-div">
                                 <label>{{'lab16'|translate}}:</label>
-                                <input type="text" name="PNRtext" class="form-control"  placeholder="">
+                                <input type="text" ng-model="e.pnr" name="pnr" class="form-control"  placeholder="{{'lab16'|translate}}" />
                             </div>
                             <div class="form-group" style="width: 50%;float: left;">
                                 <label>{{'lab2'|translate}}:</label>
-                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}">
+                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstName" ng-model="e.firstname"/>
                             </div>
                             <div class="form-group"  style="width: 48%;float: right;">
                                 <label style="color: white">1</label>
-                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}">
+                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}"  name="lastName" ng-model="e.lastname"/>
                             </div>
                             <div style="clear: both;"></div>
                             <div class="form-group">
                                 <label>{{'lab12'|translate}}</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="email" ng-model="e.email">
                             </div>
                             <div class="form-group">
                                 <label>{{'lab13'|translate}}</label>
@@ -108,29 +107,29 @@
                             {{'lab54'|translate}} <span style="font-size: 14px;">{{'lab27'|translate}}</span>
                         </p>
                         <div style="padding: 10px;">
-                            <p style="margin: 5px 0px;font-size: 18px;font-weight: bold;">{{'lab28'|translate}}
-                            </p>
-                            <div class="form-group">
+                            <p style="margin: 5px 0px;font-size: 18px;font-weight: bold;">{{'lab28'|translate}}</p>
+                            <div class="form-group pnr-div">
                                 <label>{{'lab16'|translate}}:</label>
-                                <input type="text" name="PNRtext" class="form-control"  placeholder="">
+                                <input type="text" ng-model="e.pnr" name="pnr" class="form-control"  placeholder="{{'lab16'|translate}}" />
                             </div>
                             <div class="form-group" style="width: 50%;float: left;">
                                 <label>{{'lab2'|translate}}:</label>
-                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}">
+                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstName" ng-model="e.firstname"/>
                             </div>
                             <div class="form-group"  style="width: 48%;float: right;">
                                 <label style="color: white">1</label>
-                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}">
+                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}"  name="lastName" ng-model="e.lastname"/>
                             </div>
                             <div style="clear: both;"></div>
                             <div class="form-group">
                                 <label>{{'lab12'|translate}}</label>
-                                <input type="text" class="form-control" placeholder="">
+                                <input type="text" class="form-control" name="email" ng-model="e.email">
                             </div>
                             <div class="form-group">
                                 <label>{{'lab13'|translate}}</label>
                             </div>
                             <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentSubmit2()">{{'lab14'|translate}}</button>
+                            <button class="btn btn-default" type="submit" style="float: right;margin-right: 10px;color: #71288E;border: 1px solid #71288E;padding: 10px 30px;" ng-click="getEformContent1()">{{'lab59'|translate}}</button>
                             <div style="clear: both;"></div>
                         </div>
 

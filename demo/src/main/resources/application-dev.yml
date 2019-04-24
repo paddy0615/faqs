@@ -15,7 +15,7 @@ spring:
   #jpa配置
   jpa:
     database: mysql
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: none
   tomcat:
@@ -42,19 +42,13 @@ spring:
       max-request-size: 200Mb
   # JavaMailSender 邮件发送的配置
   mail:
-    host: smtp.163.com
-    username: sonicpaddy@163.com
-    password: qq123456
+    host: mail.sonic-teleservices.com
+    username: hke_smartform@sonic-teleservices.com
+    password: sonic
     default-encoding: UTF-8
-    port: 25
-    protocol: smtp
     properties:
-      mail:
-        smtp:
-          auth: true
-        starttls:
-          enable: true
-          required: true
+      mail.smtp.socketFactory.fallback: true
+      mail.smtp.starttls.enable: true
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.example.demo.bean

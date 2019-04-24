@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQS | HK Express</title>
+    <style>
+        .control-label1{
+              font-weight: bold;
+              width: 160px;
+          }
+        .control-label2{
+        }
+        tr{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<span>From HK Express Smart Form:</span>
+    <div class="row" style="margin: 10px;">
+        <table style="width: 800px;">
+            <tr th:if="${not #lists.isEmpty(title)}">
+                <td class="control-label1">Email Subject :</td>
+                <td class="control-label2" th:text="${title}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.updateDate)}">
+                <td class="control-label1">Date :</td>
+                <td class="control-label2" th:text="${#dates.format(eform.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.pnr)}">
+                <td class="control-label1">PNR :</td>
+                <td class="control-label2" th:text="${eform.pnr}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.firstname)}">
+                <td class="control-label1">First Name :</td>
+                <td class="control-label2" th:text="${eform.firstname}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.lastname)}">
+                <td class="control-label1">Last Name :</td>
+                <td class="control-label2" th:text="${eform.lastname}"></td>
+            </tr>
+
+            <tr th:if="${not #lists.isEmpty(eform.departing)}">
+                <td class="control-label1">Departing From :</td>
+                <td class="control-label2" th:text="${eform.departing}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.going)}">
+                <td class="control-label1">Going to :</td>
+                <td class="control-label2" th:text="${eform.going}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.departingdate)}">
+                <td class="control-label1">Leaving on :</td>
+                <td class="control-label2" th:text="${#dates.format(eform.departingdate, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.departingnew)}">
+                <td class="control-label1">Departing From :</td>
+                <td class="control-label2" th:text="${eform.departingnew}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.goingnew)}">
+                <td class="control-label1">Going to :</td>
+                <td class="control-label2" th:text="${eform.goingnew}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.goingdate)}">
+                <td class="control-label1">Returning on :</td>
+                <td class="control-label2" th:text="${#dates.format(eform.goingdate, 'yyyy-MM-dd')}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(eform.email)}">
+                <td class="control-label1">Email Address :</td>
+                <td class="control-label2" th:text="${eform.email}"></td>
+            </tr>
+        </table>
+
+
+    </div>
+
+<div>
+<!--
+    <style class="fox_global_style"> div.fox_html_content { line-height: 1.5;} /* 一些默认样式 */ blockquote { margin-Top: 0px; margin-Bottom: 0px; margin-Left: 0.5em } ol, ul { margin-Top: 0px; margin-Bottom: 0px; list-style-position: inside; } p { margin-Top: 0px; margin-Bottom: 0px } </style> <div><br></div> <hr style="HEIGHT: 1px; WIDTH: 210px" align="left" color="#b5c4df" size="1"> <div> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">&lt;!&ndash;?xml:namespace prefix = "o" ns = "urn:schemas-microsoft-com:office:office" /&ndash;&gt;<o:p>&nbsp;</o:p></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><a name="OLE_LINK2"></a><a name="OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Thanks &amp; Regards<o:p></o:p></span></span></a></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Paddy pong</span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US"></span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US"></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">DataAnalyst</span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Sonic Teleservices Co. Ltd.</span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Mob: </span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-no-proof: yes">+86&nbsp;13286960470</span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Tel:&nbsp;189</span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 0cm 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">Fax:&nbsp; </span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-no-proof: yes">+86 2066826300</span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>The information in this email is confidential. </span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">If you are not the intended recipient, you should not read, use or disseminate or otherwise divulge that information. </span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">If you have received this email in error, please notify the sender and delete it immediately from your system.</span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">This email transmission and the attachment cannot be guaranteed to be secure or error free as information could be intercepted, corrupted, lost, destroyed, arrived late, incomplete or contain viruses. </span></span></span><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-GB" style="FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black"><o:p></o:p></span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US">We and the sender therefore accept no liability for any error or omission in the content of this message which may arise as a result of email transmission.<br>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~<br>"SAVE PAPER - THINK BEFORE YOU PRINT!"</span></span></span></p> <p class="MsoNormal" style="LAYOUT-GRID-MODE: char; MARGIN: 6pt 0cm 0pt"><span style="mso-bookmark: OLE_LINK1"><span style="mso-bookmark: OLE_LINK2"><span lang="EN-US" style="FONT-SIZE: 10pt; FONT-FAMILY: 'Calibri','sans-serif'; COLOR: black; mso-ansi-language: EN-US"> <img src="cid:test001"/></span></span></span></p></div>
+-->
+<p>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+    <div class="row" style="margin: 10px;">
+        <table style="width: 800px;">
+            <tr th:if="${not #lists.isEmpty(eform.random)}">
+                <td class="control-label1" style="width: 230px;">E-inquiry Form Number :</td>
+                <td class="control-label2" th:text="${eform.random}"></td>
+            </tr>
+        </table>
+    </div>
+
+    <p><hr style="HEIGHT: 1px; WIDTH: 210px" align="left" color="#b5c4df" size="1"></p>
+    <img src="cid:faq_top4"/>
+</div>
+
+
+</body>
+</html>

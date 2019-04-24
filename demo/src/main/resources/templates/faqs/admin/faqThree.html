@@ -99,6 +99,16 @@
                           <textarea class="demo1" readonly="readonly" style="display: block;"></textarea>
                       </div>
                   </div>
+                  <!-- e-form -->
+                  <div class="form-group">
+                      <label class="col-sm-2 control-label">E-Form :</label>
+                      <div class="col-sm-8">
+                          <div ng-repeat="t in eFormTypes">
+                              <input type="checkbox" name="master{{t.id}}" ng-checked="master{{t.id}}">{{t.en}}
+                          </div>
+                      </div>
+
+                  </div>
                   <!-- content -->
                   <div class="form-group">
                       <label class="col-sm-2 control-label">Content :</label>

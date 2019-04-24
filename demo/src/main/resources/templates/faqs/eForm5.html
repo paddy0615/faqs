@@ -61,8 +61,8 @@
             <div class="row" style="margin-top: 50px;">
                 <div class="col-md-6 col-md-offset-3">
                     <ul id="progressbar">
-                        <li>{{'lab1'|translate}}</li>
-                        <li>{{'lab22'|translate}}</li>
+                        <li id="progressbarLi1">{{'lab1'|translate}}</li>
+                        <li id="progressbarLi2">{{'lab22'|translate}}</li>
                     </ul>
                 </div>
 
@@ -94,20 +94,12 @@
                                 <div class="tab-pane fade in active" id="home">
                                     <div class="form-group" style="width: 50%;float: left;">
                                         <label>{{'lab8'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
+                                        <select ng-model="e_area_departing" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                         </select>
                                     </div>
                                     <div class="form-group"  style="width: 48%;float: right;">
                                         <label>{{'lab9'|translate}}：</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
+                                        <select ng-model="e_area_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                         </select>
                                     </div>
                                     <div class="form-group" style="width: 50%;float: left;">
@@ -125,20 +117,12 @@
                                 <div class="tab-pane fade" id="ios">
                                     <div class="form-group" style="width: 50%;float: left;">
                                         <label>{{'lab8'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
+                                        <select ng-model="e_area_departing" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                         </select>
                                     </div>
                                     <div class="form-group"  style="width: 48%;float: right;">
-                                        <label>{{'lab9'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
+                                        <label>{{'lab9'|translate}}：</label>
+                                        <select ng-model="e_area_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                         </select>
                                     </div>
                                     <div class="form-group" style="width: 50%;float: left;">
@@ -151,52 +135,38 @@
 
                                 <!-- tab3-->
                                 <div class="tab-pane fade" id="jmeter">
-                                    <div class="form-group" style="width: 50%;float: left;">
+                                    <div class="form-group jmeterDiv1">
                                         <label>{{'lab8'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
+                                        <input style="background-color: white" readonly="readonly" type="text" class="form-control layui-input col-sm-4" ng-value="langId==1?e_area_names[0].hk:(langId==2?e_area_names[0].cn:e_area_names[0].en)">
+                                        <input type="hidden" ng-model="e_area_departing" ng-value="e_area_names[0].key" />
+                                    </div>
+                                    <div class="form-group jmeterDiv2">
+                                        <label>{{'lab9'|translate}}：</label>
+                                        <select ng-model="e_area_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten)  for a in e_area_names">
                                         </select>
                                     </div>
-                                    <div class="form-group"  style="width: 48%;float: right;">
-                                        <label>{{'lab9'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                        </select>
+                                    <div class="form-group jmeterDiv3">
+                                        <label>{{'lab10'|translate}}：</label>
+                                        <input type="text" class="form-control layui-input col-sm-4" id="ladate4"/>
                                     </div>
-                                    <div class="form-group" style="width: 50%;float: left;">
+                                    <div style="clear: both;"></div>
+                                    <div class="form-group jmeterDiv4">
                                         <label>{{'lab8'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
-                                            <option>帅哥</option>
+                                        <select ng-model="e_area_departing1" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten)  for a in e_area_names">
                                         </select>
                                     </div>
-                                    <div class="form-group"  style="width: 48%;float: right;">
-                                        <label>{{'lab9'|translate}}:</label>
-                                        <select ng-model="fl_id" class="form-control">
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                            <option>美女</option>
-                                        </select>
+                                    <div class="form-group jmeterDiv5">
+                                        <label>{{'lab9'|translate}}：</label>
+                                        <input style="background-color: white" readonly="readonly" type="text" class="form-control layui-input col-sm-4" ng-value="langId==1?e_area_names[0].hk:(langId==2?e_area_names[0].cn:e_area_names[0].en)" />
+                                        <input type="hidden" ng-model="e_area_departing1" ng-value="e_area_names[0].key" />
                                     </div>
-                                    <div class="form-group" style="width: 50%;float: left;">
-                                        <label>{{'lab10'|translate}}:</label>
-                                        <input type="text" class="form-control layui-input col-sm-4" id="ladate4">
-                                    </div>
-                                    <div class="form-group" style="width: 48%;float: right;">
+                                    <div class="form-group jmeterDiv6">
                                         <label>{{'lab11'|translate}}:</label>
-                                        <input type="text" class="form-control layui-input col-sm-4" id="ladate5">
+                                        <input type="text" class="form-control layui-input col-sm-4" id="ladate5"/>
                                     </div>
 
                                 </div>
+
                             </div>
 
                             <div style="clear: both;"></div>
@@ -207,7 +177,7 @@
                             <div class="form-group">
                                 <label>{{'lab13'|translate}}</label>
                             </div>
-                            <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentSubmit()">{{'lab14'|translate}}</button>
+                            <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentSubmit()">{{'lab29'|translate}}</button>
                             <div style="clear: both;"></div>
                         </div>
 
@@ -302,7 +272,7 @@
                                 <p style="font-weight:700;">{{'lab13'|translate}}</p>
                                 <p style="font-weight:700;">{{'lab52'|translate}}</p>
                             </div>
-                            <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentPaySubmit()">提交</button>
+                            <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentPaySubmit()">{{'lab14'|translate}}</button>
 
                             <div style="clear: both;"></div>
                         </div>

@@ -35,25 +35,70 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
     }
     $scope.info();
 
+    // 分页
+    $scope.PageCount = 0; // 总数
+    $scope.CurrentPage = 1; // 当前页
+    $scope.PageSize = 10; // 显示页数
+    $scope.Paginator = function(PageCount,CurrentPage,PageSize){
+        if(PageCount == 0){
+            return;
+        }
+        var myPageCount = PageCount;
+        var myPageSize = PageSize;
+        var countindex = myPageCount % myPageSize > 0 ? (myPageCount / myPageSize) + 1 : (myPageCount / myPageSize);
+        $.jqPaginator('#pagination', {
+            totalPages: parseInt(countindex),
+            visiblePages: 7, //显示分页数
+            currentPage: CurrentPage,
+            first: '<li class="first"><a href="javascript:;">First</a></li>',
+            prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i>Prev</a></li>',
+            next: '<li class="next"><a href="javascript:;">Next<i class="arrow arrow3"></i></a></li>',
+            last: '<li class="last"><a href="javascript:;">Last</a></li>',
+            page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+            onPageChange: function (num, type) {
+                if (type == "change") {
+                    $scope.CurrentPage = num;
+                    $scope.info1($scope.CurrentPage,$scope.PageSize);
+                }
+            }
+        });
+
+    }
+
     // 初始化显示
-    $scope.info1 = function(){
+    $scope.info1 = function(CurrentPage,PageSize){
         $scope.selectTest = selectTest($scope.langId);
+        var dataMap = {
+            fl_id : $scope.fl_id,
+            langId : $scope.langId,
+            dl_status : $scope.dl_status,
+            CurrentPage : CurrentPage,
+            PageSize : PageSize
+        }
+
         $http({
             method : 'post',
             url : ctx + "appJson/admin/getLibrabryPage",
-            params:{"fl_id": $scope.fl_id,"langId": $scope.langId,"dl_status": $scope.dl_status}
+            data : JSON.stringify(dataMap)
         }).success(function (data) {
             /* 成功*/
             $scope.detaileds = data.result.detaileds;
+            $scope.PageCount = data.result.PageCount;
+            if($scope.PageCount > 0){
+                $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
+            }else{
+                // 没有数据时不显示
+                $('#pagination').jqPaginator('destroy');
+            }
+
         })
     }
-    //$scope.info1();
 
     // 下拉事件
     $scope.clickLanguage = function() {
         $scope.selected = [];
         $("[name='checkboxAll']:checkbox").prop("checked", false);
-        $scope.info1();
+        $scope.info1($scope.CurrentPage,$scope.PageSize);
     }
 
     // 编辑url
@@ -153,7 +198,7 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
                 ,closeBtn: 0
             },function () {
                 lock2 = false;
-                $scope.info1();
+                $scope.info1($scope.CurrentPage,$scope.PageSize);
                 $scope.selected = [];
                 $("[name='checkboxAll']:checkbox").prop("checked", false);
                 layer.close(index);
@@ -201,7 +246,7 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
             url : ctx + "appJson/admin/detailed/delete",
             params:{"dlIds": dlIds}
         }).success(function (data) {
-            $scope.info1();
+            $scope.info1($scope.CurrentPage,$scope.PageSize);
             $scope.selected = [];
             $("[name='checkboxAll']:checkbox").prop("checked", false);
         })
@@ -230,7 +275,7 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
     $scope.getSearch = function (){
         if($scope.searchTest == ""){
             $scope.detaileds =  {};
-            $scope.info1();
+            $scope.info1($scope.CurrentPage,$scope.PageSize);
             return;
         };
         //$scope.checkSearchTags();
@@ -249,10 +294,9 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }else{
-        $scope.info1();
+        $scope.info1($scope.CurrentPage,$scope.PageSize);
     }
     /* 搜索框 结束*/
-
 
     // 退出
     $scope.goCancel = function(url){
@@ -289,10 +333,15 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
             /* 成功*/
             $scope.librabries = data.result.librabries;
             $scope.languages = data.result.languages;
+            $scope.eFormTypes = data.result.eFormTypes;
         })
     }
+
     // 初始化
     $scope.info1 = function(ind){
+        angular.forEach($scope.eFormTypes,function(hero,index,objs){
+            $scope['master'+hero.id] = false;
+        });
         $scope.detailed = {};
         $http({
             method : 'post',
@@ -314,6 +363,12 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
                         editor.setContent($scope.detailed.content);
                     }
                 })
+                //$("input[name^='master']").attr("checked",false)
+                $scope.deFormType = data.result.deFormType;
+                angular.forEach($scope.deFormType,function(hero,index,objs){
+                    $scope['master'+hero.etId] = true;
+                });
+
             }else{
                 $scope.editType = "< Add";
                 $scope.showTags([]);
@@ -358,9 +413,15 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
             return;
         };
         if(!lock1) {
-            var tags = $('.demo1').tagEditor('getTags')[0].tags;
             var index =  layer.load(0, {shade: false});
             lock1 = true; // 锁定
+            var eformtypeArr = [];
+            angular.forEach($scope.eFormTypes,function(hero,index,objs){
+                if($("input[name='master"+hero.id+"']").is(':checked')){
+                    eformtypeArr.push(hero.id);
+                }
+            });
+            var tags = $('.demo1').tagEditor('getTags')[0].tags;
             $scope.detailed.flId = $scope.fl_id;
             $scope.detailed.langId = $scope.langId;
             $scope.detailed.content = UE.getEditor('editorEdit').getContent();
@@ -369,7 +430,7 @@ myapp.controller("faqThreeController",["$scope","$http",function ($scope, $http)
             $http({
                 method : 'post',
                 url : ctx + 'appJson/admin/detailed/faqThreeUpdate',
-                data : JSON.stringify({'detailed':$scope.detailed,'tagsArr':tags})
+                data : JSON.stringify({'detailed':$scope.detailed,'tagsArr':tags,'eformtypeArr':eformtypeArr})
             }).success(function(resp){
                 layer.alert( 'Success', {
                     title:'Information',

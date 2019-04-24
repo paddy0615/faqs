@@ -16,6 +16,8 @@
     <!-- Custom styles for this template -->
     <link th:href="@{/css/assets/dashboard.css}" rel="stylesheet">
     <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/jqPaginator.min.js}"></script>
+    <link th:href="@{/css/assets/myPage.css}" rel="stylesheet">
     <script th:src="@{/js/layer/layer.js}"></script>
     <script th:src="@{/js/assets/angular.js}"></script>
     <script th:src="@{/js/admin/directive.js}"></script>
@@ -42,16 +44,12 @@
         <left-Directive></left-Directive>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
-                <div class="col-lg-3">
-                    <span style="font-size: 36px;">Question List</span>
-                </div>
-                <div class="col-lg-9" style="float: right;top: 20px;">
-                    <div class="input-group">
-                        <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}"  ng-keyup="onKeyup(event)">
-                        <span class="input-group-btn">
-                              <button class="btn btn-default" type="button" ng-click="getSearch()"><i class="glyphicon glyphicon-search"></i></button>
-                        </span>
-                    </div>
+                <span style="font-size: 36px;">Question List</span>
+                <div class="input-group col-sm-9" style="float: right;margin-top: 10px;">
+                    <input ng-model="searchTest" type="text" class="form-control" placeholder="{{selectTest}}"  ng-keyup="onKeyup(event)">
+                    <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" ng-click="getSearch()"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
                 </div>
             </div>
 
@@ -129,19 +127,19 @@
                     </tbody>
                 </table>
             </div>
+
+
+            <!-- 分页-->
+            <div style="text-align: right;">
+                <ul class="pagination" id="pagination"></ul>
+            </div>
+
         </div>
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script  th:src="@{/js/assets/vendor/jquery.min.js}"><\/script>')</script>
 <script th:src="@{/js/assets/bootstrap.min.js}"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
 <script th:src="@{/js/assets/holder.min.js}"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
 
 </body>

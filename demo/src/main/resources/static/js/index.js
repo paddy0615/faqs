@@ -1,18 +1,4 @@
-var myapp = angular.module("myapp",[]);
-myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
-    return {
-        restrict: 'A',
-        link: function(scope,element,attr) {
-            if (scope.$last === true) {
-                var finishFunc=scope.$parent[attr.onFinishRenderFilters];
-                if(finishFunc)
-                {
-                    finishFunc();
-                }
-            }
-        }
-    };
-}])
+var myapp = angular.module("myapp",['pascalprecht.translate']);
 // online chat
 function onlineChat(langId) {
     if(langId == 1){
@@ -87,7 +73,7 @@ function onlineChat(langId) {
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
     }else{
         // Hong Kong (EN)
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+      /*  var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/ff4b2b7a-dfbb-47d8-9e51-766c426eb3cb.js';
         var done = false;
         se.onload = se.onreadystatechange = function() {
@@ -98,9 +84,25 @@ function onlineChat(langId) {
                 SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);*/
+        <!-- begin SonicTeleservices code -->
+        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/09bcc7b8-3035-4460-8c0f-a080d4815c17.js';
+        var done = false;
+        se.onload = se.onreadystatechange = function() {
+            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+                done = true;
+                /* Place your SonicTeleservices JS API code below */
+                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+            }
+        };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+        <!-- end SonicTeleservices code -->
+
+
     }
 }
+/*
 // www.hkexpress.com
 function getHKE(langId){
     var suffix = "";
@@ -124,7 +126,45 @@ function getHKE(langId){
         suffix = "en-hk";
     }
     clicked("https://www.hkexpress.com/"+suffix);
-}
+}*/
+
+
+myapp.config(['$translateProvider',function($translateProvider){
+    var lang = window.localStorage['lang'] || '6';
+    $translateProvider
+        .preferredLanguage(lang)
+        .useStaticFilesLoader({
+            prefix: ctx + 'js/i18n/',
+            suffix: '.json'
+        })
+        .useSanitizeValueStrategy('escapeParameters');
+}])
+myapp.factory('T', ['$translate', function($translate) {
+    var T = {
+        T:function(key) {
+            if(key){
+                return $translate.instant(key);
+            }
+            return key;
+        }
+    }
+    return T;
+}]);
+
+myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope,element,attr) {
+            if (scope.$last === true) {
+                var finishFunc=scope.$parent[attr.onFinishRenderFilters];
+                if(finishFunc)
+                {
+                    finishFunc();
+                }
+            }
+        }
+    };
+}])
 
 // 路由
 myapp.config(['$locationProvider', function($locationProvider) {
@@ -134,8 +174,9 @@ myapp.config(['$locationProvider', function($locationProvider) {
         requireBase: false
     });
 }]);
+
 // index
-myapp.controller("indexController",["$scope","$http","$location",function ($scope, $http,$location) {
+myapp.controller("indexController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
@@ -277,7 +318,7 @@ myapp.controller("indexController",["$scope","$http","$location",function ($scop
 }]);
 
 // indexDetailed
-myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",function ($scope, $http, $sce,$location) {
+myapp.controller("indexDetailedController",["$scope","$http","$sce","$location","$translate",function ($scope, $http, $sce,$location,$translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
@@ -299,6 +340,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
+                $translate.use($scope.langId.toString());
                 $scope.dfcount = data.result.dfcount;
                 $scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
@@ -324,6 +366,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                     }
                 })
                 $scope.lang_cout = data.result.categories.length;
+                $scope.eFormTypes = data.result.eFormTypes;
             }else{
                 /* 失败*/
                 layer.alert( 'Abnormal error.', {
@@ -536,6 +579,8 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         })
     }
 
+
+
     function check1() {
         var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
         var reg2 =  /^\d*$/
@@ -550,5 +595,10 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         return true;
     }
 
+
+    // 跳转E-form
+    $scope.getEform = function(id){
+        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId);
+    }
 
 }]);

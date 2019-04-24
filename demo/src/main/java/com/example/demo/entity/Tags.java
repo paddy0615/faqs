@@ -9,6 +9,15 @@ public class Tags implements Serializable {
 
     private Detailed detailed;
     private String [] tagsArr;
+    private long [] eformtypeArr;
+
+    public long[] getEformtypeArr() {
+        return eformtypeArr;
+    }
+
+    public void setEformtypeArr(long[] eformtypeArr) {
+        this.eformtypeArr = eformtypeArr;
+    }
 
     public Detailed getDetailed() {
         return detailed;

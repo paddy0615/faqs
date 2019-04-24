@@ -70,7 +70,6 @@ public class UrlController {
         return "faqs/admin/feedbackSet";
     }
 
-
     @RequestMapping("/admin/notags")
     public String notags(){
         return "faqs/admin/notags";
@@ -94,15 +93,25 @@ public class UrlController {
         return "faqs/admin/faqThree";
     }
 
+    @RequestMapping("/admin/eForm")
+    public String eForm(){
+        return "faqs/admin/eForm";
+    }
+
+    @RequestMapping("/admin/eFormSet")
+    public String eFormSet(){
+        return "faqs/admin/eFormSet";
+    }
+
     /**
-     * Resend Itinerary 重新發送行程單
+     * Request for itinerary 重新發送行程單
      * @return
      */
     @RequestMapping("/eForm1")
     public String eForm1(){return "faqs/eForm1";}
 
     /**
-     * Duplicate Mulitiple Booking 重復訂單
+     * Duplicate Booking 重復訂單
      * @return
      */
     @RequestMapping("/eForm2")
@@ -136,5 +145,6 @@ public class UrlController {
      */
     @RequestMapping("/eForm6")
     public String eForm6(){return "faqs/eForm6";}
+
 
 }
