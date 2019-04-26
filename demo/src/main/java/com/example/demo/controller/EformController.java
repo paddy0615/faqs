@@ -105,6 +105,13 @@ public class EformController {
     @RequestMapping("/test")
     public String test(Model model) throws Exception{
         System.out.println("开始");
+    /*    Map<String, Object> valueMap = new HashMap<>();
+        valueMap.put("title", "测试邮件1");
+        valueMap.put("langId",5);
+        valueMap.put("random",123456789);
+        valueMap.put("To","paddy.pong@sonic-teleservices.com");
+        eformService.sendSimpleMailUser(valueMap);
+*/
 
         return "ok";
     }

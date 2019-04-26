@@ -65,7 +65,9 @@ public class LibrabryController {
         RestResultModule module = new RestResultModule();
         module.putData("librabries",detailedService.getLibrabrys());
         module.putData("languages",languageDao.findAll());
-        module.putData("eFormTypes",e_form_typeDao.findAll());
+        //module.putData("eFormTypes",e_form_typeDao.findAll());
+        module.putData("eFormTypes",e_form_typeDao.getAllByDlIdtest());
+
         return module;
     }
 

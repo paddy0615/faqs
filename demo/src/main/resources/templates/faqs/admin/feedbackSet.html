@@ -56,7 +56,10 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Rating :</label>
-                        <label style="text-indent: 2em;font-weight: normal;" class="control-label">-1</label>
+                        <label style="text-indent: 2em;font-weight: normal;" class="control-label">
+                            <element ng-if="feedback.type == 1">+1</element>
+                            <element ng-if="feedback.type == 2">-1</element>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Comment :</label>

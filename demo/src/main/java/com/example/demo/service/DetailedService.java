@@ -114,6 +114,7 @@ public class DetailedService {
     }
 
     public List<E_form_type> getEformTypeByDlId(long dlId){
+        //return e_form_typeDao.getAllByDlIdtest(dlId);
         return e_form_typeDao.getAllByDlId(dlId);
     }
 
@@ -260,9 +261,9 @@ public class DetailedService {
      */
     public void updateFeedback(DetailedFeedback feedback){
         List<DetailedFeedback>  feedbacks = feedbackDao.findAllByTypeAndDlIdAndIp(feedback.getType(),feedback.getDlId(),feedback.getIp());
-        if(feedbacks.size() >= 5 ){
+      /*  if(feedbacks.size() >= 5 ){
             return;
-        }
+        }*/
         String conten = feedback.getContent();
         String email = feedback.getEmail();
         String number = feedback.getNumber();

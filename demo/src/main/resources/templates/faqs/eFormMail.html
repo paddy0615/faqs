@@ -82,7 +82,10 @@
         <table style="width: 800px;">
             <tr th:if="${not #lists.isEmpty(eform.random)}">
                 <td class="control-label1" style="width: 230px;">E-inquiry Form Number :</td>
-                <td class="control-label2" th:text="${eform.random}"></td>
+                <td class="control-label2" >
+                    <span>E-IN</span>
+                    <span th:text="${eform.random}"></span>
+                </td>
             </tr>
         </table>
     </div>

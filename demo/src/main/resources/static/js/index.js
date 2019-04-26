@@ -102,32 +102,6 @@ function onlineChat(langId) {
 
     }
 }
-/*
-// www.hkexpress.com
-function getHKE(langId){
-    var suffix = "";
-    if(langId == 1){
-        // 香港 (繁體)
-        suffix = "zh-hk";
-    }else if(langId == 2){
-        // 中国 简体
-        suffix = "zh-cn";
-    }else if(langId == 3){
-        // 台灣 (繁體)
-        suffix = "zh-tw";
-    }else if(langId == 4){
-        // 日本 (日本語))
-        suffix = "ja";
-    }else if(langId == 5){
-        // 대한민국(한국어)
-        suffix = "ko";
-    }else if(langId == 6){
-        // Hong Kong (EN)
-        suffix = "en-hk";
-    }
-    clicked("https://www.hkexpress.com/"+suffix);
-}*/
-
 
 myapp.config(['$translateProvider',function($translateProvider){
     var lang = window.localStorage['lang'] || '6';
@@ -479,6 +453,9 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
     // 热点初始化
     info1();
 
+    $scope.praiseNayTest = 0;
+    $scope.dfId1 = 0;
+    $scope.dfId2 = 0;
     <!-- 反馈:支持-->
     $("#praise").click(function(){
         var praise_img = $("#praise-img");
@@ -492,6 +469,8 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             $(".add-animation").removeClass("hover");
             num -=1;
             praise_txt.text(num);
+            $("#praiseNayTest").hide();
+            $scope.praiseNayTest = 0;
             delFeedback($scope.dfId1);
             $scope.dfId1 = 0;
         }else{
@@ -500,12 +479,13 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
             num +=1;
-            praise_txt.text(num)
+            praise_txt.text(num);
+            $("#praiseNayTest").show();
+            $scope.praiseNayTest = 1;
             addFeedback(1,"");
         }
     });
     <!-- 反馈:反对-->
-    $("#praiseNayTest").hide();
     $("#praise1").click(function(){
         var praise_img = $("#praise-img1");
         var text_box = $("#add-num1");
@@ -516,6 +496,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
             $("#praiseNayTest").hide();
+            $scope.praiseNayTest = 0;
             delFeedback($scope.dfId2);
             $scope.dfId2 = 0;
         }else{
@@ -523,12 +504,11 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
             $("#praiseNayTest").show();
+            $scope.praiseNayTest = 2;
             addFeedback(2,"");
         }
     });
     <!-- 反馈:add异步-->
-    $scope.dfId1 = 0;
-    $scope.dfId2 = 0;
     function addFeedback(type,content) {
         $http({
             method : "post",
@@ -543,15 +523,15 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         })
     }
     function delFeedback(dfId) {
-        if(dfId == 0){
-            return;
+        if(dfId > 0){
+            $http({
+                method : "post",
+                url : ctx + "appJson/delFeedback",
+                data : {"id" : dfId}
+            }).success(function (data) {
+            })
         }
-        $http({
-            method : "post",
-            url : ctx + "appJson/delFeedback",
-            data : {"id" : dfId}
-        }).success(function (data) {
-        })
+
     }
     $scope.dfContent = "";
     $scope.dfContentEmail = "";
@@ -560,11 +540,17 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
         if(!check1()){
             return;
         }
+        var id = 0;
+        if($scope.praiseNayTest == 1){
+            id = $scope.dfId1
+        }else if($scope.praiseNayTest == 2){
+            id = $scope.dfId2
+        }
         var index = layer.load(0, {shade: false});
         $http({
             method : "post",
             url : ctx + "appJson/updateFeedback",
-            data : {"id":$scope.dfId2,"type" : 2,"dlId" : $scope.dlId,"content" : $scope.dfContent,"email":$scope.dfContentEmail,"number":$scope.dfContentNumber}
+            data : {"id":id,"type" : $scope.praiseNayTest,"dlId" : $scope.dlId,"content" : $scope.dfContent,"email":$scope.dfContentEmail,"number":$scope.dfContentNumber}
         }).success(function (data) {
             layer.close(index);
             if(data.code == 200){
@@ -572,7 +558,10 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 $scope.dfContent = "";
                 $scope.dfContentEmail = "";
                 $scope.dfContentNumber = "";
-                $scope.dfId2 = 0;
+                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                    window.location.reload();//页面刷新
+                },1000);
+
             }else{
                 layer.msg("Error", {icon: 5});
             }

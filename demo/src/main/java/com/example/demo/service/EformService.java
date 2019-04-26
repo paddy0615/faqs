@@ -180,7 +180,7 @@ public class EformService {
             // 设置邮件内容
             MimeMessageHelper helper = new MimeMessageHelper(msg, true,"UTF-8");
             // 设置发件人邮箱
-            helper.setFrom(sender);
+            helper.setFrom("guest.relations@hkexpress.com");
             // 设置收件人邮箱
             helper.setTo(receiver);
             // 设置邮件标题
@@ -189,6 +189,10 @@ public class EformService {
             context.setVariables(valueMap);
             String content = this.templateEngine.process("faqs/eFormMailGuest.html", context);
             helper.setText(content, true);
+            org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top3.png");
+            // 图片
+            FileSystemResource file = new FileSystemResource(resource.getFile());
+            helper.addInline("faq_top3", file);
             Transport transport = session.getTransport();
             // 连接邮件服务器
             transport.connect(sender, password);

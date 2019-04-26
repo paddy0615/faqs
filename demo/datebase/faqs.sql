@@ -254,7 +254,7 @@ VALUES ('香港特別行政區','中国香港','Hong Kong SAR','HKG','香港(HKG
 DROP TABLE IF EXISTS `e_currency`;
 CREATE TABLE `e_currency` (
  `ec_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
- `ec_title` VARCHAR(200) NULL COMMENT '标题'
+ `ec_title` VARCHAR(200) NULL COMMENT '标题',
   PRIMARY KEY (`ec_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
