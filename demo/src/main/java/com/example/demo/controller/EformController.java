@@ -77,6 +77,13 @@ public class EformController {
                    valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
                    valueMap.put("cc", eform.getEmail());
                    eformService.sendSimpleMail(valueMap);
+                   // 发确认邮件
+                   Map<String, Object> valueMapUser = new HashMap<>();
+                   valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
+                   valueMapUser.put("To",eform.getEmail());
+                   valueMapUser.put("langId",eform.getLangId());
+                   valueMapUser.put("random",eform.getRandom());
+                   eformService.sendSimpleMailUser(valueMapUser);
                    // 返回成功码
                    module.putData("key",eform.getRandom());
                }else{
@@ -97,8 +104,9 @@ public class EformController {
     @ResponseBody
     @RequestMapping("/test")
     public String test(Model model) throws Exception{
-        System.out.println(eformService.getRandom());
-        return "";
+        System.out.println("开始");
+
+        return "ok";
     }
 
 }

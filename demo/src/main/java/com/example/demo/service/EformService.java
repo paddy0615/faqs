@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.EformEntity;
+import com.sun.mail.util.MailSSLSocketFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -24,11 +26,16 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 @Service("eformService")
 public class EformService {
@@ -121,6 +128,80 @@ public class EformService {
     }
 
     /**
+     * 获取getMailUserType
+     */
+    public String getMailUserType(String langid){
+        String s = "";
+        switch(langid){
+            case "1" :
+                s = "電子表格郵件確認";
+                break;
+            case "2"  :
+                s = "电子表格邮件确认";
+                break;
+            case "4"  :
+                s = "表計算ドキュメントのメール確認";
+                break;
+            case "5"  :
+                s = "환불 요청 메일 확인서";
+                break;
+            default :
+                s = "Smart Form Acknowledgement";
+        }
+        return s;
+    }
+
+    /**
+     * 发确认邮件
+     * @throws
+     */
+    public void sendSimpleMailUser(Map<String, Object> valueMap) throws Exception {
+        String sender = "Soniccs.Guest.Relations@hkexpress.com";
+        String password = "H+==2GaR";
+        // 收件人邮箱地址
+        String receiver = valueMap.get("To").toString();
+        // office365 邮箱服务器地址及端口号
+        String host = "smtp-mail.outlook.com";
+        String prot = "587";
+        try{
+            Properties props = new Properties();
+            // 发送服务器需要身份验证
+            props.setProperty("mail.smtp.auth", "true");
+            // 设置邮件服务器主机名
+            props.setProperty("mail.host", host);
+            // 发送邮件协议名称
+            props.setProperty("mail.transport.protocol", "smtp");
+            props.setProperty("mail.smtp.port", prot);
+            props.setProperty("mail.smtp.starttls.enable", "true");
+            // 设置环境信息
+            Session session = Session.getInstance(props);
+            // 创建邮件对象
+            MimeMessage msg = new MimeMessage(session);
+            // 设置邮件内容
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true,"UTF-8");
+            // 设置发件人邮箱
+            helper.setFrom(sender);
+            // 设置收件人邮箱
+            helper.setTo(receiver);
+            // 设置邮件标题
+            helper.setSubject(valueMap.get("title").toString());
+            Context context = new Context();
+            context.setVariables(valueMap);
+            String content = this.templateEngine.process("faqs/eFormMailGuest.html", context);
+            helper.setText(content, true);
+            Transport transport = session.getTransport();
+            // 连接邮件服务器
+            transport.connect(sender, password);
+            // 发送邮件
+            transport.sendMessage(msg, new Address[]{new InternetAddress(receiver)});
+            // 关闭连接
+            transport.close();
+        }catch( Exception e ){
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * 发邮件
      * @throws Exception
      */
@@ -130,12 +211,11 @@ public class EformService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         // 设置发件人邮箱
         helper.setFrom(Sender);
-        // 设置收件人邮箱
-        //helper.setTo((String[])valueMap.get("to"));
-        helper.setTo("windy.tam@sonic-teleservices.com");
+        // 设置收件人邮箱- 此邮件已关联zoho.
+        helper.setTo("guest.relations@hkexpress.com");
         // 抄送邮件接收人
-       // helper.setCc(new String[]{Sender,valueMap.get("cc").toString()});
-        helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
+         helper.setCc(Sender);
+        //helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
         // 设置邮件标题
         helper.setSubject(valueMap.get("title").toString());
         Context context = new Context();
