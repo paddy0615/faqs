@@ -22,11 +22,11 @@ public interface E_form_typeDao extends JpaRepository<E_form_type,Long> {
     List<E_form_type> getAllByDlId(@Param("dlId") long dlId);
 
     /**
-     * 开放1和6
+     * 开放1,3,6
      * @return
      */
     @Query(value = "SELECT et_id,et_title_hk,et_title_cn,et_title_en FROM e_form_type" +
-            " where et_id IN (1,6)"+
+            " where et_id IN (1,3,6)"+
             " ORDER BY et_id",nativeQuery = true)
     List<E_form_type> getAllByDlIdtest();
 

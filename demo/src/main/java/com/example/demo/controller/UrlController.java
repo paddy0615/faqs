@@ -1,7 +1,12 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
 
 /*
  * url跳转页面
@@ -107,14 +112,14 @@ public class UrlController {
      * Request for itinerary 重新發送行程單
      * @return
      */
-    @RequestMapping("/eForm1")
+    @RequestMapping("/RequestForItinerary")
     public String eForm1(){return "faqs/eForm1";}
 
     /**
      * Duplicate Booking 重復訂單
      * @return
      */
-    @RequestMapping("/eForm2")
+    @RequestMapping("/DuplicateBooking")
     public String eForm2(){return "faqs/eForm2";}
 
     /**
@@ -128,7 +133,7 @@ public class UrlController {
      * Name Correction    姓名修正
      * @return
      */
-    @RequestMapping("/eForm4")
+    @RequestMapping("/NameCorrection")
     public String eForm4(){return "faqs/eForm4";}
 
 
@@ -136,14 +141,34 @@ public class UrlController {
      * Payment Failure   支付失敗
      * @return
      */
-    @RequestMapping("/eForm5")
+    @RequestMapping("/PaymentFailure")
     public String eForm5(){return "faqs/eForm5";}
 
     /**
      * Reconfirm Flight 確認航班
      * @return
      */
-    @RequestMapping("/eForm6")
+    @RequestMapping("/ReconfirmFlight")
     public String eForm6(){return "faqs/eForm6";}
+
+    @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
+    public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
+                             @RequestParam(name = "langId",defaultValue = "6",required = true) long langId){
+        String t = "";
+        if("1".equals(id)){
+            t = "RequestForItinerary";
+        }else if("2".equals(id)){
+            t = "DuplicateBooking";
+        }else if("3".equals(id)){
+            t = "RequestForCertificate";
+        }else if("4".equals(id)){
+            t = "NameCorrection";
+        }else if("5".equals(id)){
+            t = "PaymentFailure";
+        }else if("6".equals(id)){
+            t = "ReconfirmFlight";
+        }
+        return "redirect:/appPage/"+t+"?langId="+langId;
+    }
 
 }
