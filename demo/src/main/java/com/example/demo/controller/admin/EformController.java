@@ -71,11 +71,14 @@ public class EformController {
         RestResultModule module = new RestResultModule();
         Eform eform = eformService.findEformById(eId);
         String title = "";
+        String certificate_Nature = "";
         if(null != eform){
             title = eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr());
+            certificate_Nature = eformService.getCertificateTitle(eform.getEcertificatetype());
         }
         module.putData("title",title);
         module.putData("eform",eform);
+        module.putData("Certificate_Nature",certificate_Nature);
         return module;
     }
 

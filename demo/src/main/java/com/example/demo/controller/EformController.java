@@ -46,6 +46,24 @@ public class EformController {
         return eformService.getAreaNames();
     }
 
+    /**
+     * eForm3
+     * 实例化
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/E/getEform3")
+    public RestResultModule getEform3(){
+        RestResultModule module = new RestResultModule();
+        // 语言
+        module.putData("languages",eformService.findAllLanguage());
+        // 地区名
+        module.putData("e_area_names",eformService.getAreaNames());
+        // 证明类别
+        module.putData("e_certificates",eformService.getCertificates());
+        return module;
+    }
+
 
     /**
      * 添加
@@ -95,6 +113,59 @@ public class EformController {
            }
        }
        return module;
+    }
+
+
+    /**
+     * 添加添加eform3
+     */
+    @ResponseBody
+    @RequestMapping(value = "/E/addeform3",method= RequestMethod.POST)
+    public RestResultModule addeform3(@RequestBody Eform eform){
+        RestResultModule module = new RestResultModule();
+        if(null != eform){
+            try{
+                eform.setRandom(eformService.getRandom());
+                eform.setUpdateDate(new Date());
+                // 添加form结果表
+                E_form_result result = new E_form_result();
+                String state = "-3";
+                if(null != eform.getPnr()){
+                    state = eformService.getBookingAPI(eform,result);
+                }else{
+                    state = "0";
+                }
+                // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
+                if(!"0".equals(state)){
+                    eformService.save(eform);
+                    result.setEid(eform.getId());
+                    eformService.saveResult(result);
+                    // 发邮件
+                    Map<String, Object> valueMap = new HashMap<>();
+                    valueMap.put("eform", eform);
+                    valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
+                    valueMap.put("cc", eform.getEmail());
+                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
+                    eformService.sendSimpleMaileform3(valueMap);
+                    // 发确认邮件
+                    Map<String, Object> valueMapUser = new HashMap<>();
+                    valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
+                    valueMapUser.put("To",eform.getEmail());
+                    valueMapUser.put("langId",eform.getLangId());
+                    valueMapUser.put("random",eform.getRandom());
+                    eformService.sendSimpleMailUser(valueMapUser);
+                    // 返回成功码
+                    module.putData("key",eform.getRandom());
+                }else{
+                    logger.info("-----------/E/addEform3-----------",eform.getPnr());
+                    module.setCode(404);
+                }
+            }catch (Exception e){
+                logger.error("-----------/E/add-----------"+e,eform);
+                module.setCode(500);
+            }
+        }
+        return module;
     }
 
     /**

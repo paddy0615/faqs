@@ -121,7 +121,7 @@ public class UrlController {
      * Request for Certificate   證明申請
      * @return
      */
-    @RequestMapping("/eForm3")
+    @RequestMapping("/RequestForCertificate")
     public String eForm3(){return "faqs/eForm3";}
 
     /**

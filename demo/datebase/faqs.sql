@@ -280,7 +280,7 @@ CREATE TABLE `e_form` (
  `e_trip_going_new` VARCHAR(200) NULL COMMENT '目的地1',
  `e_relation` INT(11) DEFAULT 0 COMMENT '是否有关系(0无,1第一,2第二)',
  `e_relation_eid` INT(11) DEFAULT 0 COMMENT '关系的id',
- `e_certificate_type` INT(11) DEFAULT 0 COMMENT '证书类型(1:证明类别 , 2:搭乘航班证明 , 3:无搭乘航班證明 , 4:航班延误证明[默认])',
+ `e_certificate_type` INT(11) DEFAULT 0 COMMENT '证书类型表',
  `e_first_name_new` VARCHAR(50) NULL COMMENT '新-名',
  `e_last_name_new` VARCHAR(50) NULL COMMENT '新-性',
  `e_flie` VARCHAR(200) NULL COMMENT '文件名',
@@ -331,3 +331,20 @@ CREATE TABLE `faqs_eform_relation` (
  `er_dl_id` INT NULL COMMENT 'faq详细ID',
   PRIMARY KEY (`er_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+-- e_certificate 证书类别
+DROP TABLE IF EXISTS `e_certificate`;
+CREATE TABLE `e_certificate` (
+ `ec_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `ec_title_hk` VARCHAR(200) NULL COMMENT '繁体-名',
+ `ec_title_cn` VARCHAR(200) NULL COMMENT '简体-名',
+ `ec_title_en` VARCHAR(200) NULL COMMENT '英文-名',
+  PRIMARY KEY (`ec_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+INSERT  INTO `e_certificate`(`ec_title_hk`,`ec_title_cn`,`ec_title_en`)
+VALUES ('航班延誤證明','航班延误证明','Flight Delay Certificate'),
+('搭乘航班證明','搭乘航班证明','Travel Certificate'),
+('無搭乘航班證明','无搭乘航班证明','Confirmation Letter of No show'),
+('航班取消證明','航班取消证明','Flight Cancel Certificate');

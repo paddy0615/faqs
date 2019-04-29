@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.EformEntity;
-import com.sun.mail.util.MailSSLSocketFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -17,10 +16,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -28,17 +25,17 @@ import org.thymeleaf.context.Context;
 import javax.annotation.Resource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.transaction.Transactional;
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 @Service("eformService")
 public class EformService {
+
+    @Resource
+    E_certificateDao e_certificateDao;
 
     @Resource
     E_area_nameDao e_area_nameDao;
@@ -64,11 +61,18 @@ public class EformService {
     @Resource
     private TemplateEngine templateEngine;
 
+
+
+
     @Value("${spring.mail.username}")
     private String Sender; //读取配置文件中的参数
 
     public List<E_area_name> getAreaNames(){
         return e_area_nameDao.getAllOrderByupdateDate();
+    }
+
+    public List<E_certificate> getCertificates(){
+        return e_certificateDao.findAll();
     }
 
 
@@ -125,6 +129,18 @@ public class EformService {
         E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(type));
         Language language =  languageDao.findById(langid);
         return "Smart Form/"+language.getTitle()+"/"+e_form_type.getEn()+"/"+pnr;
+    }
+
+    /**
+     * 获取e_certificate 标题
+     */
+    public String getCertificateTitle(long id) throws Exception {
+        String s = "";
+        if(id > 0){
+            E_certificate certificate = e_certificateDao.findById(id);
+            s = certificate.getEn();
+        }
+        return s;
     }
 
     /**
@@ -237,6 +253,36 @@ public class EformService {
         mailSender.send(mimeMessage);
     }
 
+    /**
+     * 发邮件eform3
+     * @throws Exception
+     */
+    public void sendSimpleMaileform3(Map<String, Object> valueMap) throws Exception {
+        MimeMessage mimeMessage = null;
+        mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+        // 设置发件人邮箱
+        helper.setFrom(Sender);
+        // 设置收件人邮箱- 此邮件已关联zoho.
+        helper.setTo("paddy.pong@sonic-teleservices.com");
+        // 抄送邮件接收人
+        helper.setCc(Sender);
+        // 设置邮件标题
+        helper.setSubject(valueMap.get("title").toString());
+        Context context = new Context();
+        context.setVariables(valueMap);
+        String content = this.templateEngine.process("faqs/eFormMail.html", context);
+        helper.setText(content, true);
+        org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top4.png");
+        // 图片
+        FileSystemResource file = new FileSystemResource(resource.getFile());
+        helper.addInline("faq_top4", file);
+        // 添加附件
+        //String fileName = f.substring(f.lastIndexOf(File.separator));
+        //helper.addAttachment(fileName, fileSystemResource);
+        // 发送邮件
+        mailSender.send(mimeMessage);
+    }
 
     /**
      * 对接PNR接口

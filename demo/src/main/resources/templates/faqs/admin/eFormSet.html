@@ -89,10 +89,15 @@
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{eform.goingdate}}</label>
                     </div>
 
-
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Email Address :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{eform.email}}</label>
+                    </div>
+
+                    <!-- 证明类别-->
+                    <div class="form-group" ng-if="eform.ecertificatetype > 0">
+                        <label class="col-sm-2 control-label">Certificate Nature :</label>
+                        <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{Certificate_Nature}}</label>
                     </div>
 
                 </form>

@@ -162,6 +162,7 @@ myapp.controller("eFormSetController",["$scope","$http",function ($scope, $http)
                 /* 成功*/
                 $scope.eform = data.result.eform;
                 $scope.title = data.result.title;
+                $scope.Certificate_Nature = data.result.Certificate_Nature;
             }
 
         })
