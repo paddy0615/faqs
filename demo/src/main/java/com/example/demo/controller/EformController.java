@@ -136,7 +136,7 @@ public class EformController {
                     state = "0";
                 }
                 // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
-                if(!"0".equals(state)){
+                if("0".equals(state)){
                     eformService.save(eform);
                     result.setEid(eform.getId());
                     eformService.saveResult(result);

@@ -264,9 +264,10 @@ public class EformService {
         // 设置发件人邮箱
         helper.setFrom(Sender);
         // 设置收件人邮箱- 此邮件已关联zoho.
-        helper.setTo("paddy.pong@sonic-teleservices.com");
+        helper.setTo("windy.tam@sonic-teleservices.com");
         // 抄送邮件接收人
-        helper.setCc(Sender);
+        //helper.setCc(Sender);
+        helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
         // 设置邮件标题
         helper.setSubject(valueMap.get("title").toString());
         Context context = new Context();
