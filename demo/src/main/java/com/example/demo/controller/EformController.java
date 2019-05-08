@@ -131,7 +131,7 @@ public class EformController {
                 E_form_result result = new E_form_result();
                 String state = "-3";
                 if(null != eform.getPnr()){
-                    state = eformService.getBookingAPI(eform,result);
+                    state = eformService.getBookingAPITest(eform,result);
                 }else{
                     state = "0";
                 }
