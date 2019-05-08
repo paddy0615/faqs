@@ -289,7 +289,7 @@ public class EformService {
      * @return
      */
     public String getBookingAPI(Eform eform,E_form_result result) throws Exception{
-        String uri="http://sonicinternal.callsonic.com/Balch/getBookingAPI.action?channel=eform";
+        String uri="http://www.callsonic.com/Balch_ver02/getBookingAPI.action?channel=eform";
         uri += "&pnr="+eform.getPnr();
         uri += "&firstname="+eform.getFirstname();
         uri += "&lastname="+eform.getLastname();
@@ -310,6 +310,33 @@ public class EformService {
         return s;
     }
 
+
+    /**
+     * 对接PNR接口--test
+     * @param eform
+     * @return
+     */
+    public String getBookingAPITest(Eform eform,E_form_result result) throws Exception{
+        String uri="http://sonicinternal.callsonic.com/Balch/getBookingAPI.action?channel=eform";
+        uri += "&pnr="+eform.getPnr();
+        uri += "&firstname="+eform.getFirstname();
+        uri += "&lastname="+eform.getLastname();
+        uri += "&email="+eform.getEmail();
+        System.out.println(uri);
+        //  模拟请求
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        RestTemplate restTemplate=new RestTemplate();
+        String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
+        Document doc = DocumentHelper.parseText(strbody);
+        // 获取根节点
+        Element rootElt = doc.getRootElement(); // 获取根节点
+        String s = rootElt.elementTextTrim("State");
+        result.setResult(s);
+        result.setResultxml(strbody);
+        return s;
+    }
 
     /**
      * 后台- 初始化数据
