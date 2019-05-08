@@ -235,7 +235,6 @@ public class EformService {
         helper.setTo("guest.relations@hkexpress.com");
         // 抄送邮件接收人
          helper.setCc(Sender);
-        //helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
         // 设置邮件标题
         helper.setSubject(valueMap.get("title").toString());
         Context context = new Context();
@@ -254,10 +253,10 @@ public class EformService {
     }
 
     /**
-     * 发邮件eform3
+     * 发邮件-test
      * @throws Exception
      */
-    public void sendSimpleMaileform3(Map<String, Object> valueMap) throws Exception {
+    public void sendSimpleMaileTest(Map<String, Object> valueMap) throws Exception {
         MimeMessage mimeMessage = null;
         mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
@@ -266,7 +265,6 @@ public class EformService {
         // 设置收件人邮箱- 此邮件已关联zoho.
         helper.setTo("windy.tam@sonic-teleservices.com");
         // 抄送邮件接收人
-        //helper.setCc(Sender);
         helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
         // 设置邮件标题
         helper.setSubject(valueMap.get("title").toString());

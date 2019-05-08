@@ -529,17 +529,7 @@ myapp.controller("eForm2Controller",["$scope","$http","$location","$translate",f
             url : ctx + "appJson/getLanguageAll",
             params:{"langId": langID}
         }).success(function (data) {
-            $scope.isGetUrl = true;
-            if(data){
-                /* 成功*/
-                $scope.languages = data;
-            }else{
-                /* 失败*/
-                layer.alert( 'Abnormal error, please contact the administrator.', {
-                    skin: 'layui-layer-lan'
-                    ,closeBtn: 0
-                });
-            }
+            $scope.languages = data;
         })
     }
     // 初始化
@@ -552,10 +542,8 @@ myapp.controller("eForm2Controller",["$scope","$http","$location","$translate",f
     }
     // 语言事件
     $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            $translate.use($scope.langId.toString());
-            onlineChat($scope.langId);
-        }
+        $translate.use($scope.langId.toString());
+        onlineChat($scope.langId);
         // 强制更新  $scope.apply();
     }
 
@@ -657,7 +645,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                 lock1 = true; // 锁定
                 $http({
                     method : 'post',
-                    url : ctx + 'appJson/E/addeform3',
+                    url : ctx + 'appJson/E/addTest',
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;

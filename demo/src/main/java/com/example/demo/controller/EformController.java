@@ -117,11 +117,11 @@ public class EformController {
 
 
     /**
-     * 添加添加eform3
+     * 添加添加addTest
      */
     @ResponseBody
-    @RequestMapping(value = "/E/addeform3",method= RequestMethod.POST)
-    public RestResultModule addeform3(@RequestBody Eform eform){
+    @RequestMapping(value = "/E/addTest",method= RequestMethod.POST)
+    public RestResultModule addTest(@RequestBody Eform eform){
         RestResultModule module = new RestResultModule();
         if(null != eform){
             try{
@@ -146,7 +146,7 @@ public class EformController {
                     valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
                     valueMap.put("cc", eform.getEmail());
                     valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
-                    eformService.sendSimpleMaileform3(valueMap);
+                    eformService.sendSimpleMaileTest(valueMap);
                     // 发确认邮件
                     Map<String, Object> valueMapUser = new HashMap<>();
                     valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
@@ -157,7 +157,6 @@ public class EformController {
                     // 返回成功码
                     module.putData("key",eform.getRandom());
                 }else{
-                    logger.info("-----------/E/addEform3-----------",eform.getPnr());
                     module.setCode(404);
                 }
             }catch (Exception e){
