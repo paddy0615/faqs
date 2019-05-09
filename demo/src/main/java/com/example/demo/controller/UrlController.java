@@ -153,7 +153,8 @@ public class UrlController {
 
     @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
     public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
-                             @RequestParam(name = "langId",defaultValue = "6",required = true) long langId){
+                             @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
+                            ,@RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
         String t = "";
         if("1".equals(id)){
             t = "RequestForItinerary";
@@ -168,7 +169,7 @@ public class UrlController {
         }else if("6".equals(id)){
             t = "ReconfirmFlight";
         }
-        return "redirect:/appPage/"+t+"?langId="+langId;
+        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
     }
 
 }

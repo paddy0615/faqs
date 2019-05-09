@@ -1,4 +1,4 @@
 spring:
   profiles:
     #环境配置
-    active: pro
+    active: dev

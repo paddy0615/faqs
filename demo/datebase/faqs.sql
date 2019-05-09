@@ -348,3 +348,7 @@ VALUES ('航班延誤證明','航班延误证明','Flight Delay Certificate'),
 ('搭乘航班證明','搭乘航班证明','Travel Certificate'),
 ('無搭乘航班證明','无搭乘航班证明','Confirmation Letter of No show'),
 ('航班取消證明','航班取消证明','Flight Cancel Certificate');
+
+
+-- e-form ,添加dlId 从哪条问题进
+ALTER TABLE e_form ADD e_dl_id INT DEFAULT 0;

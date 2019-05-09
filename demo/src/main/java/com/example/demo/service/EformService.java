@@ -6,6 +6,8 @@ import com.example.demo.entity.EformEntity;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
@@ -33,6 +35,13 @@ import java.util.Properties;
 
 @Service("eformService")
 public class EformService {
+    @Value("${spring.profiles.active}")
+    private String active; //读取配置文件中的参数
+
+    @Value("${spring.mail.username}")
+    private String Sender; //读取配置文件中的参数
+
+    private  static Logger logger = LoggerFactory.getLogger(EformService.class);
 
     @Resource
     E_certificateDao e_certificateDao;
@@ -60,12 +69,6 @@ public class EformService {
 
     @Resource
     private TemplateEngine templateEngine;
-
-
-
-
-    @Value("${spring.mail.username}")
-    private String Sender; //读取配置文件中的参数
 
     public List<E_area_name> getAreaNames(){
         return e_area_nameDao.getAllOrderByupdateDate();
@@ -231,10 +234,18 @@ public class EformService {
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
         // 设置发件人邮箱
         helper.setFrom(Sender);
-        // 设置收件人邮箱- 此邮件已关联zoho.
-        helper.setTo("guest.relations@hkexpress.com");
-        // 抄送邮件接收人
-         helper.setCc(Sender);
+        if("pro".equals(active)){
+            // 设置收件人邮箱- 此邮件已关联zoho.
+            helper.setTo("guest.relations@hkexpress.com");
+            // 抄送邮件接收人
+            helper.setCc(Sender);
+        }else{
+            // 设置收件人邮箱
+            helper.setTo("windy.tam@sonic-teleservices.com");
+            // 抄送邮件接收人
+            helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
+
+        }
         // 设置邮件标题
         helper.setSubject(valueMap.get("title").toString());
         Context context = new Context();
@@ -252,36 +263,6 @@ public class EformService {
         mailSender.send(mimeMessage);
     }
 
-    /**
-     * 发邮件-test
-     * @throws Exception
-     */
-    public void sendSimpleMaileTest(Map<String, Object> valueMap) throws Exception {
-        MimeMessage mimeMessage = null;
-        mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        // 设置发件人邮箱
-        helper.setFrom(Sender);
-        // 设置收件人邮箱- 此邮件已关联zoho.
-        helper.setTo("windy.tam@sonic-teleservices.com");
-        // 抄送邮件接收人
-        helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
-        // 设置邮件标题
-        helper.setSubject(valueMap.get("title").toString());
-        Context context = new Context();
-        context.setVariables(valueMap);
-        String content = this.templateEngine.process("faqs/eFormMail.html", context);
-        helper.setText(content, true);
-        org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top4.png");
-        // 图片
-        FileSystemResource file = new FileSystemResource(resource.getFile());
-        helper.addInline("faq_top4", file);
-        // 添加附件
-        //String fileName = f.substring(f.lastIndexOf(File.separator));
-        //helper.addAttachment(fileName, fileSystemResource);
-        // 发送邮件
-        mailSender.send(mimeMessage);
-    }
 
     /**
      * 对接PNR接口
@@ -289,40 +270,16 @@ public class EformService {
      * @return
      */
     public String getBookingAPI(Eform eform,E_form_result result) throws Exception{
-        String uri="http://www.callsonic.com/Balch_ver02/getBookingAPI.action?channel=eform";
-        uri += "&pnr="+eform.getPnr();
-        uri += "&firstname="+eform.getFirstname();
-        uri += "&lastname="+eform.getLastname();
-        uri += "&email="+eform.getEmail();
-        System.out.println(uri);
-        //  模拟请求
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        HttpEntity<String> entity = new HttpEntity<String>(headers);
-        RestTemplate restTemplate=new RestTemplate();
-        String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
-        Document doc = DocumentHelper.parseText(strbody);
-        // 获取根节点
-        Element rootElt = doc.getRootElement(); // 获取根节点
-        String s = rootElt.elementTextTrim("State");
-        result.setResult(s);
-        result.setResultxml(strbody);
-        return s;
-    }
-
-
-    /**
-     * 对接PNR接口--test
-     * @param eform
-     * @return
-     */
-    public String getBookingAPITest(Eform eform,E_form_result result) throws Exception{
         String uri="http://sonicinternal.callsonic.com/Balch/getBookingAPI.action?channel=eform";
+        if("pro".equals(active)){
+            uri="http://www.callsonic.com/Balch_ver02/getBookingAPI.action?channel=eform";
+        }
         uri += "&pnr="+eform.getPnr();
         uri += "&firstname="+eform.getFirstname();
         uri += "&lastname="+eform.getLastname();
         uri += "&email="+eform.getEmail();
         System.out.println(uri);
+        logger.info(uri);
         //  模拟请求
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
