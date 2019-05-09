@@ -11,6 +11,7 @@ myapp.config(['$translateProvider',function($translateProvider){
         //sanitize escape escapeParameters
         .useSanitizeValueStrategy('escapeParameters');
 }])
+
 myapp.factory('T', ['$translate', function($translate) {
     var T = {
         T:function(key) {
@@ -22,7 +23,6 @@ myapp.factory('T', ['$translate', function($translate) {
     }
     return T;
 }])
-
 
 myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
     return {
@@ -245,6 +245,8 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
     $scope.eFormSuccess = false;
     $scope.e = {};
     $scope.e.type = "1";
+    // 获取那个dlId进入
+    $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
 
     /**
      * 提交
@@ -623,6 +625,8 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
 
     $scope.e = {};
     $scope.e.type = "3";
+    // 获取那个dlId进入
+    $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
     // 默认航班编号为: 航班延误证明
     $scope.e.ecertificatetype = 1;
 
@@ -645,7 +649,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                 lock1 = true; // 锁定
                 $http({
                     method : 'post',
-                    url : ctx + 'appJson/E/addTest',
+                    url : ctx + 'appJson/E/add',
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
@@ -1050,6 +1054,9 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
     $scope.eFormSuccess = false;
     $scope.e = {};
     $scope.e.type = "6";
+    // 获取那个dlId进入
+    $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
+
 
     /**
      * 提交

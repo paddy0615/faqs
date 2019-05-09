@@ -587,7 +587,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
 
     // 跳转E-form
     $scope.getEform = function(id){
-        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId);
+        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId);
     }
 
 }]);

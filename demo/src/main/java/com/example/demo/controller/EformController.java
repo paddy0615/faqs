@@ -12,6 +12,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -94,6 +95,7 @@ public class EformController {
                    valueMap.put("eform", eform);
                    valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
                    valueMap.put("cc", eform.getEmail());
+                   valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                    eformService.sendSimpleMail(valueMap);
                    // 发确认邮件
                    Map<String, Object> valueMapUser = new HashMap<>();
@@ -131,7 +133,7 @@ public class EformController {
                 E_form_result result = new E_form_result();
                 String state = "-3";
                 if(null != eform.getPnr()){
-                    state = eformService.getBookingAPITest(eform,result);
+                    state = eformService.getBookingAPI(eform,result);
                 }else{
                     state = "0";
                 }
@@ -146,7 +148,7 @@ public class EformController {
                     valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
                     valueMap.put("cc", eform.getEmail());
                     valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
-                    eformService.sendSimpleMaileTest(valueMap);
+                    eformService.sendSimpleMail(valueMap);
                     // 发确认邮件
                     Map<String, Object> valueMapUser = new HashMap<>();
                     valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
@@ -157,6 +159,7 @@ public class EformController {
                     // 返回成功码
                     module.putData("key",eform.getRandom());
                 }else{
+                    logger.error("-----------/E/add-----------error=",eform);
                     module.setCode(404);
                 }
             }catch (Exception e){
@@ -175,14 +178,6 @@ public class EformController {
     @RequestMapping("/test")
     public String test(Model model) throws Exception{
         System.out.println("开始");
-    /*    Map<String, Object> valueMap = new HashMap<>();
-        valueMap.put("title", "测试邮件1");
-        valueMap.put("langId",5);
-        valueMap.put("random",123456789);
-        valueMap.put("To","paddy.pong@sonic-teleservices.com");
-        eformService.sendSimpleMailUser(valueMap);
-*/
-
         return "ok";
     }
 

@@ -100,6 +100,17 @@ public class Eform implements Serializable {
     @Column(name = "e_random",columnDefinition="int default 0")
     private int random = 0;
 
+    @Column(name = "e_dl_id",columnDefinition="long default 0")
+    private Long dlId = (long)0;
+
+
+    public Long getDlId() {
+        return dlId;
+    }
+
+    public void setDlId(Long dlId) {
+        this.dlId = dlId;
+    }
 
     public Long getLangId() {
         return langId;
