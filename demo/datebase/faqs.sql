@@ -145,7 +145,7 @@ CREATE TABLE `faqs_detailed_feedback` (
   PRIMARY KEY (`df_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
---------------- 2.2版
+-- 2.2版
 
 DROP TABLE IF EXISTS `faqs_no_tags`;
 CREATE TABLE `faqs_no_tags` (
