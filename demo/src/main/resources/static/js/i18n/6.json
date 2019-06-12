@@ -1,6 +1,6 @@
 {
   "lab1":"Booking Information"
-,"lab2":"Guest name"
+,"lab2":"Guest Name"
 ,"lab3":"First Name"
 ,"lab4":"Last Name"
 ,"lab5":"Round-Trip"
@@ -58,7 +58,8 @@
 ,"lab57":"Payment Failure"
 ,"lab58":"Reconfirm Flight"
 ,"lab59":"Return"
-,"lab60":""
+,"lab60":"Typhoon Move Flight"
+,"lab61":"If you received a notification regarding time change for your flight, please be advised that the new flight details provided on the message is the next available one. Should you wish to change, please fill-up the form below and we will assist to arrange the nearest departing flight shown on the system. Once completed, the system will send the latest flight details to the phone number and email address registered on your booking. This form is only available for unused booking."
 ,"error1":"System failure, please try again later"
 ,"error2":"can not be blank"
 ,"error3":"Please enter the correct email address such as: 123@qq.com"

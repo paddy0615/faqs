@@ -151,6 +151,13 @@ public class UrlController {
     @RequestMapping("/ReconfirmFlight")
     public String eForm6(){return "faqs/eForm6";}
 
+    /**
+     * Typhoon Move Flight 台风移动飞行
+     * @return
+     */
+    @RequestMapping("/TyphoonMoveFlight")
+    public String eForm7(){return "faqs/eForm7";}
+
     @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
     public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
                              @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
@@ -168,6 +175,8 @@ public class UrlController {
             t = "PaymentFailure";
         }else if("6".equals(id)){
             t = "ReconfirmFlight";
+        }else if("7".equals(id)){
+            t = "TyphoonMoveFlight";
         }
         return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
     }

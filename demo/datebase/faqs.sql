@@ -352,3 +352,7 @@ VALUES ('航班延誤證明','航班延误证明','Flight Delay Certificate'),
 
 -- e-form ,添加dlId 从哪条问题进
 ALTER TABLE e_form ADD e_dl_id INT DEFAULT 0;
+
+-- 添加E-Form7
+INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
+VALUES ('颱風原因更改航班','台风原因更改航班','Typhoon Move Flight')
