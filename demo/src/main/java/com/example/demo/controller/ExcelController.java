@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /*
  * 报表Excel
@@ -101,6 +102,10 @@ public class ExcelController {
 
     }
 
+    /**
+     * 获取全部FAQ
+     * @param response
+     */
     @RequestMapping("/faq")
     public void test3(HttpServletResponse response){
         List<Language> languages = languageDao.findAll();
@@ -139,5 +144,116 @@ public class ExcelController {
 
     }
 
+
+    /**
+     * 获取全部点击率
+     * @param response
+     */
+    @RequestMapping("/monitor{id}")
+    public void test4( @PathVariable("id") long id,HttpServletResponse response){
+        List<Language> languages = languageDao.findAll();
+        try {
+            Date now = new Date( );
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd hh:mm:ss");
+            // 告诉浏览器用什么软件可以打开此文件
+            response.setHeader("content-Type", "application/vnd.ms-excel");
+            // 下载文件的默认名称
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ点击率"+id+ ".xls", "utf-8"));
+            OutputStream out = response.getOutputStream();
+            String[] headers = { "父级名", "FAQ标题" ,"发布状态","点击率"};
+            ExcelUtils eeu = new ExcelUtils();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            int index = 0;
+            String s = "2019-"+id+"-01 00:00:00";
+            String e = "2019-"+(id+1)+"-01 00:00:00";
+            for (Language l:languages) {
+                List<Object[]> list = languageDao.getAllObjects(l.getId(),s,e);
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                for(int i = 0, length = list.size();i<length;i++){
+
+                    Object[] os = list.get(i);
+                    List rowData = new ArrayList();
+                    rowData.add(os[0]);
+                    rowData.add(os[1]);
+                    rowData.add(os[2]);
+                    rowData.add(os[3]);
+                    data.add(rowData);
+                }
+                eeu.exportExcel1(workbook, index++, l.getTitle(), headers, data, out);
+            }
+            //原理就是将所有的数据一起写入，然后再关闭输入流。
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * 获取全部反馈数
+     * @param response
+     */
+    @RequestMapping("/feedback{id}")
+    public void test5( @PathVariable("id") long id,HttpServletResponse response){
+        List<Language> languages = languageDao.findAll();
+        try {
+            Date now = new Date( );
+            SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd hh:mm:ss");
+            // 告诉浏览器用什么软件可以打开此文件
+            response.setHeader("content-Type", "application/vnd.ms-excel");
+            // 下载文件的默认名称
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ反馈"+id+ ".xls", "utf-8"));
+            OutputStream out = response.getOutputStream();
+            String[] headers = { "序号", "语言" ,"FAQ标题","FAQ问题内容","Rating","创建时间","评价内容","评价邮件","评价电话"};
+            ExcelUtils eeu = new ExcelUtils();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            int index = 0;
+            String s = "2019-"+id+"-01 00:00:00";
+            String e = "2019-"+(id+1)+"-01 00:00:00";
+            List<Object[]> list = languageDao.getAllObjects1(s,e);
+            List<List<Object>> data = new ArrayList<List<Object>>();
+            for(int i = 0, length = list.size();i<length;i++){
+
+                Object[] os = list.get(i);
+                List rowData = new ArrayList();
+                rowData.add(os[0]);
+                rowData.add(os[1]);
+                rowData.add(os[2]);
+                rowData.add(os[3]);
+                rowData.add(os[4]);
+                rowData.add(os[5]);
+                rowData.add(os[6]);
+                rowData.add(os[7]);
+                rowData.add(os[8]);
+                data.add(rowData);
+            }
+            eeu.exportExcel1(workbook, index++, "sheet1", headers, data, out);
+
+
+          /*  for (Language l:languages) {
+                List<Object[]> list = languageDao.getAllObjects1(l.getId());
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                for(int i = 0, length = list.size();i<length;i++){
+
+                    Object[] os = list.get(i);
+                    List rowData = new ArrayList();
+                    rowData.add(os[0]);
+                    rowData.add(os[1]);
+                    rowData.add(os[2]);
+                    rowData.add(os[3]);
+                    data.add(rowData);
+                }
+                eeu.exportExcel1(workbook, index++, l.getTitle(), headers, data, out);
+            }*/
+            //原理就是将所有的数据一起写入，然后再关闭输入流。
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
