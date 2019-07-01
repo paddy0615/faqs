@@ -103,6 +103,17 @@ public class Eform implements Serializable {
     @Column(name = "e_dl_id",columnDefinition="long default 0")
     private Long dlId = (long)0;
 
+    @Column(name = "e_pnr_new")
+    private String pnrnew;
+
+
+    public String getPnrnew() {
+        return pnrnew;
+    }
+
+    public void setPnrnew(String pnrnew) {
+        this.pnrnew = pnrnew;
+    }
 
     public Long getDlId() {
         return dlId;

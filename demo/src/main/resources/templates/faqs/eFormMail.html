@@ -27,10 +27,22 @@
                 <td class="control-label1">Date :</td>
                 <td class="control-label2" th:text="${#dates.format(eform.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
-            <tr th:if="${not #lists.isEmpty(eform.pnr)}">
-                <td class="control-label1">PNR :</td>
-                <td class="control-label2" th:text="${eform.pnr}"></td>
-            </tr>
+            <element th:if="${eform.type == '8'}">
+                <tr th:if="${not #lists.isEmpty(eform.pnr)}">
+                    <td class="control-label1">Affected Booking Reference/PNR :</td>
+                    <td class="control-label2" th:text="${eform.pnr}"></td>
+                </tr>
+                <tr th:if="${not #lists.isEmpty(eform.pnrnew)}">
+                    <td class="control-label1">New Booking Reference/PNR :</td>
+                    <td class="control-label2" th:text="${eform.pnrnew}"></td>
+                </tr>
+            </element>
+            <element th:if="${eform.type != '8'}">
+                <tr th:if="${not #lists.isEmpty(eform.pnr)}">
+                    <td class="control-label1">PNR :</td>
+                    <td class="control-label2" th:text="${eform.pnr}"></td>
+                </tr>
+            </element>
             <tr th:if="${not #lists.isEmpty(eform.firstname)}">
                 <td class="control-label1">First Name :</td>
                 <td class="control-label2" th:text="${eform.firstname}"></td>

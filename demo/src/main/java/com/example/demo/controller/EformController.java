@@ -85,6 +85,24 @@ public class EformController {
                }else{
                    state = "0";
                }
+               // tpey=8需比较两次PNR
+               if("0".equals(state) && "8".equals(eform.getType())){
+                   Eform e1 = new Eform();
+                   e1.setPnr(eform.getPnrnew());
+                   e1.setFirstname(eform.getFirstname());
+                   e1.setLastname(eform.getLastname());
+                   e1.setEmail(eform.getEmail());
+                   E_form_result r1 = new E_form_result();
+                   String s1 = eformService.getBookingAPI(e1,r1);
+                   if("0".equals(s1)){
+                       result.setEid(eform.getId());
+                       eformService.saveResult(r1);
+                   }else{
+                       module.setCode(404);
+                       return module;
+                   }
+               }
+
                // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
                if("0".equals(state)){
                    eformService.save(eform);

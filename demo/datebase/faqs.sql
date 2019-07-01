@@ -355,4 +355,18 @@ ALTER TABLE e_form ADD e_dl_id INT DEFAULT 0;
 
 -- 添加E-Form7
 INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
-VALUES ('颱風原因更改航班','台风原因更改航班','Typhoon Move Flight')
+VALUES ('颱風原因更改航班','台风原因更改航班','Typhoon Move Flight');
+
+
+-- 添加E-Form8
+INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
+VALUES ('已購買新訂單的退款','已购买新订单的退款','Refund with new booking');
+
+
+-- e-form ,添加e_pnr_new,新编号
+ALTER TABLE e_form ADD e_pnr_new VARCHAR(100) NULL COMMENT 'PNR-new';
+
+
+
+
+

@@ -158,6 +158,13 @@ public class UrlController {
     @RequestMapping("/TyphoonMoveFlight")
     public String eForm7(){return "faqs/eForm7";}
 
+    /**
+     * Refund with new booking 已購買新訂單的退款
+     * @return
+     */
+    @RequestMapping("/RefundWithNewBbooking")
+    public String eForm8(){return "faqs/eForm8";}
+
     @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
     public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
                              @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
@@ -177,7 +184,10 @@ public class UrlController {
             t = "ReconfirmFlight";
         }else if("7".equals(id)){
             t = "TyphoonMoveFlight";
+        }else if("8".equals(id)){
+            t = "RefundWithNewBbooking";
         }
+
         return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
     }
 
