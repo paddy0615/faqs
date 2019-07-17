@@ -276,7 +276,7 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
 
     function info1(){
         // 热点数
-        $http({
+      /*  $http({
             method : 'post',
             url : ctx + "appJson/getHotspot",
             params:{"langId": $scope.langId}
@@ -284,10 +284,24 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
             if(data){
                 $scope.hotspots = data.result.detaileds;
             }
+        })*/
+      // 获取Eform
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getEform",
+        }).success(function (data) {
+            $scope.eFormTypes = data;
         })
+
     }
     // 热点初始化
     info1();
+
+    // 跳转E-form
+    $scope.getEform = function(id){
+        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId);
+    }
+
 
 }]);
 

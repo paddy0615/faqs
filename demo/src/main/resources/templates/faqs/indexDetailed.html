@@ -107,14 +107,16 @@
                         <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a></li>
                     </ul>
                 </div>
-                <div class="content-box" style="padding: 0px 12px;margin-top: 50px;">
+
+            <!--    <div class="content-box" style="padding: 0px 12px;margin-top: 50px;">
                     <div class="list-group">
                         <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
                             {{hotspotTest}}
                         </a>
                         <a ng-repeat="detailed in hotspots" class="list-group-item" th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a>
                     </div>
-                </div>
+                </div>-->
+
             </div>
 
             <!-- 详情-->

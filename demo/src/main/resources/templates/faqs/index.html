@@ -40,7 +40,30 @@
             .col-md-offset-2 {
                 margin-left: 15.2%;
             }
+            .eformdiv .col-md-offset-2 {
+                margin-left: 16.2%;
+            }
+            .eformdiv .col-md-5 {
+                margin-bottom: 20px;
+            }
+
         }
+
+        @media (max-width: 768px) {
+            .eformdiv .col-md-5 {
+                margin-bottom: 20px;
+            }
+        }
+
+        .eformdiv .col-md-5 .eformdiv-content{
+            cursor: pointer;
+            border: 1px solid #ddd;
+        }
+        .eformdiv .col-md-5 .eformdiv-content:hover{
+            background-color: #f5f5f5;
+        }
+
+
     </style>
     <script>
         $(document).ready(function () {
@@ -90,7 +113,37 @@
                     </ul>
                 </div>
             </div>
-            <div class="content-box" style="padding: 50px 12px;margin-top: -22px;">
+
+            <!-- E-Form -->
+            <div class="row eformdiv" style="padding: 50px 12px;">
+                <div class="col-md-5">
+                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[0].id)">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform1.png}" ng-alt="eFormTypes[0].en">
+                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[0].hk:(langId==2?eFormTypes[0].cn:eFormTypes[0].en)}}</span>
+                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-2" ng-click="getEform(eFormTypes[1].id)">
+                    <div class="eformdiv-content">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform3.png}" ng-alt="eFormTypes[1].en">
+                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[1].hk:(langId==2?eFormTypes[1].cn:eFormTypes[1].en)}}</span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[3].id)">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform7.png}" ng-alt="eFormTypes[3].en">
+                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[3].hk:(langId==2?eFormTypes[3].cn:eFormTypes[3].en)}}</span>
+                    </div>
+                </div>
+                <div class="col-md-5 col-md-offset-2">
+                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[4].id)">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform8.png}" ng-alt="eFormTypes[4].en">
+                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[4].hk:(langId==2?eFormTypes[4].cn:eFormTypes[4].en)}}</span>
+                    </div>
+                </div>
+            </div>
+
+
+           <!-- <div class="content-box" style="padding: 50px 12px;margin-top: -22px;">
                 <div class="list-group">
                     <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
                         {{hotspotTest}}
@@ -98,6 +151,7 @@
                     <a ng-repeat="detailed in hotspots" class="list-group-item" th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a>
                 </div>
             </div>
+-->
         </div>
     </div>
 </div>

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.bean.*;
 import com.example.demo.dao.CategoryDao;
 import com.example.demo.dao.DetailedDao;
+import com.example.demo.dao.E_form_typeDao;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.service.DetailedService;
@@ -42,6 +43,8 @@ public class DetailedController {
     private DetailedService detailedService;
     @Resource
     IpUtil ipUtil;
+    @Resource
+    E_form_typeDao e_form_typeDao;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -166,6 +169,16 @@ public class DetailedController {
         module.putData("detaileds",ds.getContent());
         return module;
     }
+
+    /* 搜索页-获取eform*/
+    @ResponseBody
+    @RequestMapping("/getEform")
+    public List<E_form_type> getEform(){
+        List<E_form_type> types = null;
+        types = e_form_typeDao.getAllByDlIdtest();
+        return types;
+    }
+
 
     /**
      * 详细页- 智能向导
