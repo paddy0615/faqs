@@ -390,4 +390,14 @@ public class DetailedService {
         return detailedEntityDao.getSmartGuide(id);
     }
 
+
+    /**
+     * 2.2
+     * 按dl_id ,langid -> 查询对应语言的dl_id
+     * @return
+     */
+    public String getIndexDetailedNew(long dlId,long langId){
+        return detailedDao.getIndexDetailedNew(dlId,langId);
+    }
+
 }

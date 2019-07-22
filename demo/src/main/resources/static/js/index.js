@@ -375,7 +375,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0;
+            var url = ctx + "appJson/getIndexDetailedNew?dlId="+$scope.dlId+"&langId="+$scope.langId;
             clicked(url);
         }
         // 强制更新  $scope.apply();

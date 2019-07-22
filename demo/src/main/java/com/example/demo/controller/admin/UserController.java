@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /*
@@ -41,6 +42,25 @@ public class UserController {
         System.out.println(user.getPassword());
         boolean falg  = userService.login(request,user.getLoginId(),user.getPassword());
         return falg;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/logOut",method= RequestMethod.GET)
+    public String logOut(HttpSession session,HttpServletRequest request, HttpServletResponse response)throws Exception {
+        session.removeAttribute("userSession");
+        response.sendRedirect(request.getContextPath()+"/appPage/goLogin");
+        return "";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getUser",method= RequestMethod.POST)
+    public String getUser(HttpSession session)throws Exception {
+        User user = (User)session.getAttribute("userSession");
+        String s = "";
+        if(null != user){
+            s = user.getRole();
+        }
+        return s;
     }
 
 }

@@ -275,6 +275,28 @@ public class DetailedController {
         return "";
     }
 
+    /**
+     * 新:详细页面,点击语言;应跳转对应语言详细页
+     * @param dlId 详情ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexDetailedNew",method= RequestMethod.GET)
+    public String getIndexDetailedNew(HttpServletRequest request, HttpServletResponse response,
+                                      @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId,
+                                      @RequestParam(name = "langId",required = true,defaultValue = "0")long langId)throws Exception {
+        String url = "/appPage/index?langId="+langId;
+        if(dlId > 0){
+            String id = detailedService.getIndexDetailedNew(dlId,langId);
+            if(null != id){
+                dlId =Long.parseLong(id);
+                url = "/appPage/indexDetailed?dlId="+dlId;
+            }
+        }
+        response.sendRedirect(request.getContextPath()+url);
+        return "";
+    }
+
 
 
 

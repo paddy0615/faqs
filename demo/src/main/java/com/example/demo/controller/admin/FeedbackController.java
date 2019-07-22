@@ -1,13 +1,10 @@
 package com.example.demo.controller.admin;
 
-import com.example.demo.bean.Detailed;
-import com.example.demo.bean.DetailedFeedback;
-import com.example.demo.bean.RestResultModule;
-import com.example.demo.dao.DetailedDao;
-import com.example.demo.dao.DetailedFeedbackDao;
-import com.example.demo.dao.DfeedbackDao;
-import com.example.demo.dao.LanguageDao;
+import com.alibaba.fastjson.JSON;
+import com.example.demo.bean.*;
+import com.example.demo.dao.*;
 import com.example.demo.entity.Feedback;
+import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -19,6 +16,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +29,7 @@ import java.util.Map;
 @Controller
 @RequestMapping(value = "appJson/admin")
 @Component("AdminFeedbackController")
-public class FeedbackController {
+public class  FeedbackController {
     private  static Logger logger = LoggerFactory.getLogger(FeedbackController.class);
     @Resource
     DfeedbackDao dfeedbackDao;
@@ -39,6 +39,11 @@ public class FeedbackController {
     LanguageDao languageDao;
     @Resource
     DetailedDao detailedDao;
+    @Resource
+    LogsDao logsDao;
+    @Resource
+    IpUtil ipUtil;
+
 
     /* 初始化*/
     @ResponseBody
@@ -95,15 +100,23 @@ public class FeedbackController {
     @Transactional
     @ResponseBody
     @RequestMapping("/updateFeedbackStatus")
-    public RestResultModule updateFeedbackStatus(
-            @RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id,
-            @RequestParam(name = "df_nay_status",defaultValue = "0",required = true) long df_nay_status){
+    public RestResultModule updateFeedbackStatus(HttpServletRequest request, HttpSession session,
+                                                 @RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id,
+                                                 @RequestParam(name = "df_nay_status",defaultValue = "0",required = true) long df_nay_status){
         RestResultModule module = new RestResultModule();
-        if(df_id > 0){
-            detailedFeedbackDao.updateFeedbackStatus(df_id,df_nay_status);
-        }else{
-            module.setCode(500);
+        User user = (User)session.getAttribute("userSession");
+        if(null != user) {
+            if(df_id > 0){
+                detailedFeedbackDao.updateFeedbackStatus(df_id,df_nay_status);
+            }else{
+                module.setCode(500);
+            }
+
+            // 添加日志
+            Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), "updateFeedbackStatus", "df_id="+df_id, "df_nay_status="+df_nay_status,new Date());
+            logsDao.save(logs);
         }
+
         return module;
     }
 

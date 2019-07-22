@@ -1,14 +1,13 @@
 package com.example.demo.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.*;
-import com.example.demo.dao.CategoryDao;
-import com.example.demo.dao.DetailedDao;
-import com.example.demo.dao.LanguageDao;
-import com.example.demo.dao.LibrabryEntityDao;
+import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.entity.LibrabryEntity;
 import com.example.demo.entity.Tags;
 import com.example.demo.service.DetailedService;
+import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,13 @@ public class DetailedController {
     LanguageDao languageDao;
     @Resource
     private DetailedService detailedService;
+
+    @Resource
+    LogsDao logsDao;
+    @Resource
+    IpUtil ipUtil;
+    @Resource
+    HotspotDao hotspotDao;
 
 
     /* 初始化*/
@@ -181,27 +189,37 @@ public class DetailedController {
      */
     @ResponseBody
     @RequestMapping(value = "/detailed/faqThreeUpdate",method= RequestMethod.POST)
-    public RestResultModule faqThreeUpdate(@RequestBody Tags tags){
+    public RestResultModule faqThreeUpdate(HttpServletRequest request,HttpSession session,@RequestBody Tags tags){
+        User user = (User)session.getAttribute("userSession");
         RestResultModule module = new RestResultModule();
         Detailed detailed = tags.getDetailed();
-        if(null != detailed){
-            detailed.setUpdateDate(new Date());
-            detailed.setOrderTopDate(new Date());
-            detailed.setUpdateUser(Long.parseLong("1"));
-            if(null == detailed.getId()){
-                detailed.setCreateDate(new Date());
-                detailed.setCreateUser(Long.parseLong("1"));
-            }
-            detailedService.save(detailed);
-            // 更新标签
-            if(tags.getTagsArr().length > 0){
-                detailedService.saveTags(detailed.getId(),tags.getTagsArr());
-            }
-            // 更新eformtype
-            //if(tags.getEformtypeArr().length > 0){
-                detailedService.saveEformType(detailed.getId(),tags.getEformtypeArr());
-            //}
+        Date date = new Date();
+        if(null != user) {
+            if (null != detailed) {
+                detailed.setStatus(0);
+                detailed.setUpdateDate(date);
+                detailed.setOrderTopDate(date);
+                detailed.setUpdateUser(user.getId());
+                String t = "detailed/Update";
+                if (null == detailed.getId()) {
+                    detailed.setCreateDate(date);
+                    detailed.setCreateUser(user.getId());
+                    t = "detailed/add";
+                }
+                detailedService.save(detailed);
+                // 更新标签
+                if (tags.getTagsArr().length > 0) {
+                    detailedService.saveTags(detailed.getId(), tags.getTagsArr());
+                }
+                // 更新eformtype
+                //if(tags.getEformtypeArr().length > 0){
+                detailedService.saveEformType(detailed.getId(), tags.getEformtypeArr());
+                //}
 
+                // 添加日志
+                Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, JSON.toJSONString(tags), "",date);
+                logsDao.save(logs);
+            }
         }
         module.putData("dlId",detailed.getId());
         return module;
@@ -217,11 +235,30 @@ public class DetailedController {
     /* 删除*/
     @ResponseBody
     @RequestMapping(value = "/detailed/delete")
-    public void delete(@RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds){
-        String [] dlId = dlIds.split("-");
-        for (String id : dlId) {
-            detailedService.deleteById(Long.parseLong(id));
+    public void delete(HttpServletRequest request,HttpSession session, @RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds){
+        User user = (User)session.getAttribute("userSession");
+        if(null != user){
+            if("admin".equals(user.getRole())){
+
+                // 删除操作
+                String [] dlId = dlIds.split("-");
+
+                // 添加日志
+                List<String> ids = Arrays.asList(dlId);
+                List<Detailed> detaileds = detailedDao.getByIds(ids);
+                String str = JSON.toJSONString(detaileds); // List转json
+                List<Hotspot> hotspots = hotspotDao.getByIds(ids);
+                String str1 = JSON.toJSONString(hotspots); // List转json
+                Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"detailed/delete",str,str1,new Date());
+
+                for (String id : dlId) {
+                    detailedService.deleteById(Long.parseLong(id));
+                }
+
+                logsDao.save(logs);
+            }
         }
+
     }
 
     /* 按title模糊查询,带语言,类别*/
@@ -263,12 +300,25 @@ public class DetailedController {
     /* 修改状态*/
     @ResponseBody
     @RequestMapping(value = "/detailed/editStatus")
-    public void editStatus(@RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds,
+    public void editStatus(HttpServletRequest request,HttpSession session,
+                           @RequestParam(name = "dlIds",defaultValue = "",required = true) String dlIds,
                            @RequestParam(name = "status",defaultValue = "0",required = true) long status){
-        String [] dlId = dlIds.split("-");
-        for (String id : dlId) {
-            detailedService.saveStatus(Long.parseLong(id),status);
+        User user = (User)session.getAttribute("userSession");
+        if(null != user) {
+            if ("admin".equals(user.getRole())) {
+                String [] dlId = dlIds.split("-");
+                for (String id : dlId) {
+                    detailedService.saveStatus(Long.parseLong(id),status);
+                }
+
+                // 添加日志
+                Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"detailed/editStatus",dlIds,"status="+status,new Date());
+                logsDao.save(logs);
+            }
         }
+
+
+
     }
 
     /* 置顶*/

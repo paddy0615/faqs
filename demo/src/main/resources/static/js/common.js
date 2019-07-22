@@ -1,3 +1,4 @@
+var faqRole = '';
 (function(w){
     w.clicked = function(url){
         w.location.href = url;

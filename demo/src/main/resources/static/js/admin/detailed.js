@@ -10,7 +10,7 @@ myapp.controller("detailedController",["$scope","$http",function ($scope, $http)
     $scope.selLangId = Number(GetUrlParam("selLangId")==""?0:GetUrlParam("selLangId")); // 做跳转准备
     $scope.selCatId = Number(GetUrlParam("selCatId")==""?0:GetUrlParam("selCatId")); // 做跳转准备
     $scope.isGetUrl = false;
-    $scope.categories = {};
+    $scope.categories = {};goCancel
     $scope.languages = {};
     $scope.detaileds = {};
     $scope.detailedsTemp = {};

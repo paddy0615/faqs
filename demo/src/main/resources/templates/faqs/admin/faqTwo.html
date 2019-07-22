@@ -9,6 +9,9 @@
     <meta name="author" content="">
     <title>FAQS | HK Express</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
     <!-- Bootstrap core CSS -->
     <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -23,9 +26,6 @@
     <script th:src="@{/js/admin/directive.js}"></script>
     <script th:src="@{/js/admin/faqThree.js}"></script>
     <script th:src="@{/js/common.js}"></script>
-    <script th:inline="javascript">
-        var ctx = [[@{/}]];
-    </script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
@@ -57,9 +57,11 @@
                 <!-- button -->
                 <div class="col-lg-5" style="float: right;text-align: right;">
                     <button class="btn btn-default" type="button" ng-click="getEdit(0)">Add</button>
-                    <button class="btn btn-default" type="button" ng-click="getDelete(0)">Delete Selected</button>
-                    <button class="btn btn-default" type="button" ng-click="editStatus(0,1)">Show Selected</button>
-                    <button class="btn btn-default" type="button" ng-click="editStatus(0,0,1)">Hide Selected</button>
+                    <element zg-access="access">
+                        <button class="btn btn-default" type="button" ng-click="getDelete(0)">Delete Selected</button>
+                        <button class="btn btn-default" type="button" ng-click="editStatus(0,1)">Show Selected</button>
+                        <button class="btn btn-default" type="button" ng-click="editStatus(0,0,1)">Hide Selected</button>
+                    </element>
                 </div>
             </div>
 
@@ -117,10 +119,14 @@
                         <td>{{detailed.dl_weights}}</td>
                         <td style="text-align: right;">
                             <!--<button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(detailed.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;-->
-                            <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button><!--已发表-->
-                            <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 0" ng-click="editStatus(detailed.dl_id,1)">Show</button><!--未发表-->
+                            <element zg-access="access">
+                                <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button><!--已发表-->
+                                <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 0" ng-click="editStatus(detailed.dl_id,1)">Show</button><!--未发表-->
+                            </element>
                             <button class="btn btn-default" type="button" ng-click="getEdit(detailed.dl_id)" >Edit</button>
-                            <button class="btn btn-default" type="button" ng-click="getDelete(detailed.dl_id)">Delete</button>
+                            <element zg-access="access">
+                                <button class="btn btn-default" type="button" ng-click="getDelete(detailed.dl_id)">Delete</button>
+                            </element>
                         </td>
                     </tr>
 

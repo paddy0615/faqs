@@ -75,7 +75,6 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
             CurrentPage : CurrentPage,
             PageSize : PageSize
         }
-
         $http({
             method : 'post',
             url : ctx + "appJson/admin/getLibrabryPage",
@@ -90,7 +89,6 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
                 // 没有数据时不显示
                 $('#pagination').jqPaginator('destroy');
             }
-
         })
     }
 

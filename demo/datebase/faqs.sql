@@ -367,6 +367,28 @@ VALUES ('已購買新訂單的退款','已购买新订单的退款','Refund with
 ALTER TABLE e_form ADD e_pnr_new VARCHAR(100) NULL COMMENT 'PNR-new';
 
 
+-- user -> 添加权限;
+-- admin最高权限,agent只可编辑
+UPDATE faqs_user SET usr_login_id = 'admin.operations',usr_password='f39258'
+WHERE usr_id = 1;
+
+INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`)
+VALUES ('agent.operations','b2cb7a','agent');
+
+
+-- faqs_log日志
+DROP TABLE IF EXISTS `faqs_logs`;
+CREATE TABLE `faqs_logs` (
+ `l_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `l_user_id` INT NULL COMMENT '用户ID',
+ `l_ip` VARCHAR(200) NULL COMMENT 'IP',
+ `l_title` VARCHAR(250) NULL COMMENT '内容简介',
+ `l_content` TEXT NULL COMMENT '内容的json',
+ `l_content_other` TEXT NULL COMMENT '内容的json-other',
+ `l_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`l_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 
 
 

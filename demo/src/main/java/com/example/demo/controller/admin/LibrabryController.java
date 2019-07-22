@@ -1,9 +1,11 @@
 package com.example.demo.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.LibrabryEntity;
 import com.example.demo.service.DetailedService;
+import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +44,11 @@ public class LibrabryController {
     LibrabryDao librabryDao;
     @Resource
     E_form_typeDao e_form_typeDao;
+    @Resource
+    LogsDao logsDao;
+    @Resource
+    IpUtil ipUtil;
+
 
 
     /**
@@ -105,13 +114,26 @@ public class LibrabryController {
     /* 2.2faq librabry编辑页面,按ID获取信息*/
     @ResponseBody
     @RequestMapping("/faqOne/faqOneUpdate")
-    public RestResultModule faqOneUpdate(@RequestBody Librabry librabry){
+    public RestResultModule faqOneUpdate(HttpServletRequest request, HttpSession session,
+                                         @RequestBody Librabry librabry){
         RestResultModule module = new RestResultModule();
-        if(null == librabry.getId()){
-            librabry.setCreateDate(new Date());
+        User user = (User)session.getAttribute("userSession");
+        if(null != user) {
+            String t = "Library/Update";
+            Date date = new Date();
+            if(null == librabry.getId()){
+                librabry.setCreateDate(date);
+                t = "Library/add";
+            }
+            librabry.setUpdatedate(date);
+            librabryDao.save(librabry);
+
+            // 添加日志
+            Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, JSON.toJSONString(librabry), "",date);
+            logsDao.save(logs);
         }
-        librabry.setUpdatedate(new Date());
-        librabryDao.save(librabry);
+
+
         return module;
     }
 

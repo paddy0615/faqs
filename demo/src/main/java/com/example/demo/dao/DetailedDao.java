@@ -70,4 +70,18 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Query(value = "select new Detailed(l.title,d.id,d.title,d.contentTxt) from Detailed d,Librabry l" +
             " where d.flId = l.id and  d.status = 1 and d.langId = :langId")
     List<Detailed> getAllByLangId(@Param("langId")long langId);
+
+    @Query(value = "SELECT zd.dl_id FROM faqs_detailed zd" +
+            " WHERE zd.dl_fl_id = " +
+            " (SELECT d.dl_fl_id FROM faqs_detailed d" +
+            " WHERE d.dl_id = :dlId)" +
+            " AND zd.dl_lang_id = :langId",nativeQuery = true)
+    String getIndexDetailedNew(@Param("dlId")long dlId,@Param("langId")long langId);
+
+    @Query(value = "SELECT d.* FROM  faqs_detailed d" +
+            "            WHERE d.dl_id IN(:ids)",nativeQuery = true)
+    List<Detailed> getByIds(@Param("ids")List<String> ids);
+
+
+
 }

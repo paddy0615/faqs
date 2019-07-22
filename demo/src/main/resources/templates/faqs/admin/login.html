@@ -9,6 +9,9 @@
     <meta name="author" content="">
     <title>FAQS | HK Express</title>
     <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
     <script th:src="@{/js/assets/ie-emulation-modes-warning.js}"></script>
@@ -23,9 +26,6 @@
     <script th:src="@{/js/assets/angular.js}"></script>
     <script th:src="@{/js/login.js}"></script>
     <script th:src="@{/js/common.js}"></script>
-    <script th:inline="javascript">
-        var ctx = [[@{/}]];
-    </script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
