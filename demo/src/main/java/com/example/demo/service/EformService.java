@@ -317,6 +317,15 @@ public class EformService {
     }
 
     /**
+     * 获取E_form_type -> 指定
+     */
+    public List<E_form_type> getAllByDlIdtest(){
+        return e_form_typeDao.getAllByDlIdtest();
+    }
+
+
+
+    /**
      * 按ID获取E_from
      */
     public Eform findEformById(long id){

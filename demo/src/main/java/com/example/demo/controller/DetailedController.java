@@ -175,7 +175,7 @@ public class DetailedController {
     @RequestMapping("/getEform")
     public List<E_form_type> getEform(){
         List<E_form_type> types = null;
-        types = e_form_typeDao.getAllByDlIdtest();
+        types = e_form_typeDao.getAllByHomeDisplay();
         return types;
     }
 

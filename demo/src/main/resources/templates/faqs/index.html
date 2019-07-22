@@ -116,30 +116,13 @@
 
             <!-- E-Form -->
             <div class="row eformdiv" style="padding: 50px 12px;">
-                <div class="col-md-5">
-                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[0].id)">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform1.png}" ng-alt="eFormTypes[0].en">
-                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[0].hk:(langId==2?eFormTypes[0].cn:eFormTypes[0].en)}}</span>
+                <div ng-repeat="t in eFormTypes" ng-class="$index%2=='0'?'col-md-5':'col-md-5  col-md-offset-2'">
+                    <div class="eformdiv-content" ng-click="getEform(t.id)">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform1.png}" ng-alt="t.en">
+                        <span style="vertical-align:middle;" class="">{{langId==1?t.hk:(langId==2?t.cn:t.en)}}</span>
                     </div>
                 </div>
-                <div class="col-md-5 col-md-offset-2" ng-click="getEform(eFormTypes[1].id)">
-                    <div class="eformdiv-content">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform3.png}" ng-alt="eFormTypes[1].en">
-                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[1].hk:(langId==2?eFormTypes[1].cn:eFormTypes[1].en)}}</span>
-                    </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[3].id)">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform7.png}" ng-alt="eFormTypes[3].en">
-                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[3].hk:(langId==2?eFormTypes[3].cn:eFormTypes[3].en)}}</span>
-                    </div>
-                </div>
-                <div class="col-md-5 col-md-offset-2">
-                    <div class="eformdiv-content" ng-click="getEform(eFormTypes[4].id)">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform8.png}" ng-alt="eFormTypes[4].en">
-                        <span style="vertical-align:middle;" class="">{{langId==1?eFormTypes[4].hk:(langId==2?eFormTypes[4].cn:eFormTypes[4].en)}}</span>
-                    </div>
-                </div>
+
             </div>
 
 

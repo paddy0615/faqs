@@ -15,6 +15,10 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
 
     // 初始化
     $scope.into = function(CurrentPage,PageSize){
+    /*    angular.forEach($scope.eFormTypes,function(hero,index,objs){
+            $scope['master'+hero.id] = false;
+        });*/
+
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
         if(end != ""){
@@ -40,7 +44,14 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
                 $scope.languages = data.result.languages;
                 $scope.languages.unshift({'id':0,'title':'All'});
                 $scope.eformTypes = data.result.eformTypes;
+
+                $scope.eformTypes_n = data.result.eformTypes_n;
+
                 $scope.eformTypes.unshift({'id':0,'en':'All'});
+                angular.forEach(data.result.efds,function(hero,index,objs){
+                    $scope['master'+hero.etid] = true;
+                });
+
                 $scope.PageCount = data.result.PageCount;
                 if($scope.PageCount > 0){
                    $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
@@ -137,6 +148,31 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
     // search
     $scope.getLayDate = function(){
         $scope.into($scope.CurrentPage,$scope.PageSize);
+    }
+
+
+    // Home display -> submit
+    $scope.submitUpdate = function () {
+        var index =  layer.load(0, {shade: false});
+        var efs = [];
+        angular.forEach($scope.eformTypes_n,function(hero,index,objs){
+            if($("input[name='master"+hero.id+"']").is(':checked')){
+                efs.push(hero.id);
+            }
+        });
+        $http({
+            method : 'post',
+            url : ctx + 'appJson/admin/updateEformHomeHisplay',
+            params : {'efs':efs}
+        }).success(function(resp){
+            layer.alert( resp.msg, {
+                title:'Information',
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+            });
+            layer.close(index);
+        })
+
     }
 
 

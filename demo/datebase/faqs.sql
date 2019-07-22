@@ -389,6 +389,15 @@ CREATE TABLE `faqs_logs` (
   PRIMARY KEY (`l_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-
+-- e_form_type_display 显示
+DROP TABLE IF EXISTS `e_form_type_display`;
+CREATE TABLE `e_form_type_display` (
+ `d_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `d_user_id` INT NULL COMMENT '用户ID',
+ `d_et_id` INT NULL COMMENT 'E-FORM type',
+ `d_order` INT COMMENT '排序',
+ `d_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`d_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 

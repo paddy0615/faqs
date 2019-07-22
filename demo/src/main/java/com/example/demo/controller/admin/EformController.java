@@ -1,11 +1,13 @@
 package com.example.demo.controller.admin;
 
-import com.example.demo.bean.E_area_name;
-import com.example.demo.bean.Eform;
-import com.example.demo.bean.RestResultModule;
+import com.example.demo.bean.*;
+import com.example.demo.dao.E_form_typeDao;
+import com.example.demo.dao.E_form_type_displayDao;
+import com.example.demo.dao.LogsDao;
 import com.example.demo.entity.EformEntity;
 import com.example.demo.entity.Feedback;
 import com.example.demo.service.EformService;
+import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +38,13 @@ public class EformController {
 
     @Resource
     EformService eformService;
+    @Resource
+    E_form_type_displayDao e_form_type_displayDao;
+    @Resource
+    LogsDao logsDao;
+    @Resource
+    IpUtil ipUtil;
+
 
 
     /* 初始化*/
@@ -56,7 +67,9 @@ public class EformController {
         module.putData("eforms",eformEntities.getContent());
         module.putData("PageCount",eformEntities.getTotalElements());
         module.putData("languages",eformService.findAllLanguage());
-        module.putData("eformTypes",eformService.findAllFormType());
+        module.putData("eformTypes",eformService.getAllByDlIdtest());
+        module.putData("eformTypes_n",eformService.getAllByDlIdtest());
+        module.putData("efds",e_form_type_displayDao.findAll());
         return module;
     }
 
@@ -81,5 +94,42 @@ public class EformController {
         module.putData("Certificate_Nature",certificate_Nature);
         return module;
     }
+
+    /**
+     * 按ID查询
+     * @param efs
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/updateEformHomeHisplay")
+    public RestResultModule updateEformHomeHisplay(HttpServletRequest request, HttpSession session,
+                                          @RequestParam(name = "efs",defaultValue = "",required = true) String efs) throws Exception{
+        RestResultModule module = new RestResultModule();
+        System.out.println(efs);
+        User user = (User)session.getAttribute("userSession");
+        if(null != user && !"".equals(efs)){
+            e_form_type_displayDao.deleteAll();
+            E_form_type_display display = null;
+            String [] ids = efs.split(",");
+            int i = 0;
+            for (String id : ids) {
+                System.out.println(id);
+                display = new E_form_type_display();
+                display.setUserid(user.getId());
+                display.setCreatedate(new Date());
+                display.setEtid(Long.parseLong(id));
+                display.setOrder(++i);
+                e_form_type_displayDao.save(display);
+            }
+
+            // 添加日志
+            Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"E-Form/updateEformHomeHisplay","show="+efs,"",new Date());
+            logsDao.save(logs);
+
+        }
+        module.setMsg("Success");
+        return module;
+    }
+
 
 }
