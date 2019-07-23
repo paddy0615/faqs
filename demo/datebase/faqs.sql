@@ -369,11 +369,7 @@ ALTER TABLE e_form ADD e_pnr_new VARCHAR(100) NULL COMMENT 'PNR-new';
 
 -- user -> 添加权限;
 -- admin最高权限,agent只可编辑
-UPDATE faqs_user SET usr_login_id = 'admin.operations',usr_password='f39258'
-WHERE usr_id = 1;
-
-INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`)
-VALUES ('agent.operations','b2cb7a','agent');
+insert  into `faqs_user`(`usr_id`,`usr_login_id`,`usr_password`,`usr_role`) values (1,'Erica Yu','7d645f','admin'),(2,'Gary Lam','a855c2','admin'),(3,'Sisi Yip','9b177a','admin'),(4,'Sarsi Pablo','64f70f','admin'),(5,'Alpha Bautista','1c9f09','admin'),(6,'Able Chung','777092','agent'),(7,'KEY Wong','7895b3','agent'),(8,'Tony Leung','7bebd1','agent'),(9,'Dick Tse','42942a','agent'),(10,'Marvie Fernando','f29b5c','agent'),(11,'Cecile Agbing','903bab','agent');
 
 
 -- faqs_log日志

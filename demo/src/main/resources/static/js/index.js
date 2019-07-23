@@ -153,6 +153,7 @@ myapp.config(['$locationProvider', function($locationProvider) {
 myapp.controller("indexController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $translate.use($scope.langId.toString());
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
     $scope.lang_cout = 5;
     $scope.isGetUrl = false;

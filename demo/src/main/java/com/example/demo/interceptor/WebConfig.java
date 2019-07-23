@@ -23,6 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
         InterceptorRegistration loginRegistry = registry.addInterceptor(loginInterceptor);
         // 拦截路径
         loginRegistry.addPathPatterns("/appPage/admin/**");
+        loginRegistry.addPathPatterns("/appJson/admin/**");
         // 排除路径
         loginRegistry.excludePathPatterns("/appPage/admin/login");
         // 排除客户前端

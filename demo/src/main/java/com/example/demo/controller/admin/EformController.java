@@ -107,13 +107,15 @@ public class EformController {
         RestResultModule module = new RestResultModule();
         System.out.println(efs);
         User user = (User)session.getAttribute("userSession");
-        if(null != user && !"".equals(efs)){
+        if(null != user){
             e_form_type_displayDao.deleteAll();
             E_form_type_display display = null;
             String [] ids = efs.split(",");
             int i = 0;
             for (String id : ids) {
-                System.out.println(id);
+                if("".equals(id)){
+                    continue;
+                }
                 display = new E_form_type_display();
                 display.setUserid(user.getId());
                 display.setCreatedate(new Date());

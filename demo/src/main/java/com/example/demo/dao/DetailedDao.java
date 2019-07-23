@@ -75,7 +75,8 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
             " WHERE zd.dl_fl_id = " +
             " (SELECT d.dl_fl_id FROM faqs_detailed d" +
             " WHERE d.dl_id = :dlId)" +
-            " AND zd.dl_lang_id = :langId",nativeQuery = true)
+            " AND zd.dl_lang_id = :langId" +
+            " AND zd.dl_status = 1",nativeQuery = true)
     String getIndexDetailedNew(@Param("dlId")long dlId,@Param("langId")long langId);
 
     @Query(value = "SELECT d.* FROM  faqs_detailed d" +

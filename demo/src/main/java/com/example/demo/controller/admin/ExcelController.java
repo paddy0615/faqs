@@ -1,17 +1,16 @@
-package com.example.demo.controller;
+package com.example.demo.controller.admin;
 
 import com.example.demo.bean.Detailed;
 import com.example.demo.bean.Language;
-import com.example.demo.bean.RestResultModule;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.entity.ExcelConstant;
 import com.example.demo.entity.ExcelData;
 import com.example.demo.service.DetailedService;
-import com.example.demo.service.LanguageService;
 import com.example.demo.util.ExcelUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,14 +22,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /*
  * 报表Excel
  * paddy 2019/02/28
  * */
 @RestController
-@RequestMapping("excel")
+@RequestMapping(value = "appJson/admin/excel")
+@Component("AdminExcelController")
 public class ExcelController {
     private  static Logger logger = LoggerFactory.getLogger(ExcelController.class);
 
@@ -164,8 +163,10 @@ public class ExcelController {
             ExcelUtils eeu = new ExcelUtils();
             HSSFWorkbook workbook = new HSSFWorkbook();
             int index = 0;
-            String s = "2019-"+id+"-01 00:00:00";
-            String e = "2019-"+(id+1)+"-01 00:00:00";
+          /*  String s = "2019-"+id+"-01 00:00:00";
+            String e = "2019-"+(id+1)+"-01 00:00:00";*/
+            String s = "2019-07-22 00:00:00";
+            String e = "2019-07-23 00:00:00";
             for (Language l:languages) {
                 List<Object[]> list = languageDao.getAllObjects(l.getId(),s,e);
                 List<List<Object>> data = new ArrayList<List<Object>>();
