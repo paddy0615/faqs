@@ -65,4 +65,18 @@ public interface DfeedbackDao extends JpaRepository<Feedback,Long> {
     Page<Feedback> getAllByDfType(@Param("langId") long langId,@Param("comment") long comment,@Param("commentStatu") long commentStatu,@Param("type") long type,@Param("startTime") String startTime,@Param("endTime") String endTime,Pageable pageable);
 
 
+    @Query(value = "SELECT l.fl_title,d.dl_title,d.dl_contenttxt,f.df_type,f.df_createdate,f.df_nay_content,f.df_nay_email,f.df_nay_number" +
+            " FROM faqs_detailed_feedback f,faqs_detailed d,faqs_librabry l" +
+            " WHERE f.df_dl_id = d.dl_id AND d.dl_fl_id = l.fl_id"+
+            " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
+            " AND if(:comment = 1,f.df_nay_content != '' ,1=1)"+
+            " AND if(:comment = 2,f.df_nay_content = '' ,1=1)"+
+            " AND if(:commentStatu >= 0,f.df_nay_content != '' and f.df_nay_status = :commentStatu,1=1)"+
+            " AND if(:type > 0,f.df_type = :type,1=1)"+
+            " AND if(:startTime != '',f.df_createdate > :startTime,1=1)"+
+            " AND if(:endTime != '',f.df_createdate <= :endTime,1=1)"+
+            " ORDER BY f.df_createdate DESC", nativeQuery = true)
+    List<Object[]> getAllByDfTypeExcel(@Param("langId") long langId,@Param("comment") long comment,@Param("commentStatu") long commentStatu,@Param("type") long type,@Param("startTime") String startTime,@Param("endTime") String endTime);
+
+
 }

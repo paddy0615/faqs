@@ -27,27 +27,8 @@ public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() throws Exception {
-		//多个sheet页同时导出
-		String exportFilePath3 = "D:\\Faq20190301全部问题详情.xls";
-		List<Language> languages = languageDao.findAll();
-		String[] sheetNameArr = new String [languages.size()];
-		String[] tableTitleArr = new String [languages.size()];
-		String[] headTablesColumnsNameArr = new String [languages.size()];
-		String[] tablesColumnNameArr = new String [languages.size()];
-		List<Object> list = new ArrayList<Object>();
 
-		for (int i = 0 ; i < languages.size(); i++) {
-			sheetNameArr[i] = languages.get(i).getTitle();
-			tableTitleArr[i] = "";
-			headTablesColumnsNameArr[i] = "父级,问题ID,标题,答案";
-			tablesColumnNameArr[i] = "flTitle,id,title,contentTxt";
-			List<Detailed> detaileds = new ArrayList<>();
-			detaileds= detailedService.getAllByLangId(languages.get(i).getId());
-			list.add(detaileds);
-		}
-		//new POIExcelUtils(exportFilePath3,sheetNameArr,tablesColumnArr,list);
-		POIExcelUtils poiExcel = new POIExcelUtils(sheetNameArr,tableTitleArr,headTablesColumnsNameArr,list,tablesColumnNameArr);
-		poiExcel.excelDataExport(exportFilePath3);
+
 	}
 
 }

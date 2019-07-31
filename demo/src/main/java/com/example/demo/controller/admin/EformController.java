@@ -59,7 +59,6 @@ public class EformController {
         String startTime = map.get("startTime").toString();
         String endTime = map.get("endTime").toString();
         String searchTest = map.get("searchTest").toString();
-        System.out.println("searchTest="+searchTest);
         //分页
         Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
         Page<EformEntity> eformEntities = null;

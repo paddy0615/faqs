@@ -109,6 +109,11 @@ public class UrlController {
         return "faqs/admin/eFormSet";
     }
 
+    @RequestMapping("/admin/report")
+    public String report(){
+        return "faqs/admin/report";
+    }
+
     /**
      * Request for itinerary 重新發送行程單
      * @return

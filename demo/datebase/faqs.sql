@@ -397,3 +397,8 @@ CREATE TABLE `e_form_type_display` (
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 
+-- 添加user
+INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`) VALUES
+('Windy Tam','6da932','admin');
+INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`) VALUES
+('Hifi Chong','d4130e','agent');

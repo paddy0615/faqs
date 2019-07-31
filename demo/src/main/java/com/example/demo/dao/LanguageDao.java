@@ -28,7 +28,8 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
             "INNER JOIN faqs_librabry ON dl_fl_id = fl_id\n" +
             "WHERE 1=1 \n" +
             "AND dl_lang_id = :langId\n" +
-            "AND m_createdate BETWEEN :s AND :e\n" +
+            " AND if(:s != '',m_createdate > :s,1=1)"+
+            " AND if(:e != '',m_createdate <= :e,1=1)"+
             "GROUP BY dl_id \n" +
             "ORDER BY COUNT(m_dl_id) DESC"
             ,nativeQuery = true)
@@ -49,6 +50,7 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
             "INNER JOIN faqs_librabry ON fl_id = dl_fl_id\n" +
             "INNER JOIN faqs_language ON lang_id = dl_lang_id\n" +
             "WHERE 1=1 \n" +
+            "AND dl_lang_id = \n"+
             "AND df_createdate BETWEEN :s AND :e\n" +
             "ORDER BY df_type,dl_lang_id,df_createdate DESC"
             ,nativeQuery = true)

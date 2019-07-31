@@ -1,30 +1,13 @@
 // 初始化样式
 $(function () {
-    $(".feedbackPage").addClass("active");
+    $(".reportPage").addClass("active");
 })
-// admin/feedback
-myapp.controller("feedbackController",["$scope","$http",function ($scope, $http) {
-    $scope.df_types = [
-        {id : 0, name : "All"},
-        {id : 1, name : "Useful(+1)"},
-        {id : 2, name : "Not Useful(-1)"}
-    ];
-    $scope.comments = [
-        {id : 0, name : "All"},
-        {id : 1, name : "with guest comment"},
-        {id : 2, name : "w/o guest comment"}
-    ];
-    $scope.commentsStatus = [
-        {id : -1, name : "All"},
-        {id : 0, name : "Open"},
-        {id : 1, name : "Close"}
-    ];
+// admin/report
+myapp.controller("reportController",["$scope","$http",function ($scope, $http) {
     $scope.languages = {}
     $scope.langId = 0;
-    $scope.comment = 0;
-    $scope.commentStatu = -1;
-    $scope.df_type = 0;
-    $scope.feedbacks = {};
+    $scope.eformType = 0;
+    $scope.searchTest = "";
     // 分页
     $scope.PageCount = 0; // 总数
     $scope.CurrentPage = 1; // 当前页
@@ -32,6 +15,7 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
 
     // 初始化
     $scope.into = function(CurrentPage,PageSize){
+
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
         if(end != ""){
@@ -39,24 +23,32 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
         }
         var dataMap = {
             langId : $scope.langId,
-            comment :  $scope.comment,
-            commentStatu : $scope.commentStatu,
-            df_type : $scope.df_type,
-            CurrentPage : CurrentPage,
-            PageSize : PageSize,
+            type : $scope.eformType,
             startTime : start,
-            endTime : end
+            endTime : end,
+            searchTest : $scope.searchTest,
+            CurrentPage : CurrentPage,
+            PageSize : PageSize
         }
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/getFeedbackPage",
+            url : ctx + "appJson/admin/getEformPage",
             data : JSON.stringify(dataMap)
         }).success(function (data) {
             if(data){
                 /* 成功*/
-                $scope.feedbacks = data.result.feedbacks;
+                $scope.eforms = data.result.eforms;
                 $scope.languages = data.result.languages;
-                $scope.languages.unshift({'id':0,'title':'All'})
+                $scope.languages.unshift({'id':0,'title':'All'});
+                $scope.eformTypes = data.result.eformTypes;
+
+                $scope.eformTypes_n = data.result.eformTypes_n;
+
+                $scope.eformTypes.unshift({'id':0,'en':'All'});
+                angular.forEach(data.result.efds,function(hero,index,objs){
+                    $scope['master'+hero.etid] = true;
+                });
+
                 $scope.PageCount = data.result.PageCount;
                 if($scope.PageCount > 0){
                    $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
@@ -77,7 +69,7 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
 
     // 查看
     $scope.getSet = function(id){
-        window.open(ctx + "appPage/admin/feedbackSet?dfId="+id);
+        window.open(ctx + "appPage/admin/eFormSet?eId="+id);
     }
 
     // close
@@ -137,6 +129,7 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
                 }
             }
         });
+
     }
 
     // laydate国际版
@@ -148,13 +141,15 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
         elem: '#ladate2'
         ,lang: 'en'
     });
+
+    // search
     $scope.getLayDate = function(){
         $scope.into($scope.CurrentPage,$scope.PageSize);
     }
 
 
     // download
-    $scope.submitDownload = function () {
+    $scope.submitUpdate = function () {
         var index =  layer.load(0, {shade: false});
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
@@ -162,15 +157,13 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
             end = end +" 23:59:59";
         }
         var form  = document.getElementById("monitorform");
-        var s ="?langId="+$scope.langId+"&comment="+$scope.comment+"&commentStatu="+$scope.commentStatu+"&df_type="+$scope.df_type+"&startTime="+start+"&endTime="+end
-        form.action = ctx + "appJson/admin/excel/feedback"+s;
+        form.action = ctx + "appJson/admin/excel/monitor?langId="+$scope.langId+"&startTime="+start+"&endTime="+end;
         form.submit();
-
         var clock = setInterval(function (args) {
             $http({
                 method : 'post',
                 url : ctx + "appJson/admin/excel/check",
-                params: {"id":"feedback"}
+                params: {"id":"monitor"}
             }).success(function (data) {
                 if("ok"==data.result.s){
                     clearInterval(clock); //清除js定时器
@@ -178,73 +171,8 @@ myapp.controller("feedbackController",["$scope","$http",function ($scope, $http)
                 }
             })
         }, 1000); //一秒执行一次
-    }
-
-    // 退出
-    $scope.goCancel = function(url){
-        clicked(url); // 跳url
-    }
-}]);
-
-// admin/feedbackSet
-myapp.controller("feedbackSetController",["$scope","$http",function ($scope, $http) {
-    $scope.dfId = GetUrlParam("dfId")==""?0:GetUrlParam("dfId");
-    if($scope.dfId == 0){
-        alert("Error");
-        return;
-    }
-    $scope.feedback = "";
-
-    // 初始化
-    $scope.into = function(id){
-        $http({
-            method : 'post',
-            url : ctx + "appJson/admin/getFeedbackById",
-            params :{"df_id": id}
-        }).success(function (data) {
-            if(data){
-                /* 成功*/
-                $scope.feedback = data.result.feedback;
-            }
-
-        })
-    }
-    $scope.into($scope.dfId);
-
-
-    // close
-    $scope.updateFeedbackStatus = function(id,df_nay_status){
-        var s = "Confirm to Close the case ？";
-        if(df_nay_status == 0){
-            s = "Confirm to Open the case ？";
-        }
-        var myconfirm = layer.confirm(s, {
-            title:'Confirmation',
-            btn: ['OK','Cancel'] //按钮
-        }, function(){
-            $http({
-                method : 'post',
-                url : ctx + "appJson/admin/updateFeedbackStatus",
-                params : {"df_id":id,"df_nay_status":df_nay_status}
-            }).success(function (data) {
-                /* 成功*/
-                var index = layer.alert( 'Success', {
-                    title:'Information',
-                    skin: 'layui-layer-lan'
-                    ,closeBtn: 0
-                },function () {
-                    $scope.into($scope.dfId);
-                    layer.close(index);
-                });
-
-            })
-            layer.close(myconfirm);
-        }, function(){
-            layer.close(myconfirm);
-        });
 
     }
-
 
 
     // 退出

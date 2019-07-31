@@ -94,9 +94,15 @@
                   <input type="text" class="form-control layui-input" id="ladate2" placeholder="yyyy-MM-dd">
             </div>
             <!-- Search -->
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <button class="btn btn-default" type="button" ng-click="getLayDate()">Search</button>
             </div>
+          <!-- download -->
+          <div class="col-md-1">
+              <form id="monitorform" action="#" method="post" enctype="multipart/form-data">
+                  <button class="btn btn-default" type="button" ng-click="submitDownload()">download</button>
+              </form>
+          </div>
 
           </div><!-- /.row -->
 
@@ -124,8 +130,8 @@
                      <element ng-if="f.dfType == 2">-1</element>
                   </td>
                   <td>
-                      <div ng-if="f.dfType == 2 && f.content != '' && f.contentStatus == 0" style="color:red;">Open</div>
-                      <div ng-if="f.dfType == 2 && f.content != '' && f.contentStatus == 1">Close</div>
+                      <div ng-if="f.content != '' && f.contentStatus == 0" style="color:red;">Open</div>
+                      <div ng-if="f.content != '' && f.contentStatus == 1">Close</div>
                   </td>
                   <td style="text-align: right;">
                       <button class="btn btn-default" type="button"  ng-if="f.content != ''" ng-click="getSet(f.id)" >Select</button>

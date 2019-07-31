@@ -26,6 +26,8 @@ public class WebConfig implements WebMvcConfigurer {
         loginRegistry.addPathPatterns("/appJson/admin/**");
         // 排除路径
         loginRegistry.excludePathPatterns("/appPage/admin/login");
+        loginRegistry.excludePathPatterns("/appJson/admin/userlogin");
+        loginRegistry.excludePathPatterns("/appJson/admin/logOut");
         // 排除客户前端
         loginRegistry.excludePathPatterns("/appPage/index");
         loginRegistry.excludePathPatterns("/appPage/indexDetailed");
