@@ -122,7 +122,7 @@ public class UrlController {
     public String eForm1(){return "faqs/eForm1";}
 
     /**
-     * Duplicate Booking 重復訂單
+     * Duplicate Booking 重復訂單RefundWithNewBbooking
      * @return
      */
     @RequestMapping("/DuplicateBooking")

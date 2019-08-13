@@ -1906,6 +1906,26 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
         location.reload();
     }
 
+
+    /**
+     * 跳转e-refund
+     */
+    $scope.getUrlRefund = function () {
+        var u = "https://securesettlement.net/hkexpress/e-refund/";
+        if($scope.langId==1){
+            u += "zh_hk";
+        }else if($scope.langId==2){
+            u += "zh_cn";
+        }else if($scope.langId==4){
+            u += "ja";
+        }else if($scope.langId==5){
+            u += "ko";
+        }else if($scope.langId==6){
+            u += "en";
+        }
+        window.open(u);
+    }
+
     /**
      * 内容验证
      */

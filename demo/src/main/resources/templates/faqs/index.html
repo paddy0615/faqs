@@ -63,7 +63,6 @@
             background-color: #f5f5f5;
         }
 
-
     </style>
     <script>
         $(document).ready(function () {
@@ -93,6 +92,7 @@
                 </div>
                 <div class="header-lan">
                     <img th:src="@{/img/globe1.png}"/>
+                    <span class="icon-language"></span>
                     <select ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in result.languages">
                     </select>
                 </div>
