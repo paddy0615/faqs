@@ -2124,3 +2124,306 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
     });
 
 }]);
+
+
+// eForm9Controller
+myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
+    // 设置默认,langId==6语言，英文;
+    $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    function into(langID){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getLanguageAll",
+            params:{"langId": langID}
+        }).success(function (data) {
+            $scope.isGetUrl = true;
+            $scope.languages = data;
+        })
+
+    }
+    // 初始化
+    into($scope.langId);
+    onlineChat($scope.langId);
+    // 返HKE官网
+    $scope.clickCategory = function (idnex) {
+        getHKE($scope.langId);
+    }
+    // 语言事件
+    $scope.clickLanguage = function() {
+        if($scope.isGetUrl){
+            $translate.use($scope.langId.toString());
+            onlineChat($scope.langId);
+        }
+        // 强制更新  $scope.apply();
+    }
+
+    // laydate国际版
+    laydate.render({
+        elem: '#ladate1'
+        ,lang: 'en'
+        ,done:function(value,dates,edate){
+            $('#ladate1').val(value);
+            $('.eForm-div1').data('bootstrapValidator')
+                .updateStatus('ladate1', 'NOT_VALIDATED',null)
+                .validateField('ladate1');
+        }
+    });
+
+
+    // 样式初始化
+    $("#progressbarLi2").removeClass().addClass('progressbarLi');
+    $scope.myTabContent = false;
+    $scope.PNR = true
+    $scope.eFormContent = true;
+    $scope.eFormError = false;
+    $scope.eFormSuccess = false;
+    $scope.e = {};
+    $scope.e.type = "9";
+    // 获取那个dlId进入
+    $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
+
+    /**
+     * 提交
+     */
+    var lock1 = false; //默认未锁定
+    $scope.eFormContentSubmit = function () {
+        $scope.e.langId =  $scope.langId;
+        var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
+        bootstrapValidator.validate();
+        if(bootstrapValidator.isValid()){
+            // 验证成功
+            var index =  layer.load(0, {shade: false});
+            if(!lock1) {
+                lock1 = true; // 锁定
+                $http({
+                    method : 'post',
+                    url : ctx + 'appJson/E/add',
+                    data : $scope.e
+                }).then(function(resp){
+                    $scope.data = resp.data;
+                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
+                    $("#progressbarLi2").removeClass();
+                    $scope.eFormContent = false;
+                    if( $scope.data.code == 200 ){
+                        $scope.eFormSuccess = true;
+                    }else{
+                        $scope.eFormError = true;
+                    }
+                    layer.close(index);
+                });
+            }
+        }else{
+            return;
+        }
+    }
+
+    /**
+     * error返回
+     */
+    $scope.getEformContent = function () {
+        $("#progressbarLi2").removeClass().addClass('progressbarLi');
+        $("#progressbarLi1").removeClass();
+        $scope.eFormError = false;
+        $scope.eFormSuccess = false;
+        $scope.eFormContent = true;
+        lock1 = false; //解锁
+    }
+
+    /**
+     * success返回
+     */
+    $scope.getEformContentDone = function () {
+        location.reload();
+    }
+
+    /**
+     * 内容验证
+     */
+    $(function () {
+        $translate.use($scope.langId.toString());
+        window.onload = function(){
+            $('.eForm-div1').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    firstName: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    lastName: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    pnr : {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    email: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            },
+                            emailAddress: {
+                                message: T.T('error3')
+                            }
+                        }
+                    },
+                    tab1_departing: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tab1_going: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    ladate1: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    ladate2: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    ladate3: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    ladate4: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    ladate5: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
+                            }
+                        }
+                    },
+                    tab2_departing: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tab2_going: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tab3_going: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    tab3_departingnew: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error4')
+                            },
+                            callback :{
+                                message: T.T('error4'),
+                                callback: function(value, validator) {
+                                    if (value == "?") {
+                                        return false;
+                                    } else {
+                                        return true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+
+
+                }
+            });
+        }
+    });
+
+}]);

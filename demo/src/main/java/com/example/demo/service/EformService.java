@@ -70,6 +70,10 @@ public class EformService {
     @Resource
     private TemplateEngine templateEngine;
 
+
+    @Resource
+    E_form_MonitorDao e_form_monitorDao;
+
     public List<E_area_name> getAreaNames(){
         return e_area_nameDao.getAllOrderByupdateDate();
     }
@@ -86,6 +90,15 @@ public class EformService {
     @Transactional
     public void save(Eform eform){
         eformDao.save(eform);
+    }
+
+    /**
+     * e_form_monitor
+     * @param monitor
+     */
+    @Transactional
+    public void saveE_form_Monitor(E_form_Monitor monitor){
+        e_form_monitorDao.save(monitor);
     }
 
     /**

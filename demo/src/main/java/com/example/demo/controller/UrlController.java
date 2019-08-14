@@ -171,30 +171,12 @@ public class UrlController {
     @RequestMapping("/RefundWithNewBbooking")
     public String eForm8(){return "faqs/eForm8";}
 
-    @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
-    public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
-                             @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-                            ,@RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
-        String t = "";
-        if("1".equals(id)){
-            t = "RequestForItinerary";
-        }else if("2".equals(id)){
-            t = "DuplicateBooking";
-        }else if("3".equals(id)){
-            t = "RequestForCertificate";
-        }else if("4".equals(id)){
-            t = "NameCorrection";
-        }else if("5".equals(id)){
-            t = "PaymentFailure";
-        }else if("6".equals(id)){
-            t = "ReconfirmFlight";
-        }else if("7".equals(id)){
-            t = "TyphoonMoveFlight";
-        }else if("8".equals(id)){
-            t = "RefundWithNewBbooking";
-        }
+    /**
+     * check flight status 我想知道我的航班起飛時間
+     * @return
+     */
+    @RequestMapping("/CheckFlightStatus")
+    public String eForm9(){return "faqs/eForm9";}
 
-        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
-    }
 
 }

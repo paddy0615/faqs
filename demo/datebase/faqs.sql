@@ -404,3 +404,24 @@ INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`) VALUES
 ('Hifi Chong','d4130e','agent');
 INSERT  INTO `faqs_user`(`usr_login_id`,`usr_password`,`usr_role`) VALUES
 ('admin','paddy','admin');
+
+
+
+-- 添加E-Form9
+INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
+VALUES ('航班資訊','航班资讯','Flight information');
+
+-- 添加E-Form10
+INSERT  INTO `e_form_type`(`et_title_hk`,`et_title_cn`,`et_title_en`)
+VALUES ('重要旅遊注意事項','重要旅游注意事项','Important Travel Notice');
+
+-- 记录E-Form点击数
+DROP TABLE IF EXISTS `e_form_monitor`;
+CREATE TABLE `e_form_monitor` (
+  `m_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `m_clientip` VARCHAR(200) DEFAULT NULL COMMENT 'ip',
+  `m_lang_id` INT(11) DEFAULT NULL COMMENT 'faq语言ID',
+  `m_et_id` INT(11) DEFAULT NULL COMMENT 'e-form-type',
+  `m_createdate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`m_id`)
+) ENGINE=INNODB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;

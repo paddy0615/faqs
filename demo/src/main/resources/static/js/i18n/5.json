@@ -69,21 +69,21 @@
 ,"error3":"Please enter the correct email address such as: 123@qq.com"
 ,"error4":"Please Choose"
 ,"guestlab1":"Need futher help， you may send us a Smart Form below"
-,"eformText1":"I want to have my itinerary"
+,"eformText1":"Request for itinerary"
 ,"eformText2":""
-,"eformText3":"I want to have the certificate for my flight"
+,"eformText3":"Request for Flight Certificate"
 ,"eformText4":""
 ,"eformText5":""
 ,"eformText6":""
-,"eformText7":"I want to reschedule for my affected flight"
-,"eformText8":"I want to refund my booking"
+,"eformText7":"Change flight"
+,"eformText8":"Refund"
+,"eformText9":"Check the latest flight information"
+,"eformText10":"Important Travel Notice"
 ,"lab66":"If you would like to apply refund for your affected flight, please visit"
 ,"lab67":"to submit your application."
 ,"lab68":"If you have purchased a new booking, please fill in the form below."
-
-
-
-
+,"lab69":"Flight information"
+,"lab70":"Flight Departure Date"
 
 
 

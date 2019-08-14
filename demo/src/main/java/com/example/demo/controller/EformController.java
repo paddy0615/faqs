@@ -7,6 +7,7 @@ import com.example.demo.dao.EformDao;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.service.EformService;
 import com.example.demo.service.LanguageService;
+import com.example.demo.util.IpUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /*
@@ -36,6 +38,60 @@ public class EformController {
 
     @Resource
     EformService eformService;
+
+    /**
+     * URL跳转
+     * @return
+     */
+    @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
+    public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
+                             @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
+            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
+        E_form_Monitor monitor = new E_form_Monitor();
+        monitor.setClientip(IpUtil.getIpAddr(request));
+        monitor.setLangId(langId);
+        monitor.setEtId(Long.parseLong(id));
+        monitor.setCreateDate(new Date());
+        eformService.saveE_form_Monitor(monitor);
+
+        String t = "";
+        if("1".equals(id)){
+            t = "RequestForItinerary";
+        }else if("2".equals(id)){
+            t = "DuplicateBooking";
+        }else if("3".equals(id)){
+            t = "RequestForCertificate";
+        }else if("4".equals(id)){
+            t = "NameCorrection";
+        }else if("5".equals(id)){
+            t = "PaymentFailure";
+        }else if("6".equals(id)){
+            t = "ReconfirmFlight";
+        }else if("7".equals(id)){
+            t = "TyphoonMoveFlight";
+        }else if("8".equals(id)){
+            t = "RefundWithNewBbooking";
+        }else if("9".equals(id)){
+            //t = "CheckFlightStatus";
+            String s = "en";
+            if(langId == 1){
+                s = "tc";
+            }else if(langId == 2){
+                s = "sc";
+            }
+            return "redirect:https://www.hongkongairport.com/"+s+"/search-result.page?q=UO";
+        }else if("10".equals(id)){
+            String s = "en-hk";
+            if(langId == 1){
+                s = "zh-hk";
+            }else if(langId == 2){
+                s = "zh-cn";
+            }
+            return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
+        }
+        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
+    }
+
 
     /**
      * 地区名

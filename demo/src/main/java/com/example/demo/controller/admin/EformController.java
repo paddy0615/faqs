@@ -95,7 +95,7 @@ public class EformController {
     }
 
     /**
-     * 按ID查询
+     * 前端首页显示Eform,编辑
      * @param efs
      * @return
      */

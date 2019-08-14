@@ -300,7 +300,8 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
 
     // 跳转E-form
     $scope.getEform = function(id){
-        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId);
+        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
+        window.open(url);
     }
 
 
@@ -602,7 +603,8 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
 
     // 跳转E-form
     $scope.getEform = function(id){
-        window.open(ctx + "appPage/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId);
+        window.open(ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId);
     }
+
 
 }]);
