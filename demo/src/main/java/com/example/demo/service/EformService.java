@@ -29,6 +29,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -290,7 +291,7 @@ public class EformService {
         uri += "&pnr="+eform.getPnr();
         uri += "&firstname="+eform.getFirstname();
         uri += "&lastname="+eform.getLastname();
-        uri += "&email="+eform.getEmail();
+        //uri += "&email="+eform.getEmail();
         System.out.println(uri);
         logger.info(uri);
         //  模拟请求
@@ -306,6 +307,46 @@ public class EformService {
         result.setResult(s);
         result.setResultxml(strbody);
         return s;
+    }
+
+    /**
+     * 对接PNR接口-eform9查询航班信息
+     * @param eform
+     * @return
+     */
+    public Map<String,String> getBookingAPIEform9(Eform eform,E_form_result result) throws Exception{
+        String uri="http://sonicinternal.callsonic.com/Balch/searchFlightIRR.action";
+        if("pro".equals(active)){
+            uri="http://www.callsonic.com/Balch_ver02/searchFlightIRR.action";
+        }
+        uri += "?pnr="+eform.getPnr();
+        uri += "&departuredate="+eform.getDeparturedate();
+        uri += "&flightno="+eform.getFlightno();
+        System.out.println(uri);
+        logger.info(uri);
+        //  模拟请求
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        RestTemplate restTemplate=new RestTemplate();
+        String strbody=restTemplate.exchange(uri, HttpMethod.GET, entity,String.class).getBody();
+        Document doc = DocumentHelper.parseText(strbody);
+        // 获取根节点
+        Element rootElt = doc.getRootElement(); // 获取根节点
+        Map<String,String> map = new HashMap<>();
+        String s = rootElt.elementTextTrim("State");
+        map.put("State",s);
+        map.put("flightNo",rootElt.elementTextTrim("flightNo"));
+        map.put("departureDate",rootElt.elementTextTrim("departureDate"));
+        map.put("departingFrom",rootElt.elementTextTrim("departingFrom"));
+        map.put("arrivingAt",rootElt.elementTextTrim("arrivingAt"));
+        map.put("newFlightNo",rootElt.elementTextTrim("newFlightNo"));
+        map.put("newDepartureDate",rootElt.elementTextTrim("newDepartureDate"));
+        map.put("newDepartingFrom",rootElt.elementTextTrim("newDepartingFrom"));
+        map.put("newArrivingAt",rootElt.elementTextTrim("newArrivingAt"));
+        result.setResult(s);
+        result.setResultxml(strbody);
+        return map;
     }
 
     /**

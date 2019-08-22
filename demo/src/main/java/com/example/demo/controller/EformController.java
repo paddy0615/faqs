@@ -72,14 +72,14 @@ public class EformController {
         }else if("8".equals(id)){
             t = "RefundWithNewBbooking";
         }else if("9".equals(id)){
-            //t = "CheckFlightStatus";
-            String s = "en";
+            t = "CheckFlightStatus";
+           /* String s = "en";
             if(langId == 1){
                 s = "tc";
             }else if(langId == 2){
                 s = "sc";
             }
-            return "redirect:https://www.hongkongairport.com/"+s+"/search-result.page?q=UO";
+            return "redirect:https://www.hongkongairport.com/"+s+"/search-result.page?q=UO";*/
         }else if("10".equals(id)){
             String s = "en-hk";
             if(langId == 1){
@@ -193,10 +193,10 @@ public class EformController {
 
 
     /**
-     * 添加添加addTest
+     * eform9 - 查询航班信息
      */
     @ResponseBody
-    @RequestMapping(value = "/E/addTest",method= RequestMethod.POST)
+    @RequestMapping(value = "/E/searchFlightIRR",method= RequestMethod.POST)
     public RestResultModule addTest(@RequestBody Eform eform){
         RestResultModule module = new RestResultModule();
         if(null != eform){
@@ -205,39 +205,27 @@ public class EformController {
                 eform.setUpdateDate(new Date());
                 // 添加form结果表
                 E_form_result result = new E_form_result();
-                String state = "-3";
-                if(null != eform.getPnr()){
-                    state = eformService.getBookingAPI(eform,result);
-                }else{
-                    state = "0";
-                }
+                Map<String,String> map = eformService.getBookingAPIEform9(eform,result);
                 // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
-                if("0".equals(state)){
+                if("0".equals(map.get("State"))){
                     eformService.save(eform);
                     result.setEid(eform.getId());
                     eformService.saveResult(result);
-                    // 发邮件
-                    Map<String, Object> valueMap = new HashMap<>();
-                    valueMap.put("eform", eform);
-                    valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
-                    valueMap.put("cc", eform.getEmail());
-                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
-                    eformService.sendSimpleMail(valueMap);
-                    // 发确认邮件
-                    Map<String, Object> valueMapUser = new HashMap<>();
-                    valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
-                    valueMapUser.put("To",eform.getEmail());
-                    valueMapUser.put("langId",eform.getLangId());
-                    valueMapUser.put("random",eform.getRandom());
-                    eformService.sendSimpleMailUser(valueMapUser);
+                    // 判断是否显示 New Flight Schedule
+                    if("null".equals(map.get("newFlightNo")) && "null".equals(map.get("newDepartureDate"))&& "null".equals(map.get("newDepartingFrom"))&& "null".equals(map.get("newArrivingAt"))){
+                        module.putData("map_no_date",true);
+                    }else{
+                        module.putData("map_no_date",false);
+                    }
+
                     // 返回成功码
-                    module.putData("key",eform.getRandom());
+                    module.putData("map",map);
                 }else{
-                    logger.error("-----------/E/add-----------error=",eform);
+                    logger.error("-----------/E/searchFlightIRR-----------error=",eform);
                     module.setCode(404);
                 }
             }catch (Exception e){
-                logger.error("-----------/E/add-----------"+e,eform);
+                logger.error("-----------/E/searchFlightIRR-----------"+e,eform);
                 module.setCode(500);
             }
         }

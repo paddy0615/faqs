@@ -1,15 +1,15 @@
 {
-  "lab1":"Booking Information"
+  "lab1":"Booking Details"
 ,"lab2":"Guest Name"
 ,"lab3":"First Name"
 ,"lab4":"Last Name"
 ,"lab5":"Round-Trip"
 ,"lab6":"One-Way"
 ,"lab7":"Multi-City"
-,"lab8":"Departing From"
-,"lab9":"Going to"
-,"lab10":"Leaving on"
-,"lab11":"Returning on"
+,"lab8":"From"
+,"lab9":"To"
+,"lab10":"Departure Date"
+,"lab11":"Return Date"
 ,"lab12":"Email : (Provide your email address as per your original booking)"
 ,"lab13":"Note：Please ensure that all information you provided are accurate."
 ,"lab14":"Submit"
@@ -84,7 +84,13 @@
 ,"lab68":"If you have purchased a new booking, please fill in the form below."
 ,"lab69":"Flight information"
 ,"lab70":"Flight Departure Date"
-
+,"lab71":"Original Flight Schedule"
+,"lab72":"New Flight Schedule"
+,"lab73":"From"
+,"lab74":"To"
+,"lab75":"Flight Number"
+,"lab76":"Departure Date"
+,"lab77":"Departure Time"
 
 
 

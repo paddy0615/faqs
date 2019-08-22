@@ -107,6 +107,29 @@ public class Eform implements Serializable {
     private String pnrnew;
 
 
+    @Column(name = "e_flight_no")
+    private String flightno;
+
+    @Column(name = "e_flight_departuredate")
+    private String departuredate;
+
+
+    public String getFlightno() {
+        return flightno;
+    }
+
+    public void setFlightno(String flightno) {
+        this.flightno = flightno;
+    }
+
+    public String getDeparturedate() {
+        return departuredate;
+    }
+
+    public void setDeparturedate(String departuredate) {
+        this.departuredate = departuredate;
+    }
+
     public String getPnrnew() {
         return pnrnew;
     }

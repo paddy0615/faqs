@@ -2172,7 +2172,6 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
 
     // 样式初始化
     $("#progressbarLi2").removeClass().addClass('progressbarLi');
-    $scope.myTabContent = false;
     $scope.PNR = true
     $scope.eFormContent = true;
     $scope.eFormError = false;
@@ -2194,10 +2193,11 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
             // 验证成功
             var index =  layer.load(0, {shade: false});
             if(!lock1) {
+                $scope.e.departuredate = $("#ladate1").val();
                 lock1 = true; // 锁定
                 $http({
                     method : 'post',
-                    url : ctx + 'appJson/E/add',
+                    url : ctx + 'appJson/E/searchFlightIRR',
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
@@ -2205,6 +2205,8 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
                     $("#progressbarLi2").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
+                        $scope.map = resp.data.result.map;
+                        $scope.map_no_date = resp.data.result.map_no_date;
                         $scope.eFormSuccess = true;
                     }else{
                         $scope.eFormError = true;
@@ -2250,20 +2252,6 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    firstName: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    lastName: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
                     pnr : {
                         validators: {
                             notEmpty: {
@@ -2271,47 +2259,10 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
                             }
                         }
                     },
-                    email: {
+                    flightno: {
                         validators: {
                             notEmpty: {
                                 message: T.T('error2')
-                            },
-                            emailAddress: {
-                                message: T.T('error3')
-                            }
-                        }
-                    },
-                    tab1_departing: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab1_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
                             }
                         }
                     },
@@ -2319,102 +2270,6 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
                         validators: {
                             notEmpty: {
                                 message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate2: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate3: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate4: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate5: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    tab2_departing: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab2_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab3_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab3_departingnew: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
                             }
                         }
                     }
