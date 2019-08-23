@@ -141,6 +141,7 @@ myapp.config(['$locationProvider', function($locationProvider) {
 myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -170,6 +171,7 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
         if($scope.isGetUrl){
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
+            gaixialatu($scope.langId);
         }
         // 强制更新  $scope.apply();
     }
@@ -228,7 +230,6 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
 
 
     // 样式初始化
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
     $scope.myTabContent = false;
     $scope.PNR = true
     $scope.checkPNR = function(){
@@ -293,8 +294,8 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.eFormSuccess = true;
@@ -313,8 +314,8 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;
@@ -525,6 +526,7 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
 myapp.controller("eForm2Controller",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -598,6 +600,7 @@ myapp.controller("eForm2Controller",["$scope","$http","$location","$translate",f
 myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(){
         $http({
             method : 'post',
@@ -620,6 +623,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
     $scope.clickLanguage = function() {
         $translate.use($scope.langId.toString());
         onlineChat($scope.langId);
+        gaixialatu($scope.langId);
         // 强制更新  $scope.apply();
     }
 
@@ -631,7 +635,6 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
     $scope.e.ecertificatetype = 1;
 
     $scope.eFormContent = true;
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
 
     /**
      * 提交
@@ -653,8 +656,8 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.eFormSuccess = true;
@@ -674,8 +677,8 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;
@@ -948,7 +951,7 @@ myapp.controller("eForm5Controller",["$scope","$http","$location","$translate",f
 myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
-
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -979,6 +982,7 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
         if($scope.isGetUrl){
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
+            gaixialatu($scope.langId);
         }
         // 强制更新  $scope.apply();
     }
@@ -1037,7 +1041,6 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
 
 
     // 样式初始化
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
     $scope.myTabContent = false;
     $scope.PNR = true
     $scope.checkPNR = function(){
@@ -1103,8 +1106,8 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.eFormSuccess = true;
@@ -1123,8 +1126,8 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;
@@ -1336,6 +1339,7 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
 myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -1365,6 +1369,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
         if($scope.isGetUrl){
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
+            gaixialatu($scope.langId);
         }
         // 强制更新  $scope.apply();
     }
@@ -1422,7 +1427,6 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     });
 
     // 样式初始化
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
     $scope.myTabContent = false;
     $scope.PNR = true
     $scope.checkPNR = function(){
@@ -1487,8 +1491,8 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.eFormSuccess = true;
@@ -1507,8 +1511,8 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;
@@ -1720,6 +1724,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
 myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -1749,6 +1754,7 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
         if($scope.isGetUrl){
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
+            gaixialatu($scope.langId);
         }
         // 强制更新  $scope.apply();
     }
@@ -1806,7 +1812,6 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
     });
 
     // 样式初始化
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
     $scope.myTabContent = false;
     $scope.PNR = true
     $scope.checkPNR = function(){
@@ -1871,8 +1876,8 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.eFormSuccess = true;
@@ -1891,8 +1896,8 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;
@@ -2130,6 +2135,7 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
 myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
     // 设置默认,langId==6语言，英文;
     $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    gaixialatu($scope.langId);
     function into(langID){
         $http({
             method : 'post',
@@ -2153,6 +2159,7 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
         if($scope.isGetUrl){
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
+            gaixialatu($scope.langId);
         }
         // 强制更新  $scope.apply();
     }
@@ -2171,7 +2178,6 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
 
 
     // 样式初始化
-    $("#progressbarLi2").removeClass().addClass('progressbarLi');
     $scope.PNR = true
     $scope.eFormContent = true;
     $scope.eFormError = false;
@@ -2201,8 +2207,8 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
                     data : $scope.e
                 }).then(function(resp){
                     $scope.data = resp.data;
-                    $("#progressbarLi1").removeClass().addClass('progressbarLi');
-                    $("#progressbarLi2").removeClass();
+                    $("#booking-steps-li2").removeClass().addClass('active');
+                    $("#booking-steps-li1").removeClass();
                     $scope.eFormContent = false;
                     if( $scope.data.code == 200 ){
                         $scope.map = resp.data.result.map;
@@ -2223,8 +2229,8 @@ myapp.controller("eForm9Controller",["$scope","$http","$location","$translate","
      * error返回
      */
     $scope.getEformContent = function () {
-        $("#progressbarLi2").removeClass().addClass('progressbarLi');
-        $("#progressbarLi1").removeClass();
+        $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
         $scope.eFormContent = true;

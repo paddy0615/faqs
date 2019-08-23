@@ -72,14 +72,14 @@ public class EformController {
         }else if("8".equals(id)){
             t = "RefundWithNewBbooking";
         }else if("9".equals(id)){
-            t = "CheckFlightStatus";
-           /* String s = "en";
+            // t = "CheckFlightStatus";
+            String s = "en";
             if(langId == 1){
                 s = "tc";
             }else if(langId == 2){
                 s = "sc";
             }
-            return "redirect:https://www.hongkongairport.com/"+s+"/search-result.page?q=UO";*/
+            return "redirect:https://www.hongkongairport.com/"+s+"/search-result.page?q=UO";
         }else if("10".equals(id)){
             String s = "en-hk";
             if(langId == 1){

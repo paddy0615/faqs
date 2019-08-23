@@ -426,6 +426,7 @@ CREATE TABLE `e_form_monitor` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=INNODB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;
 
+-- 2019-8-22
 -- eform9 添加航班编号，航班出发日期
 ALTER TABLE e_form ADD e_flight_no VARCHAR(50) NULL COMMENT '航班编号';
 ALTER TABLE e_form ADD e_flight_departuredate DATETIME COMMENT '航班出发日期';

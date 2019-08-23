@@ -12,6 +12,16 @@ var faqRole = '';
         w.location.reload();
     };
 
+    w.gaixialatu = function (id) {
+        if(id ==  1 || id == 2){
+            $(".xiangxia").css("margin-left","-38px")
+        }else if(id == 4){
+            $(".xiangxia").css("margin-left","-26px")
+        }else{
+            $(".xiangxia").css("margin-left","0px")
+        }
+    };
+
 })(window);
 
 // 对字符串;转义,解义escape 和 unescape; encodeURI 和 decodeURI

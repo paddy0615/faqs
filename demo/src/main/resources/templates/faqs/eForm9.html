@@ -72,17 +72,25 @@
                     <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
                 </div>
                 <div class="header-lan">
-                    <img th:src="@{/img/globe1.png}"/>
-                    <select ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
+                    <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
+                    <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
+                            ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
                     </select>
+                    <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
 
             <div class="row" style="margin-top: 50px;">
                 <div class="col-md-6 col-md-offset-3">
-                    <ul id="progressbar">
-                        <li id="progressbarLi1">{{'lab1'|translate}}</li>
-                        <li id="progressbarLi2">{{'lab22'|translate}}</li>
+                    <ul class="booking-steps">
+                        <li id="booking-steps-li1" class="active">
+                            <span class="number"></span>
+                            <span class="label1">{{'lab1'|translate}}</span>
+                        </li>
+                        <li id="booking-steps-li2" >
+                            <span class="number"></span>
+                            <span class="label1">{{'lab22'|translate}}</span>
+                        </li>
                     </ul>
                 </div>
 
@@ -116,7 +124,7 @@
                             <div class="form-group">
                                 <label>{{'lab13'|translate}}</label>
                             </div>
-                            <button class="btn btn-default" type="button" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;" ng-click="eFormContentSubmit()">{{'lab14'|translate}}</button>
+                            <button class="btn btn-default eFormContent-submit" type="button" ng-click="eFormContentSubmit()">{{'lab14'|translate}}</button>
 
                            <div style="clear: both;"></div>
                         </div>
@@ -137,7 +145,7 @@
                                 {{'error1'|translate}}
                             </element>
                             <div style="clear: both;"></div>
-                            <button class="btn btn-default" type="submit" style="float: left;background-color: #71288E;color: white;padding: 10px 30px;margin-top: 80px;" ng-click="getEformContent()">{{'lab21'|translate}}</button>
+                            <button class="btn btn-default eFormError-submit" type="submit" ng-click="getEformContent()">{{'lab21'|translate}}</button>
                             <div style="clear: both;"></div>
                         </div>
 
@@ -207,7 +215,7 @@
 
 
                             <div style="clear: both;"></div>
-                            <button class="btn btn-default" type="submit" style="float: right;background-color: #71288E;color: white;padding: 10px 30px;margin-top: 80px;"  ng-click="getEformContentDone()">{{'lab25'|translate}}</button>
+                            <button class="btn btn-default eFormSuccess-submit" type="submit" ng-click="getEformContentDone()">{{'lab25'|translate}}</button>
                             <div style="clear: both;"></div>
                         </div>
                     </div>

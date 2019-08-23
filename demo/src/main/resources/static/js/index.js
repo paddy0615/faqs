@@ -153,6 +153,7 @@ myapp.config(['$locationProvider', function($locationProvider) {
 myapp.controller("indexController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
     $scope.lang_cout = 5;
@@ -330,6 +331,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
+                gaixialatu($scope.langId);
                 $translate.use($scope.langId.toString());
                 $scope.dfcount = data.result.dfcount;
                 $scope.selectTest = selectTest($scope.langId);
