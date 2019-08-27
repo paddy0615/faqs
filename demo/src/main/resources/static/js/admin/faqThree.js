@@ -8,7 +8,13 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
     // 状态下拉
     $scope.dl_statuss = [
         {id : -1, name : "All"},
-        {id : 1, name : "Show"},
+        {id : 2, name : "Show Internal"},
+        {id : 1, name : "Show External"},
+        {id : 0, name : "Hide"}
+    ];
+    $scope.dl_statuss1 = [
+        {id : 2, name : "Show Internal"},
+        {id : 1, name : "Show External"},
         {id : 0, name : "Hide"}
     ];
     $scope.dl_status = -1;
@@ -91,6 +97,12 @@ myapp.controller("faqTwoController",["$scope","$http","$location",function ($sco
             }
         })
     }
+
+    // 问题状态选择事件
+    $scope.clickLanguage1 = function(did,sid) {
+       console.log(did+","+sid)
+    }
+
 
     // 下拉事件
     $scope.clickLanguage = function() {

@@ -53,13 +53,14 @@
                 </div>
             </div>
 
-            <div class="row" style="margin-bottom: 20px;">
+            <div class="row" style="margin-bottom: 40px;">
                 <!-- button -->
-                <div class="col-lg-5" style="float: right;text-align: right;">
+                <div style="float: right;text-align: right;">
                     <button class="btn btn-default" type="button" ng-click="getEdit(0)">Add</button>
                     <element zg-access="access">
                         <button class="btn btn-default" type="button" ng-click="getDelete(0)">Delete Selected</button>
-                        <button class="btn btn-default" type="button" ng-click="editStatus(0,1)">Show Selected</button>
+                        <button class="btn btn-default" type="button" ng-click="editStatus(0,1)">Show Internal Selected</button>
+                        <button class="btn btn-default" type="button" ng-click="editStatus(0,2)">Show External Selected</button>
                         <button class="btn btn-default" type="button" ng-click="editStatus(0,0,1)">Hide Selected</button>
                     </element>
                 </div>
@@ -111,18 +112,25 @@
                     <tr ng-repeat="detailed in detaileds">
                         <td> <input style="vertical-align:top;"  type="checkbox" name="checkboxClien" ng-click="updateSelection($event,detailed.dl_id)" value="{{detailed.dl_id}}">{{$index+1}}</td>
                         <td>{{detailed.fl_title}}</td>
-                        <td class="col-md-4">{{detailed.dl_title}}</td>
+                        <td class="col-md-3">{{detailed.dl_title}}</td>
                         <td>{{detailed.lang_title}}</td>
-                        <td ng-if="detailed.dl_status == 1">Show</td>
-                        <td ng-if="detailed.dl_status == 0">Hide</td>
+                        <td>
+                            <element ng-if="detailed.dl_status == 0">Hide</element>
+                            <element ng-if="detailed.dl_status == 2">Show Internal</element>
+                            <element ng-if="detailed.dl_status == 1">Show External</element>
+                        </td>
                         <td>{{detailed.dl_updatedate.substring(0,16)}}</td>
                         <td>{{detailed.dl_weights}}</td>
-                        <td style="text-align: right;">
+                        <td style="text-align: right;width: 26%;">
                             <!--<button class="btn btn-default" type="button" ng-show="!searchType" ng-click="editTop(detailed.id)" >Top</button>&lt;!&ndash;置顶&ndash;&gt;-->
                             <element zg-access="access">
-                                <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button><!--已发表-->
-                                <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 0" ng-click="editStatus(detailed.dl_id,1)">Show</button><!--未发表-->
-                            </element>
+                                <select style="width: 50%;display: inherit;" ng-model="detailed.dl_status" class="form-control" ng-change="editStatus(detailed.dl_id,detailed.dl_status)"
+                                        ng-options="d.id as d.name for d in dl_statuss1">
+                                </select>
+
+                           <!--     <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 1" ng-click="editStatus(detailed.dl_id,0)">Hide</button>&lt;!&ndash;已发表&ndash;&gt;
+                                <button class="btn btn-default" type="button" ng-if="detailed.dl_status == 0" ng-click="editStatus(detailed.dl_id,1)">Show</button>&lt;!&ndash;未发表&ndash;&gt;
+                           --> </element>
                             <button class="btn btn-default" type="button" ng-click="getEdit(detailed.dl_id)" >Edit</button>
                             <element zg-access="access">
                                 <button class="btn btn-default" type="button" ng-click="getDelete(detailed.dl_id)">Delete</button>

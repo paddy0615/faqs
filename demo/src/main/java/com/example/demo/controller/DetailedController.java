@@ -118,12 +118,17 @@ public class DetailedController {
     @RequestMapping("/getSearchTags")
     public RestResultModule getSearchTags(
             @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
+            @RequestParam(name = "status",required = true,defaultValue = "1")long status,
             @RequestParam(name = "search",required = false,defaultValue = "")String search){
         RestResultModule module = new RestResultModule();
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
         List<DetailedEntity> detaileds = null;
-        detaileds = detailedService.getSearchTags(langId,1,searchs);
+        String s = String.valueOf(status);
+        if(status == 3 ){
+            s = "";
+        }
+        detaileds = detailedService.getSearchTags(langId,s,searchs);
         module.setCode(200);
         module.putData("detaileds",detaileds);
         return module;
