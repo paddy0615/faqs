@@ -12,7 +12,6 @@
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/index.css}">
     <script th:src="@{/js/assets/jquery.js}"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/layer/layer.js}"></script>
     <script th:src="@{/js/assets/angular.js}"></script>
     <script th:src="@{/js/assets/angular-translate.min.js}"></script>
@@ -22,6 +21,21 @@
     <base th:href="@{/appPage/index}">
     <script th:inline="javascript">
         var ctx = [[@{/}]];
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+            se.src = '//storage.googleapis.com/sonic-teleservices/js/e1b97c5e-d8ac-4ad0-a9ba-d954e8cff83b.js';
+            var done = false;
+            se.onload = se.onreadystatechange = function() {
+                if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+                    done = true;
+                    /* Place your SonicTeleservices JS API code below */
+                    /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+                }
+            };
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+        })();
     </script>
     <style>
         #SnapABug_bImg{
@@ -54,10 +68,6 @@
             .eformdiv .col-md-5 {
                 margin-bottom: 20px;
             }
-            .nav-select-div{
-                width: 89.5% !important;
-            }
-
         }
 
         .eformdiv .col-md-5 .eformdiv-content{
@@ -86,7 +96,7 @@
         });
     </script>
 </head>
-<body ng-app="myapp" ng-controller="indexCRMController">
+<body ng-app="myapp" ng-controller="testChatbotController">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-sm-offset-2 col-md-8 col-md-offset-2 main">
@@ -96,39 +106,30 @@
                     <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
                 </div>
                 <div class="header-lan">
+                    <!--<img th:src="@{/img/globe1.png}"/>-->
                     <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
+                    <span class="icon-language"></span>
                     <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
                             ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in result.languages">
                     </select>
                     <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
+
+
                 </div>
             </div>
 
-            <div class="dvi-checkbox row" style="font-size: 18px;margin-top: 20px;padding-left: 24%;">
-
-            </div>
-
-
-            <div class="nav-select" style="margin-top: 10px;">
-                <div class="input-group nav-select-div" style="width: 97%;display: inline-flex;">
-                    <input style="height: 40px;" ng-model="searchTest" id="search" type="text" placeholder="{{selectTest}}" class="form-control"  aria-label="...">
-                    <div class="input-group-btn">
-                        <button style="height: 40px;" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span></button>
-                        <ul style="right: inherit;" class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:;" ng-click="getSearch(2)">Internal Information</a></li>
-                            <li><a href="javascript:;" ng-click="getSearch(1)">FAQ in official website</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:;" ng-click="getSearch(3)">Show All</a></li>
-                        </ul>
-                    </div><!-- /btn-group -->
-                </div><!-- /input-group -->
+            <div class="nav-select">
+                <div class="input-group">
+                    <input style="height: 40px;" ng-model="searchTest" id="search" type="text" placeholder="{{selectTest}}" class="form-control" ng-keyup="onKeyup(event)">
+                    <span class="input-group-addon"><a href="javascript:;" ng-click="getSearch()"><span class="glyphicon glyphicon-search"></span></a></span>
+                </div>
             </div>
             <div style="clear: both;margin-bottom: 12px;"></div>
             <div ng-show="searchShow">
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
                         <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
-                        <li ng-repeat="detailed in detaileds"><a href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)" ><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
+                        <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -143,16 +144,16 @@
                 </div>
             </div>
 
-            <div class="content-box" style="padding: 50px 12px;margin-top: -22px;">
-               <div class="list-group">
-                   <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
-                       {{'lab79'| translate}}
-                   </a>
-                   <a ng-repeat="detailed in detailedInternal" class="list-group-item" href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)">{{detailed.title}}</a>
-               </div>
-           </div>
 
-
+           <!-- <div class="content-box" style="padding: 50px 12px;margin-top: -22px;">
+                <div class="list-group">
+                    <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
+                        {{hotspotTest}}
+                    </a>
+                    <a ng-repeat="detailed in hotspots" class="list-group-item" th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a>
+                </div>
+            </div>
+-->
         </div>
     </div>
 </div>

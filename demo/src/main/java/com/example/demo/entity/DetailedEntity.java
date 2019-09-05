@@ -16,6 +16,17 @@ public class DetailedEntity implements Serializable {
     @Column(name = "dl_title")
     private String title;  //详情标题
 
+    @Column(name = "dl_status")
+    private long status;  // 状态
+
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

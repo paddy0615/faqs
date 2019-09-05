@@ -193,6 +193,11 @@ public class DetailedService {
         return detailedEntityDao.getSearchTags(langId,status,srr);
     }
 
+    public List<DetailedEntity> getDetailedInternal(long langId){
+        return detailedEntityDao.getDetailedInternal(langId);
+    }
+
+
     /**
      * 前台-操作搜索不出结果,存值
      * @param srr

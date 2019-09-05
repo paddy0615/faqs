@@ -18,7 +18,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
      * @param searchs
      * @return
      */
-    @Query(value = "SELECT d.dl_id,d.dl_title\n" +
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status\n" +
             "FROM  faqs_detailed d\n" +
             "INNER JOIN faqs_dtags_relation dr ON (dr.dr_dl_id = d.dl_id)\n" +
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
@@ -60,7 +60,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             ") a", nativeQuery = true)
     long getNoTagsCount(@Param("s")String s);
 
-    @Query(value = "SELECT d.dl_id,d.dl_title FROM faqs_detailed d" +
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status FROM faqs_detailed d" +
             " INNER JOIN (" +
             " SELECT m_dl_id,m_dl_id_father,COUNT(1) FROM faqs_monitor" +
             " WHERE m_dl_id_father > 0" +
@@ -72,4 +72,12 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             " ) a" +
             " ON a.m_dl_id = d.dl_id",nativeQuery = true)
     List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId);
+
+
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status\n" +
+            "FROM  faqs_detailed d WHERE d.dl_status = 2 " +
+            "AND if(:langId > 0,d.dl_lang_id = :langId,1=1)\n"+
+            "LIMIT 10", nativeQuery = true)
+    List<DetailedEntity> getDetailedInternal(@Param("langId") long langId);
+
 }

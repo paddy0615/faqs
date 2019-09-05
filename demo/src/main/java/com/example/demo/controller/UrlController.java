@@ -49,8 +49,14 @@ public class UrlController {
     @RequestMapping("/search")
     public String search(){return "faqs/search";}
 
+    @RequestMapping("/testChatbot")
+    public String testChatbot(){return "faqs/testChatbot";}
+
     @RequestMapping("/indexDetailed")
     public String indexDetailed(){return "faqs/indexDetailed";}
+
+    @RequestMapping("/indexDetailedCRM")
+    public String indexDetailedCRM(){return "faqs/indexDetailedCRM";}
 
     @RequestMapping("/admin/login")
     public String login(){return "faqs/admin/login";}

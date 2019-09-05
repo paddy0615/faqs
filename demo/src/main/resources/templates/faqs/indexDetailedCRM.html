@@ -11,6 +11,9 @@
     <link rel="stylesheet" th:href="@{/css/assets/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/reset.css}">
     <link rel="stylesheet" th:href="@{/css/index.css}">
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
     <script th:src="@{/js/assets/jquery.js}"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/js/layer/layer.js}"></script>
@@ -19,10 +22,8 @@
     <script th:src="@{/js/assets/angular-translate-loader-static-files.min.js}"></script>
     <script th:src="@{/js/index.js}"></script>
     <script th:src="@{/js/common.js}"></script>
-    <base th:href="@{/appPage/index}">
-    <script th:inline="javascript">
-        var ctx = [[@{/}]];
-    </script>
+    <base th:href="@{/appPage/indexDetailed}">
+
     <style>
         #SnapABug_bImg{
             width:100%;
@@ -34,6 +35,25 @@
             left: 30px;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+            #cc{
+               /* width:90%;*/
+                height:100%;
+                word-wrap: break-word;
+            }
+            #cc iframe {
+                width:100% !important;
+            }
+            #cc img { width:100%;}
+            #cc video {
+                width:100%;
+                height:100%;
+            }
+            .nav-select-div{
+                width: 89.5% !important;
+            }
+        }
         @media (min-width: 992px){
             .col-md-8 {
                 width: 69.666667%;
@@ -41,31 +61,6 @@
             .col-md-offset-2 {
                 margin-left: 15.2%;
             }
-            .eformdiv .col-md-offset-2 {
-                margin-left: 16.2%;
-            }
-            .eformdiv .col-md-5 {
-                margin-bottom: 20px;
-            }
-
-        }
-
-        @media (max-width: 768px) {
-            .eformdiv .col-md-5 {
-                margin-bottom: 20px;
-            }
-            .nav-select-div{
-                width: 89.5% !important;
-            }
-
-        }
-
-        .eformdiv .col-md-5 .eformdiv-content{
-            cursor: pointer;
-            border: 1px solid #ddd;
-        }
-        .eformdiv .col-md-5 .eformdiv-content:hover{
-            background-color: #f5f5f5;
         }
 
     </style>
@@ -84,16 +79,16 @@
                 return false;
             });
         });
+
     </script>
 </head>
-<body ng-app="myapp" ng-controller="indexCRMController">
+<body ng-app="myapp" ng-controller="indexDetailedCRMController">
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9 col-sm-offset-2 col-md-8 col-md-offset-2 main">
-
             <div class="header">
                 <div class="header-loagin">
-                    <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
+                    <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"/></a>
                 </div>
                 <div class="header-lan">
                     <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
@@ -103,12 +98,9 @@
                     <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
-
             <div class="dvi-checkbox row" style="font-size: 18px;margin-top: 20px;padding-left: 24%;">
 
             </div>
-
-
             <div class="nav-select" style="margin-top: 10px;">
                 <div class="input-group nav-select-div" style="width: 97%;display: inline-flex;">
                     <input style="height: 40px;" ng-model="searchTest" id="search" type="text" placeholder="{{selectTest}}" class="form-control"  aria-label="...">
@@ -124,6 +116,8 @@
                 </div><!-- /input-group -->
             </div>
             <div style="clear: both;margin-bottom: 12px;"></div>
+
+            <!-- 搜索-->
             <div ng-show="searchShow">
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
@@ -133,31 +127,89 @@
                 </div>
             </div>
 
-            <!-- E-Form -->
-            <div class="row eformdiv" style="padding: 50px 12px;">
-                <div ng-repeat="t in eFormTypes" ng-class="$index%2=='0'?'col-md-5':'col-md-5  col-md-offset-2'">
-                    <div class="eformdiv-content" ng-click="getEform(t.id)">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform{{t.id}}.png}" ng-alt="t.id">
-                        <span style="vertical-align:middle;" class="">{{'eformText'+t.id | translate}}</span>
+            <!-- 详情-->
+            <div style="margin-top: 30px;">
+                <div class="content-type">{{problem}}</div>
+                <div style="padding: 20px 12px;">
+                    <div class="content-type-test"><div class="content-type-test-div">{{detailed.title}}</div></div>
+                    <div id="cc">
+                        <div ng-bind-html="content" style="padding: 0px 8px;">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="content-box" style="padding: 50px 12px;margin-top: -22px;">
-               <div class="list-group">
-                   <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
-                       {{'lab79'| translate}}
-                   </a>
-                   <a ng-repeat="detailed in detailedInternal" class="list-group-item" href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)">{{detailed.title}}</a>
-               </div>
-           </div>
+            <!-- E-form -->
+            <div class="row" ng-if="eFormTypes.length > 0">
+                <div class="content-box" style="padding-left: 20px;">
+                    <button ng-repeat="e in eFormTypes" class="btn btn-default ng-binding" type="button" style="border-color:#71288E;margin-bottom: 10px;margin-left: 8px;border-radius: 50px;color: #71288E;padding: 10px 30px;" ng-click="getEform(e.id)">{{langId==1?e.hk:(langId==2?e.cn:e.en)}}</button>
+
+                </div>
+            </div>
+
+            <hr style="width:100%;border:none; border-bottom:2px solid #BA2E90;">
+
+            <!-- feedback-->
+            <div class="row" style="margin-left: -3px;">
+                <div class="col-xs-4 col-sm-3 col-md-2">{{feedbackTest}}</div>
+                <div class="col-xs-12 col-sm-9 col-md-8">
+                    <div class="col-xs-3 col-sm-3 col-md-2" style="padding-top: 20px;">
+                        <div class="praise">
+                            <span id="praise">
+                                <img th:src="@{/img/hui1.png}" id="praise-img" class="animation">
+                            </span>
+                        <!--    <span id="praise-txt">{{dfcount}}</span>-->
+                            <span id="add-num" style="display: inline;"></span>
+                        </div>
+                        <div class="praise">
+                            <span id="praise1"><img th:src="@{/img/hui2.png}" id="praise-img1" class="animation"></span>
+                            <span id="add-num1" style="display: inline;"></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-9 col-sm-6 col-md-8" style="padding-top: 86px;">
+                        <div id="praiseNayTest" ng-show="praiseNayTest > 0">
+                            <div>
+                                <div style="font-weight: bold;">{{commonLabel6}}</div>
+                                <textarea class="form-control"  style="margin-bottom: 10px;" rows="5" ng-model="dfContent" placeholder="{{commonLabel2}}"></textarea>
+                            </div>
+                            <div>
+                                <div style="margin-bottom: 8px;font-weight: bold;">{{commonLabel3}}</div>
+                                <input type="text" class="form-control" id="dfContentEmail" ng-model="dfContentEmail" placeholder="{{commonLabel4}}">
+                                <div style="font-weight: bold;">{{commonLabel7}}</div>
+                                <input style="margin-bottom: 10px;" type="text" class="form-control" id="dfContentNumber" ng-model="dfContentNumber" placeholder="{{commonLabel5}}">
+                            </div>
+                            <div style="padding-top: 20px;text-align: right;">
+                                <button class="btn btn-default" type="button" ng-click="addDfContent()">{{commonLabel1}}</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Smart Guide -->
+            <div class="row" ng-show="smartGuideType">
+                <div class="content-box" style="padding: 50px 27px;margin-top: -22px;">
+                    <div class="list-group">
+                        <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
+                            {{commonLabel10}}
+                        </a>
+                        <a ng-repeat="detailed in smartGuide" class="list-group-item"href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)">{{detailed.title}}</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 50px;"></div>
 
 
         </div>
     </div>
+
 </div>
 <div class="scrollToTop" style="display: none;">
     <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
 </div>
+
 </body>
 </html>

@@ -184,6 +184,15 @@ public class DetailedController {
         return types;
     }
 
+    /* 搜索页-获取Internal*/
+    @ResponseBody
+    @RequestMapping("/getDetailedInternal")
+    public List<DetailedEntity> getDetailedInternal(@RequestParam(name = "langId",required = true,defaultValue = "6")long langId){
+        List<DetailedEntity> detaileds = null;
+        detaileds = detailedService.getDetailedInternal(langId);
+        return detaileds;
+    }
+
 
     /**
      * 详细页- 智能向导
@@ -296,6 +305,28 @@ public class DetailedController {
             if(null != id){
                 dlId =Long.parseLong(id);
                 url = "/appPage/indexDetailed?dlId="+dlId;
+            }
+        }
+        response.sendRedirect(request.getContextPath()+url);
+        return "";
+    }
+
+    /**
+     * 新:详细页面,点击语言;应跳转对应语言详细页--CRM
+     * @param dlId 详情ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexDetailedNewCRM",method= RequestMethod.GET)
+    public String getIndexDetailedNewCRM(HttpServletRequest request, HttpServletResponse response,
+                                      @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId,
+                                      @RequestParam(name = "langId",required = true,defaultValue = "0")long langId)throws Exception {
+        String url = "/appPage/indexCRM?langId="+langId;
+        if(dlId > 0){
+            String id = detailedService.getIndexDetailedNew(dlId,langId);
+            if(null != id){
+                dlId =Long.parseLong(id);
+                url = "/appPage/indexDetailedCRM?dlId="+dlId;
             }
         }
         response.sendRedirect(request.getContextPath()+url);

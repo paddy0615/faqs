@@ -242,7 +242,7 @@ public class ExcelController {
                     rowData.add(os[0]);
                     rowData.add(os[1]);
                     rowData.add(os[2]);
-                    rowData.add(os[3]=="1"?"+1":"-1");
+                    rowData.add(os[3].equals(1)?"+1":"-1");
                     rowData.add(os[4]);
                     rowData.add(os[5]);
                     rowData.add(os[6]);
