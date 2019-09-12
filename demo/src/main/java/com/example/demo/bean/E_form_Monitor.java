@@ -34,6 +34,18 @@ public class E_form_Monitor {
     private Date createDate;
 
 
+    @Column(name = "m_crm_uid")
+    private String crmuid;    // crmuid
+
+
+    public String getCrmuid() {
+        return crmuid;
+    }
+
+    public void setCrmuid(String crmuid) {
+        this.crmuid = crmuid;
+    }
+
     public Long getId() {
         return id;
     }

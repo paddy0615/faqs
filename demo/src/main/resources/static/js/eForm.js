@@ -248,7 +248,10 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
     $scope.e.type = "1";
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
-
+    var crm_uid = $location.search().crm_uid;
+    if(crm_uid == undefined){
+        crm_uid = "";
+    }
     /**
      * 提交
      */
@@ -291,7 +294,7 @@ myapp.controller("eForm1Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : $scope.e
+                    data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');
@@ -633,8 +636,12 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
     // 默认航班编号为: 航班延误证明
     $scope.e.ecertificatetype = 1;
-
     $scope.eFormContent = true;
+    var crm_uid = $location.search().crm_uid;
+    if(crm_uid == undefined){
+        crm_uid = "";
+    }
+
 
     /**
      * 提交
@@ -653,7 +660,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : $scope.e
+                    data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');
@@ -1059,7 +1066,10 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
     $scope.e.type = "6";
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
-
+    var crm_uid = $location.search().crm_uid;
+    if(crm_uid == undefined){
+        crm_uid = "";
+    }
 
     /**
      * 提交
@@ -1103,7 +1113,7 @@ myapp.controller("eForm6Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : $scope.e
+                    data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');
@@ -1445,7 +1455,10 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     $scope.e.type = "7";
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
-
+    var crm_uid = $location.search().crm_uid;
+    if(crm_uid == undefined){
+        crm_uid = "";
+    }
     /**
      * 提交
      */
@@ -1488,7 +1501,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : $scope.e
+                    data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');
@@ -1830,6 +1843,10 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
     $scope.e.type = "8";
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
+    var crm_uid = $location.search().crm_uid;
+    if(crm_uid == undefined){
+        crm_uid = "";
+    }
 
     /**
      * 提交
@@ -1873,7 +1890,7 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : $scope.e
+                    data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');

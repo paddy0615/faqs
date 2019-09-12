@@ -5,6 +5,7 @@ import com.example.demo.bean.*;
 import com.example.demo.dao.E_area_nameDao;
 import com.example.demo.dao.EformDao;
 import com.example.demo.dao.LanguageDao;
+import com.example.demo.entity.EformTotal;
 import com.example.demo.service.EformService;
 import com.example.demo.service.LanguageService;
 import com.example.demo.util.IpUtil;
@@ -46,12 +47,17 @@ public class EformController {
     @RequestMapping(value="/eForm{id}",method= RequestMethod.GET)
     public String eFormIndex(HttpServletRequest request, @PathVariable("id") String id,
                              @RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId){
+            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
+            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
         E_form_Monitor monitor = new E_form_Monitor();
         monitor.setClientip(IpUtil.getIpAddr(request));
         monitor.setLangId(langId);
         monitor.setEtId(Long.parseLong(id));
         monitor.setCreateDate(new Date());
+        if(!IpUtil.checkInternal(request)){
+            crm_uid = "";
+        }
+        monitor.setCrmuid(crm_uid);
         eformService.saveE_form_Monitor(monitor);
 
         String t = "";
@@ -89,7 +95,7 @@ public class EformController {
             }
             return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
         }
-        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId;
+        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
     }
 
 
@@ -127,14 +133,20 @@ public class EformController {
      */
     @ResponseBody
     @RequestMapping(value = "/E/add",method= RequestMethod.POST)
-    public RestResultModule add(@RequestBody Eform eform){
+    public RestResultModule add(HttpServletRequest request,@RequestBody EformTotal eformTotal){
+        Eform eform = eformTotal.getEform();
+        String crm_uid = eformTotal.getCrmuid();
+        if(!IpUtil.checkInternal(request)){
+            crm_uid = "";
+        }
         RestResultModule module = new RestResultModule();
-       if(null != eform){
+        if(null != eform){
            try{
                eform.setRandom(eformService.getRandom());
                eform.setUpdateDate(new Date());
                // 添加form结果表
                E_form_result result = new E_form_result();
+               result.setCrmuid(crm_uid);
                String state = "-3";
                if(null != eform.getPnr()){
                    state = eformService.getBookingAPI(eform,result);
@@ -149,6 +161,7 @@ public class EformController {
                    e1.setLastname(eform.getLastname());
                    e1.setEmail(eform.getEmail());
                    E_form_result r1 = new E_form_result();
+                   r1.setCrmuid(crm_uid);
                    String s1 = eformService.getBookingAPI(e1,r1);
                    if("0".equals(s1)){
                        result.setEid(eform.getId());
@@ -167,7 +180,7 @@ public class EformController {
                    // 发邮件
                    Map<String, Object> valueMap = new HashMap<>();
                    valueMap.put("eform", eform);
-                   valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr()));
+                   valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),crm_uid));
                    valueMap.put("cc", eform.getEmail());
                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                    eformService.sendSimpleMail(valueMap);

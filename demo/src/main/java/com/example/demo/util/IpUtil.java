@@ -25,4 +25,15 @@ public class IpUtil {
         }
         return ip;
     }
+
+
+    public static boolean checkInternal(HttpServletRequest request) {
+        String ip = getIpAddr(request);
+        //判断是否以指定字符串开头
+        //输出结果是否为真，返回布尔类型
+        //判断字符串是否已百度二字开头
+        return ip.startsWith("192.168");
+    }
+
+
 }

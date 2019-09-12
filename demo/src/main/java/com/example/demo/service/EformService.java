@@ -142,10 +142,17 @@ public class EformService {
     /**
      * 获取getMailType
      */
-    public String getMailType(String type,long langid,String pnr) throws Exception {
+    public String getMailType(String type,long langid,String pnr,String crm_uid) throws Exception {
         E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(type));
         Language language =  languageDao.findById(langid);
-        return "Smart Form/"+language.getTitle()+"/"+e_form_type.getEn()+"/"+pnr;
+        String s = "Smart Form/"+language.getTitle()+"/"+e_form_type.getEn();
+        if(null != pnr){
+            s += "/"+pnr;
+        }
+        if(crm_uid != "" && crm_uid != null){
+            s += "/"+crm_uid;
+        }
+        return s;
     }
 
     /**
@@ -257,7 +264,7 @@ public class EformService {
             // 设置收件人邮箱
             helper.setTo("windy.tam@sonic-teleservices.com");
             // 抄送邮件接收人
-            helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com"});
+            helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com"});
 
         }
         // 设置邮件标题

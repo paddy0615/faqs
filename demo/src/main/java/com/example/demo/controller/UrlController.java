@@ -20,29 +20,12 @@ public class UrlController {
     public String index(){return "faqs/index";}
 
     @RequestMapping("/index")
-    public String index1(HttpSession session,HttpServletRequest request){
-        Object o = session.getAttribute("user");
-        System.out.println("session="+o);
-        Object u = request.getSession(true).getAttribute("user");
-        System.out.println("request="+u);
-        Object o1 = session.getAttribute("userSession");
-        System.out.println("session1="+o1);
-        Object u1 = request.getSession(true).getAttribute("userSession");
-        System.out.println("request1="+u1);
-
+    public String index1(){
         return "faqs/index";
     }
 
     @RequestMapping("/indexCRM")
-    public String indexCRM(HttpSession session,HttpServletRequest request){
-        Object o = session.getAttribute("user");
-        System.out.println("session="+o);
-        Object u = request.getSession(true).getAttribute("user");
-        System.out.println("request="+u);
-        Object o1 = session.getAttribute("userSession");
-        System.out.println("session1="+o1);
-        Object u1 = request.getSession(true).getAttribute("userSession");
-        System.out.println("request1="+u1);
+    public String indexCRM(){
         return "faqs/indexCRM";
     }
 

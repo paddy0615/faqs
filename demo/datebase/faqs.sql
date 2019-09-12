@@ -436,3 +436,11 @@ alter table e_form_result MODIFY er_result_xml VARCHAR(500);
 
 -- 2019-8-26
 -- 备注faqs_detailed.dl_status 修改为（0未发布，1发布External官网，2发布Internal内部）
+
+
+
+--2019-09-10
+-- 添加记录，crm-username
+ALTER TABLE e_form_monitor ADD m_crm_uid VARCHAR(50) COMMENT 'crm-name';
+ALTER TABLE faqs_monitor ADD m_crm_uid VARCHAR(50) COMMENT 'crm-name';
+ALTER TABLE e_form_result ADD er_crm_uid VARCHAR(50) COMMENT 'crm-name';

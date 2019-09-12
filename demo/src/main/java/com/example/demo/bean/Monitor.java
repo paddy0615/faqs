@@ -39,6 +39,22 @@ public class Monitor {
     @Column(name = "m_dl_id_father",columnDefinition="long default 0")
     private Long dlIdFather = (long)0;  // 反馈信息状态（0关闭,1打开）
 
+
+
+    @Column(name = "m_crm_uid")
+    private String crmuid;    // crmuid
+
+
+    public String getCrmuid() {
+        return crmuid;
+    }
+
+    public void setCrmuid(String crmuid) {
+        this.crmuid = crmuid;
+    }
+
+
+
     public Long getDlIdFather() {
         return dlIdFather;
     }

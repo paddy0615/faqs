@@ -290,6 +290,26 @@ public class DetailedController {
     }
 
     /**
+     * 新:CRM-跳转详情页,添加IP数
+     * @param dlId 详情ID
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getIndexDetailedCRM",method= RequestMethod.GET)
+    public String indexDetailedCRM(HttpServletRequest request, HttpServletResponse response, @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId)throws Exception {
+        String crm_uid = request.getParameter("crm_uid");
+        if(dlId > 0){
+            // 添加IP数
+            if(!detailedService.addip(request,0,dlId)){
+                logger.error("---------添加IP数错误,dlId="+dlId+",IP="+ipUtil.getIpAddr(request));
+            }
+        }
+        response.sendRedirect(request.getContextPath()+"/appPage/indexDetailedCRM?dlId="+dlId+"&crm_uid="+crm_uid);
+        return "";
+    }
+
+
+    /**
      * 新:详细页面,点击语言;应跳转对应语言详细页
      * @param dlId 详情ID
      * @return

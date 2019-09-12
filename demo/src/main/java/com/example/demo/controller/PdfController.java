@@ -1,25 +1,16 @@
 package com.example.demo.controller;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerFontProvider;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 
 /*
  * PdfController 下载PDF
@@ -30,105 +21,68 @@ import java.util.Map;
 public class PdfController {
     private  static Logger logger = LoggerFactory.getLogger(PdfController.class);
 
-    /*@Value("${DEST}")*/
-    private String dest;
- /*   @Value("${HTML}")*/
-    private String html;
-   /* @Value("${FONT}")*/
-    private String font;
-    private static Configuration freemarkerCfg = null;
 
-
-    @RequestMapping(value = "helloPdf")
-    public void showPdf(HttpServletResponse response) throws IOException, DocumentException {
-        //需要填充的数据
-        Map<String, Object> data = new HashMap<>(16);
-        data.put("name", "kevin");
-
-        String content = freeMarkerRender(data,html);
-        //创建pdf
-        createPdf(content, dest);
-
-        // 读取pdf并预览
-        readPdf(response);
-
-    }
-
-    public  void createPdf(String content,String dest) throws IOException, DocumentException {
-        // step 1
-        Document document = new Document();
-        // step 2
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(dest));
-        // step 3
-        document.open();
-        // step 4
-        XMLWorkerFontProvider fontImp = new XMLWorkerFontProvider(XMLWorkerFontProvider.DONTLOOKFORFONTS);
-        fontImp.register(font);
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document,
-                new ByteArrayInputStream(content.getBytes("UTF-8")), null, Charset.forName("UTF-8"), fontImp);
-        // step 5
-        document.close();
-
-    }
-
-    /**
-     * freemarker渲染html
-     */
-    public  String freeMarkerRender(Map<String, Object> data, String htmlTmp) {
-        Writer out = new StringWriter();
-
+    // 利用模板生成pdf
+    public static void fillTemplate() {
+        // 模板路径
+        String templatePath = "E:/Flight Cancel Certificate5.pdf";
+        // 生成的新文件路径
+        String newPDFPath = "E:/Flight Cancel CertificateNWE.pdf";
+        PdfReader reader;
+        FileOutputStream out;
+        ByteArrayOutputStream bos;
+        PdfStamper stamper;
         try {
-            // 获取模板,并设置编码方式
-            setFreemarkerCfg();
-            Template template = freemarkerCfg.getTemplate(htmlTmp);
-            template.setEncoding("UTF-8");
-            //将合并后的数据和模板写入到流中，这里使用的字符流
-            template.process(data, out);
-            out.flush();
-            return out.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                out.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            out = new FileOutputStream(newPDFPath);// 输出流
+            reader = new PdfReader(templatePath);// 读取pdf模板
+            bos = new ByteArrayOutputStream();
+            stamper = new PdfStamper(reader, bos);
+            AcroFields form = stamper.getAcroFields();
+            String[] str = { "UO1850",
+                    "2016 年 8 月 2 日 "+"\n"+" dfdf한 글자 이상되면 중간에",
+                    "高松 " +"\n"+" スペイスで分けてくださいませ",
+                    "香港"+"\n"+" Hong Kong",
+                    "Tung Hin Chuen "+"\n"+" Cheng  Chau Lai "+"\n"+" "+"\n"+" Tung Min Shun",
+                    "2100LT / 2016 年 08 月 02  日"+"\n"+" 2100LT / 02 Aug 2016",
+                    "天氣原因",
+                    "Bad Weather Condition" ,
+                    "2016 年 8 月 9 日"+"\n"+"09Aug 2016"};
+
+            BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",
+                    BaseFont.NOT_EMBEDDED);
+            int i = 0;
+            java.util.Iterator<String> it = form.getFields().keySet().iterator();
+            while (it.hasNext()) {
+                String name = it.next().toString();
+                System.out.println(name);
+                    // 设置支持中文
+                form.setFieldProperty(name, "textfont", bf, null);
+                form.setField(name, str[i++]);
+
             }
-        }
-        return null;
-    }
-    /**
-     * 设置freemarkerCfg
-     */
-    private void setFreemarkerCfg() {
-        freemarkerCfg = new Configuration();
-        //freemarker的模板目录
-        try {
-            freemarkerCfg.setDirectoryForTemplateLoading(new ClassPathResource("template").getFile());
+            stamper.setFormFlattening(true);// 如果为false那么生成的PDF文件还能编辑，一定要设为true
+            stamper.close();
+
+
+
+
+            Document doc = new Document();
+            PdfCopy copy = new PdfCopy(doc, out);
+            doc.open();
+            PdfImportedPage importPage = copy.getImportedPage(new PdfReader(bos.toByteArray()), 1);
+            copy.addPage(importPage);
+            doc.close();
+
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(1);
+        } catch (DocumentException e) {
+            System.out.println(2);
         }
+
     }
 
-    /**
-     * 读取本地pdf,这里设置的是预览
-     */
-    private void readPdf(HttpServletResponse response) {
-        response.reset();
-        response.setContentType("application/pdf");
-        try {
-            File file = new File(dest);
-            FileInputStream fileInputStream = new FileInputStream(file);
-            OutputStream outputStream = response.getOutputStream();
-            IOUtils.write(IOUtils.toByteArray(fileInputStream), outputStream);
-            response.setHeader("Content-Disposition",
-                    "inline; filename= file");
-            outputStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String[] args) {
+        fillTemplate();
     }
 
 }

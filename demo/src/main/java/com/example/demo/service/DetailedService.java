@@ -330,6 +330,11 @@ public class DetailedService {
                         monitor.setDlIdFather(monitor1.getDlId());
                     //}
                 }
+                String crm_uid = request.getParameter("crm_uid");
+                if(!IpUtil.checkInternal(request)){
+                    crm_uid = "";
+                }
+                monitor.setCrmuid(crm_uid);
                 monitor.setLangId(detailed.getLangId());
                 monitor.setCatId(detailed.getCatId());
                 monitor.setDlId(detailed.getId());

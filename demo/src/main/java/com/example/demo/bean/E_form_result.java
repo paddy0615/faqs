@@ -27,6 +27,19 @@ public class E_form_result implements Serializable {
     @Column(name = "er_result_xml")
     private String resultxml;
 
+
+    @Column(name = "er_crm_uid")
+    private String crmuid;    // crmuid
+
+
+    public String getCrmuid() {
+        return crmuid;
+    }
+
+    public void setCrmuid(String crmuid) {
+        this.crmuid = crmuid;
+    }
+
     public Long getId() {
         return id;
     }

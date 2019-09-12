@@ -115,10 +115,10 @@
                     <div class="input-group-btn">
                         <button style="height: 40px;" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-search"></span></button>
                         <ul style="right: inherit;" class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:;" ng-click="getSearch(2)">Internal Information</a></li>
-                            <li><a href="javascript:;" ng-click="getSearch(1)">FAQ in official website</a></li>
+                            <li><a href="javascript:;" ng-click="getSearch(2)">{{"lab80" | translate}}</a></li>
+                            <li><a href="javascript:;" ng-click="getSearch(1)">{{"lab81" | translate}}</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="javascript:;" ng-click="getSearch(3)">Show All</a></li>
+                            <li><a href="javascript:;" ng-click="getSearch(3)">{{"lab82" | translate}}</a></li>
                         </ul>
                     </div><!-- /btn-group -->
                 </div><!-- /input-group -->
@@ -128,7 +128,7 @@
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
                         <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
-                        <li ng-repeat="detailed in detaileds"><a href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)" ><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
+                        <li ng-repeat="detailed in detaileds"><a href="javascript:void(0);"  ng-click="getIndexDetailedCRM(detailed.id)" ><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                    <a href="javascript:;" class="list-group-item active" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 25px;">
                        {{'lab79'| translate}}
                    </a>
-                   <a ng-repeat="detailed in detailedInternal" class="list-group-item" href="javascript:void(0);"  ng-click="getindexDetailedCRM(detailed.id)">{{detailed.title}}</a>
+                   <a ng-repeat="detailed in detailedInternal" class="list-group-item" href="javascript:void(0);"  ng-click="getIndexDetailedCRM(detailed.id)">{{detailed.title}}</a>
                </div>
            </div>
 

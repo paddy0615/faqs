@@ -1,9 +1,7 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.bean.*;
-import com.example.demo.dao.E_form_typeDao;
-import com.example.demo.dao.E_form_type_displayDao;
-import com.example.demo.dao.LogsDao;
+import com.example.demo.dao.*;
 import com.example.demo.entity.EformEntity;
 import com.example.demo.entity.Feedback;
 import com.example.demo.service.EformService;
@@ -44,6 +42,8 @@ public class EformController {
     LogsDao logsDao;
     @Resource
     IpUtil ipUtil;
+    @Resource
+    E_form_resultDao e_form_resultDao;
 
 
 
@@ -85,7 +85,8 @@ public class EformController {
         String title = "";
         String certificate_Nature = "";
         if(null != eform){
-            title = eformService.getMailType(eform.getType(),eform.getLangId(),null == eform.getPnr()?"":eform.getPnr());
+            E_form_result result = e_form_resultDao.findByeEid(eform.getId());
+            title = eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),result.getCrmuid());
             certificate_Nature = eformService.getCertificateTitle(eform.getEcertificatetype());
         }
         module.putData("title",title);

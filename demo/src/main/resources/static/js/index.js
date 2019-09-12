@@ -721,15 +721,16 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     // 热点初始化
     info1();
 
+    var crm_uid = decodeURI(GetUrlParam("uid"));
     // 跳转E-form
     $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
-        window.open(url);
+        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&crm_uid="+crm_uid;
+        clicked(url);
     }
 
-    // 跳转indexDetailedCRM
-    $scope.getindexDetailedCRM = function(id){
-        var url = ctx + "appPage/indexDetailedCRM?dlId="+id;
+    // 跳转getIndexDetailedCRM
+    $scope.getIndexDetailedCRM = function(id){
+        var url = ctx + "appJson/getIndexDetailedCRM?dlId="+id+"&crm_uid="+crm_uid;
         clicked(url);
     }
 
@@ -1024,15 +1025,16 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
         return true;
     }
 
-
+    var crm_uid = decodeURI(GetUrlParam("crm_uid"));
     // 跳转E-form
     $scope.getEform = function(id){
-        window.open(ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId);
+        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId+"&crm_uid="+crm_uid;
+        clicked(url);
     }
 
-    // 跳转indexDetailedCRM
-    $scope.getindexDetailedCRM = function(id){
-        var url = ctx + "appPage/indexDetailedCRM?dlId="+id;
+    // 跳转getIndexDetailedCRM
+    $scope.getIndexDetailedCRM = function(id){
+        var url = ctx + "appJson/getIndexDetailedCRM?dlId="+id+"&crm_uid="+crm_uid;
         clicked(url);
     }
 
