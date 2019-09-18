@@ -12,3 +12,11 @@ html {overflow-y: scroll;}
 
 .clearfix:after {content: "."; display: block; height:0; clear:both; visibility: hidden;}
 .clearfix { *zoom:1; }
+
+
+@media (max-width: 768px) {
+  .xiangxia{
+      display: none!important;
+  }
+
+}

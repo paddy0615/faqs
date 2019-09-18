@@ -13,10 +13,10 @@ var faqRole = '';
     };
 
     w.gaixialatu = function (id) {
-        if(id ==  1 || id == 2){
+        if(id == 2){
             $(".xiangxia").css("margin-left","-38px")
-        }else if(id == 4){
-            $(".xiangxia").css("margin-left","-26px")
+        }else if(id == 4|| id == 5){
+            $(".xiangxia").css("margin-left","-48px")
         }else{
             $(".xiangxia").css("margin-left","0px")
         }
