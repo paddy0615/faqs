@@ -44,9 +44,11 @@
                     <div class="input-group">
                         <input ng-model="searchTest" type="text" class="form-control" placeholder="Search..." ng-keyup="onKeyup(event)">
                         <span class="input-group-btn">
-                  <button class="btn btn-default" type="button" ng-click="getSearchTitle()"><i class="glyphicon glyphicon-search"></i></button>
-                </span>
-                        <button class="btn btn-default" type="button" style="float:right;" ng-click="getEdit(0)">Add</button>
+                          <button class="btn btn-default" type="button" ng-click="getSearchTitle()"><i class="glyphicon glyphicon-search"></i></button>
+                        </span>
+                        <element zg-access="access">
+                            <button class="btn btn-default" type="button" style="float:right;" ng-click="getEdit(0)">Add</button>
+                        </element>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
             </div><!-- /.row -->

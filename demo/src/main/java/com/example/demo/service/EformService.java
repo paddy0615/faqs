@@ -29,6 +29,7 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,9 @@ public class EformService {
 
     @Value("${spring.mail.username}")
     private String Sender; //读取配置文件中的参数
+
+    @Value("${web.upload-path}")
+    private String path; //读取配置文件中的参数
 
     private  static Logger logger = LoggerFactory.getLogger(EformService.class);
 
@@ -81,6 +85,14 @@ public class EformService {
 
     public List<E_certificate> getCertificates(){
         return e_certificateDao.findAll();
+    }
+
+    /**
+     * updateEformFlie
+     */
+    @Transactional
+    public void updateEformFlie(long id,String flie){
+        eformDao.updateEformFlie(id,flie);
     }
 
 
@@ -156,6 +168,22 @@ public class EformService {
     }
 
     /**
+     * 获取getMailType1
+     */
+    public String getMailType1(Eform eform,String crm_uid) throws Exception {
+        E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
+        Language language =  languageDao.findById((long)eform.getLangId());
+        String s = "Smart Form/"+language.getTitle()+"/"+e_form_type.getEn()+"/"+getCertificateTitle(eform.getEcertificatetype());
+        if(null != eform.getPnr()){
+            s += "/"+eform.getPnr();
+        }
+        if(crm_uid != "" && crm_uid != null){
+            s += "/"+crm_uid;
+        }
+        return s;
+    }
+
+    /**
      * 获取e_certificate 标题
      */
     public String getCertificateTitle(long id) throws Exception {
@@ -171,6 +199,30 @@ public class EformService {
      * 获取getMailUserType
      */
     public String getMailUserType(String langid){
+        String s = "";
+        switch(langid){
+            case "1" :
+                s = "電子表格郵件確認";
+                break;
+            case "2"  :
+                s = "电子表格邮件确认";
+                break;
+            case "4"  :
+                s = "表計算ドキュメントのメール確認";
+                break;
+            case "5"  :
+                s = "환불 요청 메일 확인서";
+                break;
+            default :
+                s = "Smart Form Acknowledgement";
+        }
+        return s;
+    }
+
+    /**
+     * 获取getMailUserType1
+     */
+    public String getMailUserType1(String langid){
         String s = "";
         switch(langid){
             case "1" :
@@ -227,12 +279,24 @@ public class EformService {
             helper.setSubject(valueMap.get("title").toString());
             Context context = new Context();
             context.setVariables(valueMap);
-            String content = this.templateEngine.process("faqs/eFormMailGuest.html", context);
+            String templatesMail = "faqs/eFormMailGuest.html";
+            if(valueMap.containsKey("ecertificatetype")){
+                templatesMail = "faqs/eFormMailGuestPDF.html";
+            }
+            String content = this.templateEngine.process(templatesMail, context);
             helper.setText(content, true);
             org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top3.png");
             // 图片
             FileSystemResource file = new FileSystemResource(resource.getFile());
             helper.addInline("faq_top3", file);
+
+            if(valueMap.containsKey("ecertificatetype")){
+                // 添加附件
+                String eFormpath = path+"/"+((Eform)valueMap.get("eform")).getFlie();
+                FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+                helper.addAttachment("Flight Cancel Certificate.pdf", fileSystemResource);
+            }
+
             Transport transport = session.getTransport();
             // 连接邮件服务器
             transport.connect(sender, password);
@@ -277,9 +341,13 @@ public class EformService {
         // 图片
         FileSystemResource file = new FileSystemResource(resource.getFile());
         helper.addInline("faq_top4", file);
-        // 添加附件
-        //String fileName = f.substring(f.lastIndexOf(File.separator));
-        //helper.addAttachment(fileName, fileSystemResource);
+        if(valueMap.containsKey("ecertificatetype")){
+            // 添加附件
+            String eFormpath = path+"/"+((Eform)valueMap.get("eform")).getFlie();
+            FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+            helper.addAttachment("Flight Cancel Certificate.pdf", fileSystemResource);
+        }
+
         // 发送邮件
         mailSender.send(mimeMessage);
     }
@@ -315,6 +383,7 @@ public class EformService {
         result.setResultxml(strbody);
         return s;
     }
+
 
     /**
      * 对接PNR接口-eform9查询航班信息

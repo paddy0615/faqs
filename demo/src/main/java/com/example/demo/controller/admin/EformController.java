@@ -3,7 +3,6 @@ package com.example.demo.controller.admin;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.EformEntity;
-import com.example.demo.entity.Feedback;
 import com.example.demo.service.EformService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
@@ -13,15 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /*
@@ -86,7 +82,11 @@ public class EformController {
         String certificate_Nature = "";
         if(null != eform){
             E_form_result result = e_form_resultDao.findByeEid(eform.getId());
-            title = eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),result.getCrmuid());
+            if("3".equals(eform.getType())){
+                title = eformService.getMailType1(eform,result.getCrmuid());
+            }else{
+                title = eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),result.getCrmuid());
+            }
             certificate_Nature = eformService.getCertificateTitle(eform.getEcertificatetype());
         }
         module.putData("title",title);

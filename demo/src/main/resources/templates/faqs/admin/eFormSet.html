@@ -46,6 +46,10 @@
                         <label class="col-sm-2 control-label">Email Subject :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{title}}</label>
                     </div>
+                    <div class="form-group" ng-if="eform.flightno">
+                        <label class="col-sm-2 control-label">Flight Number :</label>
+                        <label style="text-indent: 2em;font-weight: normal;" class="control-label">UO{{eform.flightno}}</label>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Date :</label>
                         <label style="text-indent: 2em;font-weight: normal;" class="control-label">{{eform.updateDate}}</label>

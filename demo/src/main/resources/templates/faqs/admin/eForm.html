@@ -131,7 +131,9 @@
                             </td>
                             <td>{{e.email}}</td>
                             <td>{{e.langaTitle}}</td>
-                            <td>{{e.flie}}</td>
+                            <td>
+                                <a href="javascript:void(0);" ng-if="e.flie" ng-click="getSetPDF(e.flie)">预览</a>
+                            </td>
                             <td style="text-align: right;">
                                 <button class="btn btn-default" type="button"  ng-click="getSet(e.id)" >Select</button>
                             </td>

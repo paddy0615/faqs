@@ -25,7 +25,27 @@
     <script th:src="@{/js/eForm.js}"></script>
     <script th:src="@{/js/common.js}"></script>
     <base th:href="@{/appPage/index}">
+    <style>
+        @media (max-width: 768px) {
+            .div-uo-input{
+                width: 89.6% !important;
+            }
+            .ecertificatetype-class{
+                width: 100% !important;
+            }
+            .GuestName-firstname,.GuestName-lastname{
+                width: 44.5%!important;
+            }
+            .div-uo{
+                width: 100%!important;
+            }
+        }
+        .div-uo .form-control-feedback {
+            top: 33px;
+            right: 12px;
+        }
 
+    </style>
     <script>
         $(document).ready(function () {
             $(window).scroll(function () {
@@ -87,18 +107,37 @@
                             <p style="margin: 5px 0px;"></p>
                             <div class="form-group">
                                 <label>{{'lab16'|translate}}:</label>
-                                <input type="text" ng-model="e.pnr" name="pnr" class="form-control"   placeholder="{{'lab16'|translate}}" />
-                            </div>
-                            <div class="form-group" style="width: 50%;float: left;">
-                                <label>{{'lab2'|translate}}:</label>
-                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstName" ng-model="e.firstname" />
-                            </div>
-                            <div class="form-group"  style="width: 48%;float: right;">
-                                <label style="color: white">1</label>
-                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}" name="lastName" ng-model="e.lastname" />
+                                <input type="text" ng-model="e.pnr" name="pnr" class="form-control"   placeholder="{{'lab16'|translate}}" autocomplete="off"/>
                             </div>
                             <div style="clear: both;"></div>
-                            <div class="form-group" style="width: 50%;float: left;">
+                            <div class="form-group div-uo" style="width: 50%">
+                                <label>{{'lab30'|translate}}:</label>
+                                <div>
+                                    <span style="float: left;line-height: 50px;font-weight: 700;margin: 0px 6px;">UO </span>
+                                    <input style="float: left;    width: 90%;" type="text" class="form-control div-uo-input"  name="flightno" ng-model="e.flightno" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div style="clear: both;margin-bottom: 10px;"></div>
+
+                            <div class="form-group" style="margin-bottom: -24px;">
+                                <label>{{'lab2'|translate}}:</label>
+                            </div>
+                            <div class="GuestName-div" ng-repeat="p in postBack" style="overflow: hidden;margin-bottom: -4px;">
+                                <div class="form-group GuestName-firstname" style="width: 47.5%;float: left;margin-right: 10px;margin-bottom: 0px">
+                                    <label style="color: white;opacity: 0;">1</label>
+                                    <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstname{{$index}}" autocomplete="off"/>
+                                </div>
+                                <div class="form-group GuestName-lastname"  style="width: 47.5%;float: left;margin-bottom: 0px">
+                                    <label style="color: white;opacity: 0;">1</label>
+                                    <input type="text" class="form-control" placeholder="{{'lab4'|translate}}" name="lastname{{$index}}" autocomplete="off"/>
+                                </div>
+                                <button style="top: 36px;right: 0px;color: #9960a7;opacity: inherit;position: relative;" type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="addGuestName(postBack.length)" ng-show="$index==0">+</button>
+                                <button style="top: 35px;right: 0px;color: #9960a7;opacity: inherit;position: relative;" type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="deleteGuestName($index)" ng-show="$index!=0">×</button>
+                            </div>
+
+                            <div style="clear: both;margin-bottom: 10px;"></div>
+
+                          <!--  <div class="form-group" style="width: 50%;float: left;">
                                 <label>{{'lab8'|translate}}:</label>
                                 <select name="departing" ng-model="e.departing"  class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                 </select>
@@ -108,7 +147,8 @@
                                 <select name="going" ng-model="e.going"  class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
                                 </select>
                             </div>
-                            <div style="clear: both;"></div>
+                            <div style="clear: both;"></div>-->
+
                             <div class="form-group">
                                 <label>{{'lab12'|translate}}:</label>
                             </div>
@@ -116,7 +156,7 @@
                                 <label></label>
                                 <input type="text" class="form-control" name="email" ng-model="e.email" />
                             </div>
-                            <div class="form-group" style="width: 50%;float: left;">
+                            <div class="form-group ecertificatetype-class" style="width: 50%;">
                                 <label>{{'lab31'|translate}}: </label>
                                 <select ng-model="e.ecertificatetype" class="form-control" ng-options="a.id as langId==1?a.hk:(langId==2?a.cn:a.en) for a in e_certificates">
                                 </select>
@@ -157,8 +197,8 @@
                         </p>
                         <div style="padding: 10px;">
                             <div class="form-group confirmation-test">
-                                <div>{{'lab23'|translate}}
-                                </div>
+                                <div ng-if="!data.result['ecertificatetype']">{{'lab23'|translate}}</div>
+                                <div ng-if="data.result['ecertificatetype']">{{'lab83'|translate}}</div>
                                 <div style="margin: 20px 0px;">{{'lab24'|translate}}</div>
                                 <p class="list-group-item active ng-binding  eFormSuccess-p" >
                                     E-IN-{{data.result["key"]}}

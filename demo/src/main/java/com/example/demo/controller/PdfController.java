@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 
@@ -21,13 +24,16 @@ import com.itextpdf.text.DocumentException;
 public class PdfController {
     private  static Logger logger = LoggerFactory.getLogger(PdfController.class);
 
+    @Value("${web.upload-path}")
+    private static String path; //读取配置文件中的参数
 
     // 利用模板生成pdf
     public static void fillTemplate() {
+        System.out.println("path="+path);
         // 模板路径
-        String templatePath = "E:/Flight Cancel Certificate5.pdf";
+        String templatePath = "E:\\Flight Cancel Certificate.pdf";
         // 生成的新文件路径
-        String newPDFPath = "E:/Flight Cancel CertificateNWE.pdf";
+        String newPDFPath = "E:\\Flight Cancel CertificateNew1.pdf";
         PdfReader reader;
         FileOutputStream out;
         ByteArrayOutputStream bos;
@@ -63,9 +69,6 @@ public class PdfController {
             stamper.setFormFlattening(true);// 如果为false那么生成的PDF文件还能编辑，一定要设为true
             stamper.close();
 
-
-
-
             Document doc = new Document();
             PdfCopy copy = new PdfCopy(doc, out);
             doc.open();
@@ -74,15 +77,18 @@ public class PdfController {
             doc.close();
 
         } catch (IOException e) {
-            System.out.println(1);
+            System.out.println(e);
         } catch (DocumentException e) {
-            System.out.println(2);
+            System.out.println(e);
         }
 
     }
 
     public static void main(String[] args) {
         fillTemplate();
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+        String d =  df.format(new Date());
+        System.out.println(d);// new Date()为获取当前系统时间
     }
 
 }

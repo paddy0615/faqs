@@ -23,6 +23,10 @@
                 <td class="control-label1">Email Subject :</td>
                 <td class="control-label2" th:text="${title}"></td>
             </tr>
+            <tr th:if="${not #lists.isEmpty(eform.flightno)}">
+                <td class="control-label1">Flight Number :</td>
+                <td class="control-label2" th:text="'UO'+${eform.flightno}"></td>
+            </tr>
             <tr th:if="${not #lists.isEmpty(eform.updateDate)}">
                 <td class="control-label1">Date :</td>
                 <td class="control-label2" th:text="${#dates.format(eform.updateDate, 'yyyy-MM-dd HH:mm:ss')}"></td>

@@ -1,31 +1,20 @@
 package com.example.demo.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.example.demo.bean.*;
-import com.example.demo.dao.E_area_nameDao;
-import com.example.demo.dao.EformDao;
-import com.example.demo.dao.LanguageDao;
+import com.example.demo.entity.CommomClass;
 import com.example.demo.entity.EformTotal;
+import com.example.demo.service.ConnectionSqlService;
 import com.example.demo.service.EformService;
-import com.example.demo.service.LanguageService;
+import com.example.demo.service.PdfService;
 import com.example.demo.util.IpUtil;
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Field;
+import java.sql.Connection;
 import java.util.*;
 
 /*
@@ -39,6 +28,11 @@ public class EformController {
 
     @Resource
     EformService eformService;
+    @Resource
+    ConnectionSqlService connectionSqlService;
+    @Resource
+    PdfService pdfService;
+
 
     /**
      * URL跳转
@@ -206,6 +200,112 @@ public class EformController {
 
 
     /**
+     * 添加3 - RequestForCertificate
+     */
+    @ResponseBody
+    @RequestMapping(value = "/E/add3",method= RequestMethod.POST)
+    public RestResultModule add3(HttpServletRequest request,@RequestBody EformTotal eformTotal){
+        Eform eform = eformTotal.getEform();
+        String crm_uid = eformTotal.getCrmuid();
+        if(!IpUtil.checkInternal(request)){
+            crm_uid = "";
+        }
+        RestResultModule module = new RestResultModule();
+        if(null != eform){
+            try{
+                eform.setRandom(eformService.getRandom());
+                eform.setUpdateDate(new Date());
+                // 添加form结果表
+                E_form_result result = new E_form_result();
+                result.setCrmuid(crm_uid);
+                String state = "-3";
+                if(null != eform.getPnr()){
+                    // 因有多个旅客，需一一与API对比
+                    String [] firstnameArr = eform.getFirstname().split(",");
+                    String [] lastnameArr = eform.getLastname().split(",");
+                    state = "0";
+                /*    for (int i = 0;i<firstnameArr.length;i++){
+                        if(firstnameArr[i] == "" || lastnameArr[i] == ""){
+                            module.setCode(404);
+                            return module;
+                        }
+                        Eform eform1 = new Eform();
+                        eform1.setPnr(eform.getPnr());
+                        eform1.setFirstname(firstnameArr[i]);
+                        eform1.setLastname(lastnameArr[i]);
+                        System.out.println(firstnameArr[i]+","+lastnameArr[i]);
+                        state = eformService.getBookingAPI(eform1,result);
+                        if(!"0".equals(state)){
+                            module.setCode(404);
+                            return module;
+                        }
+                    }*/
+                }else{
+                    state = "0";
+                }
+
+                // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
+                if("0".equals(state)){
+                    eformService.save(eform);
+                    result.setEid(eform.getId());
+                    eformService.saveResult(result);
+                    // 发邮件（给zoho跟单）
+                    Map<String, Object> valueMap = new HashMap<>();
+                    // 发确认邮件(给客)
+                    Map<String, Object> valueMapUser = new HashMap<>();
+
+                    // 如何e_certificate_type =1 or =4 ,邮件方式不一样
+                    if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
+                        List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno());
+                        if(list.size() == 0){
+                            module.setCode(404);
+                            return module;
+                        }
+                        // 填充pdf
+                        pdfService.fillTemplate(eform,(CommomClass) list.get(0));
+                        eformService.updateEformFlie(eform.getId(),eform.getFlie());
+                        valueMap.put("ecertificatetype", eform.getEcertificatetype());
+                        valueMapUser.put("ecertificatetype", eform.getEcertificatetype());
+                        module.putData("ecertificatetype",eform.getEcertificatetype());
+                    }
+                    valueMap.put("eform", eform);
+                    valueMap.put("title", eformService.getMailType1(eform,crm_uid));
+                    valueMap.put("cc", eform.getEmail());
+                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
+                    eformService.sendSimpleMail(valueMap);
+
+                    valueMapUser.put("eform", eform);
+                    if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
+                        String s = "Certificate -";
+                        if(eform.getEcertificatetype() == 1){
+                            s += " Flight Delay";
+                        }else {
+                            s += " Flight Cancel";
+                        }
+                        s += " -- PNR: "+eform.getPnr();
+                        valueMapUser.put("title", s);
+                    }else{
+                        valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
+                    }
+                    valueMapUser.put("To",eform.getEmail());
+                    valueMapUser.put("langId",eform.getLangId());
+                    valueMapUser.put("random",eform.getRandom());
+                    eformService.sendSimpleMailUser(valueMapUser);
+
+                    // 返回成功码
+                    module.putData("key",eform.getRandom());
+                }else{
+                    module.setCode(404);
+                }
+            }catch (Exception e){
+                logger.error("-----------/E/add-----------"+e,eform);
+                module.setCode(500);
+            }
+        }
+        return module;
+    }
+
+    /**
      * eform9 - 查询航班信息
      */
     @ResponseBody
@@ -250,10 +350,74 @@ public class EformController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("/test")
-    public String test(Model model) throws Exception{
+    @RequestMapping(value = "/E/searchFlightIRRTest")
+    public String getList(@RequestParam(name = "pnr",defaultValue = "",required = true) String pnr) throws Exception{
         System.out.println("开始");
-        return "ok";
+        List irrList = new ArrayList();
+        String sql = "";
+        String ordersID = "";
+        try {
+            if ((pnr != null) && (pnr.length() != 0)) {
+                ordersID = connectionSqlService.getJobID(pnr);
+                if ((ordersID != null) && (ordersID.length() != 0)) {
+                    ordersID = ordersID.substring(0, ordersID.length() - 1);
+                }
+            }else {
+                // 结束
+                return "null";
+            }
+            if ((ordersID != null) && (ordersID.length() != 0)) {
+                sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt,departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer from flightirr_sendingorders where ID in (" + ordersID + ") and status=1";
+              /*  sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt," +
+                        "departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer " +
+                        "from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'";
+            */
+            }
+            Connection con = null;
+            if (!sql.equals("")) {
+                irrList = connectionSqlService.getList(sql);
+            }
+
+        }catch (Exception e){
+            logger.error(e.toString());
+            System.out.println(e.toString());
+        }
+
+        String xml = "";
+        for (int i = 0; irrList.size() > i; i++) {
+            CommomClass cc = (CommomClass) irrList.get(i);
+            //获取class对象a中声明的所有字段
+            Field[] field = cc.getClass().getDeclaredFields();
+            for(int j=0;j<field.length;j++){
+                //设置是否允许访问，不是修改原来的访问权限修饰词。
+                field[j].setAccessible(true);
+                //返回输出指定对象a上此 Field表示的字段名和字段值
+                xml += " ("+field[j].getName()+") "+"<span style='color:red'>"+field[j].get(cc)+"</span>";
+                xml += "<br/>";
+            }
+            xml += "<br/>";
+        }
+        if(xml == ""){
+            xml = "pnr错误";
+        }
+
+        return xml;
+    }
+
+    /**
+     * test
+     * XML
+     * produces = MediaType.APPLICATION_XML_VALUE
+     * JSON
+     * produces = MediaType.APPLICATION_JSON_VALUE
+     */
+    @ResponseBody
+    @RequestMapping(value = "/E/searchFlightIRRTest1")
+    public String getList1() throws Exception{
+
+        pdfService.fillTemplate(null,null);
+        System.out.println("结束");
+        return "";
     }
 
 }

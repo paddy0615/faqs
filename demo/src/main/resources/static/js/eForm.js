@@ -641,7 +641,19 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
     if(crm_uid == undefined){
         crm_uid = "";
     }
+    /**
+     * GuestName 功能
+     * @type {string[]}
+     */
+    $scope.postBack = [{}];
+    $scope.addGuestName = function(idx){
+        var postBack={};
+        $scope.postBack.push(postBack);
 
+    };
+    $scope.deleteGuestName = function(idx){
+        $scope.postBack.splice(idx,1);
+    };
 
     /**
      * 提交
@@ -649,7 +661,32 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
     var lock1 = false; //默认未锁定
     $scope.eFormContentSubmit = function () {
         $scope.e.langId =  $scope.langId;
-        console.log( $scope.e)
+        $scope.e.firstname = "";
+        $scope.e.lastname = "";
+        angular.forEach($scope.postBack, function (each,id) {
+            var first = 'firstname'+id;
+            var last = 'lastname'+id;
+            $('.eForm-div1').bootstrapValidator('addField', first, {
+                validators: {
+                    notEmpty: {
+                        message: T.T('error2')
+                    }
+                }
+            });
+            $('.eForm-div1').bootstrapValidator('addField', last, {
+                validators: {
+                    notEmpty: {
+                        message: T.T('error2')
+                    }
+                }
+            });
+             $scope.e.firstname = $scope.e.firstname + "," + $("input[name="+first+"]").val().trim();
+             $scope.e.lastname = $scope.e.lastname + "," + $("input[name="+last+"]").val().trim();
+        });
+        $scope.e.firstname = $scope.e.firstname.substring(1);
+        $scope.e.lastname = $scope.e.lastname.substring(1);
+        console.log($scope.e.firstname);
+        console.log($scope.e.lastname);
         var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
         bootstrapValidator.validate();
         if(bootstrapValidator.isValid()) {
@@ -659,7 +696,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                 lock1 = true; // 锁定
                 $http({
                     method : 'post',
-                    url : ctx + 'appJson/E/add',
+                    url : ctx + 'appJson/E/add3',
                     data : {"eform":$scope.e,"crmuid":crm_uid},
                 }).then(function(resp){
                     $scope.data = resp.data;
@@ -699,7 +736,6 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
         location.reload();
     }
 
-
     /**
      * 内容验证
      */
@@ -714,14 +750,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                     validating: 'glyphicon glyphicon-refresh'
                 },
                 fields: {
-                    firstName: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    lastName: {
+                    flightno: {
                         validators: {
                             notEmpty: {
                                 message: T.T('error2')

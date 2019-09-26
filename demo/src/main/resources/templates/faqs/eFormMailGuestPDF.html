@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQS | HK Express</title>
+</head>
+<body>
+<div>
+    <span>Dear Guest,</span>
+    <div class="row" style="margin-bottom: 35px;">
+        <p>Thank you for choosing HK Express.</p>
+        <p>Here's your case number E-IN-<span th:text="${random}"></span>.</p>
+        <p>Please see attached flight certificate.</p>
+        <p>Please check also your spam and junk folder if you haven't seen the certificate in your inbox.</p>
+        <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>
+        <p>You can also browse our FAQs for more information:<br><a href="https://www.livedemo.net/hkexpress/appPage/index" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index</a></p>
+        <div>
+            <p style="height: 8px;">Yours sincerely,</p>
+            <p style="height: 8px;">Guest Relations</p>
+            <p style="height: 8px;">HK Express</p>
+            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
+        </div>
+    </div>
+</div>
+<p><img src="cid:faq_top3"/></p>
+
+</body>
+</html>

@@ -444,3 +444,44 @@ alter table e_form_result MODIFY er_result_xml VARCHAR(500);
 ALTER TABLE e_form_monitor ADD m_crm_uid VARCHAR(50) COMMENT 'crm-name';
 ALTER TABLE faqs_monitor ADD m_crm_uid VARCHAR(50) COMMENT 'crm-name';
 ALTER TABLE e_form_result ADD er_crm_uid VARCHAR(50) COMMENT 'crm-name';
+
+
+
+--2019-09-26
+-- e_pdf_area pdf地区
+DROP TABLE IF EXISTS `e_pdf_area`;
+CREATE TABLE `e_pdf_area` (
+ `epa_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `epa_key` VARCHAR(100) NULL COMMENT 'key',
+ `epa_title_hk` VARCHAR(200) NULL COMMENT '繁体-名',
+ `epa_title_en` VARCHAR(200) NULL COMMENT '英文-名',
+  PRIMARY KEY (`epa_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+INSERT  INTO `e_pdf_area`(`epa_key`,`epa_title_hk`,`epa_title_en`)VALUES
+('HKG','香港','Hong Kong'),
+('REP','暹粒','Siem Reap'),
+('NGB','寧波','Ningbo'),
+('FUK','福岡','Fukuoka'),
+('HIJ','廣島','Hiroshima'),
+('ISG','石垣島','Ishigaki'),
+('KOJ','鹿兒島','Kagoshima'),
+('KMJ','熊本','Kumamoto'),
+('NGS','長崎','Nagasaki'),
+('NGO','名古屋','Nagoya'),
+('OKA','沖繩','Okinawa'),
+('KIX','大阪 (關西)','Osaka (Kansai)'),
+('SHI','宮古 (下地島)','Miyako (Shimojishima)'),
+('TAK','高松','Takamatsu'),
+('HND','東京 (羽田)','Tokyo (Haneda)'),
+('NRT','東京 (成田)','Tokyo (Narita)'),
+('PUS','釜山','Busan'),
+('CJU','濟州','Jeju'),
+('ICN','首爾 (仁川)','Seoul (Incheon)'),
+('RMQ','台中','Taichung'),
+('BKK','曼谷(蘇凡納布米)','Bangkok (Suvarnabhumi)'),
+('CNX','清邁','Chiang Mai'),
+('CEI','清萊','Chiang Rai'),
+('HKT','布吉','Phuket'),
+('SPN','塞班','Saipan'),
+('DAD','峴港','Da Nang'),
+('CXR','芽莊','Nha Trang');

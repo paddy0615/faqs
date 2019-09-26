@@ -70,6 +70,10 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
         $scope.into($scope.CurrentPage,$scope.PageSize);
     }
 
+    // 查看附件
+    $scope.getSetPDF = function(flie){
+        window.open(ctx + flie);
+    }
     // 查看
     $scope.getSet = function(id){
         window.open(ctx + "appPage/admin/eFormSet?eId="+id);
