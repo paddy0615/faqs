@@ -51,6 +51,16 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
                 angular.forEach(data.result.efds,function(hero,index,objs){
                     $scope['master'+hero.etid] = true;
                 });
+                angular.forEach($scope.eforms,function(hero1,index1,objs1){
+                    var flieArr = []
+                    if(hero1.flie != null){
+                        angular.forEach(hero1.flie.split(","),function(hero2,index2,objs2){
+                            flieArr.push(hero2)
+                        });
+                    }
+                    hero1.flieArr = flieArr;
+                });
+                console.log($scope.eforms);
 
                 $scope.PageCount = data.result.PageCount;
                 if($scope.PageCount > 0){
@@ -72,7 +82,10 @@ myapp.controller("eFormController",["$scope","$http",function ($scope, $http) {
 
     // 查看附件
     $scope.getSetPDF = function(flie){
-        window.open(ctx + flie);
+        angular.forEach(flie.split(","),function(hero,index,objs){
+            window.open(ctx + hero);
+            console.log(ctx + hero);
+        });
     }
     // 查看
     $scope.getSet = function(id){

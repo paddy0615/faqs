@@ -289,14 +289,17 @@ public class EformService {
             // 图片
             FileSystemResource file = new FileSystemResource(resource.getFile());
             helper.addInline("faq_top3", file);
-
             if(valueMap.containsKey("ecertificatetype")){
                 // 添加附件
-                String eFormpath = path+"/"+((Eform)valueMap.get("eform")).getFlie();
-                FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
-                helper.addAttachment("Flight Cancel Certificate.pdf", fileSystemResource);
-            }
+                String [] flieArr = ((Eform)valueMap.get("eform")).getFlie().split(",");
+                for (int i = 0;i<flieArr.length;i++){
+                    String eFormpath = path+"/"+flieArr[i];
+                    FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+                    String flieName = flieArr[i].substring(flieArr[i].lastIndexOf("/")+1);
+                    helper.addAttachment(flieName, fileSystemResource);
+                }
 
+            }
             Transport transport = session.getTransport();
             // 连接邮件服务器
             transport.connect(sender, password);
@@ -343,9 +346,15 @@ public class EformService {
         helper.addInline("faq_top4", file);
         if(valueMap.containsKey("ecertificatetype")){
             // 添加附件
-            String eFormpath = path+"/"+((Eform)valueMap.get("eform")).getFlie();
-            FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
-            helper.addAttachment("Flight Cancel Certificate.pdf", fileSystemResource);
+            Eform eformNew = (Eform)valueMap.get("eform");
+            String [] flieArr = eformNew.getFlie().split(",");
+            for (int i = 0;i<flieArr.length;i++){
+                String eFormpath = path+"/"+flieArr[i];
+                FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+                String flieName = flieArr[i].substring(flieArr[i].lastIndexOf("/")+1);
+                helper.addAttachment(flieName, fileSystemResource);
+            }
+
         }
 
         // 发送邮件

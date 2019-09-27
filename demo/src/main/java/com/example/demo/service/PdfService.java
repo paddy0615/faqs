@@ -35,20 +35,17 @@ public class PdfService {
     E_pdf_areaDao e_pdf_areaDao;
 
     // 利用模板生成pdf
-    public void fillTemplate(Eform eform, CommomClass commomClass) {
+    public String fillTemplate(Eform eform,int flieCount,int flieInt,String guestName, CommomClass commomClass) {
         try {
             String eFormpath = path+"/eForm/";
-            System.out.println("eFormpath="+eFormpath);
             // 模板路径
             //String templatePath = ClassUtils.getDefaultClassLoader().getResource("").getPath()+"static/img/Flight Cancel Certificate.pdf";
             String templatePath = eFormpath+"Certificate"+eform.getEcertificatetype()+".pdf";
-            System.out.println("templatePath="+templatePath);
             // 生成的新文件路径
             SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
             String filePath1 = eFormpath+df.format(new Date());
             //目标目录
             File targetfile1 = new File(filePath1);
-            System.out.println("targetfile1="+targetfile1);
             if(!targetfile1.exists()) {
                 targetfile1.mkdirs();
             }
@@ -57,17 +54,20 @@ public class PdfService {
             if(!targetfile2.exists()) {
                 targetfile2.mkdirs();
             }
-            String certificateType = "/Flight Delay Certificate.pdf";
+            String certificateType = "/Flight Delay Certificate";
             if(eform.getEcertificatetype() == 4){
-                certificateType = "/Flight Cancel Certificate.pdf";
+                certificateType = "/Flight Cancel Certificate";
+            }
+            if(flieCount > 1){
+                certificateType += flieInt+".pdf";
+            }else{
+                certificateType += ".pdf";
             }
             String newPDFPath = filePath2+certificateType;
-
             PdfReader reader;
             FileOutputStream out;
             ByteArrayOutputStream bos;
             PdfStamper stamper;
-
             out = new FileOutputStream(newPDFPath);// 输出流
             reader = new PdfReader(templatePath);// 读取pdf模板
             bos = new ByteArrayOutputStream();
@@ -107,7 +107,7 @@ public class PdfService {
                         form.setField(name, area2.getHk()+"\n"+ area2.getEn());
                         break;
                     case "guestName":
-                        form.setField(name, eform.getFirstname()+" "+eform.getLastname());
+                        form.setField(name, guestName);
                         break;
                     case "departureDateTime":
                         String departureDateTime = commomClass.getDepartureDate()+" "+commomClass.getDepartureTime();
@@ -156,14 +156,17 @@ public class PdfService {
             PdfImportedPage importPage = copy.getImportedPage(new PdfReader(bos.toByteArray()), 1);
             copy.addPage(importPage);
             doc.close();
-            eform.setFlie(newPDFPath.substring(newPDFPath.indexOf("eForm")));
-            System.out.println("pdf路径="+ eform.getFlie());
+            String flieUrl = newPDFPath.substring(newPDFPath.indexOf("eForm"));
+            System.out.println("pdf路径="+ flieUrl);
+            return flieUrl;
         } catch (IOException e) {
             System.out.println(e);
             logger.error("IOException",e);
+            return null;
         } catch (DocumentException e) {
             System.out.println(e);
             logger.error("DocumentException",e);
+            return null;
         }
 
     }

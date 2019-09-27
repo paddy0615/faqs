@@ -219,10 +219,10 @@ public class EformController {
                 E_form_result result = new E_form_result();
                 result.setCrmuid(crm_uid);
                 String state = "-3";
+                // 因有多个旅客，需一一与API对比
+                String [] firstnameArr = eform.getFirstname().split(",");
+                String [] lastnameArr = eform.getLastname().split(",");
                 if(null != eform.getPnr()){
-                    // 因有多个旅客，需一一与API对比
-                    String [] firstnameArr = eform.getFirstname().split(",");
-                    String [] lastnameArr = eform.getLastname().split(",");
                     state = "0";
                 /*    for (int i = 0;i<firstnameArr.length;i++){
                         if(firstnameArr[i] == "" || lastnameArr[i] == ""){
@@ -240,8 +240,6 @@ public class EformController {
                             return module;
                         }
                     }*/
-                }else{
-                    state = "0";
                 }
 
                 // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
@@ -261,11 +259,34 @@ public class EformController {
                             module.setCode(404);
                             return module;
                         }
-                        // 填充pdf
-                        pdfService.fillTemplate(eform,(CommomClass) list.get(0));
-                        eformService.updateEformFlie(eform.getId(),eform.getFlie());
-                        valueMap.put("ecertificatetype", eform.getEcertificatetype());
-                        valueMapUser.put("ecertificatetype", eform.getEcertificatetype());
+                        // 对应类型。
+                        CommomClass commomClass = (CommomClass) list.get(0);
+                        if(eform.getEcertificatetype() == 1){
+                            if(!"Rescheduled Flights".equalsIgnoreCase(commomClass.getTemplate())){
+                                module.setCode(404);
+                                return module;
+                            }
+                        }else{
+                            if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) ||
+                               !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) ||
+                               !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) ||
+                               !"schedule is TBA".equalsIgnoreCase(commomClass.getTemplate())){
+                                module.setCode(404);
+                                return module;
+                            }
+                        }
+                        // 填充pdf-一个旅客对应一个个PDF
+                        String e_flie = "";
+                        for (int i = 0;i<firstnameArr.length;i++){
+                            String s = pdfService.fillTemplate(eform,firstnameArr.length,i+1,firstnameArr[i]+" "+lastnameArr[i],commomClass);
+                            e_flie += s+",";
+                        }
+                        e_flie = e_flie.substring(0,e_flie.length()-1);
+                        System.out.println("e_flie="+e_flie);
+                        eform.setFlie(e_flie);
+                        eformService.updateEformFlie(eform.getId(),e_flie);
+                        valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
+                        valueMapUser.put("ecertificatetype", eform.getEcertificatetype().toString());
                         module.putData("ecertificatetype",eform.getEcertificatetype());
                     }
                     valueMap.put("eform", eform);
@@ -415,7 +436,6 @@ public class EformController {
     @RequestMapping(value = "/E/searchFlightIRRTest1")
     public String getList1() throws Exception{
 
-        pdfService.fillTemplate(null,null);
         System.out.println("结束");
         return "";
     }

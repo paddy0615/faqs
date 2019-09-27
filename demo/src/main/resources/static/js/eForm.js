@@ -685,8 +685,6 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
         });
         $scope.e.firstname = $scope.e.firstname.substring(1);
         $scope.e.lastname = $scope.e.lastname.substring(1);
-        console.log($scope.e.firstname);
-        console.log($scope.e.lastname);
         var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
         bootstrapValidator.validate();
         if(bootstrapValidator.isValid()) {
