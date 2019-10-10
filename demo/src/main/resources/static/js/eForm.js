@@ -655,6 +655,18 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
         $scope.postBack.splice(idx,1);
     };
 
+    // laydate国际版
+    laydate.render({
+        elem: '#ladate1'
+        ,lang: 'en'
+        ,done:function(value,dates,edate){
+            $('#ladate1').val(value);
+            $('.eForm-div1').data('bootstrapValidator')
+                .updateStatus('ladate1', 'NOT_VALIDATED',null)
+                .validateField('ladate1');
+        }
+    });
+
     /**
      * 提交
      */
@@ -685,6 +697,7 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
         });
         $scope.e.firstname = $scope.e.firstname.substring(1);
         $scope.e.lastname = $scope.e.lastname.substring(1);
+        $scope.e.departuredate = $("#ladate1").val();
         var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
         bootstrapValidator.validate();
         if(bootstrapValidator.isValid()) {
@@ -803,6 +816,13 @@ myapp.controller("eForm3Controller",["$scope","$http","$location","$translate","
                                         return true;
                                     }
                                 }
+                            }
+                        }
+                    },
+                    ladate1: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
                             }
                         }
                     }

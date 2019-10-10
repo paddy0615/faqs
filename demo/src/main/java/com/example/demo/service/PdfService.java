@@ -6,6 +6,7 @@ import com.example.demo.dao.E_pdf_areaDao;
 import com.example.demo.entity.CommomClass;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,14 +76,17 @@ public class PdfService {
             AcroFields form = stamper.getAcroFields();
             BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",
                     BaseFont.NOT_EMBEDDED);
+            // 黑体：win=c://windows//fonts//SIMHEI.TTF , linux=/usr/share/fonts/simsun.ttc
+            String ttf = "c://windows//fonts//SIMHEI.TTF";
+            BaseFont bfComic = BaseFont.createFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             int i = 0;
             java.util.Iterator<String> it = form.getFields().keySet().iterator();
 
             while (it.hasNext()) {
                 String name = it.next().toString();
-                System.out.println(name);
                 // 设置支持中文
                 form.setFieldProperty(name, "textfont", bf, null);
+                //form.setFieldProperty(name, "textfont", bfComic, null);
                 switch (name)
                 {
                     case "flightNo":

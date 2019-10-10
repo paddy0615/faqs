@@ -40,9 +40,10 @@ public class ConnectionSqlService {
         return ordersID;
     }
 
-    public static List searchFlightIRRList(String pnr,String fltNo){
+    public static List searchFlightIRRList(String pnr,String fltNo,String monitoringDate1){
         List irrList = new ArrayList();
         String ordersID = "";
+        String  sql = "";
         try {
             if ((pnr != null) && (pnr.length() != 0)) {
                 ordersID = getJobID(pnr);
@@ -50,12 +51,19 @@ public class ConnectionSqlService {
                     ordersID = ordersID.substring(0, ordersID.length() - 1);
                 }
             }
-            if ((ordersID != null) && (ordersID.length() != 0)) {
-                String  sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt," +
-                        "departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer " +
-                        " from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'" +
-                        " ORDER BY createdDate DESC LIMIT 1";
-                if (!sql.equals("")) {
+            sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt," +
+                    "departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer " +
+                    " from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'" +
+                    " ORDER BY createdDate DESC LIMIT 1";
+            irrList = getList(sql);
+            if(irrList.size()==0){
+                if ((fltNo != null) && (fltNo.length() != 0) && (monitoringDate1 != null) && (monitoringDate1.length() != 0)) {
+                    String d1 = monitoringDate1 + " 00:00";
+                    String d2 = monitoringDate1 + " 23:59";
+                    sql = "select jobID,irrCategory,irrNature as template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt,departureDate," +
+                            "arrivalDate,newDepartureDate,newArrivalDate,match_Time as createdDate " +
+                            " from flightirr_dc_paired where flightNo='UO" + fltNo + "' and departureDate between '" + d1 + "' and '" + d2 + "' and status=1 " +
+                            " ORDER BY match_Time DESC LIMIT 1";
                     irrList = getList(sql);
                 }
             }

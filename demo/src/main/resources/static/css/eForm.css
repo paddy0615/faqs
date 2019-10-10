@@ -172,6 +172,11 @@ body{
     top: 32px !important;
     right: 12px !important;
 }
+.GuestName-firstname .form-control-feedback{
+    top: 32px !important;
+    right: 10px !important;
+}
+
 
 /** tu biao**/
 @media (min-width: 768px){

@@ -168,7 +168,10 @@ public class UrlController {
      * @return
      */
     @RequestMapping("/ReconfirmFlight")
-    public String eForm6(){return "faqs/eForm6";}
+    public String eForm6(){
+        // "faqs/eForm6"
+        return "";
+    }
 
     /**
      * Typhoon Move Flight 台风移动飞行

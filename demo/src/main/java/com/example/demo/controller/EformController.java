@@ -254,7 +254,7 @@ public class EformController {
 
                     // 如何e_certificate_type =1 or =4 ,邮件方式不一样
                     if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-                        List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno());
+                        List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno(),eform.getDeparturedate());
                         if(list.size() == 0){
                             module.setCode(404);
                             return module;
@@ -267,9 +267,9 @@ public class EformController {
                                 return module;
                             }
                         }else{
-                            if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) ||
-                               !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) ||
-                               !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) ||
+                            if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
+                               !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
+                               !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) &&
                                !"schedule is TBA".equalsIgnoreCase(commomClass.getTemplate())){
                                 module.setCode(404);
                                 return module;
@@ -282,7 +282,6 @@ public class EformController {
                             e_flie += s+",";
                         }
                         e_flie = e_flie.substring(0,e_flie.length()-1);
-                        System.out.println("e_flie="+e_flie);
                         eform.setFlie(e_flie);
                         eformService.updateEformFlie(eform.getId(),e_flie);
                         valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
