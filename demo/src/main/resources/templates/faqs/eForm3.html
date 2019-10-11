@@ -199,6 +199,9 @@
                             <element ng-if="data.code == 500">
                                 {{'error1'|translate}}
                             </element>
+                            <element ng-if="data.code == 405">
+                                {{'lab85'|translate}}
+                            </element>
                             <div style="clear: both;"></div>
                             <button class="btn btn-default eFormError-submit" type="submit" ng-click="getEformContent()">{{'lab21'|translate}}</button>
                             <div style="clear: both;"></div>

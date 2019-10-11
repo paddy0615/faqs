@@ -173,11 +173,11 @@ public class EformService {
     public String getMailType1(Eform eform,String crm_uid) throws Exception {
         E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
         Language language =  languageDao.findById((long)eform.getLangId());
-        String s = "Smart Form/";
+        String s = "Smart Form";
         if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-            s += "（completed）/";
+            s += "（completed）";
         }
-        s += language.getTitle()+"/"+e_form_type.getEn()+"/"+getCertificateTitle(eform.getEcertificatetype());
+        s += "/"+language.getTitle()+"/"+e_form_type.getEn()+"/"+getCertificateTitle(eform.getEcertificatetype());
         if(null != eform.getPnr()){
             s += "/"+eform.getPnr();
         }

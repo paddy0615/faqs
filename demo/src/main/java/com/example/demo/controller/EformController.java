@@ -224,7 +224,7 @@ public class EformController {
                 String [] lastnameArr = eform.getLastname().split(",");
                 if(null != eform.getPnr()){
                     state = "0";
-                /*    for (int i = 0;i<firstnameArr.length;i++){
+                    for (int i = 0;i<firstnameArr.length;i++){
                         if(firstnameArr[i] == "" || lastnameArr[i] == ""){
                             module.setCode(404);
                             return module;
@@ -239,7 +239,7 @@ public class EformController {
                             module.setCode(404);
                             return module;
                         }
-                    }*/
+                    }
                 }
 
                 // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
@@ -261,6 +261,11 @@ public class EformController {
                         }
                         // 对应类型。
                         CommomClass commomClass = (CommomClass) list.get(0);
+                        // TBA ,IRR待定信息
+                        if(commomClass.getTemplate()!=null && commomClass.getTemplate().contains("is TBA")){
+                            module.setCode(405);
+                            return module;
+                        }
                         if(eform.getEcertificatetype() == 1){
                             if(!"Rescheduled Flights".equalsIgnoreCase(commomClass.getTemplate())){
                                 module.setCode(404);
