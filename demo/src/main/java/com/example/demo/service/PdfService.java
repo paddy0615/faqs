@@ -77,8 +77,8 @@ public class PdfService {
             BaseFont bf = BaseFont.createFont("STSong-Light", "UniGB-UCS2-H",
                     BaseFont.NOT_EMBEDDED);
             // 黑体：win=c://windows//fonts//SIMHEI.TTF , linux=/usr/share/fonts/simsun.ttc
-            String ttf = "c://windows//fonts//SIMHEI.TTF";
-            BaseFont bfComic = BaseFont.createFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            //String ttf = "c://windows//fonts//SIMHEI.TTF";
+            //BaseFont bfComic = BaseFont.createFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
             int i = 0;
             java.util.Iterator<String> it = form.getFields().keySet().iterator();
 
