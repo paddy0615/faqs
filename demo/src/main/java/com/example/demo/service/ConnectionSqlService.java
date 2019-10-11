@@ -49,13 +49,14 @@ public class ConnectionSqlService {
                 ordersID = getJobID(pnr);
                 if ((ordersID != null) && (ordersID.length() != 0)) {
                     ordersID = ordersID.substring(0, ordersID.length() - 1);
+                    sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt," +
+                            "departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer " +
+                            " from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'" +
+                            " ORDER BY createdDate DESC LIMIT 1";
+                    irrList = getList(sql);
                 }
             }
-            sql = "select jobID,irrCategory,template,reasons,flightNo,newFlightNo,departingFrom,arrivingAt," +
-                    "departureDate,arrivalDate,newDepartureDate,newArrivalDate,createdDate,protectionoffer " +
-                    " from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'" +
-                    " ORDER BY createdDate DESC LIMIT 1";
-            irrList = getList(sql);
+
             if(irrList.size()==0){
                 if ((fltNo != null) && (fltNo.length() != 0) && (monitoringDate1 != null) && (monitoringDate1.length() != 0)) {
                     String d1 = monitoringDate1 + " 00:00";
