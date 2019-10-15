@@ -186,6 +186,7 @@ public class EformController {
                    valueMapUser.put("random",eform.getRandom());
                    eformService.sendSimpleMailUser(valueMapUser);
                    // 返回成功码
+                   eformService.updateEformStatus(eform.getId(),1);
                    module.putData("key",eform.getRandom());
                }else{
                    module.setCode(404);
@@ -283,7 +284,7 @@ public class EformController {
                         // 填充pdf-一个旅客对应一个个PDF
                         String e_flie = "";
                         for (int i = 0;i<firstnameArr.length;i++){
-                            String s = pdfService.fillTemplate(eform,firstnameArr.length,i+1,firstnameArr[i]+" "+lastnameArr[i],commomClass);
+                            String s = pdfService.fillTemplate(eform,firstnameArr[i],lastnameArr[i],commomClass);
                             e_flie += s+",";
                         }
                         e_flie = e_flie.substring(0,e_flie.length()-1);
@@ -318,12 +319,13 @@ public class EformController {
                     eformService.sendSimpleMailUser(valueMapUser);
 
                     // 返回成功码
+                    eformService.updateEformStatus(eform.getId(),1);
                     module.putData("key",eform.getRandom());
                 }else{
                     module.setCode(404);
                 }
             }catch (Exception e){
-                logger.error("-----------/E/add-----------"+e,eform);
+                logger.error("-----------/E/add3-----------"+e,eform);
                 module.setCode(500);
             }
         }

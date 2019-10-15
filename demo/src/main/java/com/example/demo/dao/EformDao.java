@@ -22,4 +22,9 @@ public interface EformDao extends JpaRepository<Eform,Long> {
     @Query("update Eform e set e.flie = :flie where e.id = :id")
     void updateEformFlie(@Param("id")long id,@Param("flie")String flie);
 
+    @Modifying
+    @Query("update Eform e set e.status = :status where e.id = :id")
+    void updateEformStatus(@Param("id")long id,@Param("status")long status);
+
+
 }

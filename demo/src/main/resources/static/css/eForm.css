@@ -293,7 +293,7 @@ body{
     border-radius: 30px;
 }
 .eFormError-submit{
-    float: left;
+    float: right;
     background-color: #0073be;
     color: white;
     padding: 10px 50px;

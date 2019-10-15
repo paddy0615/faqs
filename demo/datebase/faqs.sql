@@ -485,3 +485,16 @@ INSERT  INTO `e_pdf_area`(`epa_key`,`epa_title_hk`,`epa_title_en`)VALUES
 ('SPN','塞班','Saipan'),
 ('DAD','峴港','Da Nang'),
 ('CXR','芽莊','Nha Trang');
+
+-- 2019/10/14
+-- 修改e_form 字段长
+ALTER TABLE e_form MODIFY e_flie TEXT;
+ALTER TABLE e_form MODIFY e_first_name TEXT;
+ALTER TABLE e_form MODIFY e_last_name TEXT;
+ALTER TABLE e_form_result MODIFY er_result TEXT;
+ALTER TABLE e_form_result MODIFY er_result_xml TEXT;
+-- 添加eform状态（1为成功）
+ALTER TABLE e_form ADD e_status INT DEFAULT 0 COMMENT 'eform状态（1为成功）';
+UPDATE e_form SET e_status = 1 WHERE e_type != 3;
+UPDATE e_form SET e_status = 1 WHERE e_type = 3 AND e_certificate_type NOT IN (1,4);
+UPDATE e_form SET e_status = 1 WHERE e_flie IS NOT NULL;

@@ -28,7 +28,7 @@ public interface EformEntityDao extends JpaRepository<EformEntity,Long> {
             " l.lang_title as langa_title," +
             " t.et_title_en as type_title" +
             " FROM e_form e,faqs_language l,e_form_type t"+
-            " WHERE e.e_lang_id = l.lang_id and e.e_type = t.et_id"+
+            " WHERE e.e_lang_id = l.lang_id and e.e_type = t.et_id and e_status = 1"+
             " AND if(:langId > 0,e.e_lang_id = :langId,1=1)"+
             " AND if(:type > 0,e.e_type = :type,1=1)"+
             " AND if(:startTime != '',e.e_updatedate > :startTime,1=1)"+
@@ -37,7 +37,7 @@ public interface EformEntityDao extends JpaRepository<EformEntity,Long> {
             " ORDER BY e.e_updatedate DESC"
             ,countQuery="SELECT COUNT(*)" +
             " FROM e_form e,faqs_language l,e_form_type t"+
-            " WHERE e.e_lang_id = l.lang_id and e.e_type = t.et_id"+
+            " WHERE e.e_lang_id = l.lang_id and e.e_type = t.et_id and e_status = 1"+
             " AND if(:langId > 0,e.e_lang_id = :langId,1=1)"+
             " AND if(:type > 0,e.e_type = :type,1=1)"+
             " AND if(:startTime != '',e.e_updatedate > :startTime,1=1)"+

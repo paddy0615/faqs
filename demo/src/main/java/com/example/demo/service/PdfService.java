@@ -36,7 +36,7 @@ public class PdfService {
     E_pdf_areaDao e_pdf_areaDao;
 
     // 利用模板生成pdf
-    public String fillTemplate(Eform eform,int flieCount,int flieInt,String guestName, CommomClass commomClass) {
+    public String fillTemplate(Eform eform,String firstnameArr,String lastnameArr, CommomClass commomClass) {
         try {
             String eFormpath = path+"/eForm/";
             // 模板路径
@@ -55,15 +55,12 @@ public class PdfService {
             if(!targetfile2.exists()) {
                 targetfile2.mkdirs();
             }
+            // 附件名称
             String certificateType = "/Flight Delay Certificate";
             if(eform.getEcertificatetype() == 4){
                 certificateType = "/Flight Cancel Certificate";
             }
-            if(flieCount > 1){
-                certificateType += flieInt+".pdf";
-            }else{
-                certificateType += ".pdf";
-            }
+            certificateType +="-"+lastnameArr+" "+firstnameArr+".pdf";
             String newPDFPath = filePath2+certificateType;
             PdfReader reader;
             FileOutputStream out;
@@ -111,7 +108,7 @@ public class PdfService {
                         form.setField(name, area2.getHk()+"\n"+ area2.getEn());
                         break;
                     case "guestName":
-                        form.setField(name, guestName);
+                        form.setField(name, firstnameArr+" "+lastnameArr);
                         break;
                     case "departureDateTime":
                         String departureDateTime = commomClass.getDepartureDate()+" "+commomClass.getDepartureTime();
@@ -161,7 +158,7 @@ public class PdfService {
             copy.addPage(importPage);
             doc.close();
             String flieUrl = newPDFPath.substring(newPDFPath.indexOf("eForm"));
-            System.out.println("pdf路径="+ flieUrl);
+            logger.info("pdf路径="+ flieUrl);
             return flieUrl;
         } catch (IOException e) {
             System.out.println(e);

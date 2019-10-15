@@ -113,6 +113,17 @@ public class Eform implements Serializable {
     @Column(name = "e_flight_departuredate")
     private String departuredate;
 
+    @Column(name = "e_status",columnDefinition="long default 0")
+    private Long status = (long)0;
+
+
+    public Long getStatus() {
+        return status;
+    }
+
+    public void setStatus(Long status) {
+        this.status = status;
+    }
 
     public String getFlightno() {
         return flightno;

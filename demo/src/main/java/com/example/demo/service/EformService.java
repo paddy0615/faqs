@@ -95,6 +95,14 @@ public class EformService {
         eformDao.updateEformFlie(id,flie);
     }
 
+    /**
+     * updateEformStatus
+     */
+    @Transactional
+    public void updateEformStatus(long id,long status){
+        eformDao.updateEformStatus(id,status);
+    }
+
 
     /**
      * 添加eform
