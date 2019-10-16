@@ -188,6 +188,7 @@ public class EformController {
                    // 返回成功码
                    eformService.updateEformStatus(eform.getId(),1);
                    module.putData("key",eform.getRandom());
+                   module.putData("email",eform.getEmail());
                }else{
                    module.setCode(404);
                }
@@ -321,6 +322,7 @@ public class EformController {
                     // 返回成功码
                     eformService.updateEformStatus(eform.getId(),1);
                     module.putData("key",eform.getRandom());
+                    module.putData("email",eform.getEmail());
                 }else{
                     module.setCode(404);
                 }

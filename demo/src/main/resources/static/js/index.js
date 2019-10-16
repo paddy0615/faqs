@@ -1200,3 +1200,162 @@ myapp.controller("testChatbotController",["$scope","$http","$location","$transla
 
 
 }]);
+
+
+// testChatbot_infosunController
+myapp.controller("testChatbot_infosunController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+    // 设置默认,langId==6语言，英文;catId = 0默认选第二个
+    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    gaixialatu($scope.langId);
+    $translate.use($scope.langId.toString());
+    $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
+    $scope.lang_cout = 5;
+    $scope.isGetUrl = false;
+    $scope.cat_title = "";
+    //indexShow 显示
+    $scope.indexShow = true;
+    $scope.searchShow = false;
+    // 初始化
+    into($scope.langId,$scope.catId);
+    function into(langID,catId){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getIndex",
+            params:{"langId": langID,"catId" : catId}
+        }).success(function (data) {
+            $scope.isGetUrl = true;
+            if(data){
+                /* 成功*/
+                $scope.result = data.result;
+                $scope.langId = data.result.langId;
+                $scope.selectTest = selectTest($scope.langId);
+                $scope.selectTestUnll = selectTestUnll($scope.langId);
+                $scope.hotspotTest = hotspotTest($scope.langId);
+                angular.forEach($scope.result.languages,function (each) {
+                    if($scope.langId == each.id){
+                        $scope.problem = each.problem;
+                        return;
+                    }
+                })
+                angular.forEach(data.result.categories,function (each) {
+                    if(catId == each.id){
+                        $scope.cat_title = each.title;
+                        return;
+                    }
+                })
+                $scope.lang_cout = data.result.categories.length;
+                if($scope.cat_title == ""){
+                    $scope.cat_title = data.result.categories[1].title;
+                }
+            }else{
+                /* 失败*/
+                layer.alert( 'Abnormal error, please contact the administrator.', {
+                    skin: 'layui-layer-lan'
+                    ,closeBtn: 0
+                });
+            }
+        })
+    }
+    // 改导航宽
+    $scope.completeRepeat= function(){
+        if($scope.lang_cout > 5 ){
+            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+        }
+    }
+    // 语言事件
+    $scope.clickLanguage = function() {
+        if($scope.isGetUrl){
+            var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0;
+            clicked(url);
+        }
+        // 强制更新  $scope.apply();
+    }
+
+    // 类别事件,idnex当前下标，id:类别ID
+    $scope.clickCategory = function (idnex,cat) {
+        if(idnex==0){
+            getHKE($scope.langId);
+        }else{
+            if($scope.isGetUrl){
+                var url = ctx + "appPage/testChatbot?langId="+cat.langId+"&catId="+cat.id;
+                clicked(url);
+            }
+        }
+    }
+
+    /* 搜索框 开始*/
+    $scope.checkSearchTags = function(){
+        $http({
+            method : "post",
+            url : ctx + "appJson/checkSearchTags",
+            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+        }).success(function (data) {
+        })
+    }
+    $scope.getSearchTags = function(){
+        $http({
+            method : "post",
+            url : ctx + "appJson/getSearchTags",
+            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+        }).success(function (data) {
+            $scope.searchShow = true;
+            $scope.indexShow = false;
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+    $scope.searchTest = "";
+    $scope.getSearch = function (){
+        if($scope.searchTest == ""){
+            $scope.detaileds =  {};
+            return;
+        };
+        $scope.checkSearchTags();
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0+"&q="+q;
+        clicked(encodeURI(url));
+    }
+    $scope.onKeyup = function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            $scope.getSearch();
+        }
+    }
+    var sq = $location.search().q;
+    if(undefined != sq && "" != sq){
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTags();
+    }
+    /* 搜索框 结束*/
+
+
+    function info1(){
+        // 热点数
+        /*  $http({
+              method : 'post',
+              url : ctx + "appJson/getHotspot",
+              params:{"langId": $scope.langId}
+          }).success(function (data) {
+              if(data){
+                  $scope.hotspots = data.result.detaileds;
+              }
+          })*/
+        // 获取Eform
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getEform",
+        }).success(function (data) {
+            $scope.eFormTypes = data;
+        })
+
+    }
+    // 热点初始化
+    info1();
+
+    // 跳转E-form
+    $scope.getEform = function(id){
+        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
+        window.open(url);
+    }
+
+
+}]);

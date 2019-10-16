@@ -35,6 +35,9 @@ public class UrlController {
     @RequestMapping("/testChatbot")
     public String testChatbot(){return "faqs/testChatbot";}
 
+    @RequestMapping("/testChatbot_infosun")
+    public String testChatbot_infosun(){return "faqs/testChatbot_infosun";}
+
     @RequestMapping("/indexDetailed")
     public String indexDetailed(){return "faqs/indexDetailed";}
 

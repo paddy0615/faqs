@@ -220,12 +220,18 @@
                             {{'lab19'|translate}}
                         </p>
                         <div style="padding: 10px;">
-                            <element ng-if="data.code == 404">
-                                {{'lab20'|translate}}
-                            </element>
-                            <element ng-if="data.code == 500">
-                                {{'error1'|translate}}
-                            </element>
+                            <div style="margin: 0 auto;width: 50%;margin-top: 50px;color: black;">
+                                <p style="font-size: 18px;color: #9960a7">{{'lab87'|translate}}</p>
+                                <element ng-if="data.code == 404">
+                                    {{'lab20'|translate}}
+                                </element>
+                                <element ng-if="data.code == 500">
+                                    {{'error1'|translate}}
+                                </element>
+                                <element ng-if="data.code == 405">
+                                    {{'lab85'|translate}}<br>{{'lab86'|translate}}
+                                </element>
+                            </div>
                             <div style="clear: both;"></div>
                             <button class="btn btn-default eFormError-submit" type="submit"  ng-click="getEformContent()">{{'lab21'|translate}}</button>
                             <div style="clear: both;"></div>
@@ -240,12 +246,15 @@
                         </p>
                         <div style="padding: 10px;">
                             <div class="form-group confirmation-test">
-                                <div>{{'lab23'|translate}}
-                                </div>
-                                <div style="margin: 20px 0px;">{{'lab24'|translate}}</div>
-                                <p class="list-group-item active ng-binding eFormSuccess-p">
+                                <div style="margin: 20px 0px;">{{'lab84'|translate}}</div>
+                                <p class="list-group-item active ng-binding  eFormSuccess-p" >
                                     E-IN-{{data.result["key"]}}
                                 </p>
+                                <div class="success-div-test" style="text-align: left;margin: 0 20%;margin-top: 50px;">
+                                    {{'lab88'|translate}}<br>
+                                    {{'lab89'|translate}}{{data.result["email"]}}<br><br>
+                                    {{'lab90'|translate}}
+                                </div>
                             </div>
 
                             <div style="clear: both;"></div>

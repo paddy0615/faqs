@@ -18,6 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
@@ -45,6 +48,9 @@ public class DetailedController {
     IpUtil ipUtil;
     @Resource
     E_form_typeDao e_form_typeDao;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -129,7 +135,45 @@ public class DetailedController {
             s = "";
         }
         detaileds = detailedService.getSearchTags(langId,s,searchs);
-        module.setCode(200);
+        // 匹配标题和内容
+        String ids = "";
+        String hsql = "";
+        for (DetailedEntity e:detaileds) {
+            ids += e.getId()+",";
+        }
+        if(ids.length() > 0){
+            ids = ids.substring(0,ids.length()-1);
+        }
+        for(int i=0;i<searchs.size();i++){
+            String s1 = searchs.get(i);
+            if(!"".equals(s1)){
+                hsql += "d.dl_title LIKE '%"+searchs.get(i)+"%' OR d.dl_contenttxt LIKE '%"+searchs.get(i)+"%'";
+                if(i != searchs.size()-1){
+                    hsql += " or ";
+                }
+            }
+        }
+        String hsql_new = "SELECT d.dl_id,d.dl_title,d.dl_status FROM  faqs_detailed d WHERE 1=1";
+        if(ids != ""){
+            hsql_new += " AND d.dl_id NOT IN ("+ids+")";
+        }
+        if(s != ""){
+            hsql_new += " AND d.dl_status in ("+s+")";
+        }else{
+            hsql_new += " AND d.dl_status > 0";
+        }
+        if(hsql != ""){
+            hsql_new += " AND ("+hsql+")";
+        }
+        System.out.println("s="+s);
+        System.out.println("hsql_new="+hsql_new);
+        Query dataQuery = entityManager.createNativeQuery(hsql_new,DetailedEntity.class);
+        List<DetailedEntity> detaileds1  = dataQuery.getResultList();
+        System.out.println(detaileds1.size());
+        //detaileds.addAll(detaileds1);
+
+
+
         module.putData("detaileds",detaileds);
         return module;
     }
