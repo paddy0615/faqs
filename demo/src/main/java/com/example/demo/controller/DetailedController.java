@@ -135,7 +135,7 @@ public class DetailedController {
             s = "";
         }
         detaileds = detailedService.getSearchTags(langId,s,searchs);
-        // 匹配标题和内容
+       /* // 匹配标题和内容
         String ids = "";
         String hsql = "";
         for (DetailedEntity e:detaileds) {
@@ -169,7 +169,7 @@ public class DetailedController {
         System.out.println("hsql_new="+hsql_new);
         Query dataQuery = entityManager.createNativeQuery(hsql_new,DetailedEntity.class);
         List<DetailedEntity> detaileds1  = dataQuery.getResultList();
-        System.out.println(detaileds1.size());
+        System.out.println(detaileds1.size());*/
         //detaileds.addAll(detaileds1);
 
 
