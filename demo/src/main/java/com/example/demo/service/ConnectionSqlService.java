@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.bean.E_form_result;
 import com.example.demo.entity.CommomClass;
 import com.example.demo.util.ConnectionSqlUtil;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,8 @@ public class ConnectionSqlService {
         return ordersID;
     }
 
-    public static List searchFlightIRRList(String pnr,String fltNo,String monitoringDate1){
+    public static List searchFlightIRRList(String pnr, String fltNo, String monitoringDate1, E_form_result result){
+        String result_txt = "irr不存在";
         List irrList = new ArrayList();
         String ordersID = "";
         String  sql = "";
@@ -54,10 +56,12 @@ public class ConnectionSqlService {
                             " from flightirr_sendingorders where ID in (" + ordersID + ") and status=1 and flightNo='UO" + fltNo + "'" +
                             " ORDER BY createdDate DESC LIMIT 1";
                     irrList = getList(sql);
+                    result_txt = "irr存在"+irrList.size()+"pnr="+pnr;
+                    System.out.println(result_txt);
                 }
             }
 
-            if(irrList.size()==0){
+           /* if(irrList.size()==0){
                 if ((fltNo != null) && (fltNo.length() != 0) && (monitoringDate1 != null) && (monitoringDate1.length() != 0)) {
                     String d1 = monitoringDate1 + " 00:00";
                     String d2 = monitoringDate1 + " 23:59";
@@ -66,9 +70,11 @@ public class ConnectionSqlService {
                             " from flightirr_dc_paired where flightNo='UO" + fltNo + "' and departureDate between '" + d1 + "' and '" + d2 + "' and status=1 " +
                             " ORDER BY match_Time DESC LIMIT 1";
                     irrList = getList(sql);
+                    result_txt = "irr存在"+irrList.size()+"fltNo="+fltNo+"&monitoringDate1="+monitoringDate1;
+                    System.out.println(result_txt);
                 }
-            }
-
+            }*/
+            result.setResultxml(result.getResultxml()+","+result_txt);
         }catch (Exception e){
             System.out.println(e.toString());
         }

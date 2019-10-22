@@ -256,7 +256,8 @@ public class EformController {
 
                     // 如何e_certificate_type =1 or =4 ,邮件方式不一样
                     if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-                        List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno(),eform.getDeparturedate());
+                        List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno(),eform.getDeparturedate(),result);
+                        eformService.updateResultXml(result);
                         if(list.size() == 0){
                             module.setCode(404);
                             return module;

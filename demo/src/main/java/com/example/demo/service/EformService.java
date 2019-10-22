@@ -132,6 +132,15 @@ public class EformService {
     }
 
     /**
+     * updateResultXml
+     * @param e
+     */
+    @Transactional
+    public void updateResultXml(E_form_result e){
+        e_form_resultDao.updateResultXml(e.getId(),e.getResultxml());
+    }
+
+    /**
      * 获取Language
      */
     public Language getLanguage(long i) throws Exception {
