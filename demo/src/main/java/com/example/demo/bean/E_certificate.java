@@ -24,6 +24,12 @@ public class E_certificate implements Serializable {
     @Column(name = "ec_title_cn")
     private String cn;
 
+    @Column(name = "ec_title_jp")
+    private String jp;
+
+    @Column(name = "ec_title_kr")
+    private String kr;
+
     @Column(name = "ec_title_en")
     private String en;
 
@@ -58,5 +64,21 @@ public class E_certificate implements Serializable {
 
     public void setEn(String en) {
         this.en = en;
+    }
+
+    public String getJp() {
+        return jp;
+    }
+
+    public void setJp(String jp) {
+        this.jp = jp;
+    }
+
+    public String getKr() {
+        return kr;
+    }
+
+    public void setKr(String kr) {
+        this.kr = kr;
     }
 }

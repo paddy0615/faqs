@@ -9,6 +9,17 @@ web:
   upload-path: C:/faqsonic/faq
 
 spring:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-name: elasticsearch
+      cluster-nodes: 127.0.0.1:9300
+      properties:
+        path:
+          logs: ./elasticsearch/log
+          data: ./elasticsearch/data
+      local: true
   # 多个springboot项目部署,需加
   jmx:
     enabled: false

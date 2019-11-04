@@ -68,10 +68,13 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             " AND m_dl_id != :dlId" +
             " GROUP BY m_dl_id,m_dl_id_father" +
             " ORDER BY COUNT(1) DESC,m_createdate DESC " +
-            " LIMIT 0,5" +
+          /*  " LIMIT 0,5" +*/
             " ) a" +
-            " ON a.m_dl_id = d.dl_id",nativeQuery = true)
-    List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId);
+            " ON a.m_dl_id = d.dl_id"+
+            " WHERE d.dl_lang_id = :langId"+
+            " LIMIT 0,5"
+            ,nativeQuery = true)
+    List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId,@Param("langId") long langId);
 
 
     @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status\n" +

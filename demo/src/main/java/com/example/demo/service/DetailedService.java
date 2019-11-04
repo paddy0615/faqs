@@ -396,8 +396,8 @@ public class DetailedService {
      * 按父级,语言查询所有
      * @return
      */
-    public List<DetailedEntity> getSmartGuide(long id){
-        return detailedEntityDao.getSmartGuide(id);
+    public List<DetailedEntity> getSmartGuide(long id,long langId){
+        return detailedEntityDao.getSmartGuide(id,langId);
     }
 
 
@@ -408,6 +408,14 @@ public class DetailedService {
      */
     public String getIndexDetailedNew(long dlId,long langId){
         return detailedDao.getIndexDetailedNew(dlId,langId);
+    }
+
+    /**
+     * 模糊搜索-不用语言3
+     * @return
+     */
+    public List<Detailed> getByAllDetaileds(String t){
+        return detailedDao.getByAllDetaileds(t);
     }
 
 }

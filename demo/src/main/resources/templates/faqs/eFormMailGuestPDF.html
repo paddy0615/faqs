@@ -33,6 +33,37 @@
         </div>
     </div>
 </div>
+<div th:if="${langId == 4}">
+    <span>お客様へ</span>
+    <div class="row" style="margin-bottom: 35px;">
+        <p>香港エクスプレスをいつもご利用いただきまして、誠にありがとうございます。</p>
+        <p>申請番号 <span th:text="${random}"></span>の証明書がご用意できましたので、添付でお送りいたします。何かご不明な点がございましたら、遠慮なくお知らせください。</p>
+        <p>また、FAQページもご参照ください。<br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=4" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=4</a></p>
+        <P>香港エクスプレス　コールセンター</P>
+        <div>
+            <p style="height: 8px;">電話：<span style="color: blue;text-decoration:underline;">03-4510-2319</span>（日本語対応）</p>
+            <p style="height: 8px;">メールアドレス: <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">公式サイト : <span style="color: blue;text-decoration:underline;">www.hkexpress.com/ja</span></p>
+        </div>
+    </div>
+</div>
+<div th:if="${langId == 5}">
+    <span>Dear Guest,</span>
+    <div class="row" style="margin-bottom: 35px;">
+        <p>Thank you for choosing HK Express.</p>
+        <p>Please see attached flight certificate for your application <span th:text="${random}"></span>.</p>
+        <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>
+        <p>You can also browse our FAQs for more information:<br><a href="https://www.livedemo.net/hkexpress/appPage/index" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index</a></p>
+        <div>
+            <p style="height: 8px;">Yours sincerely,</p>
+            <p style="height: 8px;">Guest Relations</p>
+            <p style="height: 8px;">HK Express</p>
+            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
+        </div>
+    </div>
+</div>
 <div th:if="${langId == 6}">
     <span>Dear Guest,</span>
     <div class="row" style="margin-bottom: 35px;">

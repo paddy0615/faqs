@@ -498,3 +498,22 @@ ALTER TABLE e_form ADD e_status INT DEFAULT 0 COMMENT 'eform状态（1为成功�
 UPDATE e_form SET e_status = 1 WHERE e_type != 3;
 UPDATE e_form SET e_status = 1 WHERE e_type = 3 AND e_certificate_type NOT IN (1,4);
 UPDATE e_form SET e_status = 1 WHERE e_flie IS NOT NULL;
+
+
+-- 跟改语言文字
+-- e_certificate 证书类别
+DROP TABLE IF EXISTS `e_certificate`;
+CREATE TABLE `e_certificate` (
+ `ec_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `ec_title_hk` VARCHAR(200) NULL COMMENT '繁体-名',
+ `ec_title_cn` VARCHAR(200) NULL COMMENT '简体-名',
+ `ec_title_jp` VARCHAR(200) NULL COMMENT '日文-名',
+ `ec_title_kr` VARCHAR(200) NULL COMMENT '韩文-名',
+ `ec_title_en` VARCHAR(200) NULL COMMENT '英文-名',
+  PRIMARY KEY (`ec_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+INSERT  INTO `e_certificate`(`ec_title_hk`,`ec_title_cn`,`ec_title_jp`,`ec_title_kr`,`ec_title_en`)
+VALUES ('航班延誤證明','航班延误证明','遅延証明書','비행 지연 증명서','Flight Delay Certificate'),
+('搭乘航班證明','搭乘航班证明','旅行証明書','여행 서류','Travel Certificate'),
+('無搭乘航班證明','无搭乘航班证明','ノーショーの確認書','미탑승 확인 증명서','Confirmation Letter of No show'),
+('航班取消證明','航班取消证明','欠航証明書','항공편 취소 증명서','Flight Cancel Certificate');

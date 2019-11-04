@@ -83,6 +83,7 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
             "            WHERE d.dl_id IN(:ids)",nativeQuery = true)
     List<Detailed> getByIds(@Param("ids")List<String> ids);
 
-
+    @Query("select new Detailed(d.id,d.title,d.contentTxt) from Detailed d where d.langId <> 1   and (d.title like %:search%  or d.contentTxt like %:search%) and d.status = 1")
+    List<Detailed> getByAllDetaileds(@Param("search")String search);
 
 }

@@ -151,7 +151,7 @@
                             </div>
                             <div class="form-group ecertificatetype-class" style="width: 50%;">
                                 <label>{{'lab31'|translate}}: </label>
-                                <select ng-model="e.ecertificatetype" class="form-control" ng-options="a.id as langId==1?a.hk:(langId==2?a.cn:a.en) for a in e_certificates">
+                                <select ng-model="e.ecertificatetype" class="form-control" ng-options="a.id as langId==1?a.hk:(langId==2?a.cn:(langId==4?a.jp:(langId==5?a.kr:a.en))) for a in e_certificates">
                                 </select>
                             </div>
                             <div style="clear: both;"></div>

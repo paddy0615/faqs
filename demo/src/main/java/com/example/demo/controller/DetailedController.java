@@ -6,7 +6,9 @@ import com.example.demo.dao.DetailedDao;
 import com.example.demo.dao.E_form_typeDao;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.entity.DetailedEntity;
+import com.example.demo.entity.EsEntiy;
 import com.example.demo.service.DetailedService;
+import com.example.demo.service.EsService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +25,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /*
  * 前台-详情DetailedController
@@ -51,6 +54,9 @@ public class DetailedController {
 
     @PersistenceContext
     EntityManager entityManager;
+
+    @Resource
+    private EsService esService;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -129,49 +135,48 @@ public class DetailedController {
         RestResultModule module = new RestResultModule();
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
-        List<DetailedEntity> detaileds = null;
+        List<DetailedEntity> detaileds = new ArrayList<>();
+        DetailedEntity detailedEntity = null;
         String s = String.valueOf(status);
         if(status == 3 ){
             s = "";
         }
         detaileds = detailedService.getSearchTags(langId,s,searchs);
-       /* // 匹配标题和内容
-        String ids = "";
-        String hsql = "";
-        for (DetailedEntity e:detaileds) {
-            ids += e.getId()+",";
-        }
-        if(ids.length() > 0){
-            ids = ids.substring(0,ids.length()-1);
-        }
-        for(int i=0;i<searchs.size();i++){
-            String s1 = searchs.get(i);
-            if(!"".equals(s1)){
-                hsql += "d.dl_title LIKE '%"+searchs.get(i)+"%' OR d.dl_contenttxt LIKE '%"+searchs.get(i)+"%'";
-                if(i != searchs.size()-1){
-                    hsql += " or ";
-                }
-            }
-        }
-        String hsql_new = "SELECT d.dl_id,d.dl_title,d.dl_status FROM  faqs_detailed d WHERE 1=1";
-        if(ids != ""){
-            hsql_new += " AND d.dl_id NOT IN ("+ids+")";
-        }
-        if(s != ""){
-            hsql_new += " AND d.dl_status in ("+s+")";
-        }else{
-            hsql_new += " AND d.dl_status > 0";
-        }
-        if(hsql != ""){
-            hsql_new += " AND ("+hsql+")";
-        }
-        System.out.println("s="+s);
-        System.out.println("hsql_new="+hsql_new);
-        Query dataQuery = entityManager.createNativeQuery(hsql_new,DetailedEntity.class);
-        List<DetailedEntity> detaileds1  = dataQuery.getResultList();
-        System.out.println(detaileds1.size());*/
-        //detaileds.addAll(detaileds1);
 
+        Map<Long, String> map = detaileds.stream().collect(Collectors.toMap(DetailedEntity::getId, DetailedEntity::getTitle));
+
+        // 匹配标题和内容
+        detailedEntity = new DetailedEntity();
+        detailedEntity.setId((long)9999999);
+        detailedEntity.setTitle("----------------------------------------------------------------------------------以下是搜索引擎结果------------------------------------------------------------------------------------");
+        detailedEntity.setStatus(1);
+        detaileds.add(detailedEntity);
+
+        Page<EsEntiy> esEntiys = null;
+        try {
+            if(!"".equals(searchs)){
+                //detaileds = new ArrayList<>();
+                System.out.println("搜索="+search);
+                System.out.println("---------");
+                esEntiys = esService.querySearch(search);
+                //esEntiys = esService.querySearchType(search);
+
+                for (EsEntiy e:esEntiys) {
+                    if(map.containsKey(e.getId())){
+                        continue;
+                    }
+                    System.out.println(e);
+                    detailedEntity = new DetailedEntity();
+                    detailedEntity.setId(e.getId());
+                    detailedEntity.setTitle(e.getTitle());
+                    detailedEntity.setStatus(1);
+                    detaileds.add(detailedEntity);
+                }
+                System.out.println("---------");
+            }
+        }catch (Exception e){
+
+        }
 
 
         module.putData("detaileds",detaileds);
@@ -249,7 +254,8 @@ public class DetailedController {
         RestResultModule module = new RestResultModule();
         List<DetailedEntity> detaileds = null;
         if(dlId > 0){
-            detaileds = detailedService.getSmartGuide(dlId);
+            Detailed detailed = detailedDao.findById(dlId);
+            detaileds = detailedService.getSmartGuide(dlId,detailed.getLangId());
         }
         module.putData("detaileds",detaileds);
         return module;
@@ -412,4 +418,85 @@ public class DetailedController {
         return detaileds;
     }
 
+    @ResponseBody
+    @RequestMapping("/getByAllDetaileds")
+    public List<Detailed> getByAllDetaileds(
+            @RequestParam(name = "title",required = false,defaultValue = "")String title){
+        List<Detailed> detaileds = null;
+        if(!"".equals(title)){
+            detaileds = detailedService.getByAllDetaileds(title);
+        }
+        System.out.println(detaileds);
+        return detaileds;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/es/1")
+    public List<EsEntiy> esTest1() throws Exception{
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+        System.out.println("当前时间为: " + ft.format(dNow));
+        List<EsEntiy> list = null;
+        try{
+           System.out.println("开始ES");
+           EsEntiy esEntiy = null;
+           List<Detailed> detaileds = detailedDao.findAll();
+           System.out.println("原数据大小="+detaileds.size());
+           for (Detailed e:detaileds) {
+               esEntiy = new EsEntiy();
+               esEntiy.setId(e.getId());
+               esEntiy.setTitle(e.getTitle());
+               esEntiy.setContentTxt(e.getContentTxt());
+               esService.save(esEntiy);
+           }
+           System.out.println("结束ES");
+        }catch (Exception e){
+           System.out.println(e);
+        }
+
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/es/2")
+    public List<EsEntiy> esTest2() throws Exception{
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+        System.out.println("当前时间为: " + ft.format(dNow));
+        List<EsEntiy> list = null;
+        try{
+            System.out.println("开始ES");
+            list  = esService.findAll();
+            for (EsEntiy e:list) {
+                System.out.println(e);
+            }
+            System.out.println("结束ES");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/es/3")
+    public Page<EsEntiy> esTest3( @RequestParam(name = "title",required = false,defaultValue = "")String title) throws Exception{
+        Date dNow = new Date( );
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
+        System.out.println("当前时间为: " + ft.format(dNow));
+        Page<EsEntiy> list = null;
+        try{
+            System.out.println("开始ES");
+            list  = esService.querySearch(title);
+            for (EsEntiy e:list) {
+                System.out.println(e);
+            }
+            System.out.println("结束ES");
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return list;
+    }
+
 }
+
