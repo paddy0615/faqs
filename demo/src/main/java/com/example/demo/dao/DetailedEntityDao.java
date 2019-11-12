@@ -32,6 +32,27 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "ORDER BY COUNT(d.dl_id) DESC,d.dl_weights DESC,dlh_search_count DESC,d.dl_updatedate DESC", nativeQuery = true)
     List<DetailedEntity> getSearchTags(@Param("langId") long langId,@Param("status") String status,@Param("searchs")List<String> searchs);
 
+    /**
+     * 2019-11-06
+     * onChat API
+     * 同上搜索
+     * @return
+     */
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status\n" +
+            "FROM  faqs_detailed d\n" +
+            "INNER JOIN faqs_dtags_relation dr ON (dr.dr_dl_id = d.dl_id)\n" +
+            "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
+            "LEFT JOIN faqs_dl_hotspot ON (d.dl_id = dlh_dl_id)\n" +
+            "WHERE 1=1\n" +
+            "AND d.dl_lang_id = 2\n" +
+            "AND d.dl_status = 1\n" +
+            "AND dt.dt_title IN(:searchs)\n" +
+            "GROUP BY d.dl_id\n" +
+            "ORDER BY COUNT(d.dl_id) DESC,d.dl_weights DESC,dlh_search_count DESC,d.dl_updatedate DESC\n" +
+            "LIMIT 3", nativeQuery = true)
+    List<DetailedEntity> getOnChatList(@Param("searchs")List<String> searchs);
+
+
     @Query(value = "SELECT count(*) FROM (\n" +
             "SELECT d.dl_id,d.dl_title\n" +
             "FROM  faqs_detailed d\n" +

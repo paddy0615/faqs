@@ -10,14 +10,21 @@ import com.example.demo.entity.EsEntiy;
 import com.example.demo.service.DetailedService;
 import com.example.demo.service.EsService;
 import com.example.demo.util.IpUtil;
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -25,6 +32,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
@@ -146,36 +154,41 @@ public class DetailedController {
         Map<Long, String> map = detaileds.stream().collect(Collectors.toMap(DetailedEntity::getId, DetailedEntity::getTitle));
 
         // 匹配标题和内容
-        detailedEntity = new DetailedEntity();
+   /*     detailedEntity = new DetailedEntity();
         detailedEntity.setId((long)9999999);
         detailedEntity.setTitle("----------------------------------------------------------------------------------以下是搜索引擎结果------------------------------------------------------------------------------------");
         detailedEntity.setStatus(1);
-        detaileds.add(detailedEntity);
+        detaileds.add(detailedEntity);*/
 
         Page<EsEntiy> esEntiys = null;
         try {
             if(!"".equals(searchs)){
-                //detaileds = new ArrayList<>();
                 System.out.println("搜索="+search);
                 System.out.println("---------");
                 esEntiys = esService.querySearch(search);
-                //esEntiys = esService.querySearchType(search);
-
                 for (EsEntiy e:esEntiys) {
                     if(map.containsKey(e.getId())){
                         continue;
                     }
-                    System.out.println(e);
+                    if(e.getStatus() == 0){
+                        continue;
+                    }
                     detailedEntity = new DetailedEntity();
                     detailedEntity.setId(e.getId());
                     detailedEntity.setTitle(e.getTitle());
-                    detailedEntity.setStatus(1);
-                    detaileds.add(detailedEntity);
+                    detailedEntity.setStatus(e.getStatus());
+                    if(status == e.getStatus()){
+                        detaileds.add(detailedEntity);
+                    }else if(status == 3){
+                        detaileds.add(detailedEntity);
+                    }
+                    System.out.println(e);
+
                 }
                 System.out.println("---------");
             }
         }catch (Exception e){
-
+            System.out.println(e);
         }
 
 
@@ -448,6 +461,7 @@ public class DetailedController {
                esEntiy.setId(e.getId());
                esEntiy.setTitle(e.getTitle());
                esEntiy.setContentTxt(e.getContentTxt());
+               esEntiy.setStatus(e.getStatus());
                esService.save(esEntiy);
            }
            System.out.println("结束ES");
@@ -497,6 +511,81 @@ public class DetailedController {
         }
         return list;
     }
+
+
+    /**
+     * 2019-11-06
+     * onChat API
+     */
+    @ResponseBody
+    @RequestMapping(value = "/onChat/list")
+    public String onChatList( @RequestParam(name = "title",required = false,defaultValue = "")String title) throws Exception {
+        String html = "";
+        try{
+            String [] sarr = title.split(" ");
+            List<String> searchs = Arrays.asList(sarr);
+            if(title == "" ){
+                return "";
+            }
+            List<DetailedEntity> detaileds = detailedService.getOnChatList(searchs);
+            if(detaileds.size() > 0){
+                html +="<div><ul style='list-style: disc !important;'>";
+                for (DetailedEntity d:detaileds) {
+                    html +="<li style='margin-bottom: 10px;line-height: 30px;' onClick='onChatDetailed("+d.getId()+",\""+d.getTitle()+"\")'><a style='text-decoration: underline !important;' href='javascript:;'>"+d.getTitle()+"</a></li>";
+                }
+                html +="</ul></div>";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return html;
+    }
+
+    /**
+     * 2019-11-06
+     * onChat API
+     * onChatDetailed
+     */
+    @ResponseBody
+    @RequestMapping(value = "/onChat/detailed")
+    public String onChatDetailed( @RequestParam(name = "id",required = false,defaultValue = "0")long id) throws Exception {
+        String html = "";
+        try{
+            if(id > 0){
+                Detailed detailed = detailedDao.findById(id);
+                html +="<div>";
+                html += detailed.getContent();
+                html +="</div>";
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return html;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/onChat/test")
+    public String onChatTest() throws Exception {
+        System.out.println("onChattest 开始");
+        String html = "";
+        try{
+
+            String text="自古刀扇过背刺";
+            StringReader sr=new StringReader(text);
+          /*  IKSegmenter ik=new IKSegmenter(sr, true);
+            Lexeme lex=null;
+            while((lex=ik.next())!=null) {
+                System.out.print(lex.getLexemeText() + "|");
+            }*/
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        System.out.println("onChattest 结束");
+        return html;
+    }
+
+
 
 }
 

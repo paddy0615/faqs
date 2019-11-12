@@ -192,6 +192,9 @@ public class DetailedService {
     public List<DetailedEntity> getSearchTags(long langId,String status,List<String> srr){
         return detailedEntityDao.getSearchTags(langId,status,srr);
     }
+    public List<DetailedEntity> getOnChatList(List<String> srr){
+        return detailedEntityDao.getOnChatList(srr);
+    }
 
     public List<DetailedEntity> getDetailedInternal(long langId){
         return detailedEntityDao.getDetailedInternal(langId);

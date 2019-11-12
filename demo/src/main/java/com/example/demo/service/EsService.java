@@ -10,6 +10,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,11 +114,11 @@ public class EsService {
         DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
         QueryBuilder ikTypeQuery = QueryBuilders.matchQuery("title", content);
         QueryBuilder pinyinTypeQuery = QueryBuilders.matchQuery("title.pinyin", content);
-        QueryBuilder wildcardCodeQuery = QueryBuilders.wildcardQuery("title", content);
+        //QueryBuilder wildcardCodeQuery = QueryBuilders.wildcardQuery("title", content);
         /*QueryBuilder multiCodeQuery = QueryBuilders.multiMatchQuery(content,"title");*/
         disMaxQueryBuilder.add(ikTypeQuery);
         disMaxQueryBuilder.add(pinyinTypeQuery);
-        disMaxQueryBuilder.add(wildcardCodeQuery);
+        //disMaxQueryBuilder.add(wildcardCodeQuery);
        /* disMaxQueryBuilder.add(multiCodeQuery);*/
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(disMaxQueryBuilder).build();
@@ -124,82 +126,5 @@ public class EsService {
         return search;
     }
 
-    /**
-     * 高亮检索
-     * @param type
-     * @return
-     */
-    public AggregatedPage<EsEntiy> querySearchType(String type){
-        DisMaxQueryBuilder disMaxQueryBuilder = QueryBuilders.disMaxQuery();
-        QueryBuilder ikTypeQuery = QueryBuilders.matchQuery("title", type);
-        QueryBuilder pinyinTypeQuery = QueryBuilders.matchQuery("title.pinyin", type);
-        QueryBuilder wildcardCodeQuery = QueryBuilders.wildcardQuery("title", type);
-  /*      QueryBuilder ikTypeQuery1 = QueryBuilders.wildcardQuery("title", type).boost(2f);
-        QueryBuilder ikCodeQuery = QueryBuilders.wildcardQuery("title", type).boost(2f);*/
-        List<String> highlightFields = new ArrayList<String>();
-        highlightFields.add("title");
-        highlightFields.add("title");
-        HighlightBuilder.Field[] fields = new HighlightBuilder.Field[highlightFields.size()];
-        for (int x = 0; x < highlightFields.size(); x++) {
-            fields[x] = new HighlightBuilder.Field(highlightFields.get(x)).preTags(EsHighlight.HIGH_LIGHT_START_TAG)
-                    .postTags(EsHighlight.HIGH_LIGHT_END_TAG);
-        }
-        disMaxQueryBuilder.add(ikTypeQuery);
-        disMaxQueryBuilder.add(pinyinTypeQuery);
-        disMaxQueryBuilder.add(wildcardCodeQuery);
-     /*   disMaxQueryBuilder.add(ikTypeQuery1);
-        disMaxQueryBuilder.add(ikCodeQuery);*/
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(disMaxQueryBuilder)
-                .withHighlightFields(fields)
-                //.withPageable(PageRequest.of(1, 10))
-                .build();
-        //不需要高亮就直接分页返回
-        //Page<EsEntiy> esEntiys = esDao.search(searchQuery);
-        //高亮显示
-        AggregatedPage<EsEntiy> esEntiys = elasticsearchTemplate.queryForPage(searchQuery, EsEntiy.class, new SearchResultMapper() {
-            @Override
-            public <T> AggregatedPage<T> mapResults(SearchResponse searchResponse, Class<T> aClass, Pageable pageable) {
-                pageable = PageRequest.of(1, 10);
-                List<EsEntiy> chunk = new ArrayList<>();
-                for (SearchHit searchHit : searchResponse.getHits()) {
-                    if (searchResponse.getHits().getHits().length <= 0) {
-                        return null;
-                    }
-                    EsEntiy esEntiy = new EsEntiy();
-                    esEntiy.setId(Long.parseLong(searchHit.getId()));
-                    //esEntiy.setEsIndex(searchHit.getIndex());
-                    //name or memoe
-                    HighlightField code = searchHit.getHighlightFields().get("title");
-                    if (code != null) {
-                        esEntiy.setTitle(code.fragments()[0].toString());
-                    } else {
-                        Object esCode = searchHit.getSourceAsMap().get("title");
-                        if(esCode == null)
-                            esEntiy.setTitle("");
-                        else
-                            esEntiy.setTitle(esCode.toString());
-                    }
-                 /*   HighlightField type = searchHit.getHighlightFields().get("esType");
-                    if (type != null) {
-                        esEntiy.setEsType(type.fragments()[0].toString());
-                    }else {
-                        Object esType = searchHit.getSourceAsMap().get("esType");
-                        if(esType == null )
-                            esEntiy.setEsType("");
-                        else
-                            esEntiy.setEsType(esType.toString());
-                    }*/
-                    chunk.add(esEntiy);
-                }
-                if (chunk.size() > 0) {
-                    return  new AggregatedPageImpl<>((List<T>) chunk);
-                }
-                return null;
-            }
-        });
-
-        return esEntiys;
-    }
 }
 

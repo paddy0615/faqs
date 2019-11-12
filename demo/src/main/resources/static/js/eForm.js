@@ -1815,6 +1815,7 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
             $translate.use($scope.langId.toString());
             onlineChat($scope.langId);
             gaixialatu($scope.langId);
+            $scope.getUrlRefundIn();
         }
         // 强制更新  $scope.apply();
     }
@@ -1979,7 +1980,7 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
     /**
      * 跳转e-refund
      */
-    $scope.getUrlRefund = function () {
+    $scope.getUrlRefundIn = function () {
         var u = "https://securesettlement.net/hkexpress/e-refund/";
         if($scope.langId==1){
             u += "zh_hk";
@@ -1991,9 +1992,12 @@ myapp.controller("eForm8Controller",["$scope","$http","$location","$translate","
             u += "ko";
         }else if($scope.langId==6){
             u += "en";
+        }else{
+            u += "en";
         }
-        window.open(u);
+        $scope.getUrlRefund = u;
     }
+    $scope.getUrlRefundIn();
 
     /**
      * 内容验证

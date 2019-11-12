@@ -5,6 +5,7 @@ import com.example.demo.bean.Language;
 import com.example.demo.bean.RestResultModule;
 import com.example.demo.dao.DfeedbackDao;
 import com.example.demo.dao.LanguageDao;
+import com.example.demo.entity.EformEntity;
 import com.example.demo.entity.ExcelConstant;
 import com.example.demo.entity.ExcelData;
 import com.example.demo.service.DetailedService;
@@ -13,6 +14,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -104,7 +108,6 @@ public class ExcelController {
                       @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
                       @RequestParam(name = "startTime",required = false,defaultValue = "")String startTime,
                       @RequestParam(name = "endTime",required = false,defaultValue = "")String endTime){
-        request.getSession().removeAttribute("monitor");
         List<Language> languages = new ArrayList<>();
         if(langId > 0 ){
             Language l = languageDao.findById(langId);
@@ -142,7 +145,6 @@ public class ExcelController {
             workbook.write(out);
             out.flush();
             out.close();
-            request.getSession().setAttribute("monitor","ok");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -150,59 +152,32 @@ public class ExcelController {
 
 
     /**
-     * 获取全部反馈数
-     * @param response
+     * 获取全部点击率 - 分页
      */
-    @RequestMapping("/test5")
-    public void test5( @PathVariable("id") long id,HttpServletResponse response){
-        List<Language> languages = languageDao.findAll();
-        try {
-            Date now = new Date( );
-            SimpleDateFormat ft = new SimpleDateFormat ("yyyy.MM.dd hh:mm:ss");
-            // 告诉浏览器用什么软件可以打开此文件
-            response.setHeader("content-Type", "application/vnd.ms-excel");
-            // 下载文件的默认名称
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ反馈"+id+ ".xls", "utf-8"));
-            OutputStream out = response.getOutputStream();
-            String[] headers = { "序号", "语言" ,"FAQ标题","FAQ问题内容","Rating","创建时间","评价内容","评价邮件","评价电话"};
-            ExcelUtils eeu = new ExcelUtils();
-            HSSFWorkbook workbook = new HSSFWorkbook();
-            int index = 0;
-            String s = "2019-"+id+"-01 00:00:00";
-            String e = "2019-"+(id+1)+"-01 00:00:00";
-            List<Object[]> list = languageDao.getAllObjects1(s,e);
-            List<List<Object>> data = new ArrayList<List<Object>>();
-            for(int i = 0, length = list.size();i<length;i++){
-
-                Object[] os = list.get(i);
-                List rowData = new ArrayList();
-                rowData.add(os[0]);
-                rowData.add(os[1]);
-                rowData.add(os[2]);
-                rowData.add(os[3]);
-                rowData.add(os[4]);
-                rowData.add(os[5]);
-                rowData.add(os[6]);
-                rowData.add(os[7]);
-                rowData.add(os[8]);
-                data.add(rowData);
-            }
-            eeu.exportExcel1(workbook, index++, "sheet1", headers, data, out);
-            //原理就是将所有的数据一起写入，然后再关闭输入流。
-            workbook.write(out);
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    @ResponseBody
+    @RequestMapping("/monitorPage")
+    public RestResultModule monitorPage(@RequestBody Map<String,Object> map){
+        RestResultModule module = new RestResultModule();
+        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
+        int PageSize = Integer.parseInt(map.get("PageSize").toString());
+        long langId = Long.parseLong(map.get("langId").toString());
+        String startTime = map.get("startTime").toString();
+        String endTime = map.get("endTime").toString();
+        //分页
+        Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
+        Page<Object[]> list = languageDao.monitorPage(langId,startTime,endTime,pageable);
+        module.putData("eforms",list.getContent());
+        module.putData("PageCount",list.getTotalElements());
+        module.putData("languages",languageDao.findAll());
+        return module;
     }
 
 
 
-    /**
-     * 获取全部点击率
-     * @param response
-     */
+        /**
+         * 获取全部点击率
+         * @param response
+         */
     @RequestMapping(value="/feedback")
     public void feedback(HttpServletResponse response, HttpServletRequest request,
                       @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
@@ -263,22 +238,5 @@ public class ExcelController {
 
     }
 
-
-    /**
-     * check
-     */
-    @ResponseBody
-    @RequestMapping("/check")
-    public RestResultModule test6(HttpServletRequest request,@RequestParam(name = "id",required = false,defaultValue = "")String id){
-        RestResultModule module = new RestResultModule();
-        String s = "on";
-        if(null != id){
-            if("ok".equals(request.getSession().getAttribute(id))){
-                s = "ok";
-            }
-        }
-        module.putData("s",s);
-        return module;
-    }
 
 }

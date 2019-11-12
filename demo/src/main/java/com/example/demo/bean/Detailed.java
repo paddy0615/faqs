@@ -51,7 +51,7 @@ public class Detailed implements Serializable {
     private Date orderTopDate;
 
     @Column(name = "dl_status")
-    private long status;   //'状态（1发布，0未发布默认）'
+    private long status;   // 修改为（0未发布，1发布External官网，2发布Internal内部）
 
     @Column(name = "dl_fl_id")
     private long flId;   // 父级

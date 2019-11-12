@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
+import com.example.demo.entity.EsEntiy;
 import com.example.demo.entity.LibrabryEntity;
 import com.example.demo.entity.Tags;
 import com.example.demo.service.DetailedService;
+import com.example.demo.service.EsService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +47,9 @@ public class DetailedController {
     IpUtil ipUtil;
     @Resource
     HotspotDao hotspotDao;
+
+    @Resource
+    private EsService esService;
 
 
     /* 初始化*/
@@ -216,6 +221,14 @@ public class DetailedController {
                 detailedService.saveEformType(detailed.getId(), tags.getEformtypeArr());
                 //}
 
+                // 更新搜索
+                EsEntiy esEntiy = new EsEntiy();
+                esEntiy.setId(detailed.getId());
+                esEntiy.setTitle(detailed.getTitle());
+                esEntiy.setContentTxt(detailed.getContentTxt());
+                esEntiy.setStatus(detailed.getStatus());
+                esService.save(esEntiy);
+
                 // 添加日志
                 Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, JSON.toJSONString(tags), "",date);
                 logsDao.save(logs);
@@ -307,8 +320,20 @@ public class DetailedController {
         if(null != user) {
             if ("admin".equals(user.getRole())) {
                 String [] dlId = dlIds.split("-");
+                Detailed d = null;
                 for (String id : dlId) {
                     detailedService.saveStatus(Long.parseLong(id),status);
+
+                    d = new Detailed();
+                    d = detailedDao.findById(Long.parseLong(id));
+                    // 更新搜索
+                    EsEntiy esEntiy = new EsEntiy();
+                    esEntiy.setId(d.getId());
+                    esEntiy.setTitle(d.getTitle());
+                    esEntiy.setContentTxt(d.getContentTxt());
+                    esEntiy.setStatus(status);
+                    esService.save(esEntiy);
+
                 }
 
                 // 添加日志
