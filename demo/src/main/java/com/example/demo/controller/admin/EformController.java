@@ -82,11 +82,13 @@ public class EformController {
         String certificate_Nature = "";
         if(null != eform){
             E_form_result result = e_form_resultDao.findByeEid(eform.getId());
-            if("3".equals(eform.getType())){
+       /*     if("3".equals(eform.getType())){
                 title = eformService.getMailType1(eform,result.getCrmuid());
             }else{
                 title = eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),result.getCrmuid());
-            }
+            }*/
+            title = eformService.getMailTypeNew(eform,result.getCrmuid());
+
             certificate_Nature = eformService.getCertificateTitle(eform.getEcertificatetype());
         }
         module.putData("title",title);

@@ -205,6 +205,44 @@ public class EformService {
     }
 
     /**
+     * 2019-11-19
+     * 统一发zoho邮件的标题。
+     * getMailTypeNew
+     */
+    public String getMailTypeNew(Eform eform,String crm_uid) throws Exception {
+        E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
+        Language language =  languageDao.findById((long)eform.getLangId());
+        String s = "Smart Form";
+        if(crm_uid != "" && crm_uid != null){
+            s += "/CRM("+crm_uid+")";
+        }else{
+            s += "/IBE";
+        }
+        if(eform.getEcertificatetype() > 0){
+            s += "/"+e_form_type.getEn()+"/"+getCertificateTitle(eform.getEcertificatetype());
+        }else{
+            s += "/Request for "+e_form_type.getEn()+"/"+e_form_type.getEn();
+        }
+        s += "/"+language.getTitle();
+        s += "/";
+        if(null != eform.getPnr()){
+            s += eform.getPnr();
+        }
+        // 系统自动发-状态为完成
+        if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
+            s += "(Completed)";
+        }else{
+            s += "(Pending)";
+        }
+        if(null != eform.getFlie()){
+            String [] flie_Length = eform.getFlie().split(",");
+            s += "/Attachment-"+flie_Length.length;
+        }
+        return s;
+    }
+
+
+    /**
      * 获取e_certificate 标题
      */
     public String getCertificateTitle(long id) throws Exception {

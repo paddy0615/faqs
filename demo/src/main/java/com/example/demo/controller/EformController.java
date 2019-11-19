@@ -171,14 +171,15 @@ public class EformController {
                    eformService.save(eform);
                    result.setEid(eform.getId());
                    eformService.saveResult(result);
-                   // 发邮件
+                   // 发邮件(zoho)
                    Map<String, Object> valueMap = new HashMap<>();
                    valueMap.put("eform", eform);
-                   valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),crm_uid));
+                   //valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),crm_uid));
+                   valueMap.put("title", eformService.getMailTypeNew(eform,crm_uid));
                    valueMap.put("cc", eform.getEmail());
                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                    eformService.sendSimpleMail(valueMap);
-                   // 发确认邮件
+                   // 发确认邮件(给客户)
                    Map<String, Object> valueMapUser = new HashMap<>();
                    valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
                    valueMapUser.put("To",eform.getEmail());
@@ -297,7 +298,8 @@ public class EformController {
                         module.putData("ecertificatetype",eform.getEcertificatetype());
                     }
                     valueMap.put("eform", eform);
-                    valueMap.put("title", eformService.getMailType1(eform,crm_uid));
+                    // valueMap.put("title", eformService.getMailType1(eform,crm_uid));
+                    valueMap.put("title", eformService.getMailTypeNew(eform,crm_uid));
                     valueMap.put("cc", eform.getEmail());
                     valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                     eformService.sendSimpleMail(valueMap);
@@ -444,8 +446,6 @@ public class EformController {
     @ResponseBody
     @RequestMapping(value = "/E/searchFlightIRRTest1")
     public String getList1() throws Exception{
-
-        System.out.println("结束");
         return "";
     }
 

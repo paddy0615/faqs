@@ -3,8 +3,11 @@ package com.example.demo.controller.admin;
 import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
+import com.example.demo.entity.DetailedEntity;
+import com.example.demo.entity.EsEntiy;
 import com.example.demo.entity.LibrabryEntity;
 import com.example.demo.service.DetailedService;
+import com.example.demo.service.EsService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /*
  * 后台-新:重新整理FAQ逻辑 , 有个父级
@@ -48,6 +52,9 @@ public class LibrabryController {
     LogsDao logsDao;
     @Resource
     IpUtil ipUtil;
+
+    @Resource
+    private EsService esService;
 
 
 
@@ -203,6 +210,27 @@ public class LibrabryController {
         List<String> searchs = Arrays.asList(sarr);
         List<LibrabryEntity> detaileds = null;
         detaileds = librabryEntityDao.getSearchTagsNew(0,searchs);
+        Map<Long, String> map = detaileds.stream().collect(Collectors.toMap(LibrabryEntity::getDl_id, LibrabryEntity::getDl_title));
+
+        Page<EsEntiy> esEntiys = null;
+        LibrabryEntity l = null;
+        try {
+            if(!"".equals(searchs)){
+                esEntiys = esService.querySearch(search);
+                for (EsEntiy e:esEntiys) {
+                    if(map.containsKey(e.getId())){
+                        continue;
+                    }
+                    l = librabryEntityDao.getByDl_id(e.getId());
+                 detaileds.add(l);
+                }
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+
+
         module.putData("detaileds",detaileds);
         return module;
     }

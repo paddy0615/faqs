@@ -68,6 +68,24 @@ public interface LibrabryEntityDao extends JpaRepository<LibrabryEntity,Long> {
             "ORDER BY COUNT(d.dl_id) DESC,d.dl_weights DESC,dlh_search_count DESC,d.dl_updatedate DESC", nativeQuery = true)
     List<LibrabryEntity> getSearchTagsNew(@Param("status") long status, @Param("searchs")List<String> searchs);
 
-
+    @Query(value = "SELECT \n" +
+            " d.dl_id,\n" +
+            " d.dl_title,\n" +
+            " d.dl_lang_id,\n" +
+            " d.dl_updatedate,\n" +
+            " d.dl_status,\n" +
+            " fl.fl_title,\n" +
+            " l.lang_title,\n" +
+            " d.dl_weights\n" +
+            " FROM  faqs_detailed d\n" +
+            " INNER JOIN faqs_dtags_relation dr ON (dr.dr_dl_id = d.dl_id)\n" +
+            " INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
+            " LEFT JOIN faqs_dl_hotspot ON (d.dl_id = dlh_dl_id)\n" +
+            " LEFT JOIN faqs_librabry fl ON (d.dl_fl_id = fl.fl_id)\n" +
+            " LEFT JOIN faqs_language l ON (d.dl_lang_id = l.lang_id)\n" +
+            " WHERE d.dl_id = :id" +
+            " GROUP BY d.dl_id"
+            , nativeQuery = true)
+    LibrabryEntity getByDl_id(@Param("id") long id);
 
 }
