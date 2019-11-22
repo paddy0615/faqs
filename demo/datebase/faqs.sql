@@ -517,3 +517,11 @@ VALUES ('航班延誤證明','航班延误证明','遅延証明書','비행 지�
 ('搭乘航班證明','搭乘航班证明','旅行証明書','여행 서류','Travel Certificate'),
 ('無搭乘航班證明','无搭乘航班证明','ノーショーの確認書','미탑승 확인 증명서','Confirmation Letter of No show'),
 ('航班取消證明','航班取消证明','欠航証明書','항공편 취소 증명서','Flight Cancel Certificate');
+
+
+-- 2019-11-22 统一表控制
+INSERT INTO e_form_monitor
+(m_clientip,m_lang_id,m_et_id,m_createdate)
+SELECT  '192.168.97.12',e_lang_id,e_type,e_updatedate
+FROM e_form
+WHERE e_updatedate  <= '2019-08-14 14:50:00'

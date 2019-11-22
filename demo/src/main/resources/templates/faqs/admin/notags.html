@@ -70,52 +70,54 @@
                 <button class="btn btn-default" type="button" ng-click="getLayDate()">Search</button>
             </div>
 
+            <div style="clear: both"></div>
+            <div class="row" style="margin: 2% 2%;">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th><!--<input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)">--></th>
+                            <th>IP</th>
+                            <th>Serach Date</th>
+                            <th>Language</th>
+                            <th>Key words</th>
+                            <th>searching times</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="f in notags">
+                          <!--  <td>{{$index+1}}</td>-->
+                            <td>{{f[0]}}</td>
+                            <td>{{f[1]}}</td>
+                            <td>{{f[2]}}</td>
+                            <td>{{f[3]}}</td>
+                            <td>{{f[4]}}</td>
+                            <td>{{f[5]}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页-->
+                <div style="text-align: right;">
+                    <ul class="pagination" id="pagination"></ul>
+                </div>
+
+
+            </div>
+
+
           </div><!-- /.row -->
 
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th><!--<input type="checkbox" name="checkboxAll" ng-click="updateSelectionAll($event)">--></th>
-                  <th>IP</th>
-                  <th>Serach Date</th>
-                  <th>Language</th>
-                  <th>Key words</th>
-                  <th>searching times</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="f in notags">
-                  <td><!--<input style="vertical-align:top;" type="checkbox" name="checkboxClien" ng-click="updateSelection($event,categorie.id)" value="{{categorie.id}}">-->{{$index+1}}</td>
-                  <td>{{f.ip}}</td>
-                  <td>{{f.createDate.substring(0,16)}}</td>
-                  <td>{{f.lang_title}}</td>
-                  <td>{{f.title}}</td>
-                  <td>{{f.count}}</td>
-                </tr>
 
-              </tbody>
-            </table>
-          </div>
-
-          <!-- 分页-->
-          <div style="text-align: right;">
-            <ul class="pagination" id="pagination"></ul>
-          </div>
 
         </div>
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script  th:src="@{/js/assets/vendor/jquery.min.js}"><\/script>')</script>
     <script th:src="@{/js/assets/bootstrap.min.js}"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script th:src="@{/js/assets/holder.min.js}"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
 
 </body>

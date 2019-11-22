@@ -6,17 +6,17 @@ $(function () {
 myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
     // 获取语言ALL
     $scope.langId = 0;
-    $http({
+  /*  $http({
         method : 'post',
         url : ctx + "appJson/getLanguageAll",
         params :{}
     }).success(function (data) {
         if(data.length > 0){
-            /* 成功*/
+            /!* 成功*!/
             $scope.languages = data;
             $scope.languages.unshift({'id':0,'title':'All'})
         }
-    })
+    })*/
 
 
 
@@ -27,39 +27,49 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
     // 分页
     $scope.PageCount = 0; // 总数
     $scope.CurrentPage = 1; // 当前页
-    $scope.PageSize = 5; // 显示页数
+    $scope.PageSize = 10; // 显示页数
 
     // 初始化
-    $scope.into = function(langId,CurrentPage,PageSize){
+    $scope.into = function(CurrentPage,PageSize){
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
         if(end != ""){
             end = end +" 23:59:59";
         }
+        var dataMap = {
+            langId : $scope.langId,
+            startTime : start,
+            endTime : end,
+            CurrentPage : CurrentPage,
+            PageSize : PageSize
+        }
         $http({
             method : 'post',
             url : ctx + "appJson/admin/getNoTagsPage",
-            params :{"langId": langId,"CurrentPage": CurrentPage,"PageSize": PageSize,"startTime":start,"endTime":end}
-        }).success(function (data) {
+            data : JSON.stringify(dataMap),
+           }).success(function (data) {
             if(data){
                 /* 成功*/
                 $scope.notags = data.result.notags;
-                /*   $scope.PageCount = data.result.PageCount;
-                   if($scope.PageCount > 0){
-                       $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
-                   }else{
-                       // 没有数据时不显示
-                       $('#pagination').jqPaginator('destroy');
-                   }*/
+                $scope.PageCount = data.result.PageCount;
+                $scope.languages = data.result.languages;
+                $scope.languages.unshift({'id':0,'title':'All'});
+
+                if($scope.PageCount > 0){
+                    $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
+                }else{
+                    // 没有数据时不显示
+                    $('#pagination').jqPaginator('destroy');
+                }
             }
         })
     }
-    $scope.into($scope.langId,$scope.CurrentPage,$scope.PageSize);
+    $scope.into($scope.CurrentPage,$scope.PageSize);
 
     // type下拉
     $scope.clickLanguage = function () {
         $scope.CurrentPage = 1; // 当前页
-        $scope.into($scope.langId,$scope.CurrentPage,$scope.PageSize);
+        $scope.into($scope.CurrentPage,$scope.PageSize);
     }
 
     // 分页
@@ -80,9 +90,9 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
             last: '<li class="last"><a href="javascript:;">Last</a></li>',
             page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
             onPageChange: function (num, type) {
-                $('#text').html('当前第' + num + '页');
                 if (type == "change") {
-                    $scope.into($scope.df_type,num,$scope.PageSize);
+                    $scope.CurrentPage = num;
+                    $scope.into($scope.CurrentPage,$scope.PageSize);
                 }
             }
         });
@@ -98,7 +108,7 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
         ,lang: 'en'
     });
     $scope.getLayDate = function(){
-        $scope.into($scope.langId,$scope.CurrentPage,$scope.PageSize);
+        $scope.into($scope.CurrentPage,$scope.PageSize);
     }
 
 

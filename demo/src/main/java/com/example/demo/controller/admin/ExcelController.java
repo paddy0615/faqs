@@ -57,11 +57,11 @@ public class ExcelController {
 
 
     /**
-     * 获取全部FAQ
+     * 获取全部FAQ -- 报表
      * @param response
      */
     @RequestMapping("/faq")
-    public void test3(HttpServletResponse response){
+    public void faq(HttpServletResponse response){
         List<Language> languages = languageDao.findAll();
         try {
             Date now = new Date( );
@@ -98,13 +98,48 @@ public class ExcelController {
 
     }
 
+    /**
+     * 获取Eform全部点击率 - 分页
+     */
+    @ResponseBody
+    @RequestMapping("/allPage")
+    public RestResultModule allPage(){
+        RestResultModule module = new RestResultModule();
+        module.putData("allPage",languageDao.allPage());
+        module.putData("allPage1",languageDao.allPage1());
+        module.putData("allPage2",languageDao.allPage2());
+        return module;
+    }
+
+
 
     /**
-     * 获取全部点击率
+     * 获取Question全部点击率 - 分页
+     */
+    @ResponseBody
+    @RequestMapping("/monitorQuestionPage")
+    public RestResultModule monitorQuestionPage(@RequestBody Map<String,Object> map){
+        RestResultModule module = new RestResultModule();
+        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
+        int PageSize = Integer.parseInt(map.get("PageSize").toString());
+        long langId = Long.parseLong(map.get("langId").toString());
+        String startTime = map.get("startTime").toString();
+        String endTime = map.get("endTime").toString();
+        //分页
+        Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
+        Page<Object[]> list = languageDao.monitorQuestionPage(langId,startTime,endTime,pageable);
+        module.putData("eforms",list.getContent());
+        module.putData("PageCount",list.getTotalElements());
+        module.putData("languages",languageDao.findAll());
+        return module;
+    }
+
+    /**
+     * 获取monitorQuestion全部点击率 -- 报表
      * @param response
      */
-    @RequestMapping(value="/monitor")
-    public void test4(HttpServletResponse response, HttpServletRequest request,
+    @RequestMapping(value="/monitorQuestionReport")
+    public void monitorQuestionReport(HttpServletResponse response, HttpServletRequest request,
                       @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
                       @RequestParam(name = "startTime",required = false,defaultValue = "")String startTime,
                       @RequestParam(name = "endTime",required = false,defaultValue = "")String endTime){
@@ -119,7 +154,7 @@ public class ExcelController {
             // 告诉浏览器用什么软件可以打开此文件
             response.setHeader("content-Type", "application/vnd.ms-excel");
             // 下载文件的默认名称
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ点击率.xls", "utf-8"));
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ-Question-点击率.xls", "utf-8"));
             OutputStream out = response.getOutputStream();
 
             String[] headers = { "父级名", "FAQ标题" ,"发布状态","点击率"};
@@ -127,7 +162,7 @@ public class ExcelController {
             HSSFWorkbook workbook = new HSSFWorkbook();
             int index = 0;
             for (Language l:languages) {
-                List<Object[]> list = languageDao.getAllObjects(l.getId(),startTime,endTime);
+                List<Object[]> list = languageDao.monitorQuestionReport(l.getId(),startTime,endTime);
                 List<List<Object>> data = new ArrayList<List<Object>>();
                 for(int i = 0, length = list.size();i<length;i++){
 
@@ -151,33 +186,86 @@ public class ExcelController {
     }
 
 
+
     /**
-     * 获取全部点击率 - 分页
+     * 获取Eform全部点击率 - 分页
      */
     @ResponseBody
-    @RequestMapping("/monitorPage")
-    public RestResultModule monitorPage(@RequestBody Map<String,Object> map){
+    @RequestMapping("/monitorEformPage")
+    public RestResultModule monitorEformPage(@RequestBody Map<String,Object> map){
         RestResultModule module = new RestResultModule();
-        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
-        int PageSize = Integer.parseInt(map.get("PageSize").toString());
         long langId = Long.parseLong(map.get("langId").toString());
         String startTime = map.get("startTime").toString();
         String endTime = map.get("endTime").toString();
-        //分页
-        Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
-        Page<Object[]> list = languageDao.monitorPage(langId,startTime,endTime,pageable);
-        module.putData("eforms",list.getContent());
-        module.putData("PageCount",list.getTotalElements());
+        List<Object[]> list = languageDao.monitorEformPage(langId,startTime,endTime);
+        module.putData("eforms",list);
         module.putData("languages",languageDao.findAll());
         return module;
     }
 
+    /**
+     *  获取Eform全部点击率 -- 报表
+     * @param response
+     */
+    @RequestMapping(value="/monitorEformReport")
+    public void monitorEformReport(HttpServletResponse response, HttpServletRequest request,
+                                @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
+                                @RequestParam(name = "startTime",required = false,defaultValue = "")String startTime,
+                                @RequestParam(name = "endTime",required = false,defaultValue = "")String endTime){
+
+        try {
+            // 告诉浏览器用什么软件可以打开此文件
+            response.setHeader("content-Type", "application/vnd.ms-excel");
+            // 下载文件的默认名称
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ-Eform-点击率.xls", "utf-8"));
+            OutputStream out = response.getOutputStream();
+
+            String[] headers = { "ID", "E-Form标题" ,"点击率"};
+            ExcelUtils eeu = new ExcelUtils();
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            int index = 0;
+            if(langId > 0 ){
+                Language l = languageDao.findById(langId);
+                List<Object[]> list = languageDao.monitorEformPage(l.getId(),startTime,endTime);
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                for(int i = 0, length = list.size();i<length;i++){
+                    Object[] os = list.get(i);
+                    List rowData = new ArrayList();
+                    rowData.add(os[0]);
+                    rowData.add(os[1]);
+                    rowData.add(os[2]);
+                    data.add(rowData);
+                }
+                eeu.exportExcel1(workbook, index++, l.getTitle(), headers, data, out);
+            }else{
+                List<Object[]> list = languageDao.monitorEformPage(langId,startTime,endTime);
+                List<List<Object>> data = new ArrayList<List<Object>>();
+                for(int i = 0, length = list.size();i<length;i++){
+                    Object[] os = list.get(i);
+                    List rowData = new ArrayList();
+                    rowData.add(os[0]);
+                    rowData.add(os[1]);
+                    rowData.add(os[2]);
+                    data.add(rowData);
+                }
+                eeu.exportExcel1(workbook, index++, "All", headers, data, out);
+            }
+
+            //原理就是将所有的数据一起写入，然后再关闭输入流。
+            workbook.write(out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
-        /**
-         * 获取全部点击率
-         * @param response
-         */
+
+    /**
+     * 获取全部点击率
+     * @param response
+     */
     @RequestMapping(value="/feedback")
     public void feedback(HttpServletResponse response, HttpServletRequest request,
                       @RequestParam(name = "langId",required = false,defaultValue = "0")long langId,
@@ -186,8 +274,6 @@ public class ExcelController {
                       @RequestParam(name = "commentStatu",required = false,defaultValue = "0")long commentStatu,
                       @RequestParam(name = "startTime",required = false,defaultValue = "")String startTime,
                       @RequestParam(name = "endTime",required = false,defaultValue = "")String endTime){
-
-        System.out.println(1);
         request.getSession().removeAttribute("feedback");
         List<Language> languages = new ArrayList<>();
         if(langId > 0 ){
@@ -211,7 +297,6 @@ public class ExcelController {
                 List<Object[]> list = dfeedbackDao.getAllByDfTypeExcel(l.getId(),comment,commentStatu,df_type,startTime,endTime);
                 List<List<Object>> data = new ArrayList<List<Object>>();
                 for(int i = 0, length = list.size();i<length;i++){
-
                     Object[] os = list.get(i);
                     List rowData = new ArrayList();
                     rowData.add(os[0]);

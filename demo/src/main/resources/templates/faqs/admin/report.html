@@ -48,17 +48,73 @@
         <!-- 数据显示 tab-->
         <div class="tab-content">
             <ul class="nav nav-tabs" style="margin-bottom: 10px;">
-                <li class="active"><a href="#home" data-toggle="tab">Click Rate Report</a></li>
-                <li><a href="#jmeter" data-toggle="tab">Faq Detailed All</a></li>
+                <li class="active"><a href="#all" data-toggle="tab">All Click Rate</a></li>
+                <li><a href="#question" data-toggle="tab">Click Question Rate Report</a></li>
+                <li><a href="#efrom" data-toggle="tab">Click E-from Rate Report</a></li>
+                <li><a href="#detailed" data-toggle="tab">Faq Detailed All</a></li>
             </ul>
+            <!-- tab0-->
+            <div class="tab-pane fade  in active" id="all">
+                <div class="row" style="margin-top: 20px">
+                    <div class="row" style="margin: 2% 5%;">
+                        <div class="table-responsive">
+                            <span style="color: red">*All</span>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="e in allPage">{{e[0]}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td ng-repeat="e in allPage">{{e[1]}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <span style="color: red">*All Question</span>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="e in allPage1">{{e[0]}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td ng-repeat="e in allPage1">{{e[1]}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="table-responsive">
+                            <span style="color: red">*All E-from</span>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th ng-repeat="e in allPage2">{{e[0]}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td ng-repeat="e in allPage2">{{e[1]}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <!-- tab1-->
-            <div class="tab-pane fade in active" id="home">
+            <div class="tab-pane fade" id="question">
                 <div class="row" style="margin-top: 20px">
                     <!-- language select -->
                     <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
                     <div class="col-md-2">
-                        <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
-                                ng-options="language.id  as language.title for language in languages">
+                        <select ng-model="langId_Question" class="form-control" ng-change="clickLanguage_Question()"
+                                ng-options="language.id  as language.title for language in languages_Question">
                         </select>
                     </div>
                     <!-- start time -->
@@ -73,12 +129,12 @@
                     </div>
                     <!-- Search -->
                     <div class="col-md-1">
-                        <button class="btn btn-default" type="button" ng-click="getLayDate()">Search</button>
+                        <button class="btn btn-default" type="button" ng-click="search_Question()">Search</button>
                     </div>
                     <!-- download -->
                     <div class="col-md-1">
-                        <form id="monitorform" action="#" method="post" enctype="multipart/form-data">
-                            <button class="btn btn-default" type="button" ng-click="submitUpdate()">download</button>
+                        <form id="question_from" action="#" method="post" enctype="multipart/form-data">
+                            <button class="btn btn-default" type="button" ng-click="submitDownload_Question()">download</button>
                         </form>
                     </div>
                     <div style="clear:both;"></div>
@@ -87,14 +143,14 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>父级名</th>
-                                    <th>FAQ标题</th>
-                                    <th>发布状态</th>
-                                    <th>点击率</th>
+                                    <th>Series</th>
+                                    <th>Question</th>
+                                    <th>Show Status</th>
+                                    <th>Click Rate</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="e in eforms">
+                                <tr ng-repeat="e in eforms_Question">
                                     <td>{{e[0]}}</td>
                                     <td>{{e[1]}}</td>
                                     <td>{{e[2]}}</td>
@@ -107,7 +163,7 @@
 
                         <!-- 分页-->
                         <div style="text-align: right;">
-                            <ul class="pagination" id="pagination"></ul>
+                            <ul class="pagination" id="pagination_Question"></ul>
                         </div>
                     </div>
 
@@ -115,13 +171,69 @@
 
 
             </div>
+
             <!-- tab2-->
-            <div class="tab-pane fade" id="jmeter">
+            <div class="tab-pane fade" id="efrom">
+                <div class="row" style="margin-top: 20px">
+                    <!-- language select -->
+                    <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
+                    <div class="col-md-2">
+                        <select ng-model="langId_Eform" class="form-control" ng-change="clickLanguage_Eform()"
+                                ng-options="language.id  as language.title for language in languages_Eform">
+                        </select>
+                    </div>
+                    <!-- start time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">start time: </label>
+                    <div class="col-md-2">
+                        <input type="text" autocomplete="off" class="form-control layui-input" id="ladate3" placeholder="yyyy-MM-dd">
+                    </div>
+                    <!-- end time -->
+                    <label style="margin-top: 5px;margin-left:50px;float: left;">end time: </label>
+                    <div class="col-md-2">
+                        <input type="text" autocomplete="off" class="form-control layui-input" id="ladate4" placeholder="yyyy-MM-dd">
+                    </div>
+                    <!-- Search -->
+                    <div class="col-md-1">
+                        <button class="btn btn-default" type="button" ng-click="search_Eform()">Search</button>
+                    </div>
+                    <!-- download -->
+                    <div class="col-md-1">
+                        <form id="efrom_form" action="#" method="post" enctype="multipart/form-data">
+                            <button class="btn btn-default" type="button" ng-click="submitDownload_Eform()">download</button>
+                        </form>
+                    </div>
+                    <div style="clear:both;"></div>
+                    <div class="row" style="margin: 2% 5%;">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>eForm Nature</th>
+                                    <th>Click Rate</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="e in eforms_Eform">
+                                    <td>{{e[0]}}</td>
+                                    <td>{{e[1]}}</td>
+                                    <td>{{e[2]}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- tab3-->
+            <div class="tab-pane fade" id="detailed">
                 <div class="row" style="padding-left: 18px;color: red;padding-bottom: 20px;">
                     <!-- download -->
                     <div class="col-md-1">
-                        <form id="monitorform1" action="#" method="post" enctype="multipart/form-data">
-                            <button class="btn btn-default" type="button" ng-click="submitUpdate1()">download</button>
+                        <form id="detailed_form" action="#" method="post" enctype="multipart/form-data">
+                            <button class="btn btn-default" type="button" ng-click="submitDownload_Detailed()">download</button>
                         </form>
                     </div>
                 </div>

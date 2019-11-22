@@ -20,6 +20,47 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
     @Query("select title from Language where id = :langId")
     String getByTitle(@Param("langId")  long langId);
 
+    /**
+     *  all
+     */
+    @Query(value =" SELECT ym AS '年月',SUM(sum1) AS '数量' FROM (" +
+            " SELECT SUM(1) AS sum1, DATE_FORMAT(m_createdate, '%Y-%m') AS 'ym'" +
+            " FROM faqs_monitor" +
+            " WHERE m_dl_id > 0" +
+            " GROUP BY DATE_FORMAT(m_createdate, '%Y-%m')" +
+            " UNION ALL" +
+            " SELECT SUM(1) AS sum1, DATE_FORMAT(m_createdate, '%Y-%m') AS 'ym'" +
+            " FROM e_form_monitor" +
+            " GROUP BY DATE_FORMAT(m_createdate, '%Y-%m')" +
+            " ) a" +
+            " GROUP BY ym"
+            ,nativeQuery = true)
+    List<Object[]> allPage();
+
+    /**
+     *  all-Question
+     */
+    @Query(value =" SELECT DATE_FORMAT(m_createdate, '%Y-%m') AS 'ym',SUM(1) AS sum1" +
+            " FROM faqs_monitor" +
+            " WHERE m_dl_id > 0" +
+            " GROUP BY DATE_FORMAT(m_createdate, '%Y-%m')"
+            ,nativeQuery = true)
+    List<Object[]> allPage1();
+
+    /**
+     *  all-E-from
+     */
+    @Query(value =" SELECT DATE_FORMAT(m_createdate, '%Y-%m') AS 'ym',SUM(1) AS sum1" +
+            " FROM e_form_monitor" +
+            " GROUP BY DATE_FORMAT(m_createdate, '%Y-%m')"
+            ,nativeQuery = true)
+    List<Object[]> allPage2();
+
+
+
+    /**
+     *  获取Question全部点击率 - 报表
+     */
     @Query(value =" SELECT " +
             " fl_title AS '父级名'," +
             " d.dl_title AS 'FAQ标题'," +
@@ -38,9 +79,12 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
             " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
             " ORDER BY cnt DESC"
             ,nativeQuery = true)
-    List<Object[]> getAllObjects(@Param("langId")  long langId,@Param("s")  String s,@Param("e")  String e);
+    List<Object[]> monitorQuestionReport(@Param("langId")  long langId,@Param("s")  String s,@Param("e")  String e);
 
 
+    /**
+     *  获取Question全部点击率 - 分页
+     */
     @Query(value =" SELECT " +
             " fl_title AS '父级名'," +
             " d.dl_title AS 'FAQ标题'," +
@@ -72,29 +116,22 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
             " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
             " ORDER BY cnt DESC"
             ,nativeQuery = true)
-    Page<Object[]> monitorPage(@Param("langId")  long langId, @Param("s")  String s, @Param("e")  String e, Pageable pageable);
+    Page<Object[]> monitorQuestionPage(@Param("langId")  long langId, @Param("s")  String s, @Param("e")  String e, Pageable pageable);
 
 
-
-    @Query(value ="SELECT \n" +
-            "fl_title AS '序号',\n" +
-            "lang_title AS '语言',\n" +
-            "dl_title AS 'FAQ标题',\n" +
-            "dl_contenttxt AS 'FAQ问题内容',\n" +
-            "CASE WHEN df_type=1 THEN '加1'ELSE '减1' END AS 'Rating',\n" +
-            "df_createdate AS '创建时间',\n" +
-            "df_nay_content AS '评价内容',\n" +
-            "CASE WHEN df_nay_email IS NULL THEN '' ELSE df_nay_email END AS '评价邮件',\n" +
-            "CASE WHEN df_nay_number IS NULL THEN '' ELSE df_nay_number END AS '评价电话'\n" +
-            "FROM faqs_detailed_feedback \n" +
-            "INNER JOIN faqs_detailed ON dl_id = df_dl_id\n" +
-            "INNER JOIN faqs_librabry ON fl_id = dl_fl_id\n" +
-            "INNER JOIN faqs_language ON lang_id = dl_lang_id\n" +
-            "WHERE 1=1 \n" +
-            "AND dl_lang_id = \n"+
-            "AND df_createdate BETWEEN :s AND :e\n" +
-            "ORDER BY df_type,dl_lang_id,df_createdate DESC"
+    /**
+     *  获取Eform全部点击率 - 分页/报表
+     */
+    @Query(value ="  SELECT m.m_et_id AS 'id',t.et_title_en AS 'title',COUNT(m.m_et_id) AS 'cnt' " +
+            "  FROM e_form_monitor m,e_form_type t" +
+            "  WHERE m.m_et_id = t.et_id " +
+            "  AND if(:langId > 0,m.m_lang_id = :langId,1=1)"+
+            "  AND if(:s != '',m.m_createdate > :s,1=1)"+
+            "  AND if(:e != '',m.m_createdate <= :e,1=1)"+
+            "  GROUP BY m.m_et_id"
             ,nativeQuery = true)
-    List<Object[]> getAllObjects1(@Param("s")  String s,@Param("e")  String e);
+    List<Object[]> monitorEformPage(@Param("langId")  long langId, @Param("s")  String s, @Param("e")  String e);
+
+
 
 }

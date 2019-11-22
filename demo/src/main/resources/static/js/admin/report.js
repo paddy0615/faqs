@@ -4,22 +4,46 @@ $(function () {
 })
 // admin/report
 myapp.controller("reportController",["$scope","$http",function ($scope, $http) {
-    $scope.languages = {}
-    $scope.langId = 0;
-    // 分页
-    $scope.PageCount = 0; // 总数
-    $scope.CurrentPage = 1; // 当前页
-    $scope.PageSize = 10; // 显示页数
 
-    // 初始化
-    $scope.into = function(CurrentPage,PageSize){
+    /**
+     * Start
+     * all
+     */
+    $http({
+        method : 'post',
+        url : ctx + "appJson/admin/excel/allPage",
+    }).success(function (data) {
+        if(data){
+            /* 成功*/
+            $scope.allPage = data.result.allPage;
+            $scope.allPage1 = data.result.allPage1;
+            $scope.allPage2 = data.result.allPage2;
+        }
+    })
+    /**
+     * End
+     * all
+     */
+
+    /**
+     * Start
+     * Question
+     */
+    // Question-分页
+    $scope.languages_Question = {}
+    $scope.langId_Question = 0;
+    $scope.PageCount_Question = 0; // 总数
+    $scope.CurrentPage_Question = 1; // 当前页
+    $scope.PageSize_Question = 10; // 显示页数
+    // Question-初始化
+    $scope.into_Question = function(CurrentPage,PageSize){
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
         if(end != ""){
             end = end +" 23:59:59";
         }
         var dataMap = {
-            langId : $scope.langId,
+            langId : $scope.langId_Question,
             startTime : start,
             endTime : end,
             CurrentPage : CurrentPage,
@@ -27,47 +51,40 @@ myapp.controller("reportController",["$scope","$http",function ($scope, $http) {
         }
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/excel/monitorPage",
+            url : ctx + "appJson/admin/excel/monitorQuestionPage",
             data : JSON.stringify(dataMap)
         }).success(function (data) {
             if(data){
                 /* 成功*/
-                $scope.eforms = data.result.eforms;
-                $scope.languages = data.result.languages;
-                $scope.languages.unshift({'id':0,'title':'All'});
+                $scope.eforms_Question = data.result.eforms;
+                $scope.languages_Question = data.result.languages;
+                $scope.languages_Question.unshift({'id':0,'title':'All'});
 
-                $scope.PageCount = data.result.PageCount;
-                if($scope.PageCount > 0){
-                   $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
+                $scope.PageCount_Question = data.result.PageCount;
+                if($scope.PageCount_Question > 0){
+                   $scope.Paginator_Question($scope.PageCount_Question,CurrentPage,PageSize);
                 }else{
                    // 没有数据时不显示
-                   $('#pagination').jqPaginator('destroy');
+                   $('#pagination_Question').jqPaginator('destroy');
                 }
             }
         })
     }
-    $scope.into($scope.CurrentPage,$scope.PageSize);
-
-    // type下拉
-    $scope.clickLanguage = function () {
-        $scope.CurrentPage = 1; // 当前页
-        $scope.into($scope.CurrentPage,$scope.PageSize);
+    $scope.into_Question($scope.CurrentPage_Question,$scope.PageSize_Question);
+    // Question-type下拉
+    $scope.clickLanguage_Question = function () {
+        $scope.CurrentPage_Question = 1; // 当前页
+        $scope.into_Question($scope.CurrentPage_Question,$scope.PageSize_Question);
     }
-
-    // 查看
-    $scope.getSet = function(id){
-        window.open(ctx + "appPage/admin/eFormSet?eId="+id);
-    }
-
-    // 分页
-    $scope.Paginator = function(PageCount,CurrentPage,PageSize){
+    // Question-分页
+    $scope.Paginator_Question = function(PageCount,CurrentPage,PageSize){
         if(PageCount == 0){
             return;
         }
         var myPageCount = PageCount;
         var myPageSize = PageSize;
         var countindex = myPageCount % myPageSize > 0 ? (myPageCount / myPageSize) + 1 : (myPageCount / myPageSize);
-        $.jqPaginator('#pagination', {
+        $.jqPaginator('#pagination_Question', {
             totalPages: parseInt(countindex),
             visiblePages: 7, //显示分页数
             currentPage: CurrentPage,
@@ -78,14 +95,13 @@ myapp.controller("reportController",["$scope","$http",function ($scope, $http) {
             page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
             onPageChange: function (num, type) {
                 if (type == "change") {
-                    $scope.CurrentPage = num;
-                    $scope.into($scope.CurrentPage,$scope.PageSize);
+                    $scope.CurrentPage_Question = num;
+                    $scope.into_Question($scope.CurrentPage_Question,$scope.PageSize_Question);
                 }
             }
         });
 
     }
-
     // laydate国际版
     laydate.render({
         elem: '#ladate1'
@@ -95,35 +111,113 @@ myapp.controller("reportController",["$scope","$http",function ($scope, $http) {
         elem: '#ladate2'
         ,lang: 'en'
     });
-
-    // search
-    $scope.getLayDate = function(){
-        $scope.into($scope.CurrentPage,$scope.PageSize);
+    // Question-search
+    $scope.search_Question = function(){
+        $scope.into_Question($scope.CurrentPage_Question,$scope.PageSize_Question);
     }
-
-
-    // download
-    $scope.submitUpdate = function () {
+    // Question-download
+    $scope.submitDownload_Question = function () {
         var start = $("#ladate1").val();
         var end = $("#ladate2").val();
         if(end != ""){
             end = end +" 23:59:59";
         }
-        var form  = document.getElementById("monitorform");
-        form.action = ctx + "appJson/admin/excel/monitor?langId="+$scope.langId+"&startTime="+start+"&endTime="+end;
+        var form  = document.getElementById("question_from");
+        form.action = ctx + "appJson/admin/excel/monitorQuestionReport?langId="+$scope.langId_Question+"&startTime="+start+"&endTime="+end;
         form.submit();
     }
+    /**
+     * End
+     * Question
+     */
 
-    // download1
-    $scope.submitUpdate1 = function () {
-        var form  = document.getElementById("monitorform");
+
+
+    /**
+     * Start
+     * Eform
+     */
+    // Eform-分页
+    $scope.languages_Eform = {}
+    $scope.langId_Eform = 0;
+    // Eform-初始化
+    $scope.into_Eform = function(){
+        var start = $("#ladate3").val();
+        var end = $("#ladate4").val();
+        if(end != ""){
+            end = end +" 23:59:59";
+        }
+        var dataMap = {
+            langId : $scope.langId_Eform,
+            startTime : start,
+            endTime : end
+        }
+        $http({
+            method : 'post',
+            url : ctx + "appJson/admin/excel/monitorEformPage",
+            data : JSON.stringify(dataMap)
+        }).success(function (data) {
+            if(data){
+                /* 成功*/
+                $scope.eforms_Eform = data.result.eforms;
+                $scope.languages_Eform = data.result.languages;
+                $scope.languages_Eform.unshift({'id':0,'title':'All'});
+            }
+        })
+    }
+    $scope.into_Eform();
+    // Eform-type下拉
+    $scope.clickLanguage_Eform = function () {
+        $scope.into_Eform();
+    }
+    // laydate国际版
+    laydate.render({
+        elem: '#ladate3'
+        ,lang: 'en'
+    });
+    laydate.render({
+        elem: '#ladate4'
+        ,lang: 'en'
+    });
+    // Eform-search
+    $scope.search_Eform = function(){
+        $scope.into_Eform();
+    }
+    // Eform-download
+    $scope.submitDownload_Eform = function () {
+        var start = $("#ladate3").val();
+        var end = $("#ladate4").val();
+        if(end != ""){
+            end = end +" 23:59:59";
+        }
+        var form  = document.getElementById("efrom_form");
+        form.action = ctx + "appJson/admin/excel/monitorEformReport?langId="+$scope.langId_Eform+"&startTime="+start+"&endTime="+end;
+        form.submit();
+    }
+    /**
+     * End
+     * Eform
+     */
+
+    /**
+     * Start
+     * Detailed
+     */
+    // Detailed-download
+    $scope.submitDownload_Detailed = function () {
+        var form  = document.getElementById("detailed_form");
         form.action = ctx + "appJson/admin/excel/faq";
         form.submit();
     }
+    /**
+     * End
+     * Detailed
+     */
 
 
     // 退出
     $scope.goCancel = function(url){
         clicked(url); // 跳url
     }
+
 }]);

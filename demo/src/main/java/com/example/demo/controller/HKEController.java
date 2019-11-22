@@ -40,7 +40,7 @@ public class HKEController {
             langId = 2;
         }else if(("farerules_zh_tw.ftl").equals(name)){
             // 台湾
-            langId = 3;
+            langId = 1;
         }else if(("farerules_ja.ftl").equals(name)){
             // 日本
             langId = 4;

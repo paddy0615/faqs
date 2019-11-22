@@ -123,7 +123,7 @@
             <div class="row eformdiv" style="padding: 50px 12px;">
                 <div ng-repeat="t in eFormTypes" ng-class="$index%2=='0'?'col-md-5':'col-md-5  col-md-offset-2'">
                     <div class="eformdiv-content" ng-click="getEform(t.id)">
-                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform{{t.id}}.png}" ng-alt="t.id">
+                        <img style="vertical-align:middle;width:45px;"  th:src="@{/img/eform{{t.id}}.png}" ng-alt="t.id"/>
                         <span style="vertical-align:middle;" class="">{{'eformText'+t.id | translate}}</span>
                     </div>
                 </div>

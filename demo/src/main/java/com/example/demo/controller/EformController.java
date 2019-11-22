@@ -9,6 +9,7 @@ import com.example.demo.service.PdfService;
 import com.example.demo.util.IpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -25,6 +26,8 @@ import java.util.*;
 @RequestMapping(value = "appJson")
 public class EformController {
     private  static Logger logger = LoggerFactory.getLogger(EformController.class);
+    @Value("${spring.profiles.active}")
+    private String active; //读取配置文件中的参数
 
     @Resource
     EformService eformService;
@@ -227,20 +230,22 @@ public class EformController {
                 String [] lastnameArr = eform.getLastname().split(",");
                 if(null != eform.getPnr()){
                     state = "0";
-                    for (int i = 0;i<firstnameArr.length;i++){
-                        if(firstnameArr[i] == "" || lastnameArr[i] == ""){
-                            module.setCode(404);
-                            return module;
-                        }
-                        Eform eform1 = new Eform();
-                        eform1.setPnr(eform.getPnr());
-                        eform1.setFirstname(firstnameArr[i]);
-                        eform1.setLastname(lastnameArr[i]);
-                        System.out.println(firstnameArr[i]+","+lastnameArr[i]);
-                        state = eformService.getBookingAPI(eform1,result);
-                        if(!"0".equals(state)){
-                            module.setCode(404);
-                            return module;
+                    if("pro".equals(active)){
+                        for (int i = 0;i<firstnameArr.length;i++){
+                            if(firstnameArr[i] == "" || lastnameArr[i] == ""){
+                                module.setCode(404);
+                                return module;
+                            }
+                            Eform eform1 = new Eform();
+                            eform1.setPnr(eform.getPnr());
+                            eform1.setFirstname(firstnameArr[i]);
+                            eform1.setLastname(lastnameArr[i]);
+                            System.out.println(firstnameArr[i]+","+lastnameArr[i]);
+                            state = eformService.getBookingAPI(eform1,result);
+                            if(!"0".equals(state)){
+                                module.setCode(404);
+                                return module;
+                            }
                         }
                     }
                 }
