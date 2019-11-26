@@ -98,10 +98,11 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
     List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId,@Param("langId") long langId);
 
 
-    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status\n" +
-            "FROM  faqs_detailed d WHERE d.dl_status = 2 " +
-            "AND if(:langId > 0,d.dl_lang_id = :langId,1=1)\n"+
-            "LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status" +
+            " FROM  faqs_detailed d WHERE d.dl_status = 2 " +
+            " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
+            " ORDER BY d.dl_updatedate DESC"+
+            " LIMIT 10", nativeQuery = true)
     List<DetailedEntity> getDetailedInternal(@Param("langId") long langId);
 
 }

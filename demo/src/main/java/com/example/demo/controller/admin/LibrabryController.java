@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /*
@@ -211,26 +208,24 @@ public class LibrabryController {
         List<LibrabryEntity> detaileds = null;
         detaileds = librabryEntityDao.getSearchTagsNew(0,searchs);
         Map<Long, String> map = detaileds.stream().collect(Collectors.toMap(LibrabryEntity::getDl_id, LibrabryEntity::getDl_title));
-
         Page<EsEntiy> esEntiys = null;
         LibrabryEntity l = null;
         try {
-            if(!"".equals(searchs)){
+            if(!"".equals(search)){
                 esEntiys = esService.querySearch(search);
                 for (EsEntiy e:esEntiys) {
                     if(map.containsKey(e.getId())){
                         continue;
                     }
+                    l = new LibrabryEntity();
                     l = librabryEntityDao.getByDl_id(e.getId());
-                 detaileds.add(l);
+                    detaileds.add(l);
                 }
             }
         }catch (Exception e){
             System.out.println(e);
         }
-
-
-
+        detaileds.removeAll(Collections.singleton(null));
         module.putData("detaileds",detaileds);
         return module;
     }
