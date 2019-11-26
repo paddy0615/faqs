@@ -236,7 +236,7 @@ public class EformService {
         }
         if(null != eform.getFlie()){
             String [] flie_Length = eform.getFlie().split(",");
-            s += "/Attachment-"+flie_Length.length;
+            s += "/Attachment "+flie_Length.length;
         }
         return s;
     }

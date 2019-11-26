@@ -404,12 +404,13 @@ public class DetailedController {
     public String getIndexDetailedNewCRM(HttpServletRequest request, HttpServletResponse response,
                                       @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId,
                                       @RequestParam(name = "langId",required = true,defaultValue = "0")long langId)throws Exception {
-        String url = "/appPage/indexCRM?langId="+langId;
+        String uid = request.getParameter("uid");
+        String url = "/appPage/indexCRM?langId="+langId+"&uid="+uid;;
         if(dlId > 0){
             String id = detailedService.getIndexDetailedNew(dlId,langId);
             if(null != id){
                 dlId =Long.parseLong(id);
-                url = "/appPage/indexDetailedCRM?dlId="+dlId;
+                url = "/appPage/indexDetailedCRM?dlId="+dlId+"&uid="+uid;
             }
         }
         response.sendRedirect(request.getContextPath()+url);

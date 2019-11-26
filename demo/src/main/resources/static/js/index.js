@@ -613,6 +613,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
 
 // indexCRM
 myapp.controller("indexCRMController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+    var crm_uid = decodeURI(GetUrlParam("uid"));
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
     gaixialatu($scope.langId);
@@ -652,7 +653,7 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&catId="+0;
+            var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&catId="+0+"&uid="+crm_uid;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -721,7 +722,6 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     // 热点初始化
     info1();
 
-    var crm_uid = decodeURI(GetUrlParam("uid"));
     // 跳转E-form
     $scope.getEform = function(id){
         var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&crm_uid="+crm_uid;
@@ -739,6 +739,7 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
 
 // indexDetailedCRM
 myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$location","$translate",function ($scope, $http, $sce,$location,$translate) {
+    var crm_uid = decodeURI(GetUrlParam("crm_uid"));
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
@@ -807,7 +808,7 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId="+$scope.dlId+"&langId="+$scope.langId;
+            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId="+$scope.dlId+"&langId="+$scope.langId+"&uid="+crm_uid;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -1025,7 +1026,7 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
         return true;
     }
 
-    var crm_uid = decodeURI(GetUrlParam("crm_uid"));
+
     // 跳转E-form
     $scope.getEform = function(id){
         var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId+"&crm_uid="+crm_uid;
