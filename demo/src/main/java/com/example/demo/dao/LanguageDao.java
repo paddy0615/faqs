@@ -132,6 +132,24 @@ public interface LanguageDao extends JpaRepository<Language,Long> {
             ,nativeQuery = true)
     List<Object[]> monitorEformPage(@Param("langId")  long langId, @Param("s")  String s, @Param("e")  String e);
 
+    /**
+     *  获取FAQ全部详细内容 - 分页/报表
+     */
+    @Query(value ="  SELECT m.m_et_id AS 'id',t.et_title_en AS 'title',COUNT(m.m_et_id) AS 'cnt' " +
+            "  FROM e_form_monitor m,e_form_type t" +
+            "  WHERE m.m_et_id = t.et_id " +
+            "  AND if(:langId > 0,m.m_lang_id = :langId,1=1)"+
+            "  AND if(:s != '',m.m_createdate > :s,1=1)"+
+            "  AND if(:e != '',m.m_createdate <= :e,1=1)"+
+            "  GROUP BY m.m_et_id"
+            ,nativeQuery = true)
+    List<Object[]> monitorFaq(@Param("langId")  long langId);
 
+
+    @Query(value =" SELECT  GROUP_CONCAT(dt.dt_title) AS 'dt_title' FROM faqs_dtags_relation dr ,faqs_detailed_tags dt" +
+            " WHERE dr.dr_dt_id = dt.dt_id" +
+            " AND dr.dr_dl_id = :id" +
+            " ORDER BY dr.dr_order" ,nativeQuery = true)
+    String getDetailedTagsTitle(@Param("id")  long id);
 
 }

@@ -495,22 +495,18 @@ public class DetailedController {
 
     @ResponseBody
     @RequestMapping(value = "/es/3")
-    public Page<EsEntiy> esTest3( @RequestParam(name = "title",required = false,defaultValue = "")String title) throws Exception{
-        Date dNow = new Date( );
-        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss");
-        System.out.println("当前时间为: " + ft.format(dNow));
-        Page<EsEntiy> list = null;
+    public String esTest3( @RequestParam(name = "title",required = false,defaultValue = "")String title) throws Exception{
+        String html = "";
         try{
-            System.out.println("开始ES");
-            list  = esService.querySearch(title);
-            for (EsEntiy e:list) {
-                System.out.println(e);
+            String[] arr = esService.getAnalyzes("es_index2",title);
+            for (String s:arr) {
+                html += s;
+                html += "<br>";
             }
-            System.out.println("结束ES");
         }catch (Exception e){
             System.out.println(e);
         }
-        return list;
+        return html;
     }
 
 
@@ -563,29 +559,6 @@ public class DetailedController {
         }
         return html;
     }
-
-    @ResponseBody
-    @RequestMapping(value = "/onChat/test")
-    public String onChatTest() throws Exception {
-        System.out.println("onChattest 开始");
-        String html = "";
-        try{
-
-            String text="自古刀扇过背刺";
-            StringReader sr=new StringReader(text);
-          /*  IKSegmenter ik=new IKSegmenter(sr, true);
-            Lexeme lex=null;
-            while((lex=ik.next())!=null) {
-                System.out.print(lex.getLexemeText() + "|");
-            }*/
-
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        System.out.println("onChattest 结束");
-        return html;
-    }
-
 
 
 }

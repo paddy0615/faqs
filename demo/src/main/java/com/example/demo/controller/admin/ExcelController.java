@@ -71,7 +71,7 @@ public class ExcelController {
             // 下载文件的默认名称
             response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("FAQ全部问题"+ ft.format(now) + ".xls", "utf-8"));
             OutputStream out = response.getOutputStream();
-            String[] headers = { "父级", "问题ID" ,"标题","答案"};
+            String[] headers = { "父级", "问题ID" ,"标题","搜索标签","答案"};
             ExcelUtils eeu = new ExcelUtils();
             HSSFWorkbook workbook = new HSSFWorkbook();
             int index = 0;
@@ -84,7 +84,13 @@ public class ExcelController {
                     rowData.add(detailed.getFlTitle());
                     rowData.add(detailed.getId());
                     rowData.add(detailed.getTitle());
+                    rowData.add(languageDao.getDetailedTagsTitle(detailed.getId()));
                     rowData.add(detailed.getContentTxt());
+
+                 /*   List rowData = new ArrayList();
+                    rowData.add(os[0]);
+                    rowData.add(os[1]);
+                    rowData.add(os[2]);*/
                     data.add(rowData);
                 }
                 eeu.exportExcel1(workbook, index++, l.getTitle(), headers, data, out);
