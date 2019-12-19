@@ -4,6 +4,10 @@ server:
   address: 0.0.0.0
   servlet:
     context-path: /hkexpress
+  use-forward-headers: true
+  tomcat:
+    remote-ip-header: X-Real-IP
+    protocol-header: X-Forwarded-Proto
 ##thymeleaf页面模板配置
 web:
   upload-path: C:/faqsonic/faq

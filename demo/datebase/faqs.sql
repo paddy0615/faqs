@@ -525,3 +525,17 @@ INSERT INTO e_form_monitor
 SELECT  '192.168.97.12',e_lang_id,e_type,e_updatedate
 FROM e_form
 WHERE e_updatedate  <= '2019-08-14 14:50:00'
+
+
+-- 添加搜索记录
+-- 2019-12-17
+DROP TABLE IF EXISTS `faqs_select_monitor`;
+CREATE TABLE `faqs_select_monitor` (
+  `m_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `m_clientip` VARCHAR(200) DEFAULT NULL COMMENT 'ip',
+  `m_lang_id` INT(11) DEFAULT NULL COMMENT 'faq语言ID',
+  `m_selete` VARCHAR(500) NULL COMMENT '搜索值',
+  `m_createdate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `m_crm_uid` VARCHAR(50) NULL COMMENT 'crm-name',
+  PRIMARY KEY (`m_id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

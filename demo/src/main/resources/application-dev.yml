@@ -14,7 +14,8 @@ spring:
       repositories:
         enabled: true
       cluster-name: elasticsearch
-      cluster-nodes: 192.168.97.9:9300
+      # cluster-nodes: 192.168.97.9:9300
+      cluster-nodes: 118.143.2.7:9300
       properties:
         path:
           logs: ./elasticsearch/log

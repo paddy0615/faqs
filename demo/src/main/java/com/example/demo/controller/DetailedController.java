@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.bean.*;
-import com.example.demo.dao.CategoryDao;
-import com.example.demo.dao.DetailedDao;
-import com.example.demo.dao.E_form_typeDao;
-import com.example.demo.dao.LanguageDao;
+import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.entity.EsEntiy;
 import com.example.demo.service.DetailedService;
@@ -33,6 +30,7 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.StringReader;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Function;
@@ -59,6 +57,8 @@ public class DetailedController {
     IpUtil ipUtil;
     @Resource
     E_form_typeDao e_form_typeDao;
+    @Resource
+    Faqs_Select_MonitorDao faqs_select_monitorDao;
 
     @PersistenceContext
     EntityManager entityManager;
@@ -136,10 +136,19 @@ public class DetailedController {
      */
     @ResponseBody
     @RequestMapping("/getSearchTags")
-    public RestResultModule getSearchTags(
+    public RestResultModule getSearchTags(HttpServletRequest request,
             @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
             @RequestParam(name = "status",required = true,defaultValue = "1")long status,
-            @RequestParam(name = "search",required = false,defaultValue = "")String search){
+            @RequestParam(name = "search",required = false,defaultValue = "")String search) throws Exception{
+        // 添加搜索记录
+        Faqs_Select_Monitor monitor = new Faqs_Select_Monitor();
+        monitor.setClientip(ipUtil.getIpAddr(request));
+        monitor.setCreateDate(new Date());
+        monitor.setLangId(langId);
+        monitor.setSelect(search);
+        monitor.setCrmuid(request.getParameter("crm_uid"));
+        faqs_select_monitorDao.save(monitor);
+
         RestResultModule module = new RestResultModule();
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
@@ -163,8 +172,6 @@ public class DetailedController {
         Page<EsEntiy> esEntiys = null;
         try {
             if(!"".equals(searchs)){
-                System.out.println("搜索="+search);
-                System.out.println("---------");
                 esEntiys = esService.querySearch(search);
                 for (EsEntiy e:esEntiys) {
                     if(map.containsKey(e.getId())){
@@ -182,10 +189,7 @@ public class DetailedController {
                     }else if(status == 3){
                         detaileds.add(detailedEntity);
                     }
-                    System.out.println(e);
-
                 }
-                System.out.println("---------");
             }
         }catch (Exception e){
             System.out.println(e);

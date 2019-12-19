@@ -130,6 +130,11 @@ public class UrlController {
         return "faqs/admin/report";
     }
 
+    @RequestMapping("/admin/searchCollection")
+    public String searchCollection(){
+        return "faqs/admin/searchCollection";
+    }
+
     /**
      * Request for itinerary 重新發送行程單
      * @return

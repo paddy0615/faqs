@@ -664,7 +664,7 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
         $http({
             method : "post",
             url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id}
+            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id,"crm_uid":crm_uid}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;
@@ -831,7 +831,7 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
         $http({
             method : "post",
             url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id}
+            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id,"crm_uid":crm_uid}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;

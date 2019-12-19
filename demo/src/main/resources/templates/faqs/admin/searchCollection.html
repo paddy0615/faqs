@@ -22,7 +22,7 @@
         <script th:src="@{/js/laydate/laydate.js}"></script>
         <script th:src="@{/js/assets/angular.js}"></script>
         <script th:src="@{/js/admin/directive.js}"></script>
-        <script th:src="@{/js/admin/eForm.js}"></script>
+        <script th:src="@{/js/admin/searchCollection.js}"></script>
         <script th:src="@{/js/common.js}"></script>
 
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -34,7 +34,7 @@
         <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
       </head>
-<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="eFormController">
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="selectController">
     <top-Directive></top-Directive>
 
     <div class="container-fluid">
@@ -42,11 +42,11 @@
         <left-Directive></left-Directive>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
-              <span style="font-size: 36px;">E-Form</span>
+              <span style="font-size: 36px;">Search Collection</span>
               <div class="input-group col-sm-5" style="float: right;margin-top: 10px;">
                   <input ng-model="searchTest" type="text" class="form-control" placeholder="Search Support ID or PNR or First Name or Last Name"  ng-keyup="onKeyup(event)">
                   <span class="input-group-btn">
-                          <button class="btn btn-default" type="button" ng-click="getLayDate()"><i class="glyphicon glyphicon-search"></i></button>
+                          <button class="btn btn-default" type="button" ng-click="clickLanguage()"><i class="glyphicon glyphicon-search"></i></button>
                     </span>
               </div>
           </div>
@@ -54,12 +54,12 @@
         <!-- 数据显示 tab-->
         <div class="tab-content">
             <ul class="nav nav-tabs" style="margin-bottom: 10px;">
-                <li class="active"><a href="#home" data-toggle="tab">Data management</a></li>
-                <li><a href="#jmeter" data-toggle="tab">Home display</a></li>
+                <li class="active"><a href="#home" data-toggle="tab">Search Data</a></li>
+                <li><a href="#jmeter" data-toggle="tab">Search Report</a></li>
             </ul>
             <!-- tab1-->
             <div class="tab-pane fade in active" id="home">
-                <div class="row">
+                <div class="row" style="margin-top: 20px;margin-bottom: 20px">
                     <!-- language select -->
                     <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
                     <div class="col-md-2">
@@ -67,18 +67,6 @@
                                 ng-options="language.id  as language.title for language in languages">
                         </select>
                     </div>
-
-                    <!-- Nature select -->
-                    <label style="margin-top: 5px;margin-left: 50px;float: left;">Nature: </label>
-                    <div class="col-md-2">
-                        <select ng-model="eformType" class="form-control" ng-change="clickLanguage()"
-                                ng-options="c.id  as c.en for c in eformTypes">
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="row" style="margin-top: 20px">
                     <!-- start time -->
                     <label style="margin-top: 5px;margin-left:50px;float: left;">start time: </label>
                     <div class="col-md-2">
@@ -91,7 +79,7 @@
                     </div>
                     <!-- Search -->
                     <div class="col-md-2">
-                        <button class="btn btn-default" type="button" ng-click="getLayDate()">Search</button>
+                        <button class="btn btn-default" type="button" ng-click="clickLanguage()">Search</button>
                     </div>
 
                 </div>
@@ -101,42 +89,21 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Create Date</th>
-                            <th>eForm Nature</th>
-                            <th>PNR</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Trip Type</th>
-                            <th>Email Address</th>
+                            <th>IP</th>
+                            <th>Serach Date</th>
                             <th>Language</th>
-                            <th>Attachment</th>
-                            <th></th>
+                            <th>Search value</th>
+                            <th>CRM</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="e in eforms">
-                            <td data="{{e.id}}">{{e.random}}</td>
-                            <td>{{e.updateDate}}</td>
-                            <td>{{e.typeTitle}}</td>
-                            <td>{{e.pnr}}</td>
-                            <td>{{e.firstname}}</td>
-                            <td>{{e.lastname}}</td>
-                            <td>
-                                <element ng-switch="e.triptype">
-                                    <element ng-switch-when="1">Round-Trip</element>
-                                    <element ng-switch-when="2">One-Way</element>
-                                    <element ng-switch-when="3">Multi-City</element>
-                                    <element  ng-switch-default></element>
-                                </element>
-                            </td>
-                            <td>{{e.email}}</td>
-                            <td>{{e.langaTitle}}</td>
-                            <td>
-                                <p ng-repeat="ef in e.flieArr"><a href="javascript:void(0);" ng-click="getSetPDF(ef)">预览{{$index+1}}</a></p>
-                            </td>
-                            <td style="text-align: right;">
-                                <button class="btn btn-default" type="button"  ng-click="getSet(e.id)" >Select</button>
-                            </td>
+                        <tr ng-repeat="f in fsm">
+                            <td>{{f[0]}}</td>
+                            <td>{{f[1]}}</td>
+                            <td>{{f[2]}}</td>
+                            <td>{{f[3]}}</td>
+                            <td>{{f[4]}}</td>
+                            <td>{{f[5]}}</td>
                         </tr>
 
                         </tbody>
@@ -151,20 +118,20 @@
             </div>
             <!-- tab2-->
             <div class="tab-pane fade" id="jmeter">
-                <div class="row" style="padding-left: 18px;color: red;padding-bottom: 20px;">
-                    * This display controls the home page display.
-                </div>
-                <!-- e-form -->
-                <div class="form-group">
-                    <label class="col-sm-1 control-label">E-Form :</label>
-                    <div class="col-sm-8">
-                        <div ng-repeat="t in eformTypes_n">
-                            <input type="checkbox" name="master{{t.id}}" ng-checked="master{{t.id}}">{{t.en}}
-                        </div>
-                    </div>
-                </div>
-                <div zg-access="access" class="form-group col-sm-8" style="padding: 10px;">
-                    <button ng-click="submitUpdate()" type="button" class="btn btn-default">Save</button>
+                <div class="table-responsive">
+                    <span style="color: red">*All</span>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th ng-repeat="e in allPage">{{e[0]}}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td ng-repeat="e in allPage">{{e[1]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

@@ -10,14 +10,28 @@ myapp.config(['$locationProvider', function($locationProvider) {
 // 左导航  <left-Directive></left-Directive>
 myapp.directive('leftDirective', function() {
     var templateHtml = " <div class=\"col-sm-3 col-md-2 sidebar\">" +
-        "                <ul class=\"nav nav-sidebar\">\n" +
+        "                <ul class=\"nav nav-sidebar\" id=\"side-menu\">\n" +
         "                <li class=\"languagePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/language')\">Language Maintenance</a></li>\n" +
         /*"                <li class=\"categoryPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/category')\">Category Maintenance</a></li>\n" +*/
         "                <li class=\"faqOnePage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/faqOne')\">FAQ Library</a></li>\n" +
         "                <li class=\"faqTwoPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/faqTwo')\">Question List</a></li>\n" +
         /*        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ(Old)</a></li>\n" +*/
         "                <li class=\"feedbackPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/feedback')\">FAQ Feedback</a></li>\n" +
-        "                <li class=\"notagsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\">No Result Key Words</a></li>\n" +
+/*        "                <li class=\"notagsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\">No Result Key Words</a></li>\n" +*/
+
+        "                        <li>\n" +
+        "                            <a href=\"#\"><i class=\"fa fa-sitemap fa-fw\"></i>Search For<span class=\"glyphicon glyphicon-test\"></span></a>\n" +
+        "                            <ul class=\"nav nav-second-level navbartop3\">\n" +
+        "                                <li  class=\"searchCollectionPage\">\n" +
+        "                                    <a href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/searchCollection')\"> &nbsp;&nbsp;&nbsp;&nbsp;Search Collection</a>\n" +
+        "                                </li>\n" +
+        "                                <li  class=\"notagsPage\" >\n" +
+        "                                   <a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\"> &nbsp;&nbsp;&nbsp;&nbsp;No Result Key Words</a>"+
+        "                                </li>\n" +
+        "                            </ul>\n" +
+        "                            <!-- /.nav-second-level -->\n" +
+        "                        </li>\n" +
+
         "                <li class=\"eFormPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/eForm')\">E-Form</a></li>\n" +
         "                <li class=\"reportPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/report')\">Report</a></li>\n" +
         "            </ul></div>";
@@ -61,7 +75,19 @@ myapp.directive('topDirective', function() {
         "                <li class=\"faqTwoPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/faqTwo')\">Question List</a></li>\n" +
 /*        "                <li class=\"detailedPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/detailed')\">FAQ(Old)</a></li>\n" +*/
         "                <li class=\"feedbackPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/feedback')\">FAQ Feedback</a></li>\n" +
-        "                <li class=\"notagsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\">No Result Key Words</a></li>\n" +
+       /* "                <li class=\"notagsPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\">No Result Key Words</a></li>\n" +
+        */
+        "                        <li>\n" +
+        "                            <a href=\"#\"><i class=\"fa fa-sitemap fa-fw\"></i>Search For<span class=\"glyphicon glyphicon-test\"></span></a>\n" +
+        "                            <ul class=\"nav nav-second-level navbartop3\">\n" +
+        "                                <li  class=\"searchCollectionPage\">\n" +
+        "                                    <a href='javascript:void(0);' ng-click=\"goCancel('" + ctx + "appPage/admin/searchCollection')\"> &nbsp;&nbsp;&nbsp;&nbsp;Search Collection</a>\n" +
+        "                                </li>\n" +
+        "                                <li  class=\"notagsPage\" >\n" +
+        "                                   <a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/notags')\"> &nbsp;&nbsp;&nbsp;&nbsp;No Result Key Words</a>"+
+        "                                </li>\n" +
+        "                            </ul>\n" +
+        "                        </li>\n" +
         "                <li class=\"eFormPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/eForm')\">E-Form</a></li>\n" +
         "                <li class=\"reportPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/report')\">Report</a></li>\n" +
 

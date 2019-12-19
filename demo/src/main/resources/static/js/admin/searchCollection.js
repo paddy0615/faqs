@@ -1,30 +1,28 @@
 // 初始化样式
 $(function () {
     $(".navbartop3").addClass("in");
-    $(".notagsPage").addClass("active");
+    $(".searchCollectionPage").addClass("active");
 })
-// admin/notags
-myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
-    // 获取语言ALL
-    $scope.langId = 0;
-  /*  $http({
+// admin/select
+myapp.controller("selectController",["$scope","$http",function ($scope, $http) {
+    /**
+     * Start
+     * all
+     */
+    $http({
         method : 'post',
-        url : ctx + "appJson/getLanguageAll",
-        params :{}
+        url : ctx + "appJson/admin/search/getAllPage",
     }).success(function (data) {
-        if(data.length > 0){
-            /!* 成功*!/
-            $scope.languages = data;
-            $scope.languages.unshift({'id':0,'title':'All'})
+        if(data){
+            /* 成功*/
+            $scope.allPage = data.result.allPage;
         }
-    })*/
+    })
 
 
-
-    $scope.df_type = 0;
-    $scope.feedbacks = {};
-    $scope.notags = {};
-
+    $scope.languages = {}
+    $scope.langId = 0;
+    $scope.searchTest = "";
     // 分页
     $scope.PageCount = 0; // 总数
     $scope.CurrentPage = 1; // 当前页
@@ -41,33 +39,34 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
             langId : $scope.langId,
             startTime : start,
             endTime : end,
+            searchTest : $scope.searchTest,
             CurrentPage : CurrentPage,
             PageSize : PageSize
         }
         $http({
             method : 'post',
-            url : ctx + "appJson/admin/getNoTagsPage",
-            data : JSON.stringify(dataMap),
-           }).success(function (data) {
+            url : ctx + "appJson/admin/search/getSearchCollectionPage",
+            data : JSON.stringify(dataMap)
+        }).success(function (data) {
             if(data){
                 /* 成功*/
-                $scope.notags = data.result.notags;
-                $scope.PageCount = data.result.PageCount;
+                $scope.fsm = data.result.fsm;
                 $scope.languages = data.result.languages;
                 $scope.languages.unshift({'id':0,'title':'All'});
 
+                $scope.PageCount = data.result.PageCount;
                 if($scope.PageCount > 0){
-                    $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
+                   $scope.Paginator($scope.PageCount,CurrentPage,PageSize);
                 }else{
-                    // 没有数据时不显示
-                    $('#pagination').jqPaginator('destroy');
+                   // 没有数据时不显示
+                   $('#pagination').jqPaginator('destroy');
                 }
             }
         })
     }
     $scope.into($scope.CurrentPage,$scope.PageSize);
 
-    // type下拉
+    // type下拉/search
     $scope.clickLanguage = function () {
         $scope.CurrentPage = 1; // 当前页
         $scope.into($scope.CurrentPage,$scope.PageSize);
@@ -97,6 +96,7 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
                 }
             }
         });
+
     }
 
     // laydate国际版
@@ -108,9 +108,6 @@ myapp.controller("notagsController",["$scope","$http",function ($scope, $http) {
         elem: '#ladate2'
         ,lang: 'en'
     });
-    $scope.getLayDate = function(){
-        $scope.into($scope.CurrentPage,$scope.PageSize);
-    }
 
 
     // 退出
