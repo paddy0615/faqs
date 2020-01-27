@@ -308,7 +308,8 @@ public class EformService {
      */
     public void sendSimpleMailUser(Map<String, Object> valueMap) throws Exception {
         String sender = "Soniccs.Guest.Relations@hkexpress.com";
-        String password = "H+==2GaR";
+        //String password = "H+==2GaR";
+        String password = "W34eDSer@Hke";
         // 收件人邮箱地址
         String receiver = valueMap.get("To").toString();
         // office365 邮箱服务器地址及端口号
