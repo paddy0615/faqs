@@ -151,6 +151,15 @@ public class EformService {
     public void updateResultXml(E_form_result e){
         e_form_resultDao.updateResultXml(e.getId(),e.getResultxml());
     }
+    /**
+     * updateResultzohomailtitle
+     * @param e
+     */
+    @Transactional
+    public void updateResultzohomailtitle(E_form_result e){
+        e_form_resultDao.updateResultzohomailtitle(e.getId(),e.getZohomailtitle());
+    }
+
 
     /**
      * 获取Language
@@ -197,31 +206,10 @@ public class EformService {
     }
 
     /**
-     * 获取getMailType1
-     */
-    public String getMailType1(Eform eform,String crm_uid) throws Exception {
-        E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
-        Language language =  languageDao.findById((long)eform.getLangId());
-        String s = "Smart Form";
-        if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-            s += "（completed）";
-        }
-        s += "/"+language.getTitle()+"/"+e_form_type.getEn()+"/"+getCertificateTitle(eform.getEcertificatetype());
-        if(null != eform.getPnr()){
-            s += "/"+eform.getPnr();
-        }
-        if(crm_uid != "" && crm_uid != null){
-            s += "/"+crm_uid;
-        }
-        return s;
-    }
-
-    /**
      * 2019-11-19
      * 统一发zoho邮件的标题。
-     * getMailTypeNew
      */
-    public String getMailTypeNew(Eform eform,String crm_uid) throws Exception {
+    public String getMailTypeNew(Eform eform,String crm_uid,int listSize) throws Exception {
         E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
         Language language =  languageDao.findById((long)eform.getLangId());
         String s = "Smart Form";
@@ -242,7 +230,11 @@ public class EformService {
         }
         // 系统自动发-状态为完成
         if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-            s += "(Completed)";
+            if(listSize == 0){
+                s += "(Pending)";
+            }else{
+                s += "(Completed)";
+            }
         }else{
             s += "(Pending)";
         }

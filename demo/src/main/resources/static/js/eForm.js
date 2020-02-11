@@ -1439,46 +1439,82 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
         elem: '#ladate1'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate2'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate3'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate4'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate5'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate6'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate7'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate8'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
     laydate.render({
         elem: '#ladate9'
         ,lang: 'en'
         ,min : s3
+        ,done: function(value, date, endDate){
+            // 回调函数
+            $scope.checkPNR2();
+        }
     });
 
 
@@ -1495,6 +1531,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
             $scope.RoundTrip = true;
             $scope.er.triptype = 2;
         }
+        $scope.checkPNR2();
     }
 
     $scope.checkPNR1 = function(txt){
@@ -1504,6 +1541,9 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                 $('#ladate4').attr("disabled",true);
                 $('#ladate5').attr("disabled",true);
                 $('#ladate6').attr("disabled",true);
+                $("#ladate4").val("");
+                $("#ladate5").val("");
+                $("#ladate6").val("");
             }else{
                 $('#checkbox2').attr("disabled",false);
                 $('#ladate4').attr("disabled",false);
@@ -1516,11 +1556,59 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                 $('#ladate7').attr("disabled",true);
                 $('#ladate8').attr("disabled",true);
                 $('#ladate9').attr("disabled",true);
+                $("#ladate7").val("");
+                $("#ladate8").val("");
+                $("#ladate9").val("");
             }else{
                 $('#checkbox1').attr("disabled",false);
                 $('#ladate7').attr("disabled",false);
                 $('#ladate8').attr("disabled",false);
                 $('#ladate9').attr("disabled",false);
+            }
+        }
+        $scope.checkPNR2();
+    }
+
+
+    // 是否可以提交
+    $scope.checkPNR2 = function(){
+        if($scope.OneWay){
+            if($("#ladate1").val() == "" && $("#ladate2").val() == "" && $("#ladate3").val() == ""){
+                $(".eFormContent-submit").attr("disabled",true);
+            }else{
+                $(".eFormContent-submit").attr("disabled",false);
+            }
+        }else{
+            if($('#checkbox1').is(':checked')) {
+                if($("#ladate7").val() == "" && $("#ladate8").val() == "" && $("#ladate9").val() == ""){
+                    $(".eFormContent-submit").attr("disabled",true);
+                }else{
+                    $(".eFormContent-submit").attr("disabled",false);
+                }
+            }else if($('#checkbox2').is(':checked')){
+                if($("#ladate4").val() == "" && $("#ladate5").val() == "" && $("#ladate6").val() == ""){
+                    $(".eFormContent-submit").attr("disabled",true);
+                }else{
+                    $(".eFormContent-submit").attr("disabled",false);
+                }
+            }else if(!$('#checkbox1').is(':checked') && !$('#checkbox2').is(':checked')){
+                var falg1 = true;
+                var falg2 = true;
+                if($("#ladate4").val() == "" && $("#ladate5").val() == "" && $("#ladate6").val() == ""){
+                    falg1 = false;
+                }else{
+                    falg1 = true;
+                }
+                if($("#ladate7").val() == "" && $("#ladate8").val() == "" && $("#ladate9").val() == ""){
+                    falg2 = false;
+                }else{
+                    falg2 = true;
+                }
+                if(falg1 && falg2){
+                    $(".eFormContent-submit").attr("disabled",false);
+                }else{
+                    $(".eFormContent-submit").attr("disabled",true);
+                }
             }
         }
     }

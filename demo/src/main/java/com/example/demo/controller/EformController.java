@@ -73,7 +73,18 @@ public class EformController {
         }else if("7".equals(id)){
             t = "TyphoonMoveFlight";
         }else if("8".equals(id)){
-            t = "RefundWithNewBbooking";
+            //t = "RefundWithNewBbooking";
+            String s = "en";
+            if(langId == 1){
+                s = "zh_hk";
+            }else if(langId == 2){
+                s = "zh_cn";
+            }else if(langId == 4){
+                s = "ja";
+            }else if(langId == 5){
+                s = "ko";
+            }
+            return "redirect:https://securesettlement.net/hkexpress/e-refund/"+s;
         }else if("9".equals(id)){
             // t = "CheckFlightStatus";
             String s = "en";
@@ -174,6 +185,8 @@ public class EformController {
                    Map<String, Object> valueMap = new HashMap<>();
                    eformService.save(eform);
                    result.setEid(eform.getId());
+                   String zohomailtitle = eformService.getMailTypeNew(eform,crm_uid,-1);
+                   result.setZohomailtitle(zohomailtitle);
                    eformService.saveResult(result);
                    E_form_relation relation = eformTotal.getRelation();
                    if(relation != null && relation.getTriptype() > 0){
@@ -184,8 +197,7 @@ public class EformController {
 
                    // 发邮件(zoho)
                    valueMap.put("eform", eform);
-                   //valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),crm_uid));
-                   valueMap.put("title", eformService.getMailTypeNew(eform,crm_uid));
+                   valueMap.put("title", zohomailtitle);
                    valueMap.put("cc", eform.getEmail());
                    valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                    eformService.sendSimpleMail(valueMap);
@@ -315,8 +327,10 @@ public class EformController {
 
                     }
                     valueMap.put("eform", eform);
-                    // valueMap.put("title", eformService.getMailType1(eform,crm_uid));
-                    valueMap.put("title", eformService.getMailTypeNew(eform,crm_uid));
+                    String zohomailtitle = eformService.getMailTypeNew(eform,crm_uid,listSize);
+                    result.setZohomailtitle(zohomailtitle);
+                    eformService.updateResultzohomailtitle(result);
+                    valueMap.put("title", zohomailtitle);
                     valueMap.put("cc", eform.getEmail());
                     valueMap.put("Certificate_Nature", eformService.getCertificateTitle(eform.getEcertificatetype()));
                     eformService.sendSimpleMail(valueMap);

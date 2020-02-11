@@ -557,3 +557,6 @@ CREATE TABLE `e_form_relation` (
  `er_inbound_three` DATETIME COMMENT '第三次',
   PRIMARY KEY (`er_id`)
 )ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+ALTER TABLE e_form_result ADD er_zoho_mail_title TEXT COMMENT '发给zoho的邮件标题';
+

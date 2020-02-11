@@ -44,6 +44,11 @@
         });
 
     </script>
+    <style>
+        .eFormContent-submit:hover{
+            background-color: #0073be !important;
+        }
+    </style>
 
 </head>
 <body ng-app="myapp" ng-controller="eForm7Controller">
@@ -84,7 +89,6 @@
                             {{'eformText7'|translate}}<p style="font-size: 14px;text-indent: 2em;">{{'lab96'|translate}}<br>{{'lab97'|translate}}</p>
                         </div>
                         <div style="padding: 10px;">
-                            <p style="margin: 5px 0px;"></p>
                             <div class="form-group">
                                 <label>
                                     <span style="margin-right: 20px;">{{'lab16'|translate}}</span>
@@ -123,67 +127,62 @@
                                 <div class="form-group"style="width: 50%;">
                                     <label>{{'lab76'|translate}}</label>
                                 </div>
-                                <div class="form-group" style="width: 50%;">
-                                    <label>{{'lab98'|translate}}：</label>
-                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate1" autocomplete="off"/>
+                                <div>
+                                    <table width="60%">
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab98'|translate}}：</label></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate1" autocomplete="off"/></td>
+                                        </tr>
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab98'|translate}}：</label></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate2" autocomplete="off"/></td>
+                                        </tr>
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab98'|translate}}：</label></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate3" autocomplete="off"/></td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                <div class="form-group" style="width: 50%;">
-                                    <label>{{'lab99'|translate}}：</label>
-                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate2" autocomplete="off"/>
-                                </div>
-                                <div class="form-group" style="width: 50%;">
-                                    <label>{{'lab100'|translate}}：</label>
-                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate3" autocomplete="off"/>
-                                </div>
+
                             </div>
                             <div style="clear: both;"></div>
+
                             <div ng-show="RoundTrip">
-                                <div style="width: 50%;float: left;">
-                                    <div class="form-group">
-                                        <label>{{'lab101'|translate}}</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>
-                                            <input type="checkbox" id="checkbox1" ng-click="checkPNR1(1)"> {{'lab103'|translate}}
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab98'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate4" autocomplete="off"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab99'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate5" autocomplete="off"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab100'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate6" autocomplete="off"/>
-                                    </div>
-                                </div>
+                                <div>
+                                    <table width="100%">
+                                        <tr style="height: 35px;">
+                                            <td></td>
+                                            <td style="padding-right: 15px;"><label>{{'lab101'|translate}}</label></td>
+                                            <td><label>{{'lab102'|translate}}</label></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td style="padding-right: 15px;">
+                                                <input type="checkbox" id="checkbox1" ng-click="checkPNR1(1)"> <label>{{'lab103'|translate}}</label>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" id="checkbox2" ng-click="checkPNR1(2)"> <label>{{'lab103'|translate}}</label>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab98'|translate}}：</label></td>
+                                            <td style="padding-right: 15px;"><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate4" autocomplete="off"/></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate7" autocomplete="off"/></td>
+                                        </tr>
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab99'|translate}}：</label></td>
+                                            <td  style="padding-right: 15px;"><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate5" autocomplete="off"/></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate8" autocomplete="off"/></td>
+                                        </tr>
+                                        <tr style="height: 70px;">
+                                            <td><label>{{'lab100'|translate}}：</label></td>
+                                            <td  style="padding-right: 15px;"><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate6" autocomplete="off"/></td>
+                                            <td><input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate9" autocomplete="off"/></td>
+                                        </tr>
 
-                                <div style="width: 48%;float: right;">
-                                    <div class="form-group">
-                                        <label>{{'lab102'|translate}}</label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>
-                                            <input type="checkbox" id="checkbox2" ng-value="true" ng-click="checkPNR1(2)"> {{'lab103'|translate}}
-                                        </label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab98'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate7" autocomplete="off"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab99'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate8" autocomplete="off"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>{{'lab100'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate9" autocomplete="off" />
-                                    </div>
-                                </div>
+                                    </table>
 
+                                </div>
                             </div>
 
 
@@ -193,13 +192,16 @@
                                 <label>{{'lab104'|translate}}</label>
                             </div>
                             <div class="form-group" style="margin-bottom: 0px;">
-                                <label>&nbsp;&nbsp;1:{{'lab105'|translate}}</label>
+                                <label>&nbsp;&nbsp;1.{{'lab105'|translate}}</label>
                             </div>
                             <div class="form-group" style="margin-bottom: 0px;">
-                                <label>&nbsp;&nbsp;2:{{'lab106'|translate}}</label>
+                                <label>&nbsp;&nbsp;2.{{'lab106'|translate}}</label>
                             </div>
                             <div class="form-group" style="margin-bottom: 0px;">
-                                <label>&nbsp;&nbsp;3:{{'lab107'|translate}}</label>
+                                <label>&nbsp;&nbsp;3.{{'lab107'|translate}}</label>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label>&nbsp;&nbsp;4.{{'lab108'|translate}}</label>
                             </div>
                             <button class="btn btn-default eFormContent-submit" type="button" ng-click="eFormContentSubmit()">{{'lab14'|translate}}</button>
 

@@ -31,6 +31,16 @@ public class E_form_result implements Serializable {
     @Column(name = "er_crm_uid")
     private String crmuid;    // crmuid
 
+    @Column(name = "er_zoho_mail_title")
+    private String zohomailtitle;
+
+    public String getZohomailtitle() {
+        return zohomailtitle;
+    }
+
+    public void setZohomailtitle(String zohomailtitle) {
+        this.zohomailtitle = zohomailtitle;
+    }
 
     public String getCrmuid() {
         return crmuid;

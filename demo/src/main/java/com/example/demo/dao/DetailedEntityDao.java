@@ -24,7 +24,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             "INNER JOIN faqs_detailed_tags dt ON (dr.dr_dt_id = dt.dt_id)\n" +
             "LEFT JOIN faqs_dl_hotspot ON (d.dl_id = dlh_dl_id)\n" +
             "WHERE 1=1\n" +
-            "AND if(:langId < 0,d.dl_lang_id = :langId,1=1)\n"+
+            "AND if(:langId > 0,d.dl_lang_id = :langId,1=1)\n"+
             "AND if(:status != '',d.dl_status in (:status),1=1)\n"+
             "AND if(:status = '',d.dl_status > 0,1=1)\n"+
             "AND dt.dt_title IN(:searchs)\n" +

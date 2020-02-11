@@ -18,5 +18,8 @@ public interface E_form_resultDao extends JpaRepository<E_form_result,Long> {
     @Query("update E_form_result e set e.resultxml = :xml where e.id = :id")
     void updateResultXml(@Param("id")long id,@Param("xml")String xml);
 
+    @Modifying
+    @Query("update E_form_result e set e.zohomailtitle = :zohomailtitle where e.id = :id")
+    void updateResultzohomailtitle(@Param("id")long id,@Param("zohomailtitle")String zohomailtitle);
 
 }
