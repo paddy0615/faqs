@@ -171,11 +171,18 @@ public class EformController {
 
                // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
                if("0".equals(state)){
+                   Map<String, Object> valueMap = new HashMap<>();
                    eformService.save(eform);
                    result.setEid(eform.getId());
                    eformService.saveResult(result);
+                   E_form_relation relation = eformTotal.getRelation();
+                   if(relation != null && relation.getTriptype() > 0){
+                       relation.setEid(eform.getId());
+                       eformService.saveRelation(relation);
+                       valueMap.put("eformRelation", relation);
+                   }
+
                    // 发邮件(zoho)
-                   Map<String, Object> valueMap = new HashMap<>();
                    valueMap.put("eform", eform);
                    //valueMap.put("title", eformService.getMailType(eform.getType(),eform.getLangId(),eform.getPnr(),crm_uid));
                    valueMap.put("title", eformService.getMailTypeNew(eform,crm_uid));
@@ -259,48 +266,53 @@ public class EformController {
                     Map<String, Object> valueMap = new HashMap<>();
                     // 发确认邮件(给客)
                     Map<String, Object> valueMapUser = new HashMap<>();
-
+                    int listSize = -1;
                     // 如何e_certificate_type =1 or =4 ,邮件方式不一样
                     if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
                         List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno(),eform.getDeparturedate(),result);
                         eformService.updateResultXml(result);
-                        if(list.size() == 0){
-                            module.setCode(404);
-                            return module;
-                        }
-                        // 对应类型。
-                        CommomClass commomClass = (CommomClass) list.get(0);
-                        // TBA ,IRR待定信息
-                        if(commomClass.getTemplate()!=null && commomClass.getTemplate().contains("is TBA")){
-                            module.setCode(405);
-                            return module;
-                        }
-                        if(eform.getEcertificatetype() == 1){
-                            if(!"Rescheduled Flights".equalsIgnoreCase(commomClass.getTemplate())){
+                        listSize = list.size();
+                        if(listSize == 0){
+                            if(eform.getEcertificatetype() == 1){
                                 module.setCode(404);
                                 return module;
                             }
                         }else{
-                            if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
-                               !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
-                               !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) &&
-                               !"schedule is TBA".equalsIgnoreCase(commomClass.getTemplate())){
-                                module.setCode(404);
+                            // 对应类型。
+                            CommomClass commomClass = (CommomClass) list.get(0);
+                            // TBA ,IRR待定信息
+                            if(commomClass.getTemplate()!=null && commomClass.getTemplate().contains("is TBA")){
+                                module.setCode(405);
                                 return module;
                             }
+                            if(eform.getEcertificatetype() == 1){
+                                if(!"Rescheduled Flights".equalsIgnoreCase(commomClass.getTemplate())){
+                                    module.setCode(404);
+                                    return module;
+                                }
+                            }else{
+                                if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
+                                        !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
+                                        !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) &&
+                                        !"schedule is TBA".equalsIgnoreCase(commomClass.getTemplate())){
+                                    module.setCode(404);
+                                    return module;
+                                }
+                            }
+                            // 填充pdf-一个旅客对应一个个PDF
+                            String e_flie = "";
+                            for (int i = 0;i<firstnameArr.length;i++){
+                                String s = pdfService.fillTemplate(eform,firstnameArr[i],lastnameArr[i],commomClass);
+                                e_flie += s+",";
+                            }
+                            e_flie = e_flie.substring(0,e_flie.length()-1);
+                            eform.setFlie(e_flie);
+                            eformService.updateEformFlie(eform.getId(),e_flie);
+                            valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
+                            valueMapUser.put("ecertificatetype", eform.getEcertificatetype().toString());
+                            module.putData("ecertificatetype",eform.getEcertificatetype());
                         }
-                        // 填充pdf-一个旅客对应一个个PDF
-                        String e_flie = "";
-                        for (int i = 0;i<firstnameArr.length;i++){
-                            String s = pdfService.fillTemplate(eform,firstnameArr[i],lastnameArr[i],commomClass);
-                            e_flie += s+",";
-                        }
-                        e_flie = e_flie.substring(0,e_flie.length()-1);
-                        eform.setFlie(e_flie);
-                        eformService.updateEformFlie(eform.getId(),e_flie);
-                        valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
-                        valueMapUser.put("ecertificatetype", eform.getEcertificatetype().toString());
-                        module.putData("ecertificatetype",eform.getEcertificatetype());
+
                     }
                     valueMap.put("eform", eform);
                     // valueMap.put("title", eformService.getMailType1(eform,crm_uid));
@@ -311,14 +323,18 @@ public class EformController {
 
                     valueMapUser.put("eform", eform);
                     if(eform.getEcertificatetype() == 1 || eform.getEcertificatetype() == 4 ){
-                        String s = "Certificate -";
-                        if(eform.getEcertificatetype() == 1){
-                            s += " Flight Delay";
-                        }else {
-                            s += " Flight Cancel";
+                        if(listSize == 0){
+                            valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
+                        }else{
+                            String s = "Certificate -";
+                            if(eform.getEcertificatetype() == 1){
+                                s += " Flight Delay";
+                            }else {
+                                s += " Flight Cancel";
+                            }
+                            s += " -- PNR: "+eform.getPnr();
+                            valueMapUser.put("title", s);
                         }
-                        s += " -- PNR: "+eform.getPnr();
-                        valueMapUser.put("title", s);
                     }else{
                         valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
                     }
@@ -451,6 +467,15 @@ public class EformController {
     @ResponseBody
     @RequestMapping(value = "/E/searchFlightIRRTest1")
     public String getList1() throws Exception{
+        // 发确认邮件(给客)
+        Map<String, Object> valueMapUser = new HashMap<>();
+        valueMapUser.put("title", "Certificate - Flight Cancel -- PNR: test1");
+        valueMapUser.put("To","gary.lam@sonic-teleservices.com");
+        valueMapUser.put("langId",1);
+        valueMapUser.put("random","123456789");
+        eformService.sendSimpleMailUser(valueMapUser);
+
+
         return "";
     }
 

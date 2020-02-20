@@ -88,6 +88,67 @@
                 <td class="control-label1">Certificate Nature :</td>
                 <td class="control-label2" th:text="${Certificate_Nature}"></td>
             </tr>
+            <element th:if="${eform.type == '7'}">
+                <element th:if="${not #lists.isEmpty(eformRelation)}">
+                    <element th:if="${eformRelation.triptype == 1}">
+                    <tr>
+                        <td class="control-label1">One-Way:</td>
+                        <td class="control-label2"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 1st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundone, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 2nd choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundtwo, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 3rd choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundthree, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                </element>
+                    <element th:if="${eformRelation.triptype == 2}">
+                    <tr>
+                        <td class="control-label1">Round-Trip:</td>
+                        <td class="control-label2"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp;Outbound</td>
+                        <td class="control-label2"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 1st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundone, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 2st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundtwo, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 3st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.outboundthree, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp;Inbound</td>
+                        <td class="control-label2"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 1st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.inboundone, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 2st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.inboundtwo, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    <tr>
+                        <td class="control-label1">&nbsp; &nbsp; 3st choice :</td>
+                        <td class="control-label2" th:text="${#dates.format(eformRelation.inboundthree, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                </element>
+                </element>
+            </element>
+
         </table>
 
 

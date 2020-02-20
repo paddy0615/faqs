@@ -1435,71 +1435,92 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate1'
         ,lang: 'en'
-        ,done:function(value,dates,edate){
-            $('#ladate1').val(value);
-            $('.eForm-div1').data('bootstrapValidator')
-                .updateStatus('ladate1', 'NOT_VALIDATED',null)
-                .validateField('ladate1');
-        }
     });
     laydate.render({
         elem: '#ladate2'
         ,lang: 'en'
-        ,done:function(value,dates,edate){
-            $('#ladate2').val(value);
-            $('.eForm-div1').data('bootstrapValidator')
-                .updateStatus('ladate2', 'NOT_VALIDATED',null)
-                .validateField('ladate2');
-        }
     });
     laydate.render({
         elem: '#ladate3'
         ,lang: 'en'
-        ,done:function(value,dates,edate){
-            $('#ladate3').val(value);
-            $('.eForm-div1').data('bootstrapValidator')
-                .updateStatus('ladate3', 'NOT_VALIDATED',null)
-                .validateField('ladate3');
-        }
     });
     laydate.render({
         elem: '#ladate4'
         ,lang: 'en'
-        ,done:function(value,dates,edate){
-            $('#ladate4').val(value);
-            $('.eForm-div1').data('bootstrapValidator')
-                .updateStatus('ladate4', 'NOT_VALIDATED',null)
-                .validateField('ladate4');
-        }
     });
     laydate.render({
         elem: '#ladate5'
         ,lang: 'en'
-        ,done:function(value,dates,edate){
-            $('#ladate5').val(value);
-            $('.eForm-div1').data('bootstrapValidator')
-                .updateStatus('ladate5', 'NOT_VALIDATED',null)
-                .validateField('ladate5');
-        }
+    });
+    laydate.render({
+        elem: '#ladate6'
+        ,lang: 'en'
+    });
+    laydate.render({
+        elem: '#ladate7'
+        ,lang: 'en'
+    });
+    laydate.render({
+        elem: '#ladate8'
+        ,lang: 'en'
+    });
+    laydate.render({
+        elem: '#ladate9'
+        ,lang: 'en'
     });
 
+
     // 样式初始化
-    $scope.myTabContent = false;
-    $scope.PNR = true
-    $scope.checkPNR = function(){
-        if(!$scope.PNR){
-            $('.pnr-div').hide();
-            $scope.myTabContent = true;
+    $scope.OneWay = false;
+    $scope.RoundTrip = false;
+    $scope.checkPNR = function(txt){
+        $scope.OneWay = false;
+        $scope.RoundTrip = false;
+        if(txt == 'OneWay'){
+            $scope.OneWay = true;
+            $scope.er.triptype = 1;
         }else{
-            $('.pnr-div').show();
-            $scope.myTabContent = false;
+            $scope.RoundTrip = true;
+            $scope.er.triptype = 2;
         }
     }
+
+    $scope.checkPNR1 = function(txt){
+        if(txt == 1){
+            if($('#checkbox1').is(':checked')) {
+                $('#checkbox2').attr("disabled",true);
+                $('#ladate4').attr("disabled",true);
+                $('#ladate5').attr("disabled",true);
+                $('#ladate6').attr("disabled",true);
+            }else{
+                $('#checkbox2').attr("disabled",false);
+                $('#ladate4').attr("disabled",false);
+                $('#ladate5').attr("disabled",false);
+                $('#ladate6').attr("disabled",false);
+            }
+        }else{
+            if($('#checkbox2').is(':checked')) {
+                $('#checkbox1').attr("disabled",true);
+                $('#ladate7').attr("disabled",true);
+                $('#ladate8').attr("disabled",true);
+                $('#ladate9').attr("disabled",true);
+            }else{
+                $('#checkbox1').attr("disabled",false);
+                $('#ladate7').attr("disabled",false);
+                $('#ladate8').attr("disabled",false);
+                $('#ladate9').attr("disabled",false);
+            }
+        }
+    }
+
+
     $scope.eFormContent = true;
     $scope.eFormError = false;
     $scope.eFormSuccess = false;
     $scope.e = {};
     $scope.e.type = "7";
+    $scope.er = {};
+    $scope.er.triptype = 0;
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
     var crm_uid = $location.search().crm_uid;
@@ -1512,31 +1533,17 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     var lock1 = false; //默认未锁定
     $scope.eFormContentSubmit = function () {
         $scope.e.langId =  $scope.langId;
-        if(!$scope.PNR){
-            $scope.pnr = "";
-            $scope.e.triptype = parseInt($(".nav-tabs .active").attr("data"));
-            if($scope.e.triptype == 1){
-                $scope.e.departing =  $scope.tab1_departing;
-                $scope.e.going =  $scope.tab1_going;
-                $scope.e.departingdate =   $("#ladate1").val();
-                $scope.e.goingdate =   $("#ladate2").val();
-                $scope.e.departingnew =  "";
-                $scope.e.goingnew =  "";
-            }else if($scope.e.triptype == 2){
-                $scope.e.departing =  $scope.tab2_departing;
-                $scope.e.going =  $scope.tab2_going;
-                $scope.e.departingdate =  $("#ladate3").val();
-                $scope.e.goingdate = "";
-                $scope.e.departingnew =  "";
-                $scope.e.goingnew =  "";
-            }else if($scope.e.triptype == 3){
-                $scope.e.departing =  $scope.e_area_names[0].key;
-                $scope.e.going =  $scope.tab3_going;
-                $scope.e.departingdate =  $("#ladate4").val();
-                $scope.e.goingdate = $("#ladate5").val();
-                $scope.e.departingnew =  $scope.tab3_departingnew;
-                $scope.e.goingnew =  $scope.e_area_names[0].key;
-            }
+        if($scope.er.triptype ==1){
+            $scope.er.outboundone = $("#ladate1").val();
+            $scope.er.outboundtwo = $("#ladate2").val();
+            $scope.er.outboundthree = $("#ladate3").val();
+        }else{
+            $scope.er.outboundone = $("#ladate4").val();
+            $scope.er.outboundtwo = $("#ladate5").val();
+            $scope.er.outboundthree = $("#ladate6").val();
+            $scope.er.inboundone = $("#ladate7").val();
+            $scope.er.inboundtwo = $("#ladate8").val();
+            $scope.er.inboundthree = $("#ladate9").val();
         }
         var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
         bootstrapValidator.validate();
@@ -1548,7 +1555,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                 $http({
                     method : 'post',
                     url : ctx + 'appJson/E/add',
-                    data : {"eform":$scope.e,"crmuid":crm_uid},
+                    data : {"eform":$scope.e,"crmuid":crm_uid,"relation":$scope.er},
                 }).then(function(resp){
                     $scope.data = resp.data;
                     $("#booking-steps-li2").removeClass().addClass('active');
@@ -1630,146 +1637,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
                                 message: T.T('error3')
                             }
                         }
-                    },
-                    tab1_departing: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab1_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    ladate1: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate2: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate3: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate4: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    ladate5: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error2')
-                            }
-                        }
-                    },
-                    tab2_departing: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab2_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab3_going: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    tab3_departingnew: {
-                        validators: {
-                            notEmpty: {
-                                message: T.T('error4')
-                            },
-                            callback :{
-                                message: T.T('error4'),
-                                callback: function(value, validator) {
-                                    if (value == "?") {
-                                        return false;
-                                    } else {
-                                        return true;
-                                    }
-                                }
-                            }
-                        }
                     }
-
-
 
                 }
             });

@@ -75,9 +75,11 @@ public class EformService {
     @Resource
     private TemplateEngine templateEngine;
 
-
     @Resource
     E_form_MonitorDao e_form_monitorDao;
+
+    @Resource
+    E_form_relationDao e_form_relationDao;
 
     public List<E_area_name> getAreaNames(){
         return e_area_nameDao.getAllOrderByupdateDate();
@@ -130,6 +132,16 @@ public class EformService {
     public void saveResult(E_form_result e_form_result){
         e_form_resultDao.save(e_form_result);
     }
+
+    /**
+     * 添加e_form_relationDao
+     * @param e_form_relation
+     */
+    @Transactional
+    public void saveRelation(E_form_relation e_form_relation){
+        e_form_relationDao.save(e_form_relation);
+    }
+
 
     /**
      * updateResultXml
@@ -307,14 +319,18 @@ public class EformService {
      * @throws
      */
     public void sendSimpleMailUser(Map<String, Object> valueMap) throws Exception {
+        //  Soniccs.Guest.Relations@hkexpress.com
         String sender = "Soniccs.Guest.Relations@hkexpress.com";
         //String password = "H+==2GaR";
         String password = "W34eDSer@Hke";
+
         // 收件人邮箱地址
         String receiver = valueMap.get("To").toString();
-        // office365 邮箱服务器地址及端口号
-        String host = "smtp-mail.outlook.com";
+
+        // 邮箱服务器地址及端口号
+        String host = "smtp.office365.com";
         String prot = "587";
+
         try{
             Properties props = new Properties();
             // 发送服务器需要身份验证
@@ -325,16 +341,23 @@ public class EformService {
             props.setProperty("mail.transport.protocol", "smtp");
             props.setProperty("mail.smtp.port", prot);
             props.setProperty("mail.smtp.starttls.enable", "true");
+
             // 设置环境信息
             Session session = Session.getInstance(props);
             // 创建邮件对象
             MimeMessage msg = new MimeMessage(session);
+            // 发送人
+            msg.setFrom(new InternetAddress("guest.relations@hkexpress.com"));
+            // 收信人
+            //msg.setRecipients(Message.RecipientType.TO,receiver);
+            msg.addRecipient(Message.RecipientType.TO,new InternetAddress(receiver));
+            // 抄送人
+            //msg.setRecipients(Message.RecipientType.CC, "hke_smartform@sonic-teleservices.com");
+            // 密抄人
+            msg.setRecipients(Message.RecipientType.BCC, "guest.relations@hkexpress.com");
+
             // 设置邮件内容
             MimeMessageHelper helper = new MimeMessageHelper(msg, true,"UTF-8");
-            // 设置发件人邮箱
-            helper.setFrom("guest.relations@hkexpress.com");
-            // 设置收件人邮箱
-            helper.setTo(receiver);
             // 设置邮件标题
             helper.setSubject(valueMap.get("title").toString());
             Context context = new Context();
@@ -364,61 +387,73 @@ public class EformService {
             // 连接邮件服务器
             transport.connect(sender, password);
             // 发送邮件
-            transport.sendMessage(msg, new Address[]{new InternetAddress(receiver)});
+            transport.sendMessage(msg, msg.getAllRecipients());
             // 关闭连接
             transport.close();
+
+            logger.info("成功发送确认邮件："+valueMap.toString());
         }catch( Exception e ){
             e.printStackTrace();
+            logger.error(e.toString()+" ；错误发送确认邮件："+valueMap.toString());
         }
     }
+
 
     /**
      * 发邮件
      * @throws Exception
      */
     public void sendSimpleMail(Map<String, Object> valueMap) throws Exception {
-        MimeMessage mimeMessage = null;
-        mimeMessage = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-        // 设置发件人邮箱
-        helper.setFrom(Sender);
-        if("pro".equals(active)){
-            // 设置收件人邮箱- 此邮件已关联zoho.
-            helper.setTo("guest.relations@hkexpress.com");
-            // 抄送邮件接收人
-            helper.setCc(Sender);
-        }else{
-            // 设置收件人邮箱
-            helper.setTo("windy.tam@sonic-teleservices.com");
-            // 抄送邮件接收人
-            helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com"});
+        try {
+            MimeMessage mimeMessage = null;
+            mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            // 设置发件人邮箱
+            helper.setFrom(Sender);
+            if("pro".equals(active)){
+                // 设置收件人邮箱- 此邮件已关联zoho.
+                helper.setTo("guest.relations@hkexpress.com");
+                // 抄送邮件接收人
+                helper.setCc(Sender);
+            }else{
+                // 设置收件人邮箱
+                helper.setTo("windy.tam@sonic-teleservices.com");
+                // 抄送邮件接收人
+                helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com"});
 
-        }
-        // 设置邮件标题
-        helper.setSubject(valueMap.get("title").toString());
-        Context context = new Context();
-        context.setVariables(valueMap);
-        String content = this.templateEngine.process("faqs/eFormMail.html", context);
-        helper.setText(content, true);
-        org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top4.png");
-        // 图片
-        FileSystemResource file = new FileSystemResource(resource.getFile());
-        helper.addInline("faq_top4", file);
-        if(valueMap.containsKey("ecertificatetype")){
-            // 添加附件
-            Eform eformNew = (Eform)valueMap.get("eform");
-            String [] flieArr = eformNew.getFlie().split(",");
-            for (int i = 0;i<flieArr.length;i++){
-                String eFormpath = path+"/"+flieArr[i];
-                FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
-                String flieName = flieArr[i].substring(flieArr[i].lastIndexOf("/")+1);
-                helper.addAttachment(flieName, fileSystemResource);
+            }
+            // 设置邮件标题
+            helper.setSubject(valueMap.get("title").toString());
+            Context context = new Context();
+            context.setVariables(valueMap);
+            String content = this.templateEngine.process("faqs/eFormMail.html", context);
+            helper.setText(content, true);
+            org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top4.png");
+            // 图片
+            FileSystemResource file = new FileSystemResource(resource.getFile());
+            helper.addInline("faq_top4", file);
+            if(valueMap.containsKey("ecertificatetype")){
+                // 添加附件
+                Eform eformNew = (Eform)valueMap.get("eform");
+                String [] flieArr = eformNew.getFlie().split(",");
+                for (int i = 0;i<flieArr.length;i++){
+                    String eFormpath = path+"/"+flieArr[i];
+                    FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+                    String flieName = flieArr[i].substring(flieArr[i].lastIndexOf("/")+1);
+                    helper.addAttachment(flieName, fileSystemResource);
+                }
+
             }
 
+            // 发送邮件
+            mailSender.send(mimeMessage);
+            logger.info("成功发送邮件："+valueMap.toString());
+        }catch( Exception e ){
+            e.printStackTrace();
+            logger.error(e.toString()+" ；错误发送邮件："+valueMap.toString());
         }
 
-        // 发送邮件
-        mailSender.send(mimeMessage);
+
     }
 
 
@@ -437,7 +472,6 @@ public class EformService {
         uri += "&lastname="+eform.getLastname();
         //uri += "&email="+eform.getEmail();
         System.out.println(uri);
-        logger.info(uri);
         //  模拟请求
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -468,7 +502,6 @@ public class EformService {
         uri += "&departuredate="+eform.getDeparturedate();
         uri += "&flightno="+eform.getFlightno();
         System.out.println(uri);
-        logger.info(uri);
         //  模拟请求
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);

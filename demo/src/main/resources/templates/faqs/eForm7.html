@@ -79,19 +79,15 @@
                 </div>
 
                 <div style="width: 100%;float: left;margin-bottom: 100px;">
-
                     <div ng-show="eFormContent" class="eForm-div1" style="border-radius: 10px;color: #9960a7;">
                         <div class="list-group-item active ng-binding" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 24px;">
-                            {{'eformText7'|translate}}<p style="font-size: 14px;text-indent: 2em;">{{'lab61'|translate}}</p>
+                            {{'eformText7'|translate}}<p style="font-size: 14px;text-indent: 2em;">{{'lab96'|translate}}<br>{{'lab97'|translate}}</p>
                         </div>
                         <div style="padding: 10px;">
                             <p style="margin: 5px 0px;"></p>
                             <div class="form-group">
                                 <label>
                                     <span style="margin-right: 20px;">{{'lab16'|translate}}</span>
-                              <!--      <input type="radio" name="a" ng-value="true" ng-model="PNR" ng-click="checkPNR()" ng-checked="true" >{{'lab17'|translate}}
-                                    <input type="radio" name="a" ng-value="false" ng-model="PNR" ng-click="checkPNR()" style="margin-left: 20px;">{{'lab18'|translate}}
--->
                                 </label>
                             </div>
                             <div class="form-group pnr-div" style="margin-top: -30px;">
@@ -107,95 +103,7 @@
                                 <input type="text" class="form-control" placeholder="{{'lab4'|translate}}"  name="lastName" ng-model="e.lastname"/>
                             </div>
                             <div style="clear: both;"></div>
-                            <!-- tab-->
-                            <div ng-show="myTabContent" class="tab-content">
-                                <ul class="nav nav-tabs" style="margin-bottom: 10px;">
-                                    <li data="1" class="active"><a href="#home" data-toggle="tab">{{'lab5'|translate}}</a></li>
-                                    <li data="2"><a href="#ios" data-toggle="tab">{{'lab6'|translate}}</a></li>
-                                    <li data="3"><a href="#jmeter" data-toggle="tab">{{'lab7'|translate}}</a></li>
-                                </ul>
-                                <!-- tab1-->
-                                <div class="tab-pane fade in active" id="home">
-                                    <div class="form-group" style="width: 50%;float: left;">
-                                        <label>{{'lab8'|translate}}:</label>
-                                        <select name="tab1_departing" ng-model="tab1_departing" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div class="form-group"  style="width: 48%;float: right;">
-                                        <label>{{'lab9'|translate}}：</label>
-                                        <select name="tab1_going" ng-model="tab1_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div style="clear: both;"></div>
-                                    <div class="form-group" style="width: 50%;float: left;">
-                                        <label>{{'lab10'|translate}}：</label>
-                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate1" />
-                                    </div>
-                                    <div class="form-group" style="width: 48%;float: right;">
-                                        <label>{{'lab11'|translate}}:</label>
-                                        <input name="ladate2" type="text" class="form-control layui-input col-sm-4" id="ladate2" />
-                                    </div>
 
-                                </div>
-
-                                <!-- tab2-->
-                                <div class="tab-pane fade" id="ios">
-                                    <div class="form-group" style="width: 50%;float: left;">
-                                        <label>{{'lab8'|translate}}:</label>
-                                        <select name="tab2_departing" ng-model="tab2_departing" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten) for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div class="form-group"  style="width: 48%;float: right;">
-                                        <label>{{'lab9'|translate}}：</label>
-                                        <select name="tab2_going" ng-model="tab2_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten)  for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div style="clear: both;"></div>
-                                    <div class="form-group" style="width: 50%;">
-                                        <label>{{'lab10'|translate}}：</label>
-                                        <input name="ladate3" type="text" class="form-control layui-input col-sm-4" id="ladate3">
-                                    </div>
-
-
-                                </div>
-
-                                <!-- tab3-->
-                                <div class="tab-pane fade" id="jmeter">
-                                    <div class="form-group jmeterDiv1">
-                                        <label>{{'lab8'|translate}}:</label>
-                                        <input style="background-color: white" readonly="readonly" type="text" class="form-control layui-input col-sm-4" ng-value="langId==1?e_area_names[0].hk:(langId==2?e_area_names[0].cn:e_area_names[0].en)">
-                                    </div>
-                                    <div class="form-group jmeterDiv2">
-                                        <label>{{'lab9'|translate}}：</label>
-                                        <select name="tab3_going" ng-model="tab3_going" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten)  for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div class="form-group jmeterDiv3">
-                                        <label>{{'lab10'|translate}}：</label>
-                                        <input name="ladate4" type="text" class="form-control layui-input col-sm-4" id="ladate4"/>
-                                    </div>
-                                    <div style="clear: both;"></div>
-                                    <div class="form-group jmeterDiv4">
-                                        <label>{{'lab8'|translate}}:</label>
-                                        <select name="tab3_departingnew" ng-model="tab3_departingnew" class="form-control" ng-options="a.key as langId==1?a.hk:(langId==2?a.cn:a.en) group by langId==1?a.thk:(langId==2?a.tcn:a.ten)  for a in e_area_names">
-                                        </select>
-                                    </div>
-                                    <div class="form-group jmeterDiv5">
-                                        <label>{{'lab9'|translate}}：</label>
-                                        <input style="background-color: white" readonly="readonly" type="text" class="form-control layui-input col-sm-4" ng-value="langId==1?e_area_names[0].hk:(langId==2?e_area_names[0].cn:e_area_names[0].en)" />
-                                    </div>
-                                    <div class="jmeterDiv5-div"></div>
-                                    <div class="form-group jmeterDiv6">
-                                        <label>{{'lab11'|translate}}:</label>
-                                        <input name="ladate5" type="text" class="form-control layui-input col-sm-4" id="ladate5"/>
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-
-                            <div style="clear: both;"></div>
                             <div class="form-group">
                                 <label>{{'lab12'|translate}}:</label>
                             </div>
@@ -203,8 +111,95 @@
                                 <label></label>
                                 <input type="text" class="form-control" name="email" ng-model="e.email" />
                             </div>
+
                             <div class="form-group">
-                                <label>{{'lab13'|translate}}</label>
+                                <label>
+                                    <!--<span style="margin-right: 20px;">{{'lab16'|translate}}</span>-->
+                                    <input type="radio" name="a" ng-value="true" ng-click="checkPNR('OneWay')" ng-checked="false" >{{'lab6'|translate}}
+                                    <input type="radio" name="a" ng-value="false" ng-click="checkPNR('RoundTrip')" style="margin-left: 20px;">{{'lab5'|translate}}
+                                </label>
+                            </div>
+                            <div ng-show="OneWay">
+                                <div class="form-group"style="width: 50%;">
+                                    <label>{{'lab76'|translate}}</label>
+                                </div>
+                                <div class="form-group" style="width: 50%;">
+                                    <label>{{'lab98'|translate}}：</label>
+                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate1" autocomplete="off"/>
+                                </div>
+                                <div class="form-group" style="width: 50%;">
+                                    <label>{{'lab99'|translate}}：</label>
+                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate2" autocomplete="off"/>
+                                </div>
+                                <div class="form-group" style="width: 50%;">
+                                    <label>{{'lab100'|translate}}：</label>
+                                    <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate3" autocomplete="off"/>
+                                </div>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <div ng-show="RoundTrip">
+                                <div style="width: 50%;float: left;">
+                                    <div class="form-group">
+                                        <label>{{'lab101'|translate}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" id="checkbox1" ng-click="checkPNR1(1)"> {{'lab103'|translate}}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab98'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate4" autocomplete="off"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab99'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate5" autocomplete="off"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab100'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate6" autocomplete="off"/>
+                                    </div>
+                                </div>
+
+                                <div style="width: 48%;float: right;">
+                                    <div class="form-group">
+                                        <label>{{'lab102'|translate}}</label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                            <input type="checkbox" id="checkbox2" ng-value="true" ng-click="checkPNR1(2)"> {{'lab103'|translate}}
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab98'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate7" autocomplete="off"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab99'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate8" autocomplete="off"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{'lab100'|translate}}：</label>
+                                        <input name="ladate1" type="text" class="form-control layui-input col-sm-4" id="ladate9" autocomplete="off" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+                            <div style="clear: both;height: 20px;"></div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label>{{'lab104'|translate}}</label>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label>&nbsp;&nbsp;1:{{'lab105'|translate}}</label>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label>&nbsp;&nbsp;2:{{'lab106'|translate}}</label>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0px;">
+                                <label>&nbsp;&nbsp;3:{{'lab107'|translate}}</label>
                             </div>
                             <button class="btn btn-default eFormContent-submit" type="button" ng-click="eFormContentSubmit()">{{'lab14'|translate}}</button>
 

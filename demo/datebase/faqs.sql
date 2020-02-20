@@ -539,3 +539,19 @@ CREATE TABLE `faqs_select_monitor` (
   `m_crm_uid` VARCHAR(50) NULL COMMENT 'crm-name',
   PRIMARY KEY (`m_id`)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- e_form_relation 关系表
+DROP TABLE IF EXISTS `e_form_relation`;
+CREATE TABLE `e_form_relation` (
+ `er_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `er_e_id` INT NULL COMMENT 'e-form表单ID',
+ `er_trip_type` INT(11) DEFAULT 0 COMMENT '[1单程,2往返]',
+ `er_outbound_one` DATETIME COMMENT '第一次',
+ `er_outbound_two` DATETIME COMMENT '第二次',
+ `er_outbound_three` DATETIME COMMENT '第三次',
+ `er_inbound_one` DATETIME COMMENT '第一次',
+ `er_inbound_two` DATETIME COMMENT '第二次',
+ `er_inbound_three` DATETIME COMMENT '第三次',
+  PRIMARY KEY (`er_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
