@@ -24,6 +24,12 @@ public class E_form_relation implements Serializable {
     @Column(name = "er_trip_type",columnDefinition="long default 0")
     private Long triptype = (long)0;
 
+    @Column(name = "er_outbound_unchanged",columnDefinition="long default 0")
+    private Long outboundunchanged = (long)0;
+
+    @Column(name = "er_inbound_unchanged",columnDefinition="long default 0")
+    private Long inboundunchanged = (long)0;
+
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @Column(name = "er_outbound_one")
     private Date outboundone;
@@ -47,6 +53,23 @@ public class E_form_relation implements Serializable {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     @Column(name = "er_inbound_three")
     private Date inboundthree;
+
+
+    public Long getOutboundunchanged() {
+        return outboundunchanged;
+    }
+
+    public void setOutboundunchanged(Long outboundunchanged) {
+        this.outboundunchanged = outboundunchanged;
+    }
+
+    public Long getInboundunchanged() {
+        return inboundunchanged;
+    }
+
+    public void setInboundunchanged(Long inboundunchanged) {
+        this.inboundunchanged = inboundunchanged;
+    }
 
     public Long getId() {
         return id;

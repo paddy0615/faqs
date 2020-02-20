@@ -1431,42 +1431,54 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
         // 强制更新  $scope.apply();
     }
 
+    var day3 = new Date();
+    day3.setTime(day3.getTime()+24*60*60*1000);
+    var s3 = day3.getFullYear()+"-" + (day3.getMonth()+1) + "-" + day3.getDate();
     // laydate国际版
     laydate.render({
         elem: '#ladate1'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate2'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate3'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate4'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate5'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate6'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate7'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate8'
         ,lang: 'en'
+        ,min : s3
     });
     laydate.render({
         elem: '#ladate9'
         ,lang: 'en'
+        ,min : s3
     });
 
 
@@ -1521,6 +1533,9 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     $scope.e.type = "7";
     $scope.er = {};
     $scope.er.triptype = 0;
+    $scope.er.outboundunchanged = 0;
+    $scope.er.inboundunchanged = 0;
+
     // 获取那个dlId进入
     $scope.e.dlId = GetUrlParam("dlId")==""?0:GetUrlParam("dlId");
     var crm_uid = $location.search().crm_uid;
@@ -1544,6 +1559,19 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
             $scope.er.inboundone = $("#ladate7").val();
             $scope.er.inboundtwo = $("#ladate8").val();
             $scope.er.inboundthree = $("#ladate9").val();
+            if($('#checkbox1').is(':checked')) {
+                $scope.er.outboundunchanged = 1;
+                $scope.er.outboundone = "";
+                $scope.er.outboundtwo = "";
+                $scope.er.outboundthree = "";
+            }
+            if($('#checkbox2').is(':checked')) {
+                $scope.er.inboundunchanged = 1;
+                $scope.er.inboundone = "";
+                $scope.er.inboundtwo = "";
+                $scope.er.inboundthree = "";
+            }
+
         }
         var bootstrapValidator = $(".eForm-div1").data('bootstrapValidator');
         bootstrapValidator.validate();

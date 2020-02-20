@@ -114,35 +114,47 @@
                         <td class="control-label2"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp;Outbound</td>
+                        <td class="control-label1">&nbsp;&nbsp;Outbound</td>
                         <td class="control-label2"></td>
                     </tr>
+                    <element th:if="${eformRelation.outboundunchanged > 0}">
+                        <tr>
+                            <td class="control-label1">&nbsp;&nbsp;Remain unchanged</td>
+                            <td class="control-label2"></td>
+                        </tr>
+                    </element>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 1st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 1st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.outboundone, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 2st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 2st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.outboundtwo, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 3st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 3st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.outboundthree, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp;Inbound</td>
+                        <td class="control-label1">&nbsp;&nbsp;Inbound</td>
                         <td class="control-label2"></td>
                     </tr>
+                    <element th:if="${eformRelation.inboundunchanged > 0}">
+                        <tr>
+                            <td class="control-label1">&nbsp;&nbsp;Remain unchanged</td>
+                            <td class="control-label2"></td>
+                        </tr>
+                    </element>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 1st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 1st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.inboundone, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 2st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 2st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.inboundtwo, 'yyyy-MM-dd')}"></td>
                     </tr>
                     <tr>
-                        <td class="control-label1">&nbsp; &nbsp; 3st choice :</td>
+                        <td class="control-label1">&nbsp;&nbsp;&nbsp; &nbsp; 3st choice :</td>
                         <td class="control-label2" th:text="${#dates.format(eformRelation.inboundthree, 'yyyy-MM-dd')}"></td>
                     </tr>
                 </element>
