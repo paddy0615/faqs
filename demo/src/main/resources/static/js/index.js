@@ -247,8 +247,10 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
             params : {"search": $scope.searchTest,"langId" : $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
-            $scope.indexShow = false;
             $scope.detaileds =  data.result.detaileds;
+            $scope.folderList =  data.result.folderList;
+            $scope.detaileds_length = $scope.detaileds.length;
+            $scope.searchFeedback =  data.result.searchFeedback;
         })
     }
     $scope.searchTest = "";
@@ -276,18 +278,91 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
     /* 搜索框 结束*/
 
 
+    /**
+     * 搜索文件夹
+     * @param key
+     * @param langId
+     */
+    $scope.getFolderUrl = function (key,langId) {
+        $scope.folderList = {};
+        $http({
+            method : "post",
+            url : ctx + "appJson/getSearchFolder",
+            params : {"key": key,"langId" : langId,"status":1}
+        }).success(function (data) {
+            $scope.folderList =  data.result.folderList;
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+
+
+
+    /**
+     * 搜索反馈弹框
+     * 开始
+     */
+    $scope.alertSet = function () {
+        $('#myModalAddFolder').modal();
+    }
+    $scope.selectFeedback = {};
+    // 提交搜索反馈信息
+    var lock1 = false; //默认未锁定
+    $scope.addSelectFeedback = function () {
+        if(!check1()){
+            return;
+        }
+        if(!lock1) {
+            lock1 = true; // 锁定
+            var index = layer.load(0, {shade: false});
+            $scope.selectFeedback.langId = $scope.langId;
+            $http({
+                method : "post",
+                url : ctx + "appJson/addSelectFeedback",
+                data : JSON.stringify($scope.selectFeedback)
+            }).success(function (data) {
+                lock1 = false;
+                layer.close(index);
+                if(data.code == 200){
+                    layer.msg('OK', {icon: 1});
+                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                        window.location.reload();//页面刷新
+                    },1000);
+                }else{
+                    layer.msg("Error", {icon: 5});
+                }
+            })
+        }
+    }
+    function check1() {
+        var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
+        var reg2 =  /^\d*$/
+        if(undefined != $scope.selectFeedback.email && "" != $scope.selectFeedback.email && !reg1.test($scope.selectFeedback.email)){ //正则验证不通过，格式不对
+            alert(commonLabel8($scope.langId));
+            return false;
+        }
+        if(undefined != $scope.selectFeedback.number && "" != $scope.selectFeedback.number && !reg2.test($scope.selectFeedback.number)){ //正则验证不通过，格式不对
+            alert(commonLabel9($scope.langId));
+            return false;
+        }
+        return true;
+    }
+    /**
+     * 搜索反馈弹框
+     * 结束
+     */
+
     function info1(){
         // 热点数
-      /*  $http({
-            method : 'post',
-            url : ctx + "appJson/getHotspot",
-            params:{"langId": $scope.langId}
-        }).success(function (data) {
-            if(data){
-                $scope.hotspots = data.result.detaileds;
-            }
-        })*/
-      // 获取Eform
+        /*  $http({
+              method : 'post',
+              url : ctx + "appJson/getHotspot",
+              params:{"langId": $scope.langId}
+          }).success(function (data) {
+              if(data){
+                  $scope.hotspots = data.result.detaileds;
+              }
+          })*/
+        // 获取Eform
         $http({
             method : 'post',
             url : ctx + "appJson/getEform",
@@ -422,10 +497,13 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
             $scope.detaileds =  {};
             return;
         };
-        $scope.checkSearchTags();
-        var q = escape($scope.searchTest);
-        var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&langId="+$scope.langId+"&q="+q;
+        /* $scope.checkSearchTags();
+         var q = escape($scope.searchTest);
+         var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&langId="+$scope.langId+"&q="+q;
+         clicked(encodeURI(url));*/
+        var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0+"&q="+$scope.searchTest;
         clicked(encodeURI(url));
+
     }
     $scope.onKeyup = function(event){
         // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
@@ -678,8 +756,8 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
             return;
         };
         var q = escape($scope.searchTest);
-   /*     var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&q="+q;
-        clicked(encodeURI(url));*/
+        /*     var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&q="+q;
+             clicked(encodeURI(url));*/
         $scope.getSearchTags(id);
     }
     $scope.onKeyup = function(event){
@@ -706,7 +784,9 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
             method : 'post',
             url : ctx + "appJson/getEform",
         }).success(function (data) {
+            var d  = {cn: "台风原因更改航班",en: "Typhoon Move Flight",hk: "颱風原因更改航班",id: 7}
             $scope.eFormTypes = data;
+            $scope.eFormTypes.unshift(d);
         })
 
         $http({

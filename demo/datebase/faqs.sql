@@ -560,3 +560,96 @@ CREATE TABLE `e_form_relation` (
 
 ALTER TABLE e_form_result ADD er_zoho_mail_title TEXT COMMENT '发给zoho的邮件标题';
 
+
+/*Table structure for table `folder` */
+
+DROP TABLE IF EXISTS `folder`;
+
+CREATE TABLE `folder` (
+  `f_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `f_title` varchar(200) DEFAULT NULL COMMENT 'title',
+  `f_lang_id` int(11) NOT NULL COMMENT '语言ID',
+  `f_createdate` datetime DEFAULT NULL COMMENT '创建时间',
+  `f_key_random` int(11) DEFAULT '0' COMMENT 'key-同个Q',
+  PRIMARY KEY (`f_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Data for the table `folder` */
+
+/*Table structure for table `folder_display_relation` */
+
+DROP TABLE IF EXISTS `folder_display_relation`;
+
+CREATE TABLE `folder_display_relation` (
+  `fdr_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `fdr_f_id` int(11) DEFAULT NULL COMMENT '文件夹ID-f_key_random',
+  `fdr_parenid` int(11) DEFAULT '1' COMMENT '文件夹父级ID，默认1',
+  `fdr_level` int(11) DEFAULT NULL COMMENT '层次',
+  `fdr_createdate` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`fdr_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Data for the table `folder_display_relation` */
+
+/*Table structure for table `folder_tags` */
+
+DROP TABLE IF EXISTS `folder_tags`;
+
+CREATE TABLE `folder_tags` (
+  `ft_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ft_tags` varchar(200) DEFAULT NULL COMMENT 'tags名',
+  PRIMARY KEY (`ft_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Data for the table `folder_tags` */
+
+/*Table structure for table `folder_tags_relation` */
+
+DROP TABLE IF EXISTS `folder_tags_relation`;
+
+CREATE TABLE `folder_tags_relation` (
+  `ftr_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `ftr_f_id` int(11) DEFAULT NULL COMMENT '文件夹ID',
+  `ftr_ft_id` int(11) DEFAULT NULL COMMENT '文件夹标签ID',
+  `ftr_order` int(11) DEFAULT NULL COMMENT '排序序号',
+  `ftr_createdate` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`ftr_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Data for the table `folder_tags_relation` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+
+-- 文件夹与faq父级关系
+DROP TABLE IF EXISTS `folder_library_relation`;
+CREATE TABLE `folder_library_relation` (
+ `flr_id` INT NOT NULL AUTO_INCREMENT COMMENT 'id',
+ `flr_fl_id` INT NULL COMMENT 'library-ID',
+ `flr_parenid` INT DEFAULT 1 COMMENT '文件夹ID-f_key_random',
+ `flr_createdate` DATETIME COMMENT '创建时间',
+  PRIMARY KEY (`flr_id`)
+)ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+
+
+-- 2020-1-2
+-- 搜索反馈
+DROP TABLE IF EXISTS `faqs_select_feedback`;
+CREATE TABLE `faqs_select_feedback` (
+  `df_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `df_lang_id` INT(11) NOT NULL COMMENT '语言ID',
+  `df_ip` VARCHAR(100) DEFAULT NULL COMMENT 'ip',
+  `df_createdate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `df_suggest_content` VARCHAR(100) DEFAULT NULL COMMENT '建议内容',
+  `df_follow_content` VARCHAR(100) DEFAULT NULL COMMENT '跟进内容',
+  `df_follow` INT(11) DEFAULT '1' COMMENT '默认跟进为1',
+  `df_name` VARCHAR(100) DEFAULT NULL,
+  `df_email` VARCHAR(100) DEFAULT NULL,
+  `df_number` VARCHAR(100) DEFAULT NULL,
+  `df_status` INT(11) DEFAULT '0',
+  PRIMARY KEY (`df_id`)
+) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

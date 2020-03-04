@@ -47,7 +47,8 @@ public class DetailedService {
     E_form_typeDao e_form_typeDao;
     @Resource
     DeFormTypeRelationDao deFormTypeRelationDao;
-
+    @Resource
+    SelectFeedbackDao selectFeedbackDao;
 
 
     @Resource
@@ -199,6 +200,16 @@ public class DetailedService {
     public List<DetailedEntity> getDetailedInternal(long langId){
         return detailedEntityDao.getDetailedInternal(langId);
     }
+
+    public List<DetailedEntity> getSearchFolderByLibrary(long key,long langId,String status){
+        return detailedEntityDao.getSearchFolderByLibrary(key,langId,status);
+    }
+
+    public List<Object[]> getAllTagsBys(long langId,String status){
+        return detailedEntityDao.getAllTagsBys(langId,status);
+    }
+
+
 
 
     /**
@@ -419,6 +430,10 @@ public class DetailedService {
      */
     public List<Detailed> getByAllDetaileds(String t){
         return detailedDao.getByAllDetaileds(t);
+    }
+
+    public void addSelectFeedback(SelectFeedback feedback){
+        selectFeedbackDao.save(feedback);
     }
 
 }

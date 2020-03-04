@@ -43,7 +43,8 @@ public class  FeedbackController {
     LogsDao logsDao;
     @Resource
     IpUtil ipUtil;
-
+    @Resource
+    SelectFeedbackDao selectFeedbackDao;
 
     /* 初始化*/
     @ResponseBody
@@ -120,4 +121,58 @@ public class  FeedbackController {
         return module;
     }
 
+
+    /**
+     * 2020-1-2
+     * select 初始化
+     */
+    @ResponseBody
+    @RequestMapping("/getSelectFeedbackPage")
+    public RestResultModule getSelectFeedbackPage(@RequestBody Map<String,Object> map){
+        RestResultModule module = new RestResultModule();
+        int CurrentPage = Integer.parseInt(map.get("CurrentPage").toString());
+        int PageSize = Integer.parseInt(map.get("PageSize").toString());
+        long langId = Long.parseLong(map.get("langId").toString());
+        long follow = Long.parseLong(map.get("follow").toString());
+        long status = Long.parseLong(map.get("status").toString());
+        String startTime = map.get("startTime").toString();
+        String endTime = map.get("endTime").toString();
+        //分页
+        Pageable pageable = new PageRequest(CurrentPage-1,PageSize);
+        Page<Object[]> feedbacks = null;
+        feedbacks = dfeedbackDao.getSelectFeedbackPage(langId,follow,status,startTime,endTime,pageable);
+
+        module.putData("feedbacks",feedbacks.getContent());
+        module.putData("PageCount",feedbacks.getTotalElements());
+        module.putData("languages",languageDao.findAll());
+        return module;
+    }
+
+    /**
+     * 更新反馈状态--select
+     * @param df_id
+     * @return
+     */
+    @Transactional
+    @ResponseBody
+    @RequestMapping("/updateSelectFeedbackStatus")
+    public RestResultModule updateSelectFeedbackStatus(HttpServletRequest request, HttpSession session,
+                                                       @RequestParam(name = "df_id",defaultValue = "0",required = true) long df_id,
+                                                       @RequestParam(name = "status",defaultValue = "0",required = true) long status){
+        RestResultModule module = new RestResultModule();
+        User user = (User)session.getAttribute("userSession");
+        if(null != user) {
+            if(df_id > 0){
+                selectFeedbackDao.updateFeedbackStatus(df_id,status);
+            }else{
+                module.setCode(500);
+            }
+
+            // 添加日志
+            Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), "updateSelectFeedbackStatus", "df_id="+df_id, "status="+status,new Date());
+            logsDao.save(logs);
+        }
+
+        return module;
+    }
 }

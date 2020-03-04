@@ -6,6 +6,7 @@ import com.example.demo.entity.DetailedEntity;
 import com.example.demo.entity.EsEntiy;
 import com.example.demo.service.DetailedService;
 import com.example.demo.service.EsService;
+import com.example.demo.service.FolderService;
 import com.example.demo.util.IpUtil;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
@@ -65,6 +66,9 @@ public class DetailedController {
 
     @Resource
     private EsService esService;
+
+    @Resource
+    FolderService folderService;
 
     @ResponseBody
     @RequestMapping("/getByDetaileds")
@@ -153,22 +157,111 @@ public class DetailedController {
         String [] sarr = search.split(" ");
         List<String> searchs = Arrays.asList(sarr);
         List<DetailedEntity> detaileds = new ArrayList<>();
-        DetailedEntity detailedEntity = null;
         String s = String.valueOf(status);
         if(status == 3 ){
             s = "";
         }
+
+        List<Object[]> folderList = null;
+        Map<String,Integer> foldermap = new LinkedHashMap<>();
+
+        // 第一步:整句话匹配标签
         detaileds = detailedService.getSearchTags(langId,s,searchs);
+        if(detaileds.size() == 0){
+            // 第二步: 所有标签是否包含再整句话
+            List<Object[]> tagsList = detailedService.getAllTagsBys(langId,s);
+            Map<String,Object[]> map_Date = new HashMap<>();
+            Map<String,Integer> map = new LinkedHashMap<>();
+            for(int i = 0; i < tagsList.size();i++){
+                Object[] os = tagsList.get(i);
+                if(search.contains(os[0].toString())){
+                    if(map.containsKey(os[1].toString())){
+                        map.put(os[1].toString(),map.get(os[1].toString())+1);
+                    }else{
+                        map.put(os[1].toString(),1);
+                    }
+                    map_Date.put(os[1].toString(),os);
+                }
+            }
+            System.out.println("搜索："+search);
+            System.out.println("排序前map："+map.toString());
+            List<Map.Entry<String,Integer>> list_Data = new ArrayList<>(map.entrySet());
+            Collections.sort(list_Data, new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            System.out.println("排序后map："+list_Data);
+            if(map.size() > 0){
+                DetailedEntity detailedEntity = null;
+                for (Map.Entry<String,Integer> map_key :list_Data){
+                    Object[] os = map_Date.get(map_key.getKey());
+                    detailedEntity = new DetailedEntity();
+                    detailedEntity.setId(Long.parseLong(os[1].toString()));
+                    detailedEntity.setTitle(os[2].toString());
+                    detailedEntity.setStatus(Long.parseLong(os[1].toString()));
+                    detaileds.add(detailedEntity);
+                }
+            }
 
+            // 第三步: 显示文件夹
+            if(detaileds.size() == 0){
+                long maxLevel = folderService.getMaxlevel();
+                Map<String,Object[]> foldermap_Date = new HashMap<>();
+                while(maxLevel > 0){
+                    folderList = folderService.getAllByFolderTags(maxLevel,langId);
+                    if(folderList.size() == 0){
+                        maxLevel--;
+                        continue;
+                    }
+                    //folderList = folderService.getFolderSelect(maxLevel,langId,searchs);
+                    for(Object[] os : folderList){
+                        if(search.contains(os[4].toString())){
+                            if(foldermap.containsKey(os[0].toString())){
+                                foldermap.put(os[0].toString(),foldermap.get(os[0].toString())+1);
+                            }else{
+                                foldermap.put(os[0].toString(),1);
+                            }
+                        }
+                        foldermap_Date.put(os[0].toString(),os);
+                    }
+                    if(foldermap.size() > 0){
+                        break;
+                    }
+                    if(maxLevel == 1){
+                        // 搜索无结果-显示首层文件夹
+                        folderList = new ArrayList<>();
+                        folderList = folderService.getFolderSelectByLevel1(langId);
+                        break;
+                    }
+                    maxLevel--;
+                }
+                // 有结果-排序
+                if(foldermap.size() > 0){
+                    List<Map.Entry<String,Integer>> folder_list_Data = new ArrayList<>(foldermap.entrySet());
+                    Collections.sort(folder_list_Data, new Comparator<Map.Entry<String, Integer>>() {
+                        @Override
+                        public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                            return o2.getValue().compareTo(o1.getValue());
+                        }
+                    });
+                    System.out.println("foldermap排序前："+foldermap.toString());
+                    System.out.println("folder_list_Data排序后："+folder_list_Data);
+                    folderList = new ArrayList<>();
+                    for (Map.Entry<String,Integer> map_key1 : folder_list_Data) {
+                        Object[] os1 = foldermap_Date.get(map_key1.getKey());
+                        folderList.add(os1);
+                    }
+                }
+
+            }
+
+        }
+
+        /* 搜索引擎*/
+        /*
         Map<Long, String> map = detaileds.stream().collect(Collectors.toMap(DetailedEntity::getId, DetailedEntity::getTitle));
-
-        // 匹配标题和内容
-   /*     detailedEntity = new DetailedEntity();
-        detailedEntity.setId((long)9999999);
-        detailedEntity.setTitle("----------------------------------------------------------------------------------以下是搜索引擎结果------------------------------------------------------------------------------------");
-        detailedEntity.setStatus(1);
-        detaileds.add(detailedEntity);*/
-
         Page<EsEntiy> esEntiys = null;
         try {
             if(!"".equals(searchs)){
@@ -193,10 +286,16 @@ public class DetailedController {
             }
         }catch (Exception e){
             System.out.println(e);
-        }
+        }*/
 
 
         module.putData("detaileds",detaileds);
+        module.putData("folderList",folderList);
+        boolean searchFeedback = false;
+        if(detaileds.size() > 0 || foldermap.size() > 0){
+            searchFeedback = true;
+        }
+        module.putData("searchFeedback",searchFeedback);
         return module;
     }
 
@@ -213,6 +312,37 @@ public class DetailedController {
         detailedService.getNoTagsCount(request,langId,search);
         return module;
     }
+
+
+    /**
+     * 文件夹搜索
+     * 存在：显示子文件夹
+     * 不存在：显示Lirabry
+     */
+    @ResponseBody
+    @RequestMapping("/getSearchFolder")
+    public RestResultModule getSearchFolder(HttpServletRequest request,
+                                            @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
+                                            @RequestParam(name = "key",required = true,defaultValue = "0")long key,
+                                            @RequestParam(name = "status",required = true,defaultValue = "1")long status) throws Exception{
+        RestResultModule module = new RestResultModule();
+        List<Object[]> folderList = folderService.getSearchFolder(langId,key);
+        List<DetailedEntity> detaileds = null;
+        if(folderList.size() == 0 ){
+            String s = String.valueOf(status);
+            if(status == 3 ){
+                s = "";
+            }
+            detaileds = detailedService.getSearchFolderByLibrary(key,langId,s);
+        }
+        module.putData("folderList",folderList);
+        module.putData("detaileds",detaileds);
+        return module;
+
+    }
+
+
+
 
 
     /* 首页搜索*/
@@ -419,6 +549,22 @@ public class DetailedController {
         }
         response.sendRedirect(request.getContextPath()+url);
         return "";
+    }
+
+    /**
+     * 2020-1-2
+     * 添加搜索反馈信息, 按IP记录
+     * @param request
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addSelectFeedback",method= RequestMethod.POST)
+    public RestResultModule addSelectFeedback(HttpServletRequest request,@RequestBody SelectFeedback feedback){
+        RestResultModule module = new RestResultModule();
+        feedback.setIp(ipUtil.getIpAddr(request));
+        feedback.setCreateDate(new Date());
+        detailedService.addSelectFeedback(feedback);
+        return module;
     }
 
 

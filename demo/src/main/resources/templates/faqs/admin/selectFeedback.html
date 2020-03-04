@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FAQS | HK Express</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <script th:inline="javascript">
+        var ctx = [[@{
+            /}]];
+    </script>
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/assets/ie10-viewport-bug-workaround.css}" rel="stylesheet">
+    <link th:href="@{/css/assets/dashboard.css}" rel="stylesheet">
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/jqPaginator.min.js}"></script>
+    <link th:href="@{/css/assets/myPage.css}" rel="stylesheet">
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/admin/directive.js}"></script>
+    <script th:src="@{/js/admin/feedback.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
+    <script th:src="@{/js/assets/ie-emulation-modes-warning.js}"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="selectfeedbackController">
+<top-Directive></top-Directive>
+
+<div class="container-fluid">
+    <div class="row">
+        <left-Directive></left-Directive>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
+                <div class="col-lg-5">
+                    <span style="font-size: 36px;">Search Feedback</span>
+                </div>
+            </div>
+            <div class="row">
+                <!-- language select -->
+                <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
+                <div class="col-md-2">
+                    <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
+                            ng-options="language.id  as language.title for language in languages">
+                    </select>
+                </div>
+                <!-- RFollow up -->
+                <label style="margin-top: 5px;margin-left:50px;float: left;">Follow up: </label>
+                <div class="col-md-2">
+                    <select ng-model="follow" class="form-control" ng-change="clickLanguage()"
+                            ng-options="d.id as d.name for d in followList">
+                    </select>
+                </div>
+
+                <!-- comment Status -->
+                <label style="margin-top: 5px;margin-left: 50px;float: left;">Comment Status: </label>
+                <div class="col-md-2">
+                    <select ng-model="status" class="form-control" ng-change="clickLanguage()"
+                            ng-options="c.id  as c.name for c in statusList">
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row" style="margin-top: 20px">
+                <!-- start time -->
+                <label style="margin-top: 5px;margin-left:50px;float: left;">start time: </label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control layui-input" id="ladate1" placeholder="yyyy-MM-dd">
+                </div>
+                <!-- end time -->
+                <label style="margin-top: 5px;margin-left:50px;float: left;">end time: </label>
+                <div class="col-md-2">
+                    <input type="text" class="form-control layui-input" id="ladate2" placeholder="yyyy-MM-dd">
+                </div>
+                <!-- Search -->
+                <div class="col-md-1">
+                    <button class="btn btn-default" type="button" ng-click="getLayDate()">Search</button>
+                </div>
+                <!-- download -->
+                <div class="col-md-1">
+                    <form id="monitorform" action="#" method="post" enctype="multipart/form-data">
+                        <button class="btn btn-default" type="button" ng-click="submitDownload()">download</button>
+                    </form>
+                </div>
+
+            </div><!-- /.row -->
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Suggest Content</th>
+                        <th>Follow up</th>
+                        <th>Follow Content</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Language</th>
+                        <th>IP</th>
+                        <th>Create Date</th>
+                        <th>Comment Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="f in feedbacks">
+                        <td>{{f[0]}}</td>
+                        <td>{{f[4]}}</td>
+                        <td>
+                            <span ng-if="f[6] == 0">No</span>
+                            <span style="color: red;" ng-if="f[6] == 1">Yes</span>
+                        </td>
+                        <td>{{f[5]}}</td>
+                        <td>{{f[7]}}</td>
+                        <td>{{f[8]}}</td>
+                        <td>{{f[9]}}</td>
+                        <td>{{f[11]}}</td>
+                        <td>{{f[2]}}</td>
+                        <td>{{f[12]}}</td>
+                        <td>
+                            <span style="color: red;" ng-if="f[10] == 0">Open</span>
+                            <span ng-if="f[10] == 1">Close</span>
+                        </td>
+                        <td style="text-align: right;">
+                            <button class="btn btn-default" type="button" ng-if="f[10] == 0"
+                                    ng-click="updateFeedbackStatus(f[0],1)">Close
+                            </button>
+                            <button class="btn btn-default" type="button" ng-if="f[10] == 1"
+                                    ng-click="updateFeedbackStatus(f[0],0)">Open
+                            </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 分页-->
+            <div style="text-align: right;">
+                <ul class="pagination" id="pagination"></ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/assets/bootstrap.min.js}"></script>
+<script th:src="@{/js/assets/holder.min.js}"></script>
+<script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script th:src="@{/js/dist/metisMenu/metisMenu.min.js}"></script>
+<!-- Custom Theme JavaScript -->
+<script th:src="@{/js/dist/sb-admin-2.js}"></script>
+</body>
+</html>

@@ -203,4 +203,16 @@ public class UrlController {
     public String eForm9(){return "faqs/eForm9";}
 
 
+
+    @RequestMapping("/admin/folder")
+    public String folder(){
+        return "faqs/admin/folder";
+    }
+
+    @RequestMapping("/admin/selectFeedback")
+    public String selectFeedback(){
+        return "faqs/admin/selectFeedback";
+    }
+
+
 }

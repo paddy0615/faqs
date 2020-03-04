@@ -110,11 +110,28 @@
                 </div>
             </div>
             <div style="clear: both;margin-bottom: 12px;"></div>
+
             <div ng-show="searchShow">
+                <!-- 无结果-->
+                <div ng-show="!searchFeedback">
+                    <div class="content-box" style="padding: 0px 12px;">
+                        <ul>
+                            <li style="border:none;color: #555;" >{{'lab124' | translate}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 问题list-->
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
-                        <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
                         <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}">{{detailed.title}}</a></li>
+                    </ul>
+                </div>
+
+                <!-- 文件夹list-->
+                <div class="content-box" style="padding: 0px 12px;">
+                    <ul>
+                        <li ng-repeat="l in folderList"><a ng-click="getFolderUrl(l[2],l[3])" href="javascript:void(0);" >{{l[1]}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -142,8 +159,172 @@
         </div>
     </div>
 </div>
-<div class="scrollToTop" style="display: none;">
-    <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
+
+
+<!-- myModalAddFolder-->
+<div class="modal fade" data-backdrop="static" id="myModalAddFolder" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{'lab114' | translate}}
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>{{'lab115'|translate}}:</label>
+                    <input type="text" class="form-control layui-input col-sm-4" autocomplete="off"
+                           ng-model="selectFeedback.suggestContent"/>
+                </div>
+                <div style="clear:both;height: 15px;"></div>
+                <div class="tab-pane fade in active" id="home">
+                    <div class="form-group">
+                        <label>
+                            <span style="margin-right: 20px;">{{'lab116'|translate}}</span>
+                            <input type="radio" name="a" ng-value="1" ng-model="selectFeedback.follow" ng-checked="1">{{'lab117'|translate}}
+                            <input type="radio" name="a" ng-value="0" ng-model="selectFeedback.follow"
+                                   style="margin-left: 20px;">{{'lab118'|translate}}
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group pnr-div" style="margin-top: -36px;">
+                    <label></label>
+                    <input type="text" class="form-control" placeholder="{{'lab119'|translate}}" autocomplete="off"
+                           ng-model="selectFeedback.followContent"/>
+                </div>
+                <div class="form-group" style="margin-bottom: 10px;">
+                    <label>{{'lab120'|translate}}:</label>
+                </div>
+                <div class="form-group">
+                    <label style="padding-left: 0px;padding-right: 0px;width: auto;" class="col-sm-3">{{'lab121'|translate}}:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" autocomplete="off" ng-model="selectFeedback.name"/>
+                    </div>
+                </div>
+                <div style="clear:both;height: 10px;"></div>
+                <div class="form-group">
+                    <label style="padding-left: 0px;padding-right: 0px;width: auto;" class="col-sm-3">{{'lab122'|translate}}:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" autocomplete="off" ng-model="selectFeedback.email"/>
+                    </div>
+                </div>
+                <div style="clear:both;height: 10px;"></div>
+                <div class="form-group">
+                    <label style="padding-left: 0px;padding-right: 0px;width: auto;" class="col-sm-3">{{'lab123'|translate}}:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" autocomplete="off" ng-model="selectFeedback.number"/>
+                    </div>
+                </div>
+
+                <div style="clear:both;height: 10px;"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button style="background: #612b80;" type="button" ng-click="addSelectFeedback()" id="btn_submit"
+                        class="btn btn-primary"><span
+                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>{{'lab125'|translate}}
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>{{'lab126'|translate}}
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<style>
+    .shortcut-box {
+        position: fixed;
+        bottom: 20px;
+        z-index: 500;
+        left: 30px;
+    }
+    .bottom.shortcut-box .top-btn {
+        opacity: 1;
+        filter: alpha(opacity=100);
+    }
+    .shortcut-box .top-btn {
+        border-bottom: 0;
+        -o-transition: all .4s;
+        -ms-transition: all .4s;
+        -moz-transition: all .4s;
+        -webkit-transition: all .4s;
+        transition: all .4s;
+    }
+    .shortcut-box .btn {
+        position: relative;
+        background: #fff;
+        display: block;
+        border: 1px solid #E6E6E6;
+        cursor: pointer;
+        padding: 16px;
+    }
+    .shortcut-box .top-btn i, .shortcut-box .back-btn i, .shortcut-box .feedback-btn i {
+        background-size: 18px 72px;
+        background-image: url(https://www.livedemo.net/hkexpress/webimg/feedback-box.png);
+    }
+    .shortcut-box .top-btn i {
+        background-position: 0px 0px;
+    }
+    .shortcut-box .feedback-btn i {
+        background-position: 0px -54px;
+    }
+    .shortcut-box .btn i {
+        display: block;
+        height: 18px;
+        width: 18px;
+    }
+    .shortcut-box .tip {
+        background-position: 0px -186px;
+        background-size: 150px 1129px;
+        background-image: url(https://www.livedemo.net/hkexpress/webimg/shortcut-box.png);
+    }
+    .shortcut-box .tip {
+        position: absolute;
+        height: 28px;
+        line-height: 28px;
+        top: 12px;
+        padding-left: 7px;
+        color: #fff;
+        display: block;
+        visibility: hidden;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        background-repeat: no-repeat;
+        padding: 0px 7px 0px 17px;
+    }
+    .shortcut-box .top-btn:hover .tip {
+        visibility: visible;
+        left: 52px;
+        opacity: .9;
+        filter: alpha(opacity=90);
+    }
+    .shortcut-box .feedback-btn:hover .tip {
+        visibility: visible;
+        left: 52px;
+        opacity: .9;
+        filter: alpha(opacity=90);
+    }
+
+</style>
+<div id="shortcut-box" class="shortcut-box bottom" monkey="rightbutton"><a style="display: none;" class="scrollToTop top-btn btn" data-hook="top"
+                                                                           alog-text="回到顶部" monkey="top"><i></i><span
+        class="tip">{{'lab127' | translate}}</span></a><a class="feedback-btn btn" href="javascript:void(0);" ng-click="alertSet()" alog-text="反馈"
+                                      monkey="feedback"><i></i><span class="tip">{{'lab128' | translate}}</span></a></div>
+
+
+
+
+<!--<div class="scrollToTop" style="display: none;">
+    <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
+</div>-->
+
+<script th:src="@{/js/assets/bootstrap.min.js}"></script>
+
 </body>
 </html>

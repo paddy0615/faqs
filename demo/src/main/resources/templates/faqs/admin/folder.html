@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>FAQS | HK Express</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+    <link th:href="@{/css/assets/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/assets/ie10-viewport-bug-workaround.css}" rel="stylesheet">
+    <link th:href="@{/css/assets/dashboard.css}" rel="stylesheet">
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/jqPaginator.min.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <link th:href="@{/css/assets/jquery.tag-editor.css}" rel="stylesheet">
+    <script th:src="@{/js/assets/jquery.tag-editor.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/admin/directive.js}"></script>
+    <script th:src="@{/js/admin/folder.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script th:src="@{/js/assets/ie8-responsive-file-warning.js}"></script><![endif]-->
+    <script th:src="@{/js/assets/ie-emulation-modes-warning.js}"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        #myModalAddFolder label {
+            padding: 0;
+        }
+
+        .clearBoth {
+            clear: both;
+            height: 10px;
+        }
+
+        .colorRed {
+            color: red;
+        }
+    </style>
+
+</head>
+<body cz-shortcut-listen="true" ng-app="myapp" ng-controller="folderController">
+<top-Directive></top-Directive>
+
+<div class="container-fluid">
+    <div class="row">
+        <left-Directive></left-Directive>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="row" style="padding-bottom: 9px;margin-bottom: 20px;border-bottom: 1px solid #eee;">
+                <div class="col-lg-5">
+                    <span style="font-size: 36px;">Folder Category</span>
+                </div>
+            </div>
+            <div class="row" style="text-align: right;padding-right: 20px;margin-bottom: 50px;">
+                <!-- language select -->
+              <!--  <label style="margin-top: 5px;margin-left: 50px;float: left;">Language: </label>
+                <div class="col-md-2">
+                    <select ng-model="langId" class="form-control" ng-change="clickLanguage()"
+                            ng-options="language.id  as language.title for language in languages_show">
+                    </select>
+                </div>-->
+
+                <!-- add -->
+                <div>
+                    <button class="btn btn-default" ng-click="alertSet(0)">Add Folder</button>
+                    <button class="btn btn-default" ng-click="alertSet1(0)">Add Libray</button>
+                </div>
+
+            </div>
+            <div class="table-responsive">
+                <ol class="breadcrumb">
+                    <li ng-repeat="l in tableofContents.slice().reverse()"><a href="javascript:void(0);"
+                                                                              ng-click="nextFolder(l[1],l[0],0)">{{l[1]}}</a>
+                    </li>
+                </ol>
+            </div>
+            <!-- folder-->
+            <div>
+                <div class="row" style="padding-left: 18px;color: red;">
+                    * ALL Folder
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Folder Title(香港特別行政區（繁體）)</th>
+                            <th>Language</th>
+                            <th>Update Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="l in list">
+                            <td><a href="javascript:void(0);" ng-click="nextFolder(l[0],level+1,0)">{{l[0]}}</a></td>
+                            <td class="col-md-5">{{l[1]}}</td>
+                            <td>{{l[2]}}</td>
+                            <td>{{l[3]}}</td>
+                            <td style="text-align: right;">
+                                <button class="btn btn-default" ng-click="alertSet(l[0])">Edit</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- library-->
+            <div style="margin-top: 20px;">
+                <div class="row" style="padding-left: 18px;color: red;">
+                    * ALL library
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Series</th>
+                            <th>Create Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="l in list_librabries">
+                            <td>{{l[0]}}</td>
+                            <td>{{l[2]}}</td>
+                            <td>{{l[3]}}</td>
+                            <td style="text-align: right;">
+                                <a target="_blank" class="btn btn-default" th:href="@{'/appPage/admin/faqTwo?fl_id={{l[1]}}'}" >Select</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- myModalAddFolder-->
+<div class="modal fade" data-backdrop="static" id="myModalAddFolder" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <element>{{eventStatus}} Folder</element>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div ng-repeat="l in languages" ng-if="l.id > 0">
+                    <div class="form-group">
+                        <label class="col-sm-2">Language :</label>
+                        <label class="col-sm-8 colorRed">{{l.title}}</label>
+                    </div>
+                    <div class="clearBoth"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2">Folder Title :</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="folderTitle{{l.id}}">
+                        </div>
+                    </div>
+                    <div class="clearBoth"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2">Tags :</label>
+                        <div class="col-sm-8">
+                            <textarea class="folderTags{{l.id}}" readonly="readonly" style="display: block;"></textarea>
+                        </div>
+                    </div>
+                    <div class="clearBoth"></div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="submitAddFolder()" id="btn_submit" class="btn btn-primary"><span
+                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Save
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- myModalAddLibray-->
+<div class="modal fade" data-backdrop="static" id="myModalAddLibray" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">
+                    <element>{{eventStatus}} Libray</element>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Series</th>
+                            <th>Update Date</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="l in librabries">
+                            <td><input type="checkbox" name="checkboxClien"
+                                       value="{{l.id}}">{{l.id}}
+                            </td>
+                            <td class="col-md-5">{{l.title}}</td>
+                            <td>{{l.updatedate.substring(0,16)}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" ng-click="submitAddLibrary()" class="btn btn-primary"><span
+                        class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>Save
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                        class="glyphicon glyphicon-remove" aria-hidden="true"></span>Cancle
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/assets/bootstrap.min.js}"></script>
+<script th:src="@{/js/assets/holder.min.js}"></script>
+<script th:src="@{/js/assets/ie10-viewport-bug-workaround.js}"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script th:src="@{/js/dist/metisMenu/metisMenu.min.js}"></script>
+<!-- Custom Theme JavaScript -->
+<script th:src="@{/js/dist/sb-admin-2.js}"></script>
+
+</body>
+</html>

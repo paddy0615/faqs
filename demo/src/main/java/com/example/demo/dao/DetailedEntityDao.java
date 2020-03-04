@@ -105,4 +105,32 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             " LIMIT 10", nativeQuery = true)
     List<DetailedEntity> getDetailedInternal(@Param("langId") long langId);
 
+    /**
+     * 搜索-文件夹
+     */
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status" +
+            " FROM folder_library_relation r,faqs_detailed d" +
+            " WHERE r.flr_fl_id = d.dl_fl_id" +
+            " AND if(:status != '',d.dl_status in (:status),1=1)\n"+
+            " AND if(:status = '',d.dl_status > 0,1=1)\n"+
+            " AND r.flr_parenid = :key" +
+            " AND dl_lang_id = :langId"+
+            " ORDER BY r.flr_id"
+            , nativeQuery = true)
+    List<DetailedEntity> getSearchFolderByLibrary(@Param("key") long key,@Param("langId") long langId,@Param("status") String status);
+
+
+
+    /**
+     * 获取标签
+     */
+    @Query(value = "SELECT t.dt_title,r.dr_dl_id,d.dl_title,d.dl_status " +
+            " FROM faqs_detailed_tags t,faqs_dtags_relation r,faqs_detailed d" +
+            " WHERE t.dt_id = r.dr_dt_id AND r.dr_dl_id = d.dl_id"+
+            " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
+            " AND if(:status != '',d.dl_status in (:status),1=1)"+
+            " AND if(:status = '',d.dl_status > 0,1=1)"
+            , nativeQuery = true)
+    List<Object[]> getAllTagsBys(@Param("langId") long langId,@Param("status") String status);
+
 }

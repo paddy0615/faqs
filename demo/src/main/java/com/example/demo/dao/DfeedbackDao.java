@@ -79,4 +79,41 @@ public interface DfeedbackDao extends JpaRepository<Feedback,Long> {
     List<Object[]> getAllByDfTypeExcel(@Param("langId") long langId,@Param("comment") long comment,@Param("commentStatu") long commentStatu,@Param("type") long type,@Param("startTime") String startTime,@Param("endTime") String endTime);
 
 
+
+    @Query(value = "SELECT f.*,l.lang_title,DATE_FORMAT(f.df_createdate, '%Y-%m-%d %H:%i') AS 'createdate' " +
+            " FROM faqs_select_feedback f,faqs_language l" +
+            " WHERE f.df_lang_id = l.lang_id" +
+            " AND if(:langId > 0,f.df_lang_id = :langId,1=1)"+
+            " AND if(:follow >= 0,f.df_follow = :follow,1=1)"+
+            " AND if(:status >= 0,f.df_status = :status,1=1)"+
+            " AND if(:startTime != '',f.df_createdate > :startTime,1=1)"+
+            " AND if(:endTime != '',f.df_createdate <= :endTime,1=1)"+
+            " ORDER BY df_createdate DESC"
+            ,countQuery="SELECT COUNT(*)" +
+            " WHERE f.df_lang_id = l.lang_id" +
+            " AND if(:langId > 0,f.df_lang_id = :langId,1=1)"+
+            " AND if(:follow >= 0,f.df_follow = :follow,1=1)"+
+            " AND if(:status >= 0,f.df_status = :status,1=1)"+
+            " AND if(:startTime != '',f.df_createdate > :startTime,1=1)"+
+            " AND if(:endTime != '',f.df_createdate <= :endTime,1=1)"+
+            " ORDER BY df_createdate DESC"
+            , nativeQuery = true)
+    Page<Object[]> getSelectFeedbackPage(@Param("langId") long langId,@Param("follow") long follow,@Param("status") long status,@Param("startTime") String startTime,@Param("endTime") String endTime,Pageable pageable);
+
+
+
+
+    @Query(value = "SELECT f.*,l.lang_title,DATE_FORMAT(f.df_createdate, '%Y-%m-%d %H:%i') AS 'createdate' " +
+            " FROM faqs_select_feedback f,faqs_language l" +
+            " WHERE f.df_lang_id = l.lang_id" +
+            " AND if(:langId > 0,f.df_lang_id = :langId,1=1)"+
+            " AND if(:follow >= 0,f.df_follow = :follow,1=1)"+
+            " AND if(:status >= 0,f.df_status = :status,1=1)"+
+            " AND if(:startTime != '',f.df_createdate > :startTime,1=1)"+
+            " AND if(:endTime != '',f.df_createdate <= :endTime,1=1)"+
+            " ORDER BY df_createdate DESC", nativeQuery = true)
+    List<Object[]> getSelectFeedbackExcel(@Param("langId") long langId,@Param("follow") long follow,@Param("status") long status,@Param("startTime") String startTime,@Param("endTime") String endTime);
+
+
+
 }
