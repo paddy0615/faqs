@@ -103,6 +103,48 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
     }
 
 
+    // 删除文件夹
+    $scope.getDelete = function(id){
+        var myconfirm = layer.confirm(id+",The following relationships are all deleted.", {
+            title:'Information',
+            btn: ['OK','Cancel'] //按钮
+        }, function(){
+            $http({
+                method : 'post',
+                url : ctx + "appJson/admin/deleteFolder",
+                params:{"key_random": id}
+            }).success(function (data) {
+                window.location.reload();//页面刷新
+            })
+            layer.close(myconfirm);
+        }, function(){
+            layer.close(myconfirm);
+        });
+
+    }
+
+    // 删除library
+    $scope.getDelete1 = function(id,txt){
+        var myconfirm = layer.confirm("confirm delete? <br/> Series:"+txt, {
+            title:'Information',
+            btn: ['OK','Cancel'] //按钮
+        }, function(){
+            console.log('执行删除');
+            $http({
+                method : 'post',
+                url : ctx + "appJson/admin/deleteLiaray",
+                params:{"id": id}
+            }).success(function (data) {
+                window.location.reload();//页面刷新
+            })
+            layer.close(myconfirm);
+        }, function(){
+            layer.close(myconfirm);
+        });
+
+    }
+
+
     function infoDataMap(l,t,s) {
         return  {
             'langId':l,

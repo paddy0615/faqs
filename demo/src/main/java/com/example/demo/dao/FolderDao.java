@@ -2,6 +2,7 @@ package com.example.demo.dao;
 
 import com.example.demo.bean.Folder;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
@@ -28,4 +29,8 @@ public interface FolderDao extends JpaRepository<Folder,Long> {
 
 
     void deleteById(long id);
+
+    @Modifying
+    @Query(value = " DELETE FROM folder WHERE f_key_random = :key",nativeQuery = true)
+    void deleteBykey(@Param("key") long key);
 }

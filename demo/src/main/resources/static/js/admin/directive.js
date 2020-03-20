@@ -37,6 +37,7 @@ myapp.directive('leftDirective', function() {
         "                                </li>\n" +
         "                            </ul>\n" +
         "                        </li>\n" +
+        "                <li class=\"eFormPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/eForm')\">E-Form</a></li>\n" +
         "                <li class=\"reportPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/report')\">Report</a></li>\n" +
         "            </ul></div>";
     return {
@@ -101,6 +102,7 @@ myapp.directive('topDirective', function() {
         "                                </li>\n" +
         "                            </ul>\n" +
         "                        </li>\n" +
+        "                <li class=\"eFormPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/eForm')\">E-Form</a></li>\n" +
         "                <li class=\"reportPage\"><a href=\"javascript:void(0);\" ng-click=\"goCancel('" + ctx + "appPage/admin/report')\">Report</a></li>\n" +
         "            </ul>\n" +
         "        </div>\n" +

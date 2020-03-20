@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @Service("folderService")
 public class FolderService {
 
@@ -253,4 +254,38 @@ public class FolderService {
             folder_library_relationDao.save(relation);
         }
     }
+
+
+    /**
+     * 删除
+     */
+    public void eachDeleteFdr(long key){
+        List<Object> fidall = folder_display_relationDao.getFdrFidByFdrParenid(key);
+        deleteFdr(key);
+        for (int i = 0; i < fidall.size(); i++) {
+            long l_key = Long.parseLong(fidall.get(i).toString());
+            deleteFdr(l_key);
+            // 循环子节
+            eachDeleteFdr(l_key);
+        }
+    }
+
+    public void deleteFdr(long l){
+        // 删除文件夹的标签
+        folder_tagsDao.deleteBykey(l);
+        // 删除文件夹与标签关联
+        folder_tags_relationDao.deleteBykey(l);
+        // 删除文件夹
+        folderDao.deleteBykey(l);
+        // 删除library关联
+        folder_library_relationDao.deleteByPfid(l);
+        // 删除foleder关联
+        folder_display_relationDao.deleteByPfid(l);
+    }
+
+    public void deleteLiaray(long id){
+        // 删除library关联
+        folder_library_relationDao.deleteById(id);
+    }
+
 }

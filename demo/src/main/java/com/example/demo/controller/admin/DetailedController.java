@@ -222,12 +222,17 @@ public class DetailedController {
                 //}
 
                 // 更新搜索
-                EsEntiy esEntiy = new EsEntiy();
-                esEntiy.setId(detailed.getId());
-                esEntiy.setTitle(detailed.getTitle());
-                esEntiy.setContentTxt(detailed.getContentTxt());
-                esEntiy.setStatus(detailed.getStatus());
-                esService.save(esEntiy);
+                try{
+                    EsEntiy esEntiy = new EsEntiy();
+                    esEntiy.setId(detailed.getId());
+                    esEntiy.setTitle(detailed.getTitle());
+                    esEntiy.setContentTxt(detailed.getContentTxt());
+                    esEntiy.setStatus(detailed.getStatus());
+                    esService.save(esEntiy);
+                }catch (Exception e){
+                    logger.error("更新搜索引擎失败");
+                }
+
 
                 // 添加日志
                 Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, JSON.toJSONString(tags), "",date);
@@ -326,13 +331,18 @@ public class DetailedController {
 
                     d = new Detailed();
                     d = detailedDao.findById(Long.parseLong(id));
+
                     // 更新搜索
-                    EsEntiy esEntiy = new EsEntiy();
-                    esEntiy.setId(d.getId());
-                    esEntiy.setTitle(d.getTitle());
-                    esEntiy.setContentTxt(d.getContentTxt());
-                    esEntiy.setStatus(status);
-                    esService.save(esEntiy);
+                    try{
+                        EsEntiy esEntiy = new EsEntiy();
+                        esEntiy.setId(d.getId());
+                        esEntiy.setTitle(d.getTitle());
+                        esEntiy.setContentTxt(d.getContentTxt());
+                        esEntiy.setStatus(status);
+                        esService.save(esEntiy);
+                    }catch (Exception e){
+                        logger.error("更新搜索引擎失败");
+                    }
 
                 }
 

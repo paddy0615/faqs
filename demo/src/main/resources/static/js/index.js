@@ -9,9 +9,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);

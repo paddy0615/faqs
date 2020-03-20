@@ -109,7 +109,11 @@
                             <td>{{l[3]}}</td>
                             <td style="text-align: right;">
                                 <button class="btn btn-default" ng-click="alertSet(l[0])">Edit</button>
+                                <element zg-access="access">
+                                    <button class="btn btn-default" type="button" ng-click="getDelete(l[0])">Delete</button>
+                                </element>
                             </td>
+
                         </tr>
 
                         </tbody>
@@ -139,6 +143,9 @@
                             <td>{{l[3]}}</td>
                             <td style="text-align: right;">
                                 <a target="_blank" class="btn btn-default" th:href="@{'/appPage/admin/faqTwo?fl_id={{l[1]}}'}" >Select</a>
+                                <element zg-access="access">
+                                    <button class="btn btn-default" type="button" ng-click="getDelete1(l[4],l[2])">Delete</button>
+                                </element>
                             </td>
                         </tr>
                         </tbody>

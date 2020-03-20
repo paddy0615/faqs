@@ -37,10 +37,19 @@ spring:
     uri-encoding: UTF-8
   datasource:
     ## 118.143.2.7 -> faqsDate , faqsDate208,给192.168.172.208机用
+    ## 211.155.19.247(已更改)
     url: jdbc:mysql://118.143.2.7:3306/faqsDate208?characterEncoding=UTF-8
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      read-only: false
+      connection-timeout: 50000
+      idle-timeout: 50000
+      max-lifetime: 50000
+      maximum-pool-size: 100
+      minimum-idle: 10
+      auto-commit: true
   mvc:
     static-path-pattern: /**
   thymeleaf:

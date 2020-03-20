@@ -1,9 +1,7 @@
 package com.example.demo.controller.admin;
 
-import com.example.demo.bean.Folder;
-import com.example.demo.bean.Logs;
-import com.example.demo.bean.RestResultModule;
-import com.example.demo.bean.User;
+import com.alibaba.fastjson.JSON;
+import com.example.demo.bean.*;
 import com.example.demo.dao.LanguageDao;
 import com.example.demo.dao.LibrabryDao;
 import com.example.demo.dao.LogsDao;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,8 @@ public class FolderController {
     LogsDao logsDao;
     @Resource
     LibrabryDao librabryDao;
+    @Resource
+    IpUtil ipUtil;
 
     /**
      * folder 页面初始化
@@ -138,4 +139,43 @@ public class FolderController {
         return module;
     }
 
+
+    /* 删除deleteFolder*/
+    @ResponseBody
+    @RequestMapping(value = "/deleteFolder")
+    public void delete(HttpServletRequest request,HttpSession session,
+                       @RequestParam(name = "key_random",defaultValue = "0",required = true) long key_random){
+        User user = (User)session.getAttribute("userSession");
+        if(null != user){
+            if("admin".equals(user.getRole())){
+                // 删除
+                folderService.eachDeleteFdr(key_random);
+                // 添加日志
+                Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"folder/delete",key_random+"","",new Date());
+                logsDao.save(logs);
+            }
+        }
+
     }
+
+    /* 删除deleteLiaray*/
+    @ResponseBody
+    @RequestMapping(value = "/deleteLiaray")
+    public void deleteLiaray(HttpServletRequest request,HttpSession session,
+                       @RequestParam(name = "id",defaultValue = "0",required = true) long id){
+        User user = (User)session.getAttribute("userSession");
+        if(null != user){
+            if("admin".equals(user.getRole())){
+                // 删除
+                folderService.deleteLiaray(id);
+                // 添加日志
+                Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"folderLiaray/delete",id+"","",new Date());
+                logsDao.save(logs);
+            }
+        }
+
+    }
+
+
+
+}

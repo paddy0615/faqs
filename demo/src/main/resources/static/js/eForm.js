@@ -1431,14 +1431,124 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
         // 强制更新  $scope.apply();
     }
 
+    var map = new Map();
+    map.set("2020-4-29",true);
+    map.set("2020-4-30",true);
+    map.set("2020-5-1",true);
+    map.set("2020-5-2",true);
+    map.set("2020-5-3",true);
+    map.set("2020-5-4",true);
+    map.set("2020-6-25",true);
+    map.set("2020-6-26",true);
+    map.set("2020-7-1",true);
+    map.set("2020-7-20",true);
+    map.set("2020-7-21",true);
+    map.set("2020-7-22",true);
+    map.set("2020-7-23",true);
+    map.set("2020-7-24",true);
+    map.set("2020-7-25",true);
+    map.set("2020-7-26",true);
+    map.set("2020-7-27",true);
+    map.set("2020-7-28",true);
+    map.set("2020-7-29",true);
+    map.set("2020-7-30",true);
+    map.set("2020-7-31",true);
+    map.set("2020-8-1",true);
+    map.set("2020-8-2",true);
+    map.set("2020-8-3",true);
+    map.set("2020-8-4",true);
+    map.set("2020-8-5",true);
+    map.set("2020-8-6",true);
+    map.set("2020-8-7",true);
+    map.set("2020-8-8",true);
+    map.set("2020-8-9",true);
+    map.set("2020-8-10",true);
+    map.set("2020-8-11",true);
+    map.set("2020-8-12",true);
+    map.set("2020-8-13",true);
+    map.set("2020-8-14",true);
+    map.set("2020-8-15",true);
+    map.set("2020-8-16",true);
+    map.set("2020-8-17",true);
+    map.set("2020-8-18",true);
+    map.set("2020-8-19",true);
+    map.set("2020-8-20",true);
+    map.set("2020-8-21",true);
+    map.set("2020-8-22",true);
+    map.set("2020-8-23",true);
+    map.set("2020-8-24",true);
+    map.set("2020-8-25",true);
+    map.set("2020-8-26",true);
+    map.set("2020-8-27",true);
+    map.set("2020-8-28",true);
+    map.set("2020-8-29",true);
+    map.set("2020-8-30",true);
+    map.set("2020-9-26",true);
+    map.set("2020-9-27",true);
+    map.set("2020-9-28",true);
+    map.set("2020-9-29",true);
+    map.set("2020-9-30",true);
+    map.set("2020-10-1",true);
+    map.set("2020-10-2",true);
+    map.set("2020-10-3",true);
+    map.set("2020-10-4",true);
+    map.set("2020-10-5",true);
+    map.set("2020-10-6",true);
+    map.set("2020-10-7",true);
+    map.set("2020-10-8",true);
+    map.set("2020-10-9",true);
+    map.set("2020-10-10",true);
+    map.set("2020-10-11",true);
+    map.set("2020-10-23",true);
+    map.set("2020-10-24",true);
+    map.set("2020-10-25",true);
+    map.set("2020-10-26",true);
+    map.set("2020-10-27",true);
+    map.set("2020-12-18",true);
+    map.set("2020-12-19",true);
+    map.set("2020-12-20",true);
+    map.set("2020-12-21",true);
+    map.set("2020-12-22",true);
+    map.set("2020-12-23",true);
+    map.set("2020-12-24",true);
+    map.set("2020-12-25",true);
+    map.set("2020-12-26",true);
+    map.set("2020-12-27",true);
+    map.set("2020-12-28",true);
+    map.set("2020-12-29",true);
+    map.set("2020-12-30",true);
+    map.set("2020-12-31",true);
+
+
+
+    function disabledLaydateInfo() {
+        var elem = $(".layui-laydate-content");//获取table对象
+        angular.forEach(elem.find('td'),function(hero1,index1,objs1){
+           var s = hero1.getAttribute('lay-ymd');
+           if(map.get(s)){
+               hero1.className += ' laydate-disabled';
+           }
+
+       });
+    }
+
+
     var day3 = new Date();
-    day3.setTime(day3.getTime()+24*60*60*1000);
-    var s3 = day3.getFullYear()+"-" + (day3.getMonth()+1) + "-" + day3.getDate();
+    var s3 = (day3.getFullYear()+1)+"-1-1";
+
     // laydate国际版
     laydate.render({
         elem: '#ladate1'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1447,7 +1557,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate2'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1456,7 +1574,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate3'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1465,7 +1591,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate4'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1474,7 +1608,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate5'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1483,7 +1625,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate6'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1492,7 +1642,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate7'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1501,7 +1659,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate8'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();
@@ -1510,7 +1676,15 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     laydate.render({
         elem: '#ladate9'
         ,lang: 'en'
-        ,min : s3
+        ,min : 2
+        ,max : s3
+        ,btns: ['clear']
+        ,change: function(value, date, endDate){
+            disabledLaydateInfo();
+        }
+        ,ready: function() {
+            disabledLaydateInfo();
+        }
         ,done: function(value, date, endDate){
             // 回调函数
             $scope.checkPNR2();

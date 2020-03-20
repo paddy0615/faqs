@@ -2,10 +2,12 @@ package com.example.demo.dao;
 
 import com.example.demo.bean.Folder_display_relation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 @Component(value = "folder_display_relationDao")
@@ -111,5 +113,12 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
     List<Object[]> getSearchFolder(@Param("langId") long langId, @Param("key") long key);
 
 
+    @Query(value =" SELECT fdr_f_id FROM folder_display_relation WHERE fdr_parenid = :key"
+            ,nativeQuery = true)
+    List<Object> getFdrFidByFdrParenid(@Param("key") long key);
+
+    @Modifying
+    @Query(value =" DELETE FROM folder_display_relation WHERE fdr_parenid = :key or fdr_f_id = :key",nativeQuery = true)
+    void deleteByPfid(@Param("key") long key);
 
 }

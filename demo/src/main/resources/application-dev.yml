@@ -38,6 +38,14 @@ spring:
     username: root
     password: sonic@xunyu
     driver-class-name: com.mysql.jdbc.Driver
+    hikari:
+      read-only: false
+      connection-timeout: 50000
+      idle-timeout: 50000
+      max-lifetime: 50000
+      maximum-pool-size: 100
+      minimum-idle: 10
+      auto-commit: true
   mvc:
     static-path-pattern: /**
   thymeleaf:
