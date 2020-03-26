@@ -125,10 +125,8 @@ public class FolderController {
             long key_random = Long.parseLong(map.get("key_random").toString());
             if(key_random > 0){
                 // 更新
-                System.out.println("更新");
             }else{
                 // 添加
-                System.out.println("添加");
                 folderService.saveLibraryALL(parenId,arr);
             }
 

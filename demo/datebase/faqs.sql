@@ -653,3 +653,17 @@ CREATE TABLE `faqs_select_feedback` (
   `df_status` INT(11) DEFAULT '0',
   PRIMARY KEY (`df_id`)
 ) ENGINE=INNODB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+-- 文件夹轨迹
+DROP TABLE IF EXISTS `folder_monitor`;
+CREATE TABLE `folder_monitor` (
+  `m_id` INT(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `m_clientip` VARCHAR(200) DEFAULT NULL COMMENT 'ip',
+  `m_lang_id` INT(11) DEFAULT NULL COMMENT 'faq语言ID',
+  `m_f_id` INT(11) DEFAULT NULL COMMENT '文件夹ID',
+  `m_f_key` INT(11) DEFAULT NULL COMMENT '文件夹key',
+  `m_createdate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`m_id`)
+) ENGINE=INNODB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;
+

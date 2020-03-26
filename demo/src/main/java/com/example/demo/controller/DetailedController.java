@@ -70,6 +70,15 @@ public class DetailedController {
     @Resource
     FolderService folderService;
 
+    @Resource
+    Folder_MonitorDao folder_monitorDao;
+
+
+
+
+
+
+
     @ResponseBody
     @RequestMapping("/getByDetaileds")
     public List<Detailed> getByDetaileds(
@@ -324,17 +333,26 @@ public class DetailedController {
     public RestResultModule getSearchFolder(HttpServletRequest request,
                                             @RequestParam(name = "langId",required = true,defaultValue = "0")long langId,
                                             @RequestParam(name = "key",required = true,defaultValue = "0")long key,
-                                            @RequestParam(name = "status",required = true,defaultValue = "1")long status) throws Exception{
+                                            @RequestParam(name = "status",required = true,defaultValue = "1")long status,
+                                            @RequestParam(name = "fid",required = true,defaultValue = "0")long fid) throws Exception{
         RestResultModule module = new RestResultModule();
+        // 添加搜索记录
+        Folder_monitor monitor = new Folder_monitor();
+        monitor.setClientip(ipUtil.getIpAddr(request));
+        monitor.setCreateDate(new Date());
+        monitor.setLangId(langId);
+        monitor.setfId(fid);
+        monitor.setfKey(key);
+        folder_monitorDao.save(monitor);
+
+
         List<Object[]> folderList = folderService.getSearchFolder(langId,key);
-        List<DetailedEntity> detaileds = null;
-        if(folderList.size() == 0 ){
-            String s = String.valueOf(status);
-            if(status == 3 ){
-                s = "";
-            }
-            detaileds = detailedService.getSearchFolderByLibrary(key,langId,s);
+        String s = String.valueOf(status);
+        if(status == 3 ){
+            s = "";
         }
+        List<DetailedEntity> detaileds = null;
+        detaileds = detailedService.getSearchFolderByLibrary(key,langId,s);
         module.putData("folderList",folderList);
         module.putData("detaileds",detaileds);
         return module;

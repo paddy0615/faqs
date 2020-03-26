@@ -149,6 +149,12 @@ public class DetailedService {
         detailedDao.deleteById(id);
     }
 
+    @Modifying
+    @Transactional
+    public void deleteByFlId(long flid){
+        detailedDao.deleteByFlId(flid);
+    }
+
 
     /**
      * 添加搜索数量

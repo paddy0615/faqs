@@ -21,6 +21,27 @@ myapp.controller("faqOneController",["$scope","$http",function ($scope, $http) {
         clicked(ctx + "appPage/admin/feedbackSet?dfId="+id);
     }
 
+    // 删除library
+    $scope.getDelete = function(id,txt){
+        var myconfirm = layer.confirm("confirm delete?<br/>Contains an associated Question List! <br/> Series:"+txt, {
+            title:'Information',
+            btn: ['OK','Cancel'] //按钮
+        }, function(){
+            $http({
+                method : 'post',
+                url : ctx + "appJson/admin/liaray/delete",
+                params:{"id": id}
+            }).success(function (data) {
+                window.location.reload();//页面刷新
+            })
+            layer.close(myconfirm);
+        }, function(){
+            layer.close(myconfirm);
+        });
+
+    }
+
+
     // 退出
     $scope.goCancel = function(url){
         clicked(url); // 跳url

@@ -121,6 +121,13 @@
                     </div>
                 </div>
 
+                <!-- 文件夹list-->
+                <div class="content-box" style="padding: 0px 12px;">
+                    <ul>
+                        <li ng-repeat="l in folderList"><a ng-click="getFolderUrl(l[2],l[3],l[0])" href="javascript:void(0);" >{{l[1]}}</a></li>
+                    </ul>
+                </div>
+
                 <!-- 问题list-->
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
@@ -128,12 +135,6 @@
                     </ul>
                 </div>
 
-                <!-- 文件夹list-->
-                <div class="content-box" style="padding: 0px 12px;">
-                    <ul>
-                        <li ng-repeat="l in folderList"><a ng-click="getFolderUrl(l[2],l[3])" href="javascript:void(0);" >{{l[1]}}</a></li>
-                    </ul>
-                </div>
             </div>
 
             <!-- E-Form -->

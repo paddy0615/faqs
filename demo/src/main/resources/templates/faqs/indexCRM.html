@@ -125,12 +125,38 @@
             </div>
             <div style="clear: both;margin-bottom: 12px;"></div>
             <div ng-show="searchShow">
-                <div class="content-box" style="padding: 0px 12px;">
+           <!--     <div class="content-box" style="padding: 0px 12px;">
                     <ul>
                         <li style="border:none;color: #555;" ng-if="detaileds.length == 0" >{{selectTestUnll}}</li>
                         <li ng-repeat="detailed in detaileds"><a href="javascript:void(0);"  ng-click="getIndexDetailedCRM(detailed.id)" ><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
                     </ul>
+                </div>-->
+
+                <!-- 无结果-->
+                <div ng-show="!searchFeedback">
+                    <div class="content-box" style="padding: 0px 12px;">
+                        <ul>
+                            <li style="border:none;color: #555;" >{{'lab124' | translate}}</li>
+                        </ul>
+                    </div>
                 </div>
+
+                <!-- 文件夹list-->
+                <div class="content-box" style="padding: 0px 12px;">
+                    <ul>
+                        <li ng-repeat="l in folderList"><a ng-click="getFolderUrl(l[2],l[3],l[0])" href="javascript:void(0);" >{{l[1]}}</a></li>
+                    </ul>
+                </div>
+
+                <!-- 问题list-->
+                <div class="content-box" style="padding: 0px 12px;">
+                    <ul>
+                        <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}"><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
+                    </ul>
+                </div>
+
+
+
             </div>
 
             <!-- E-Form -->

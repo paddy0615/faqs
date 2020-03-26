@@ -129,7 +129,6 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
             title:'Information',
             btn: ['OK','Cancel'] //按钮
         }, function(){
-            console.log('执行删除');
             $http({
                 method : 'post',
                 url : ctx + "appJson/admin/deleteLiaray",

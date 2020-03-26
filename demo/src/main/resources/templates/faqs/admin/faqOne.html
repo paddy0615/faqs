@@ -72,6 +72,9 @@
                   <td style="text-align: right;">
                       <a class="btn btn-default" th:href="@{'/appPage/admin/faqTwo?fl_id={{l.id}}'}" >Select</a>
                       <a class="btn btn-default" th:href="@{'/appPage/admin/faqOneEdit?fl_id={{l.id}}'}" >Edit</a>
+                      <element zg-access="access">
+                          <button class="btn btn-default" type="button" ng-click="getDelete(l.id,l.title)">Delete</button>
+                      </element>
                   </td>
                 </tr>
 

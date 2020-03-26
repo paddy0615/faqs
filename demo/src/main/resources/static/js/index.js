@@ -23,9 +23,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("联络我们!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透过在线客服与我们联络"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("联络我们!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透过在线客服与我们联络"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -37,9 +37,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -51,9 +51,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("連絡先情報!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("私たちとチャットしましょう"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("連絡先情報!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("私たちとチャットしましょう"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -65,9 +65,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("연락처!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("연락해 주십시오."); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("연락처!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("연락해 주십시오."); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -79,27 +79,12 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("Contact us!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("Chat with us!"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("Contact us!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("Chat with us!"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-        <!-- begin SonicTeleservices code -->
-        /*var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
-        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/09bcc7b8-3035-4460-8c0f-a080d4815c17.js';
-        var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
-                done = true;
-                /!* Place your SonicTeleservices JS API code below *!/
-                /!* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. *!/
-            }
-        };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);*/
-        <!-- end SonicTeleservices code -->
-
-
     }
 }
 
@@ -283,12 +268,12 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
      * @param key
      * @param langId
      */
-    $scope.getFolderUrl = function (key,langId) {
+    $scope.getFolderUrl = function (key,langId,fid) {
         $scope.folderList = {};
         $http({
             method : "post",
             url : ctx + "appJson/getSearchFolder",
-            params : {"key": key,"langId" : langId,"status":1}
+            params : {"key": key,"langId" : langId,"status":1,"fid":fid}
         }).success(function (data) {
             $scope.folderList =  data.result.folderList;
             $scope.detaileds =  data.result.detaileds;
@@ -367,6 +352,9 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
             method : 'post',
             url : ctx + "appJson/getEform",
         }).success(function (data) {
+          /*  angular.forEach(data,function (each) {
+                each.img = '/hkexpress/img/eform'+each.id+'.png'
+            })*/
             $scope.eFormTypes = data;
         })
 
@@ -747,6 +735,12 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
             $scope.searchShow = true;
             $scope.indexShow = false;
             $scope.detaileds =  data.result.detaileds;
+
+            $scope.folderList =  data.result.folderList;
+            $scope.detaileds_length = $scope.detaileds.length;
+            $scope.searchFeedback =  data.result.searchFeedback;
+
+
         })
     }
     $scope.searchTest = "";
@@ -778,15 +772,31 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     /* 搜索框 结束*/
 
 
+    /**
+     * 搜索文件夹
+     * @param key
+     * @param langId
+     */
+    $scope.getFolderUrl = function (key,langId,fid) {
+        $scope.folderList = {};
+        $http({
+            method : "post",
+            url : ctx + "appJson/getSearchFolder",
+            params : {"key": key,"langId" : langId,"status":3,"fid":fid}
+        }).success(function (data) {
+            $scope.folderList =  data.result.folderList;
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+
+
     function info1(){
         // 获取Eform
         $http({
             method : 'post',
             url : ctx + "appJson/getEform",
         }).success(function (data) {
-            var d  = {cn: "台风原因更改航班",en: "Typhoon Move Flight",hk: "颱風原因更改航班",id: 7}
             $scope.eFormTypes = data;
-            $scope.eFormTypes.unshift(d);
         })
 
         $http({

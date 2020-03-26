@@ -104,6 +104,8 @@ public class EformController {
             return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
         }
         return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+        //return "redirect:http://eform.securesettlement.net/hkexpress/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+
     }
 
 

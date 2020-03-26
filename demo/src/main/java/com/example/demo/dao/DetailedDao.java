@@ -86,4 +86,9 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Query("select new Detailed(d.id,d.title,d.contentTxt) from Detailed d where d.langId <> 1   and (d.title like %:search%  or d.contentTxt like %:search%) and d.status = 1")
     List<Detailed> getByAllDetaileds(@Param("search")String search);
 
+
+    @Modifying
+    @Query(value = "DELETE FROM faqs_detailed WHERE dl_fl_id =:flid",nativeQuery = true)
+    void deleteByFlId(@Param("flid")long flid);
+
 }

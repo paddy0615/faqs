@@ -49,9 +49,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -63,9 +63,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("联络我们!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透过在线客服与我们联络"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("联络我们!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透过在线客服与我们联络"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -77,9 +77,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -91,9 +91,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("連絡先情報!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("私たちとチャットしましょう"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("連絡先情報!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("私たちとチャットしましょう"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -105,9 +105,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("연락처!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("연락해 주십시오."); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+               // SonicTeleservices.setTitle("연락처!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("연락해 주십시오."); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -119,9 +119,9 @@ function onlineChat(langId) {
         se.onload = se.onreadystatechange = function() {
             if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
                 done = true;
-                SonicTeleservices.setTitle("Contact us!"); // for the pre-chat form
-                SonicTeleservicesChat.setTitle("Chat with us!"); // for the chat-form
-                SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
+                //SonicTeleservices.setTitle("Contact us!"); // for the pre-chat form
+                //SonicTeleservicesChat.setTitle("Chat with us!"); // for the chat-form
+                //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
@@ -1534,8 +1534,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
 
 
     var day3 = new Date();
-    var s3 = (day3.getFullYear()+1)+"-1-1";
-
+    var s3 = (day3.getFullYear())+"-12-31";
     // laydate国际版
     laydate.render({
         elem: '#ladate1'

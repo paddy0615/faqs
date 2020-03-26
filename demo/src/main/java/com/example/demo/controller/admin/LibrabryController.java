@@ -230,5 +230,24 @@ public class LibrabryController {
         return module;
     }
 
+    /* 删除deleteLiaray*/
+    @ResponseBody
+    @RequestMapping(value = "/liaray/delete")
+    public void deleteLiaray(HttpServletRequest request,HttpSession session,
+                             @RequestParam(name = "id",defaultValue = "0",required = true) long id){
+        User user = (User)session.getAttribute("userSession");
+        if(null != user){
+            if("admin".equals(user.getRole())){
+                // 删除
+                detailedService.deleteByFlId(id);
+                librabryDao.deleteById(id);
+                // 添加日志
+                Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"liaray/delete",id+"","",new Date());
+                logsDao.save(logs);
+            }
+        }
+
+    }
+
 
 }
