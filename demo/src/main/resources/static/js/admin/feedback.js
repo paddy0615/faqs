@@ -164,6 +164,7 @@ myapp.controller("selectfeedbackController",["$scope","$http",function ($scope, 
 
 // admin/feedback
 myapp.controller("feedbackController",["$scope","$http",function ($scope, $http) {
+    $(".feedbackPage").addClass("active");
     $scope.df_types = [
         {id : 0, name : "All"},
         {id : 1, name : "Useful(+1)"},

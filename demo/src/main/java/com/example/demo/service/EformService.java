@@ -347,6 +347,11 @@ public class EformService {
             //msg.setRecipients(Message.RecipientType.CC, "hke_smartform@sonic-teleservices.com");
             // 密抄人
             msg.setRecipients(Message.RecipientType.BCC, "guest.relations@hkexpress.com");
+            //msg.setRecipients(Message.RecipientType.BCC, "hke_smartform@sonic-teleservices.com");
+           /* Address [] a = new Address[2];
+            a[0] = new InternetAddress("guest.relations@hkexpress.com");
+            a[1] = new InternetAddress("hke_smartform@sonic-teleservices.com");
+            msg.setRecipients(Message.RecipientType.BCC, a);*/
 
             // 设置邮件内容
             MimeMessageHelper helper = new MimeMessageHelper(msg, true,"UTF-8");

@@ -21,6 +21,9 @@
     <script th:src="@{/js/assets/angular-translate-loader-static-files.min.js}"></script>
     <script th:src="@{/js/index.js}"></script>
     <script th:src="@{/js/common.js}"></script>
+    <script type="text/javascript" charset="utf-8"  th:src="@{/ueditor/ueditor.config.js}"></script>
+    <script type="text/javascript" charset="utf-8"  th:src="@{/ueditor/ueditor.all.js}"> </script>
+
     <base th:href="@{/appPage/indexDetailed}">
 
     <style>
@@ -96,7 +99,8 @@
             </div>
             <div class="nav-select">
                 <div class="input-group">
-                    <input style="height: 40px;" ng-model="searchTest" id="search" type="text" placeholder="{{selectTest}}" class="form-control" ng-keyup="onKeyup(event)">
+                    <!--  placeholder="{{selectTest}}"  -->
+                    <input style="height: 40px;" ng-model="searchTest" id="search" type="text" class="form-control" ng-keyup="onKeyup(event)">
                     <span class="input-group-addon"><a href="javascript:;" ng-click="getSearch()"><span  class="glyphicon glyphicon-search"></span></a></span>
                 </div>
             </div>

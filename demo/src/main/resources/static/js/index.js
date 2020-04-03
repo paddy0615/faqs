@@ -161,7 +161,7 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {
@@ -397,7 +397,7 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 gaixialatu($scope.langId);
                 $translate.use($scope.langId.toString());
                 $scope.dfcount = data.result.dfcount;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.feedbackTest = feedbackTest($scope.langId);
@@ -704,7 +704,7 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
             }else{
@@ -854,7 +854,7 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
                 gaixialatu($scope.langId);
                 $translate.use($scope.langId.toString());
                 $scope.dfcount = data.result.dfcount;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.feedbackTest = feedbackTest($scope.langId);
@@ -1160,7 +1160,7 @@ myapp.controller("testChatbotController",["$scope","$http","$location","$transla
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {
@@ -1319,7 +1319,7 @@ myapp.controller("testChatbot_infosunController",["$scope","$http","$location","
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
-                $scope.selectTest = selectTest($scope.langId);
+                //$scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 angular.forEach($scope.result.languages,function (each) {

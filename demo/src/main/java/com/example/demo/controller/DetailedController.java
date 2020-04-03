@@ -183,7 +183,7 @@ public class DetailedController {
             Map<String,Integer> map = new LinkedHashMap<>();
             for(int i = 0; i < tagsList.size();i++){
                 Object[] os = tagsList.get(i);
-                if(search.contains(os[0].toString())){
+                if(search.toLowerCase().contains(os[0].toString().toLowerCase())){
                     if(map.containsKey(os[1].toString())){
                         map.put(os[1].toString(),map.get(os[1].toString())+1);
                     }else{
@@ -226,7 +226,7 @@ public class DetailedController {
                     }
                     //folderList = folderService.getFolderSelect(maxLevel,langId,searchs);
                     for(Object[] os : folderList){
-                        if(search.contains(os[4].toString())){
+                        if(search.toLowerCase().contains(os[4].toString().toLowerCase())){
                             if(foldermap.containsKey(os[0].toString())){
                                 foldermap.put(os[0].toString(),foldermap.get(os[0].toString())+1);
                             }else{

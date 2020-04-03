@@ -51,9 +51,9 @@ public class EformController {
         monitor.setLangId(langId);
         monitor.setEtId(Long.parseLong(id));
         monitor.setCreateDate(new Date());
-        if(!IpUtil.checkInternal(request)){
+       /* if(!IpUtil.checkInternal(request)){
             crm_uid = "";
-        }
+        }*/
         monitor.setCrmuid(crm_uid);
         eformService.saveE_form_Monitor(monitor);
 
@@ -103,8 +103,13 @@ public class EformController {
             }
             return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
         }
-        return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-        //return "redirect:http://eform.securesettlement.net/hkexpress/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+
+
+        if("pro".equals(active)){
+            return "redirect:https://eform.securesettlement.net/hkexpress/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+        }else {
+            return "redirect:/appPage/"+t+"?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+        }
 
     }
 
@@ -146,9 +151,9 @@ public class EformController {
     public RestResultModule add(HttpServletRequest request,@RequestBody EformTotal eformTotal){
         Eform eform = eformTotal.getEform();
         String crm_uid = eformTotal.getCrmuid();
-        if(!IpUtil.checkInternal(request)){
+      /*  if(!IpUtil.checkInternal(request)){
             crm_uid = "";
-        }
+        }*/
         RestResultModule module = new RestResultModule();
         if(null != eform){
            try{
@@ -234,9 +239,9 @@ public class EformController {
     public RestResultModule add3(HttpServletRequest request,@RequestBody EformTotal eformTotal){
         Eform eform = eformTotal.getEform();
         String crm_uid = eformTotal.getCrmuid();
-        if(!IpUtil.checkInternal(request)){
+        /*if(!IpUtil.checkInternal(request)){
             crm_uid = "";
-        }
+        }*/
         RestResultModule module = new RestResultModule();
         if(null != eform){
             try{

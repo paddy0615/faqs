@@ -351,9 +351,9 @@ public class DetailedService {
                     //}
                 }
                 String crm_uid = request.getParameter("crm_uid");
-                if(!IpUtil.checkInternal(request)){
+               /* if(!IpUtil.checkInternal(request)){
                     crm_uid = "";
-                }
+                }*/
                 monitor.setCrmuid(crm_uid);
                 monitor.setLangId(detailed.getLangId());
                 monitor.setCatId(detailed.getCatId());

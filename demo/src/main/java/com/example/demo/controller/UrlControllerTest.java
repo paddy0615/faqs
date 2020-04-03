@@ -1,13 +1,7 @@
 package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /*
  * url跳转页面
@@ -15,7 +9,7 @@ import javax.servlet.http.HttpSession;
  * */
 @Controller
 @RequestMapping("appPage")
-public class UrlController {
+public class UrlControllerTest {
     @RequestMapping("/")
     public String index(){return "faqs/index";}
 
@@ -140,55 +134,36 @@ public class UrlController {
      * @return
      */
     @RequestMapping("/RequestForItinerary")
-    public String eForm1(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/RequestForItinerary?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm1(){return "faqs/eForm1";}
 
     /**
      * Duplicate Booking 重復訂單RefundWithNewBbooking
      * @return
      */
     @RequestMapping("/DuplicateBooking")
-    public String eForm2(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/DuplicateBooking?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm2(){return "faqs/eForm2";}
 
     /**
      * Request for Certificate   證明申請
      * @return
      */
     @RequestMapping("/RequestForCertificate")
-    public String eForm3(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/RequestForCertificate?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm3(){return "faqs/eForm3";}
 
     /**
      * Name Correction    姓名修正
      * @return
      */
     @RequestMapping("/NameCorrection")
-    public String eForm4(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/NameCorrection?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm4(){return "faqs/eForm4";}
+
 
     /**
      * Payment Failure   支付失敗
      * @return
      */
     @RequestMapping("/PaymentFailure")
-    public String eForm5(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/PaymentFailure?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm5(){return "faqs/eForm5";}
 
     /**
      * Reconfirm Flight 確認航班
@@ -205,33 +180,21 @@ public class UrlController {
      * @return
      */
     @RequestMapping("/TyphoonMoveFlight")
-    public String eForm7(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/TyphoonMoveFlight?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm7(){return "faqs/eForm7";}
 
     /**
      * Refund with new booking 已購買新訂單的退款
      * @return
      */
     @RequestMapping("/RefundWithNewBbooking")
-    public String eForm8(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/RefundWithNewBbooking?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm8(){return "faqs/eForm8";}
 
     /**
      * check flight status 我想知道我的航班起飛時間
      * @return
      */
     @RequestMapping("/CheckFlightStatus")
-    public String eForm9(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
-            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
-            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/CheckFlightStatus?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
-    }
+    public String eForm9(){return "faqs/eForm9";}
 
 
 
