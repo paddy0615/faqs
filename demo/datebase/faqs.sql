@@ -667,3 +667,6 @@ CREATE TABLE `folder_monitor` (
   PRIMARY KEY (`m_id`)
 ) ENGINE=INNODB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;
 
+
+-- 添加选择方式
+ALTER TABLE e_form_relation ADD er_eleven_style VARCHAR(200) NULL COMMENT 'form11-选择方式';

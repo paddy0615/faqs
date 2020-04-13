@@ -247,6 +247,41 @@ public class EformService {
 
 
     /**
+     * 2020-4-10
+     * 发zoho邮件的标题。e-form11
+     */
+    public String getMailTypeNewForm11(Eform eform,String crm_uid,String elevenstyle) throws Exception {
+        E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
+        Language language =  languageDao.findById((long)eform.getLangId());
+        String s = "Smart Form";
+        if(crm_uid != "" && crm_uid != null){
+            s += "/CRM("+crm_uid+")";
+        }else{
+            s += "/IBE";
+        }
+        s += "/Request for "+e_form_type.getEn();
+
+        // -- 當客人選擇只发送一张礼券予上面填写的旅客時：
+        //Refund by One Voucher
+
+        //--當客人選擇按照已申请退款订单内的退款旅客名单发放礼券時：
+        //Refund by More Voucher
+        if(elevenstyle.contains("refund passenger")){
+            s += "/Refund by More Voucher";
+        }else{
+            s += "/Refund by One Voucher";
+        }
+        s += "/"+language.getTitle();
+        s += "/";
+        if(null != eform.getPnr()){
+            s += eform.getPnr();
+        }
+        s += "(Pending)";
+        return s;
+    }
+
+
+    /**
      * 获取e_certificate 标题
      */
     public String getCertificateTitle(long id) throws Exception {
@@ -416,7 +451,7 @@ public class EformService {
                 // 设置收件人邮箱
                 helper.setTo("windy.tam@sonic-teleservices.com");
                 // 抄送邮件接收人
-                helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com"});
+                helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com","sam.mok@sonic-teleservices.com"});
 
             }
             // 设置邮件标题

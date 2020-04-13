@@ -39,12 +39,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       read-only: false
-      connection-timeout: 50000
-      idle-timeout: 50000
-      max-lifetime: 50000
-      maximum-pool-size: 100
+      connection-timeout: 60000
+      idle-timeout: 60000
+      validation-timeout: 3000
+      max-lifetime: 60000
+      login-timeout: 5
+      maximum-pool-size: 60
       minimum-idle: 10
-      auto-commit: true
   mvc:
     static-path-pattern: /**
   thymeleaf:

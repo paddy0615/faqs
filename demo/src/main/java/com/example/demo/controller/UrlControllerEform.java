@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * url- 只对eform系统有关。
  * */
 @Controller
-@RequestMapping("appPage")
+@RequestMapping("appPage2")
 public class UrlControllerEform {
 
     /**
@@ -82,5 +82,12 @@ public class UrlControllerEform {
     public String eForm9(){return "faqs/eForm9";}
 
 
+    /**
+     * RefunWithdGift
+     * Refund with gift certificate instead  改為以禮券退款
+     * @return
+     */
+    @RequestMapping("/RefunWithdGift")
+    public String eForm11(){return "faqs/eForm11";}
 
 }

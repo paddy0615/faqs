@@ -54,6 +54,17 @@ public class E_form_relation implements Serializable {
     @Column(name = "er_inbound_three")
     private Date inboundthree;
 
+    @Column(name = "er_eleven_style")
+    private String elevenstyle;
+
+
+    public String getElevenstyle() {
+        return elevenstyle;
+    }
+
+    public void setElevenstyle(String elevenstyle) {
+        this.elevenstyle = elevenstyle;
+    }
 
     public Long getOutboundunchanged() {
         return outboundunchanged;

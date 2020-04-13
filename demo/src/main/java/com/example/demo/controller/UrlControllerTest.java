@@ -196,7 +196,13 @@ public class UrlControllerTest {
     @RequestMapping("/CheckFlightStatus")
     public String eForm9(){return "faqs/eForm9";}
 
-
+    /**
+     * RefunWithdGift
+     * Refund with gift certificate instead  改為以禮券退款
+     * @return
+     */
+    @RequestMapping("/RefunWithdGift")
+    public String eForm11(){return "faqs/eForm11";}
 
     @RequestMapping("/admin/folder")
     public String folder(){

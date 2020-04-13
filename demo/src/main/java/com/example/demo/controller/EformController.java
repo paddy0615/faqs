@@ -102,6 +102,8 @@ public class EformController {
                 s = "zh-cn";
             }
             return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
+        }else if("11".equals(id)){
+            t = "RefunWithdGift";
         }
 
 
@@ -193,14 +195,27 @@ public class EformController {
                    eformService.save(eform);
                    result.setEid(eform.getId());
                    String zohomailtitle = eformService.getMailTypeNew(eform,crm_uid,-1);
+
+                   if("7".equals(eform.getType())){
+                       E_form_relation relation = eformTotal.getRelation();
+                       if(relation != null && relation.getTriptype() > 0){
+                           relation.setEid(eform.getId());
+                           eformService.saveRelation(relation);
+                           valueMap.put("eformRelation", relation);
+                       }
+                   }
+                   if("11".equals(eform.getType())){
+                       E_form_relation relation = eformTotal.getRelation();
+                       if(relation != null){
+                           zohomailtitle = eformService.getMailTypeNewForm11(eform,crm_uid,relation.getElevenstyle());
+                           relation.setEid(eform.getId());
+                           eformService.saveRelation(relation);
+                           valueMap.put("eformRelation", relation);
+                       }
+                   }
+
                    result.setZohomailtitle(zohomailtitle);
                    eformService.saveResult(result);
-                   E_form_relation relation = eformTotal.getRelation();
-                   if(relation != null && relation.getTriptype() > 0){
-                       relation.setEid(eform.getId());
-                       eformService.saveRelation(relation);
-                       valueMap.put("eformRelation", relation);
-                   }
 
                    // 发邮件(zoho)
                    valueMap.put("eform", eform);
@@ -210,6 +225,7 @@ public class EformController {
                    eformService.sendSimpleMail(valueMap);
                    // 发确认邮件(给客户)
                    Map<String, Object> valueMapUser = new HashMap<>();
+                   valueMapUser.put("eform", eform);
                    valueMapUser.put("title", eformService.getMailUserType(eform.getLangId().toString()));
                    valueMapUser.put("To",eform.getEmail());
                    valueMapUser.put("langId",eform.getLangId());
@@ -292,10 +308,11 @@ public class EformController {
                         eformService.updateResultXml(result);
                         listSize = list.size();
                         if(listSize == 0){
-                            if(eform.getEcertificatetype() == 1){
+                         /* CRM 无IRR记录。 e_certificate_type =1 or =4，正常通话，让人手跟进
+                           if(eform.getEcertificatetype() == 1){
                                 module.setCode(404);
                                 return module;
-                            }
+                            }*/
                         }else{
                             // 对应类型。
                             CommomClass commomClass = (CommomClass) list.get(0);

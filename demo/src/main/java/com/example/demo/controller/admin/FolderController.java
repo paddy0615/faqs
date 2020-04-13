@@ -56,7 +56,7 @@ public class FolderController {
         long parenId = Long.parseLong(map.get("parenId").toString());
         long langId = Long.parseLong(map.get("langId").toString());
         // 固定显示英文
-        List<Object[]> list = folderService.getFolderPage(level,parenId,1);
+        List<Object[]> list = folderService.getFolderPage(level,parenId,6);
         module.putData("list",list);
         module.putData("languages",languageDao.findAll());
         module.putData("tableofContents",folderService.getFolderTableofContents(level,parenId));

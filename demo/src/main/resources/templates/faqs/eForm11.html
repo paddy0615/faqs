@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="HK Express: 香港低成本航空公司！立即預訂機票，查詢航班時間表或航班狀態！">
+    <meta name="keywords" content="便宜機票,特價機票,廉價機票,優惠機票,HK Express,FAQ,Faqs,航班问题,答案,香港航空">
+    <title>FAQS | HK Express</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <link rel="stylesheet" th:href="@{/css/assets/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/assets/bootstrapValidator.min.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/eForm.css}">
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/bootstrap.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/assets/angular-translate.min.js}"></script>
+    <script th:src="@{/js/assets/angular-translate-loader-static-files.min.js}"></script>
+    <script th:src="@{/js/assets/bootstrapValidator.min.js}"></script>
+    <script th:src="@{/js/eForm.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <base th:href="@{/appPage/index}">
+
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollToTop').fadeIn();
+                } else {
+                    $('.scrollToTop').fadeOut();
+                }
+            });
+
+            $('.scrollToTop').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 800);
+                return false;
+            });
+        });
+
+    </script>
+    <style>
+        .eFormError-submit-xia:hover{
+            background-color: #0073be !important;
+        }
+    </style>
+
+</head>
+<body ng-app="myapp" ng-controller="eForm11Controller">
+<div class="container-fluid" id="eForm1">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-2 col-md-8 col-md-offset-2 main">
+
+            <div class="header">
+                <div class="header-loagin">
+                    <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
+                </div>
+                <div class="header-lan">
+                    <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
+                    <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
+                            ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
+                    </select>
+                    <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-md-6 col-md-offset-3">
+                    <ul class="booking-steps">
+                        <li id="booking-steps-li1" class="active">
+                            <span class="number"></span>
+                            <span class="label1">{{'lab92'|translate}}</span>
+                        </li>
+                        <li id="booking-steps-li1-1" >
+                            <span class="number"></span>
+                            <span class="label1">{{'lab129'|translate}}</span>
+                        </li>
+                        <li id="booking-steps-li2" >
+                            <span class="number"></span>
+                            <span class="label1">{{'lab22'|translate}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="width: 100%;float: left;margin-bottom: 100px;">
+
+                    <!-- Resend Itinerary-->
+                    <div ng-show="eFormContent" class="eForm-div1" style="border-radius: 10px;color: #9960a7;">
+                        <p class="list-group-item active ng-binding" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 24px;">
+                            {{'eformText11'|translate}}
+                        </p>
+                        <div style="padding: 10px;">
+                            <p style="margin: 5px 0px;"></p>
+                            <div class="form-group">
+                                <label>
+                                    <span style="margin-right: 20px;">{{'lab16'|translate}}</span>
+                                </label>
+                            </div>
+                            <div class="form-group pnr-div" style="margin-top: -30px;">
+                                <label></label>
+                                <input type="text" ng-model="e.pnr" name="pnr" class="form-control"  placeholder="{{'lab16'|translate}}" />
+                            </div>
+                            <div class="form-group" style="width: 50%;float: left;">
+                                <label>{{'lab2'|translate}}:</label>
+                                <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstName" ng-model="e.firstname"/>
+                            </div>
+                            <div class="form-group"  style="width: 48%;float: right;">
+                                <label style="color: white">1</label>
+                                <input type="text" class="form-control" placeholder="{{'lab4'|translate}}"  name="lastName" ng-model="e.lastname"/>
+                            </div>
+                            <div style="clear: both;"></div>
+
+                            <div class="form-group">
+                                <label>{{'lab12'|translate}}:</label>
+                            </div>
+                            <div class="form-group" style="margin-top: -30px;">
+                                <label></label>
+                                <input type="text" class="form-control" name="email" ng-model="e.email" />
+                            </div>
+                            <div class="form-group">
+                                <label>{{'lab93'|translate}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label>{{'lab130'|translate}}</label>
+                            </div>
+                            <div class="form-group" style="padding-left: 20px;">
+                                <input type="radio" name="ElevenstyleRadio" ng-click="checkElevenstyle(1)">{{'lab131'|translate}}
+                            </div>
+                            <div class="form-group" style="padding-left: 20px;margin-top: -10px;">
+                                <input type="radio" name="ElevenstyleRadio" ng-click="checkElevenstyle(2)">{{'lab132'|translate}}
+                            </div>
+                            <button class="btn btn-default eFormContent-submit" type="button" ng-click="getXiaTermsandConditions()">{{'lab14'|translate}}</button>
+
+                            <div style="clear: both;"></div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- TermsandConditions-->
+                    <div ng-show="TermsandConditions" class="eForm-div1" style="border-radius: 10px;color: #9960a7;">
+                        <p class="list-group-item active ng-binding" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 24px;">
+                            {{'lab129'|translate}}
+                        </p>
+                        <div style="padding: 10px;">
+                            <div style="padding: 10px;color: black;">
+                                <p style="padding-bottom: 10px;">1. {{'lab133'|translate}}</p>
+                                <p style="padding-bottom: 10px;">&nbsp;&nbsp;&nbsp;{{'lab134'|translate}}</p>
+                                <p style="font-weight: bold;padding-bottom: 10px;">&nbsp;&nbsp;&nbsp;{{'lab135'|translate}}</p>
+                                <p style="padding-bottom: 10px;">2. {{'lab136'|translate}}</p>
+                                <p style="padding-bottom: 10px;">3. {{'lab137'|translate}}</p>
+                                <p style="padding-bottom: 10px;">4. {{'lab138'|translate}}</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <input type="checkbox"  id="checkbox" ng-click="getTongyi()"> {{'lab139'|translate}}
+                            </div>
+                            <div style="clear: both;"></div>
+                            <button style="float: left;background-color: white;color: #71288E;" class="btn btn-default eFormError-submit" type="submit"  ng-click="getShangTermsandConditions()">{{'lab59'|translate}}</button>
+                            <button class="btn btn-default eFormError-submit eFormError-submit-xia" type="submit"  ng-click="eFormContentSubmit()" disabled="false">{{'lab140'|translate}}</button>
+                            <div style="clear: both;"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- error-->
+                    <div ng-show="eFormError" class="eForm-div1" style="border-radius: 10px;color: #9960a7;">
+                        <p class="list-group-item active ng-binding" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 24px;">
+                            {{'lab19'|translate}}
+                        </p>
+                        <div style="padding: 10px;">
+                            <div style="margin: 0 auto;width: 50%;margin-top: 50px;color: black;">
+                                <p style="font-size: 18px;color: #9960a7">{{'lab87'|translate}}</p>
+                                <element ng-if="data.code == 404">
+                                    {{'lab20'|translate}}
+                                </element>
+                                <element ng-if="data.code == 500">
+                                    {{'error1'|translate}}
+                                </element>
+                                <element ng-if="data.code == 405">
+                                    {{'lab85'|translate}}<br>{{'lab86'|translate}}
+                                </element>
+                            </div>
+                            <div style="clear: both;"></div>
+                            <button class="btn btn-default eFormError-submit" type="submit"  ng-click="getEformContent()">{{'lab21'|translate}}</button>
+                            <div style="clear: both;"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- success-->
+                    <div ng-show="eFormSuccess" class="eForm-div1" style="border-radius: 10px;color: #9960a7;">
+                        <p class="list-group-item active ng-binding" style="background-color: #71288E;border-color: #71288E;border-top-left-radius: 10px;border-top-right-radius: 10px;font-size: 24px;">
+                            {{'lab22'|translate}}
+                        </p>
+                        <div style="padding: 10px;">
+                            <div class="form-group confirmation-test">
+                                <div style="margin: 20px 0px;">{{'lab84'|translate}}</div>
+                                <p class="list-group-item active ng-binding  eFormSuccess-p" >
+                                    E-IN-{{data.result["key"]}}
+                                </p>
+                                <div class="success-div-test" style="text-align: left;margin: 0 20%;margin-top: 50px;">
+                                    {{'lab88'|translate}}<br>
+                                    {{'lab141'|translate}}{{data.result["email"]}}<br><br>
+                                    {{'lab90'|translate}}
+                                </div>
+                            </div>
+
+                            <div style="clear: both;"></div>
+                            <button class="btn btn-default eFormSuccess-submit" type="submit" ng-click="getEformContentDone()">{{'lab25'|translate}}</button>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scrollToTop" style="display: none;">
+    <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
+</div>
+
+
+</body>
+</html>

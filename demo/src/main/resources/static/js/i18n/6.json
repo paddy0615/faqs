@@ -79,6 +79,7 @@
 ,"eformText8":"Refund"
 ,"eformText9":"Check the latest flight information"
 ,"eformText10":"Important Travel Notice"
+,"eformText11":"Refund by voucher"
 ,"lab66":"If you would like to apply refund for your affected flight, please visit"
 ,"lab67":"to submit your application."
 ,"lab68":"If you have purchased a new booking, please fill in the form below."
@@ -137,9 +138,19 @@
 ,"lab126":"Cancel"
 ,"lab127":"Top"
 ,"lab128":"search feedback"
-
-
-
+,"lab129":"Terms and Conditions"
+,"lab130":"Please choose one of the following ways:"
+,"lab131":"Issue the gift certificate according to the refund passenger list in the applied refund order"
+,"lab132":"Only one gift certificate will be sent to the above passenger"
+,"lab133":"There is no refund for all HK express air tickets, and no refund for other charges and surcharges (all terms shall comply with local laws and applicable laws of the point of sale)。"
+,"lab134":"Refunds of departure taxes will be made in accordance with local legal requirements。*"
+,"lab135":"*The above terms and conditions do not apply to eligible tickets for full refund"
+,"lab136":"Once the tax refund application is submitted, it cannot be cancelled or changed. After the refund application is submitted, the flight reservation has been cancelled on behalf of the passenger. Passengers are not allowed to make any request to HK express for the cancelled order。"
+,"lab137":"HK express will send a confirmation email to the applicant after submitting the application form. All refund applications must be approved and the entire refund process will take about 6 to 8 weeks from the date of application submission。"
+,"lab138":"In case of any objection, HK express reserves the right of final decision。"
+,"lab139":"I confirm that I have read, understood and agreed to the above terms and conditions"
+,"lab140":"Confirm"
+,"lab141":"Confirmation email will be sent to your email address within 24 hours: "
 
 
 

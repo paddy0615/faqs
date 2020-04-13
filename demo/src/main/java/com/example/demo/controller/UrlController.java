@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping("appPage")
+@RequestMapping("appPage1")
 public class UrlController {
     @RequestMapping("/")
     public String index(){return "faqs/index";}
@@ -232,8 +232,24 @@ public class UrlController {
             , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
         return "redirect:https://eform.securesettlement.net/hkexpress/appPage/CheckFlightStatus?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
     }
-
-
+/*
+    *//**
+     * check flight status 我想知道我的航班起飛時間
+     * @return
+     *//*
+    @RequestMapping("/RefunWithdGift")
+    public String eForm11(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
+            , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
+            , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
+        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/RefunWithdGift?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+    }*/
+    /**
+     * RefunWithdGift
+     * Refund with gift certificate instead  改為以禮券退款
+     * @return
+     */
+    @RequestMapping("/RefunWithdGift")
+    public String eForm11(){return "faqs/eForm11";}
 
     @RequestMapping("/admin/folder")
     public String folder(){

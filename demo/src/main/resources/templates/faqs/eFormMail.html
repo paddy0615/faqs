@@ -162,6 +162,16 @@
                 </element>
             </element>
 
+            <element th:if="${eform.type == '11'}">
+                <element th:if="${not #lists.isEmpty(eformRelation)}">
+                    <tr>
+                        <td class="control-label1">Please choose one of the following ways:</td>
+                        <td class="control-label2" th:text="${eformRelation.elevenstyle}"></td>
+                    </tr>
+                </element>
+            </element>
+
+
         </table>
 
 
