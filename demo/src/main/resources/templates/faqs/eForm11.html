@@ -105,11 +105,14 @@
                                 <label></label>
                                 <input type="text" ng-model="e.pnr" name="pnr" class="form-control"  placeholder="{{'lab16'|translate}}" />
                             </div>
-                            <div class="form-group" style="width: 50%;float: left;">
-                                <label>{{'lab2'|translate}}:</label>
+                            <div class="form-group">
+                                <label>{{'lab142'|translate}}:</label>
+                            </div>
+                            <div class="form-group" style="margin-top: -30px;width: 50%;float: left;">
+                                <label style="color: white">1</label>
                                 <input type="text" class="form-control" placeholder="{{'lab3'|translate}}" name="firstName" ng-model="e.firstname"/>
                             </div>
-                            <div class="form-group"  style="width: 48%;float: right;">
+                            <div class="form-group"  style="margin-top: -30px;width: 48%;float: right;">
                                 <label style="color: white">1</label>
                                 <input type="text" class="form-control" placeholder="{{'lab4'|translate}}"  name="lastName" ng-model="e.lastname"/>
                             </div>
@@ -123,8 +126,18 @@
                                 <input type="text" class="form-control" name="email" ng-model="e.email" />
                             </div>
                             <div class="form-group">
+                                <label>{{'lab150'|translate}}:</label>
+                            </div>
+                            <div class="form-group" style="margin-top: -30px;width: 50%;">
+                                <label style="color: white">1</label>
+                                <input type="text" class="form-control" name="bookingno" ng-model="er.bookingno" onkeyup="this.value=this.value.replace(/\D|^0/g,'')"/>
+                            </div>
+                            <div class="form-group">
                                 <label>{{'lab93'|translate}}</label>
                             </div>
+
+
+
                             <div class="form-group">
                                 <label>{{'lab130'|translate}}</label>
                             </div>
@@ -150,11 +163,16 @@
                         <div style="padding: 10px;">
                             <div style="padding: 10px;color: black;">
                                 <p style="padding-bottom: 10px;">1. {{'lab133'|translate}}</p>
-                                <p style="padding-bottom: 10px;">&nbsp;&nbsp;&nbsp;{{'lab134'|translate}}</p>
-                                <p style="font-weight: bold;padding-bottom: 10px;">&nbsp;&nbsp;&nbsp;{{'lab135'|translate}}</p>
-                                <p style="padding-bottom: 10px;">2. {{'lab136'|translate}}</p>
-                                <p style="padding-bottom: 10px;">3. {{'lab137'|translate}}</p>
-                                <p style="padding-bottom: 10px;">4. {{'lab138'|translate}}</p>
+                                <p style="padding-bottom: 10px;">2. {{'lab134'|translate}}</p>
+                                <p style="padding-bottom: 10px;">3. {{'lab135'|translate}}</p>
+                                <p style="padding-bottom: 10px;">4. {{'lab136'|translate}}</p>
+                                <p style="padding-bottom: 10px;">5. {{'lab137'|translate}}</p>
+                                <p style="padding-bottom: 10px;">6. {{'lab145'|translate}}</p>
+                                <p style="padding-bottom: 10px;">7. {{'lab146'|translate}}</p>
+                                <p style="padding-bottom: 10px;">8. {{'lab147'|translate}}</p>
+                                <p style="padding-bottom: 10px;">9. {{'lab148'|translate}}</p>
+                                <p style="padding-bottom: 10px;">10. {{'lab149'|translate}}</p>
+                                <p style="padding-bottom: 10px;">{{'lab151'|translate}}</p>
                             </div>
                             <div style="text-align: center;">
                                 <input type="checkbox"  id="checkbox" ng-click="getTongyi()"> {{'lab139'|translate}}
@@ -205,8 +223,8 @@
                                 </p>
                                 <div class="success-div-test" style="text-align: left;margin: 0 20%;margin-top: 50px;">
                                     {{'lab88'|translate}}<br>
-                                    {{'lab141'|translate}}{{data.result["email"]}}<br><br>
-                                    {{'lab90'|translate}}
+                                    {{'lab141'|translate}}{{data.result["email"]}} {{'lab143'|translate}}<br><br>
+                                    {{'lab144'|translate}}
                                 </div>
                             </div>
 

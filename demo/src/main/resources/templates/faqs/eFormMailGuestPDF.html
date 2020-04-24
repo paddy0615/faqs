@@ -8,6 +8,12 @@
 <div th:if="${langId == 1}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>此電郵是由系統自動發送，請勿回覆此郵件</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>感謝您選擇乘搭香港快運航空。</p>
         <p>就您早前所提交的申請 <span th:text="${random}"></span>，附件為您所需要的航班證明。</p>
         <p>如有任何查詢，請瀏覽我們的常見問題網頁 <br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=1" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=1</a></p>
@@ -22,6 +28,12 @@
 <div th:if="${langId == 2}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>此电邮是由系统自动发送，请勿回复此邮件</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>感谢您选择乘搭香港快运航空。</p>
         <p>就您早前所提交的申请 <span th:text="${random}"></span>，附件为您所需要的航班证明。</p>
         <p>如有任何查询，请浏览我们的常见问题网页 <br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=2" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=2</a></p>
@@ -36,6 +48,12 @@
 <div th:if="${langId == 4}">
     <span>お客様へ</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>このメールはシステムによって自動的に送信されます。このメールに返信しないでください</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>香港エクスプレスをいつもご利用いただきまして、誠にありがとうございます。</p>
         <p>申請番号 <span th:text="${random}"></span>の証明書がご用意できましたので、添付でお送りいたします。何かご不明な点がございましたら、遠慮なくお知らせください。</p>
         <p>また、FAQページもご参照ください。<br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=4" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=4</a></p>
@@ -50,6 +68,12 @@
 <div th:if="${langId == 5}">
     <span>Dear Guest,</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>This is a system automated email.  Please do not reply to this message.</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>Thank you for choosing HK Express.</p>
         <p>Please see attached flight certificate for your application <span th:text="${random}"></span>.</p>
         <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>
@@ -67,6 +91,12 @@
 <div th:if="${langId == 6}">
     <span>Dear Guest,</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>This is a system automated email.  Please do not reply to this message.</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>Thank you for choosing HK Express.</p>
         <p>Please see attached flight certificate for your application <span th:text="${random}"></span>.</p>
         <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>

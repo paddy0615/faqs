@@ -90,6 +90,7 @@ public interface DfeedbackDao extends JpaRepository<Feedback,Long> {
             " AND if(:endTime != '',f.df_createdate <= :endTime,1=1)"+
             " ORDER BY df_createdate DESC"
             ,countQuery="SELECT COUNT(*)" +
+            " FROM faqs_select_feedback f,faqs_language l" +
             " WHERE f.df_lang_id = l.lang_id" +
             " AND if(:langId > 0,f.df_lang_id = :langId,1=1)"+
             " AND if(:follow >= 0,f.df_follow = :follow,1=1)"+

@@ -250,7 +250,7 @@ public class EformService {
      * 2020-4-10
      * 发zoho邮件的标题。e-form11
      */
-    public String getMailTypeNewForm11(Eform eform,String crm_uid,String elevenstyle) throws Exception {
+    public String getMailTypeNewForm11(Eform eform,String crm_uid,E_form_relation relation) throws Exception {
         E_form_type e_form_type = e_form_typeDao.findById(Long.parseLong(eform.getType()));
         Language language =  languageDao.findById((long)eform.getLangId());
         String s = "Smart Form";
@@ -266,11 +266,13 @@ public class EformService {
 
         //--當客人選擇按照已申请退款订单内的退款旅客名单发放礼券時：
         //Refund by More Voucher
-        if(elevenstyle.contains("refund passenger")){
-            s += "/Refund by More Voucher";
-        }else{
+        if(relation.getElevenstyle().contains("one")){
             s += "/Refund by One Voucher";
+        }else{
+            s += "/Refund by More Voucher";
         }
+        s += "/"+eform.getLastname()+" "+eform.getFirstname();
+        s += "/"+relation.getBookingno();
         s += "/"+language.getTitle();
         s += "/";
         if(null != eform.getPnr()){
@@ -430,6 +432,94 @@ public class EformService {
         }
     }
 
+
+
+    /**
+     * 发确认邮件-eform3
+     * @throws
+     */
+    public void sendSimpleMailUser3(Map<String, Object> valueMap) throws Exception {
+        String sender = "flight.certificate@hkexpress.com";
+        String password = "Fgt@Cert2020HKE";
+
+        // 收件人邮箱地址
+        String receiver = valueMap.get("To").toString();
+
+        // 邮箱服务器地址及端口号
+        String host = "smtp.office365.com";
+        String prot = "587";
+
+        try{
+            Properties props = new Properties();
+            // 发送服务器需要身份验证
+            props.setProperty("mail.smtp.auth", "true");
+            // 设置邮件服务器主机名
+            props.setProperty("mail.host", host);
+            // 发送邮件协议名称
+            props.setProperty("mail.transport.protocol", "smtp");
+            props.setProperty("mail.smtp.port", prot);
+            props.setProperty("mail.smtp.starttls.enable", "true");
+
+            // 设置环境信息
+            Session session = Session.getInstance(props);
+            // 创建邮件对象
+            MimeMessage msg = new MimeMessage(session);
+            // 发送人
+            msg.setFrom(new InternetAddress("flight.certificate@hkexpress.com"));
+            // 收信人
+            //msg.setRecipients(Message.RecipientType.TO,receiver);
+            msg.addRecipient(Message.RecipientType.TO,new InternetAddress(receiver));
+            // 抄送人
+            //msg.setRecipients(Message.RecipientType.CC, "hke_smartform@sonic-teleservices.com");
+            // 密抄人
+            msg.setRecipients(Message.RecipientType.BCC, "guest.relations@hkexpress.com");
+            //msg.setRecipients(Message.RecipientType.BCC, "hke_smartform@sonic-teleservices.com");
+           /* Address [] a = new Address[2];
+            a[0] = new InternetAddress("guest.relations@hkexpress.com");
+            a[1] = new InternetAddress("hke_smartform@sonic-teleservices.com");
+            msg.setRecipients(Message.RecipientType.BCC, a);*/
+
+            // 设置邮件内容
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true,"UTF-8");
+            // 设置邮件标题
+            helper.setSubject(valueMap.get("title").toString());
+            Context context = new Context();
+            context.setVariables(valueMap);
+            String templatesMail = "faqs/eFormMailGuest.html";
+            if(valueMap.containsKey("ecertificatetype")){
+                templatesMail = "faqs/eFormMailGuestPDF.html";
+            }
+            String content = this.templateEngine.process(templatesMail, context);
+            helper.setText(content, true);
+            org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top3.png");
+            // 图片
+            FileSystemResource file = new FileSystemResource(resource.getFile());
+            helper.addInline("faq_top3", file);
+            if(valueMap.containsKey("ecertificatetype")){
+                // 添加附件
+                String [] flieArr = ((Eform)valueMap.get("eform")).getFlie().split(",");
+                for (int i = 0;i<flieArr.length;i++){
+                    String eFormpath = path+"/"+flieArr[i];
+                    FileSystemResource fileSystemResource = new FileSystemResource(new File(eFormpath));
+                    String flieName = flieArr[i].substring(flieArr[i].lastIndexOf("/")+1);
+                    helper.addAttachment(flieName, fileSystemResource);
+                }
+
+            }
+            Transport transport = session.getTransport();
+            // 连接邮件服务器
+            transport.connect(sender, password);
+            // 发送邮件
+            transport.sendMessage(msg, msg.getAllRecipients());
+            // 关闭连接
+            transport.close();
+
+            logger.info("成功发送确认邮件："+valueMap.toString());
+        }catch( Exception e ){
+            e.printStackTrace();
+            logger.error(e.toString()+" ；错误发送确认邮件："+valueMap.toString());
+        }
+    }
 
     /**
      * 发邮件

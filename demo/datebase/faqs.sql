@@ -670,3 +670,4 @@ CREATE TABLE `folder_monitor` (
 
 -- 添加选择方式
 ALTER TABLE e_form_relation ADD er_eleven_style VARCHAR(200) NULL COMMENT 'form11-选择方式';
+ALTER TABLE e_form_relation ADD er_booking_no INT(11) DEFAULT 0 COMMENT 'form11-訂單內的乘客數量';

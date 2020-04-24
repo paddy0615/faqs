@@ -8,10 +8,16 @@
 <div th:if="${langId == 1}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>此電郵是由系統自動發送，請勿回覆此郵件</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>感謝您選擇乘搭HK Express。</p>
         <p>此電子郵件是確認我們已收到您的電子表格。此個案的編號為E-IN-<span th:text="${random}"></span>
             <element th:switch="${eform.type}">
-                <element th:case="11">，我們將儘快處理。</element>
+                <element th:case="11"> </element>
                 <element th:case="*">，我們將儘快處理並回覆您。</element>
             </element>
         </p>
@@ -27,10 +33,16 @@
 <div th:if="${langId == 2}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>此电邮是由系统自动发送，请勿回复此邮件</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>感谢您选择乘搭香港快运航空。</p>
         <p>此电子邮件是确认我们已收到您的电子表格。此个案的编号为E-IN-<span th:text="${random}"></span>
             <element th:switch="${eform.type}">
-                <element th:case="11">，我们将尽快处理。</element>
+                <element th:case="11"> </element>
                 <element th:case="*">，我们将尽快处理并回复您。</element>
             </element>
         </p>
@@ -46,10 +58,22 @@
 <div th:if="${langId == 4}">
     <span>尊敬なるお客様：</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>このメールはシステムによって自動的に送信されます。このメールに返信しないでください</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>香港エクスプレスをお選びいただいて、誠に有難う御座います！</p>
         <p> お客様のメールを承りました。番号E-IN-<span th:text="${random}"></span>
-            の件について、こちらはお客様の用件を対応致して、できるだけ早めに返事いたします。</p>
+            <element th:switch="${eform.type}">
+                <element th:case="11"> </element>
+                <element th:case="*">の件について、こちらはお客様の用件を対応致して、できるだけ早めに返事いたします。</element>
+            </element>
+        </p>
+
         <p>もし問い合わせがあれば、コールセンター連絡ください。</p>
+
         <p>HK Express Guest Relations</p>
         <div>
             <p style="height: 8px;">電話番号： <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
@@ -61,10 +85,16 @@
 <div th:if="${langId == 5}">
     <span>친애하는 손님,</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>이 이메일은 시스템에 의해 자동으로 전송됩니다.이 이메일에 회신하지 마십시오</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>홍콩 익스프레스 항공을 이용해 주셔서 감사합니다.</p>
         <p>본 이메일은 귀하의 양식을 접수했음을 확인합니다. 양식 번호는 E-IN-<span th:text="${random}"></span>
             <element th:switch="${eform.type}">
-                <element th:case="11">이며 가능한 한 빨리  답변 해 드리겠습니다.</element>
+                <element th:case="11"> </element>
                 <element th:case="*">이며 가능한 한 빨리 처리하고 답변 해 드리겠습니다.</element>
             </element>
         </p>
@@ -80,10 +110,16 @@
 <div th:if="${langId == 6}">
     <span>Dear Guest,</span>
     <div class="row" style="margin-bottom: 35px;">
+        <element th:switch="${eform.type}">
+            <element th:case="3">
+                <p>This is a system automated email.  Please do not reply to this message.</p>
+            </element>
+            <element th:case="*"> </element>
+        </element>
         <p>Thank you for choosing HK Express.</p>
         <p>This email is to confirm that your E-Form has been received and here's your case number E-IN-<span th:text="${random}"></span>
             <element th:switch="${eform.type}">
-                <element th:case="11">We will get back to you soon.</element>
+                <element th:case="11"> </element>
                 <element th:case="*">,We will look into the case and get back to you soon.</element>
             </element>
         </p>

@@ -58,6 +58,17 @@ public class E_form_relation implements Serializable {
     private String elevenstyle;
 
 
+    @Column(name = "er_booking_no",columnDefinition="long default 0")
+    private Long bookingno = (long)0;
+
+    public Long getBookingno() {
+        return bookingno;
+    }
+
+    public void setBookingno(Long bookingno) {
+        this.bookingno = bookingno;
+    }
+
     public String getElevenstyle() {
         return elevenstyle;
     }

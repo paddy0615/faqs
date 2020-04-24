@@ -103,7 +103,7 @@ public class EformController {
             }
             return "redirect:https://www.hkexpress.com/"+s+"/your-trips/important-travel-notice/";
         }else if("11".equals(id)){
-            t = "RefunWithdGift";
+            t = "CreditVoucher";
         }
 
 
@@ -207,7 +207,7 @@ public class EformController {
                    if("11".equals(eform.getType())){
                        E_form_relation relation = eformTotal.getRelation();
                        if(relation != null){
-                           zohomailtitle = eformService.getMailTypeNewForm11(eform,crm_uid,relation.getElevenstyle());
+                           zohomailtitle = eformService.getMailTypeNewForm11(eform,crm_uid,relation);
                            relation.setEid(eform.getId());
                            eformService.saveRelation(relation);
                            valueMap.put("eformRelation", relation);
@@ -244,6 +244,40 @@ public class EformController {
            }
        }
        return module;
+    }
+
+
+    /**
+     * 添加11 -
+     */
+    @ResponseBody
+    @RequestMapping(value = "/E/checkBookingAPI",method= RequestMethod.POST)
+    public RestResultModule checkBookingAPI(HttpServletRequest request,@RequestBody EformTotal eformTotal){
+        Eform eform = eformTotal.getEform();
+      /*  if(!IpUtil.checkInternal(request)){
+            crm_uid = "";
+        }*/
+        RestResultModule module = new RestResultModule();
+        if(null != eform){
+            try{
+                // 添加form结果表
+                E_form_result result = new E_form_result();
+                String state = "-3";
+                if(null != eform.getPnr()){
+                    state = eformService.getBookingAPI(eform,result);
+                }
+
+                // 比较接口 State=0时表示"Matched"; 其它值表示"Not Matched".
+                if("0".equals(state)){
+                }else{
+                    module.setCode(404);
+                }
+            }catch (Exception e){
+                logger.error("-----------/E/checkBookingAPI-----------"+e,eform);
+                module.setCode(500);
+            }
+        }
+        return module;
     }
 
 
@@ -307,6 +341,7 @@ public class EformController {
                         List list = connectionSqlService.searchFlightIRRList(eform.getPnr(),eform.getFlightno(),eform.getDeparturedate(),result);
                         eformService.updateResultXml(result);
                         listSize = list.size();
+                        // listSize == 0 人手入
                         if(listSize == 0){
                          /* CRM 无IRR记录。 e_certificate_type =1 or =4，正常通话，让人手跟进
                            if(eform.getEcertificatetype() == 1){
@@ -323,30 +358,37 @@ public class EformController {
                             }
                             if(eform.getEcertificatetype() == 1){
                                 if(!"Rescheduled Flights".equalsIgnoreCase(commomClass.getTemplate())){
-                                    module.setCode(404);
-                                    return module;
+                                    /*module.setCode(404);
+                                    return module;*/
+                                    listSize = 0;
                                 }
                             }else{
                                 if(!"Cancelled Flights with new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
                                         !"Cancelled Flights without new flight schedule".equalsIgnoreCase(commomClass.getTemplate()) &&
                                         !"Cancelled Flights but new flight".equalsIgnoreCase(commomClass.getTemplate()) &&
                                         !"schedule is TBA".equalsIgnoreCase(commomClass.getTemplate())){
-                                    module.setCode(404);
-                                    return module;
+                                   /* module.setCode(404);
+                                    return module;*/
+                                    listSize = 0;
                                 }
                             }
-                            // 填充pdf-一个旅客对应一个个PDF
-                            String e_flie = "";
-                            for (int i = 0;i<firstnameArr.length;i++){
-                                String s = pdfService.fillTemplate(eform,firstnameArr[i],lastnameArr[i],commomClass);
-                                e_flie += s+",";
+                            if(listSize == 0){
+
+                            }else{
+                                // 填充pdf-一个旅客对应一个个PDF
+                                String e_flie = "";
+                                for (int i = 0;i<firstnameArr.length;i++){
+                                    String s = pdfService.fillTemplate(eform,firstnameArr[i],lastnameArr[i],commomClass);
+                                    e_flie += s+",";
+                                }
+                                e_flie = e_flie.substring(0,e_flie.length()-1);
+                                eform.setFlie(e_flie);
+                                eformService.updateEformFlie(eform.getId(),e_flie);
+                                valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
+                                valueMapUser.put("ecertificatetype", eform.getEcertificatetype().toString());
+                                module.putData("ecertificatetype",eform.getEcertificatetype());
                             }
-                            e_flie = e_flie.substring(0,e_flie.length()-1);
-                            eform.setFlie(e_flie);
-                            eformService.updateEformFlie(eform.getId(),e_flie);
-                            valueMap.put("ecertificatetype", eform.getEcertificatetype().toString());
-                            valueMapUser.put("ecertificatetype", eform.getEcertificatetype().toString());
-                            module.putData("ecertificatetype",eform.getEcertificatetype());
+
                         }
 
                     }
@@ -379,7 +421,7 @@ public class EformController {
                     valueMapUser.put("To",eform.getEmail());
                     valueMapUser.put("langId",eform.getLangId());
                     valueMapUser.put("random",eform.getRandom());
-                    eformService.sendSimpleMailUser(valueMapUser);
+                    eformService.sendSimpleMailUser3(valueMapUser);
 
                     // 返回成功码
                     eformService.updateEformStatus(eform.getId(),1);

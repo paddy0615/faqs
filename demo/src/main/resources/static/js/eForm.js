@@ -1432,27 +1432,6 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     }
 
     var map = new Map();
-    map.set("2020-4-29",true);
-    map.set("2020-4-30",true);
-    map.set("2020-5-1",true);
-    map.set("2020-5-2",true);
-    map.set("2020-5-3",true);
-    map.set("2020-5-4",true);
-    map.set("2020-6-25",true);
-    map.set("2020-6-26",true);
-    map.set("2020-7-1",true);
-    map.set("2020-7-20",true);
-    map.set("2020-7-21",true);
-    map.set("2020-7-22",true);
-    map.set("2020-7-23",true);
-    map.set("2020-7-24",true);
-    map.set("2020-7-25",true);
-    map.set("2020-7-26",true);
-    map.set("2020-7-27",true);
-    map.set("2020-7-28",true);
-    map.set("2020-7-29",true);
-    map.set("2020-7-30",true);
-    map.set("2020-7-31",true);
     map.set("2020-8-1",true);
     map.set("2020-8-2",true);
     map.set("2020-8-3",true);
@@ -1518,6 +1497,46 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     map.set("2020-12-29",true);
     map.set("2020-12-30",true);
     map.set("2020-12-31",true);
+    map.set("2021-1-1",true);
+    map.set("2021-1-2",true);
+    map.set("2021-1-3",true);
+    map.set("2021-1-4",true);
+    map.set("2021-1-5",true);
+    map.set("2021-1-6",true);
+    map.set("2021-2-1",true);
+    map.set("2021-2-2",true);
+    map.set("2021-2-3",true);
+    map.set("2021-2-4",true);
+    map.set("2021-2-5",true);
+    map.set("2021-2-6",true);
+    map.set("2021-2-7",true);
+    map.set("2021-2-8",true);
+    map.set("2021-2-9",true);
+    map.set("2021-2-10",true);
+    map.set("2021-2-11",true);
+    map.set("2021-2-12",true);
+    map.set("2021-2-13",true);
+    map.set("2021-2-14",true);
+    map.set("2021-2-15",true);
+    map.set("2021-2-16",true);
+    map.set("2021-2-17",true);
+    map.set("2021-2-18",true);
+    map.set("2021-2-19",true);
+    map.set("2021-2-20",true);
+    map.set("2021-2-21",true);
+    map.set("2021-2-22",true);
+    map.set("2021-2-23",true);
+    map.set("2021-2-24",true);
+    map.set("2021-2-25",true);
+    map.set("2021-2-26",true);
+    map.set("2021-2-27",true);
+    map.set("2021-2-28",true);
+    map.set("2021-3-26",true);
+    map.set("2021-3-27",true);
+    map.set("2021-3-28",true);
+    map.set("2021-3-29",true);
+    map.set("2021-3-30",true);
+    map.set("2021-3-31",true);
 
 
 
@@ -1528,13 +1547,13 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
            if(map.get(s)){
                hero1.className += ' laydate-disabled';
            }
-
        });
     }
 
 
     var day3 = new Date();
-    var s3 = (day3.getFullYear())+"-12-31";
+    //var s3 = (day3.getFullYear())+"-12-31";
+    var s3 = (day3.getFullYear()+1)+"-3-31";
     // laydate国际版
     laydate.render({
         elem: '#ladate1'
@@ -2572,9 +2591,9 @@ myapp.controller("eForm11Controller",["$scope","$http","$location","$translate",
     $scope.er.elevenstyle = "";
     $scope.checkElevenstyle = function(txt){
         if(txt == 1){
-            $scope.er.elevenstyle = "Issue the gift certificate according to the refund passenger list in the applied refund order"
+            $scope.er.elevenstyle = "Issue one credit voucher only"
         }else{
-            $scope.er.elevenstyle = "Only one gift certificate will be sent to the above passenger"
+            $scope.er.elevenstyle = "Issue individual credit voucher for each passenger"
         }
     }
 
@@ -2637,13 +2656,31 @@ myapp.controller("eForm11Controller",["$scope","$http","$location","$translate",
                 alert(T.T("lab130"));
                 return;
             }
-            $("#booking-steps-li1").removeClass().addClass('active');
-            $("#booking-steps-li1-1").removeClass().addClass('active');
-            $("#booking-steps-li2").removeClass();
-            $scope.eFormError = false;
-            $scope.eFormSuccess = false;
-            $scope.eFormContent = false;
-            $scope.TermsandConditions = true;
+            // 判断API
+            $scope.e.langId =  $scope.langId;
+            // 验证成功
+            var index =  layer.load(0, {shade: false});
+            $http({
+                method : 'post',
+                url : ctx + 'appJson/E/checkBookingAPI',
+                data : {"eform":$scope.e,"crmuid":crm_uid,"relation":$scope.er},
+            }).then(function(resp){
+                $scope.data = resp.data;
+                if( $scope.data.code == 200 ){
+                    $("#booking-steps-li1").removeClass().addClass('active');
+                    $("#booking-steps-li1-1").removeClass().addClass('active');
+                    $("#booking-steps-li2").removeClass();
+                    $scope.eFormError = false;
+                    $scope.eFormSuccess = false;
+                    $scope.eFormContent = false;
+                    $scope.TermsandConditions = true;
+                }else{
+                    $scope.eFormContent = false;
+                    $scope.eFormError = true;
+                }
+                layer.close(index);
+            });
+
         }else{
             return;
         }
@@ -2669,9 +2706,11 @@ myapp.controller("eForm11Controller",["$scope","$http","$location","$translate",
      */
     $scope.getEformContent = function () {
         $("#booking-steps-li1").removeClass().addClass('active');
+        $("#booking-steps-li1-1").removeClass();
         $("#booking-steps-li2").removeClass();
         $scope.eFormError = false;
         $scope.eFormSuccess = false;
+        $scope.TermsandConditions = false;
         $scope.eFormContent = true;
         lock1 = false; //解锁
     }
@@ -2725,6 +2764,13 @@ myapp.controller("eForm11Controller",["$scope","$http","$location","$translate",
                             },
                             emailAddress: {
                                 message: T.T('error3')
+                            }
+                        }
+                    },
+                    bookingno: {
+                        validators: {
+                            notEmpty: {
+                                message: T.T('error2')
                             }
                         }
                     }

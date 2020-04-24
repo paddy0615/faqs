@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.example.demo.bean.*;
 import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
@@ -582,6 +583,7 @@ public class DetailedController {
         feedback.setIp(ipUtil.getIpAddr(request));
         feedback.setCreateDate(new Date());
         detailedService.addSelectFeedback(feedback);
+        logger.info(JSON.toJSONString(feedback));
         return module;
     }
 

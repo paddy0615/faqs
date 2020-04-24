@@ -79,7 +79,7 @@
 ,"eformText8":"Refund"
 ,"eformText9":"Check the latest flight information"
 ,"eformText10":"Important Travel Notice"
-,"eformText11":"Refund by voucher"
+,"eformText11":"Receive a refund in the form of a credit voucher"
 ,"lab66":"If you would like to apply refund for your affected flight, please visit"
 ,"lab67":"to submit your application."
 ,"lab68":"If you have purchased a new booking, please fill in the form below."
@@ -139,18 +139,35 @@
 ,"lab127":"Top"
 ,"lab128":"search feedback"
 ,"lab129":"Terms and Conditions"
-,"lab130":"Please choose one of the following ways:"
-,"lab131":"Issue the gift certificate according to the refund passenger list in the applied refund order"
-,"lab132":"Only one gift certificate will be sent to the above passenger"
-,"lab133":"There is no refund for all HK express air tickets, and no refund for other charges and surcharges (all terms shall comply with local laws and applicable laws of the point of sale)。"
-,"lab134":"Refunds of departure taxes will be made in accordance with local legal requirements。*"
-,"lab135":"*The above terms and conditions do not apply to eligible tickets for full refund"
-,"lab136":"Once the tax refund application is submitted, it cannot be cancelled or changed. After the refund application is submitted, the flight reservation has been cancelled on behalf of the passenger. Passengers are not allowed to make any request to HK express for the cancelled order。"
-,"lab137":"HK express will send a confirmation email to the applicant after submitting the application form. All refund applications must be approved and the entire refund process will take about 6 to 8 weeks from the date of application submission。"
+,"lab130":"Please select one of the following options:"
+,"lab131":"Issue one credit voucher only"
+,"lab132":"Issue individual credit voucher for each passenger"
+,"lab133":"Credit voucher can be redeemed within one year from the date of voucher issuance and is valid for new bookings made with HK Express only."
+,"lab134":"Applicant for credit voucher shall specify in the electronic application form if split issuance of credit vouchers are required for a group of passengers under same booking otherwise only one credit voucher will be issued to the customer who submit the electronic application form. If split issuance of the credit voucher is required, the amount of individual credit voucher will be calculated in accordance with individual spending of the passengers under the relevant booking. "
+,"lab135":"One credit voucher can be used in a new booking transaction and cannot be used in conjunction with other vouchers or promotion code."
+,"lab136":"Credit voucher is non-refundable, non-transferrable and non-redeemable for cash. "
+,"lab137":"Credit voucher must be used all at once.  Cash will not be given for any unused balance.  Unused balance of any expired Credit Voucher will not be refunded or credited."
 ,"lab138":"In case of any objection, HK express reserves the right of final decision。"
 ,"lab139":"I confirm that I have read, understood and agreed to the above terms and conditions"
 ,"lab140":"Confirm"
-,"lab141":"Confirmation email will be sent to your email address within 24 hours: "
+,"lab141":"All applications are subject to an approval. Should your application be approved, we will send the credit voucher to your registered email address :"
+,"lab142":"Name of applicant (Must be one of the passenger in the booking)"
+,"lab143":"within 3-4 weeks upon receipt of your application."
+,"lab144":"If you have not received the email, please check if the email has been assigned to the junk mailbox."
+,"lab145":"Credit voucher must be used for new air ticket booking.  If a credit voucher is insufficient to pay for full payment of a booking, outstanding balance shall be settled with credit card or any digital wallet which is compatible to the system."
+,"lab146":"Credit voucher is valid for single use with no remaining value for full or part payment of other booking transactions."
+,"lab147":"Credit voucher can only be redeemed against bookings in the currency of issuance."
+,"lab148":"HK Express reserves the right to amend these terms and conditions at any time, and to take any action in relation to Credit Voucher that at its sole discretion it deems is necessary."
+,"lab149":"In case of any dispute, the decision of HK Express shall be final."
+,"lab150":"No. of passenger(s) in the booking"
+,"lab151":"*To ensure your application would be proceeded accurately, please reconfirm the booking information that you have selected. Once the application is submitted, it cannot be withdrawn."
+,"lab152":"If you are unable to select your preferrable departure date(s) above, please contact our customer service officer at 39020288 for immediate assistance."
+
+
+
+
+
+
 
 
 

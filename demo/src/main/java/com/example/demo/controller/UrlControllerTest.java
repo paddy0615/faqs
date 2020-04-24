@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /*
  * url跳转页面
@@ -197,12 +199,20 @@ public class UrlControllerTest {
     public String eForm9(){return "faqs/eForm9";}
 
     /**
-     * RefunWithdGift
-     * Refund with gift certificate instead  改為以禮券退款
+     * CreditVoucher 改為以禮券退款
      * @return
      */
-    @RequestMapping("/RefunWithdGift")
-    public String eForm11(){return "faqs/eForm11";}
+    @ResponseBody
+    @RequestMapping("/CreditVoucher")
+    public String eForm11(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId){
+        String s = "No further online application is accepted";
+        if(langId == 1){
+            s = "系統已停止接受網上申請";
+        }else if(langId == 2){
+            s = "系统已停止接受网上申请";
+        }
+        return s;
+    }
 
     @RequestMapping("/admin/folder")
     public String folder(){
