@@ -61,11 +61,11 @@
                     <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
                 </div>
                 <div class="header-lan">
-                    <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
-                    <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
+                    <img class="header-lan-imgdiqiu" th:src="@{/img/diqiu.svg}"/>
+                    <select class="header-lan-select"
                             ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
                     </select>
-                    <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
+                    <img class="xiangxia" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
 

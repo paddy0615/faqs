@@ -17,7 +17,26 @@ body{
     float: right;
     line-height: 50px;
     color: #501275;
+    padding: 14px 0px 0px 0px;
 }
+.header-lan-imgdiqiu{
+    width: 18px;
+    float: left;
+    margin-left: -24px;
+}
+.header-lan-select{
+    border: 0;
+    background: transparent;
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    float: left;
+}
+.xiangxia{
+    width: 18px;
+    float: left;
+}
+
 .nav-tab ul{
     overflow: hidden;
 }

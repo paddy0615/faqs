@@ -1432,36 +1432,6 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     }
 
     var map = new Map();
-    map.set("2020-8-1",true);
-    map.set("2020-8-2",true);
-    map.set("2020-8-3",true);
-    map.set("2020-8-4",true);
-    map.set("2020-8-5",true);
-    map.set("2020-8-6",true);
-    map.set("2020-8-7",true);
-    map.set("2020-8-8",true);
-    map.set("2020-8-9",true);
-    map.set("2020-8-10",true);
-    map.set("2020-8-11",true);
-    map.set("2020-8-12",true);
-    map.set("2020-8-13",true);
-    map.set("2020-8-14",true);
-    map.set("2020-8-15",true);
-    map.set("2020-8-16",true);
-    map.set("2020-8-17",true);
-    map.set("2020-8-18",true);
-    map.set("2020-8-19",true);
-    map.set("2020-8-20",true);
-    map.set("2020-8-21",true);
-    map.set("2020-8-22",true);
-    map.set("2020-8-23",true);
-    map.set("2020-8-24",true);
-    map.set("2020-8-25",true);
-    map.set("2020-8-26",true);
-    map.set("2020-8-27",true);
-    map.set("2020-8-28",true);
-    map.set("2020-8-29",true);
-    map.set("2020-8-30",true);
     map.set("2020-9-26",true);
     map.set("2020-9-27",true);
     map.set("2020-9-28",true);
@@ -1537,6 +1507,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     map.set("2021-3-29",true);
     map.set("2021-3-30",true);
     map.set("2021-3-31",true);
+
 
 
 
@@ -2779,5 +2750,36 @@ myapp.controller("eForm11Controller",["$scope","$http","$location","$translate",
             });
         }
     });
+
+}]);
+
+
+// eFormError
+myapp.controller("eFormError",["$scope","$http","$location","$translate","T",function ($scope, $http,$location,$translate,T) {
+    // 设置默认,langId==6语言，英文;
+    $scope.langId = parseInt(GetUrlParam("langId")==""?6:GetUrlParam("langId"));
+    function into(langID){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/getLanguageAll",
+            params:{"langId": langID}
+        }).success(function (data) {
+            $scope.languages = data;
+        })
+    }
+    // 初始化
+    into($scope.langId);
+    onlineChat($scope.langId);
+    $translate.use($scope.langId.toString());
+
+    // 语言事件
+    $scope.clickLanguage = function() {
+        $translate.use($scope.langId.toString());
+        onlineChat($scope.langId);
+    }
+    // 返HKE官网
+    $scope.clickCategory = function (idnex) {
+        getHKE($scope.langId);
+    }
 
 }]);

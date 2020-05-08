@@ -93,13 +93,11 @@
                 </div>
                 <div class="header-lan">
                     <!--<img th:src="@{/img/globe1.png}"/>-->
-                    <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
-                    <span class="icon-language"></span>
-                    <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
+                    <img class="header-lan-imgdiqiu" th:src="@{/img/diqiu.svg}"/>
+                    <select class="header-lan-select"
                             ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in result.languages">
                     </select>
-                    <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
-
+                    <img class="xiangxia" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
             <div style="clear: both;"></div>

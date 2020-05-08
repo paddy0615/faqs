@@ -5,22 +5,36 @@ import com.example.demo.dao.*;
 import com.example.demo.entity.DetailedEntity;
 import com.example.demo.mapper.DetailedMapper;
 import com.example.demo.util.IpUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service("detailedService")
 public class DetailedService {
+    private  static Logger logger = LoggerFactory.getLogger(EformService.class);
+
     @Resource
     DetailedDao detailedDao;
     @Resource
@@ -50,6 +64,14 @@ public class DetailedService {
     @Resource
     SelectFeedbackDao selectFeedbackDao;
 
+    @Value("${spring.profiles.active}")
+    private String active; //读取配置文件中的参数
+    @Value("${spring.mail.username}")
+    private String Sender; //读取配置文件中的参数
+    @Resource
+    private TemplateEngine templateEngine;
+    @Resource
+    private JavaMailSender mailSender; //自动注入的Bean
 
     @Resource
     private DetailedMapper detailedMapper;
@@ -441,5 +463,53 @@ public class DetailedService {
     public void addSelectFeedback(SelectFeedback feedback){
         selectFeedbackDao.save(feedback);
     }
+
+
+    /**
+     * 2020-05-06
+     * 发邮件-zoho
+     * @throws Exception
+     */
+    public void sendSimpleMail(Map<String, Object> valueMap) throws Exception {
+        try {
+            MimeMessage mimeMessage = null;
+            mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+            // 设置发件人邮箱
+            helper.setFrom(Sender);
+            if("pro".equals(active)){
+                // 设置收件人邮箱- 此邮件已关联zoho.
+                helper.setTo("guest.relations@hkexpress.com");
+                // 抄送邮件接收人
+                helper.setCc(Sender);
+            }else{
+                // 设置收件人邮箱
+                helper.setTo("windy.tam@sonic-teleservices.com");
+                // 抄送邮件接收人
+                helper.setCc(new String[]{Sender,"sarsi.pablo@sonic-teleservices.com","erica.yu@sonic-teleservices.com","gary.lam@sonic-callcenter.com","cecile.agbing@sonic-teleservices.com","emerson.bautista@sonic-teleservices.com","sisi.yip@sonic-callcenter.com","paddy.pong@sonic-teleservices.com","sam.mok@sonic-teleservices.com"});
+                //helper.setCc(new String[]{Sender,"paddy.pong@sonic-teleservices.com"});
+
+            }
+            // 设置邮件标题
+            helper.setSubject(valueMap.get("title").toString());
+            Context context = new Context();
+            context.setVariables(valueMap);
+            String content = this.templateEngine.process("faqs/feedbackMail.html", context);
+            helper.setText(content, true);
+            org.springframework.core.io.Resource resource = new ClassPathResource("static/img/faq_top4.png");
+            // 图片
+            FileSystemResource file = new FileSystemResource(resource.getFile());
+            helper.addInline("faq_top4", file);
+            // 发送邮件
+            mailSender.send(mimeMessage);
+            logger.info("成功发送邮件："+valueMap.toString());
+        }catch( Exception e ){
+            e.printStackTrace();
+            logger.error(e.toString()+" ；错误发送邮件："+valueMap.toString());
+        }
+
+
+    }
+
 
 }

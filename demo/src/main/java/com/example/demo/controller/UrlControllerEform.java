@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * url- 只对eform系统有关。
  * */
 @Controller
-@RequestMapping("appPage1")
+@RequestMapping("appPage12")
 public class UrlControllerEform {
 
     /**
@@ -88,16 +88,9 @@ public class UrlControllerEform {
      * CreditVoucher 改為以禮券退款
      * @return
      */
-    @ResponseBody
     @RequestMapping("/CreditVoucher")
-    public String eForm11(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId){
-        String s = "No further online application is accepted";
-        if(langId == 1){
-            s = "系統已停止接受網上申請";
-        }else if(langId == 2){
-            s = "系统已停止接受网上申请";
-        }
-        return s;
+    public String eForm11(){
+        return "faqs/eFormError";
     }
 
 

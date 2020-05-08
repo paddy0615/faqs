@@ -215,6 +215,7 @@ public class EformController {
                    }
 
                    result.setZohomailtitle(zohomailtitle);
+                   result.setIp(IpUtil.getIpAddr(request));
                    eformService.saveResult(result);
 
                    // 发邮件(zoho)
@@ -330,6 +331,7 @@ public class EformController {
                 if("0".equals(state)){
                     eformService.save(eform);
                     result.setEid(eform.getId());
+                    result.setIp(IpUtil.getIpAddr(request));
                     eformService.saveResult(result);
                     // 发邮件（给zoho跟单）
                     Map<String, Object> valueMap = new HashMap<>();

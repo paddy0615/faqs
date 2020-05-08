@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FAQS | HK Express</title>
+    <style>
+        .control-label1{
+              font-weight: bold;
+              width: 160px;
+          }
+        .control-label2{
+        }
+        tr{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<span>From HK Express LiveDemo:</span>
+    <div class="row" style="margin: 10px;">
+        <table style="width: 800px;">
+            <tr th:if="${not #lists.isEmpty(title)}">
+                <td class="control-label1">Email Subject :</td>
+                <td class="control-label2" th:text="${title}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.id)}">
+                <td class="control-label1">ID :</td>
+                <td class="control-label2" th:text="${feedback.id}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.suggestContent)}">
+                <td class="control-label1">Suggest Content :</td>
+                <td class="control-label2" th:text="${feedback.suggestContent}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.follow)}">
+                <td class="control-label1">Follow up :</td>
+                <element th:if="${feedback.follow == 0}">
+                    <td class="control-label2">No</td>
+                </element>
+                <element th:if="${feedback.follow != 0}">
+                    <td class="control-label2" style="color: red">Yes</td>
+                </element>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.followContent)}">
+                <td class="control-label1">Follow Content :</td>
+                <td class="control-label2" th:text="${feedback.followContent}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.name)}">
+                <td class="control-label1">Name :</td>
+                <td class="control-label2" th:text="${feedback.name}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.email)}">
+                <td class="control-label1">Email :</td>
+                <td class="control-label2" th:text="${feedback.email}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.number)}">
+                <td class="control-label1">Phone :</td>
+                <td class="control-label2" th:text="${feedback.number}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(language)}">
+                <td class="control-label1">Language :</td>
+                <td class="control-label2" th:text="${language}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.ip)}">
+                <td class="control-label1">IP :</td>
+                <td class="control-label2" th:text="${feedback.ip}"></td>
+            </tr>
+            <tr th:if="${not #lists.isEmpty(feedback.createDate)}">
+                <td class="control-label1">Create Date :</td>
+                <td class="control-label2" th:text="${#dates.format(feedback.createDate, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+
+        </table>
+
+
+    </div>
+
+<div>
+    <p><hr style="HEIGHT: 1px; WIDTH: 210px" align="left" color="#b5c4df" size="1"></p>
+    <img src="cid:faq_top4"/>
+</div>
+
+
+</body>
+</html>

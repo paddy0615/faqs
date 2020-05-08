@@ -578,12 +578,20 @@ public class DetailedController {
      */
     @ResponseBody
     @RequestMapping(value = "/addSelectFeedback",method= RequestMethod.POST)
-    public RestResultModule addSelectFeedback(HttpServletRequest request,@RequestBody SelectFeedback feedback){
+    public RestResultModule addSelectFeedback(HttpServletRequest request,@RequestBody SelectFeedback feedback) throws Exception{
         RestResultModule module = new RestResultModule();
         feedback.setIp(ipUtil.getIpAddr(request));
         feedback.setCreateDate(new Date());
         detailedService.addSelectFeedback(feedback);
         logger.info(JSON.toJSONString(feedback));
+        // 发邮件（给zoho跟单）
+        Map<String, Object> valueMap = new HashMap<>();
+        String language = languageDao.getByTitle(feedback.getLangId());
+        valueMap.put("title", "searchfeedback/"+feedback.getName()+"/"+feedback.getEmail()+"/"+feedback.getNumber()+"/"+language);
+        valueMap.put("feedback",feedback);
+        valueMap.put("language",language);
+        detailedService.sendSimpleMail(valueMap);
+
         return module;
     }
 

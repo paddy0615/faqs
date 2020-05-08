@@ -34,6 +34,18 @@ public class E_form_result implements Serializable {
     @Column(name = "er_zoho_mail_title")
     private String zohomailtitle;
 
+
+    @Column(name = "er_ip")
+    private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
     public String getZohomailtitle() {
         return zohomailtitle;
     }

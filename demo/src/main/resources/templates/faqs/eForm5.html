@@ -54,9 +54,11 @@
                     <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}" ></a>
                 </div>
                 <div class="header-lan">
-                    <img th:src="@{/img/globe1.png}"/>
-                    <select ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
+                    <img class="header-lan-imgdiqiu" th:src="@{/img/diqiu.svg}"/>
+                    <select class="header-lan-select"
+                            ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
                     </select>
+                    <img class="xiangxia" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
 

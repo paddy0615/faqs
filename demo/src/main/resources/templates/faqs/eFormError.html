@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="HK Express: 香港低成本航空公司！立即預訂機票，查詢航班時間表或航班狀態！">
+    <meta name="keywords" content="便宜機票,特價機票,廉價機票,優惠機票,HK Express,FAQ,Faqs,航班问题,答案,香港航空">
+    <title>FAQS | HK Express</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/img/favicon-32x32.png}"/>
+    <link rel="stylesheet" th:href="@{/css/assets/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/assets/bootstrapValidator.min.css}">
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/eForm.css}">
+    <script th:inline="javascript">
+        var ctx = [[@{/}]];
+    </script>
+    <script th:src="@{/js/assets/jquery.js}"></script>
+    <script th:src="@{/js/assets/bootstrap.js}"></script>
+    <script th:src="@{/js/layer/layer.js}"></script>
+    <script th:src="@{/js/laydate/laydate.js}"></script>
+    <script th:src="@{/js/assets/angular.js}"></script>
+    <script th:src="@{/js/assets/angular-translate.min.js}"></script>
+    <script th:src="@{/js/assets/angular-translate-loader-static-files.min.js}"></script>
+    <script th:src="@{/js/assets/bootstrapValidator.min.js}"></script>
+    <script th:src="@{/js/eForm.js}"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <base th:href="@{/appPage/index}">
+
+</head>
+<body ng-app="myapp" ng-controller="eFormError">
+<div class="container-fluid" id="eForm1">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-2 col-md-8 col-md-offset-2 main">
+
+            <div class="header">
+                <div class="header-loagin">
+                    <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
+                </div>
+                <div class="header-lan">
+                    <img class="header-lan-imgdiqiu" th:src="@{/img/diqiu.svg}"/>
+                    <select class="header-lan-select"
+                            ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in languages">
+                    </select>
+                    <img class="xiangxia" th:src="@{/img/xiangxia.svg}"/>
+                </div>
+            </div>
+
+            <div class="row" style="text-align: center;margin: 30% auto;font-weight: bold;font-size: 18px;">
+                {{"eFormErrorLab"|translate}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scrollToTop" style="display: none;">
+    <img th:src="@{/img/scroll-to-top.png}" alt="Back To Top">
+</div>
+
+
+</body>
+</html>
