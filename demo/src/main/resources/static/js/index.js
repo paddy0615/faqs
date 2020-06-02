@@ -795,6 +795,23 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     // 热点初始化
     info1();
 
+    /**
+     * 搜索文件夹
+     * @param key
+     * @param langId
+     */
+    $scope.getFolderUrl = function (key,langId,fid) {
+        $scope.folderList = {};
+        $http({
+            method : "post",
+            url : ctx + "appJson/getSearchFolder",
+            params : {"key": key,"langId" : langId,"status":3,"fid":fid}
+        }).success(function (data) {
+            $scope.folderList =  data.result.folderList;
+            $scope.detaileds =  data.result.detaileds;
+        })
+    }
+
     // 跳转E-form
     $scope.getEform = function(id){
         var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&crm_uid="+crm_uid;
@@ -881,7 +898,7 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
     // 语言事件
     $scope.clickLanguage = function() {
         if($scope.isGetUrl){
-            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId="+$scope.dlId+"&langId="+$scope.langId+"&uid="+crm_uid;
+            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId="+$scope.dlId+"&langId="+$scope.langId+"&crm_uid="+crm_uid;
             clicked(url);
         }
         // 强制更新  $scope.apply();
@@ -917,8 +934,10 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
             $scope.detaileds =  {};
             return;
         };
-        var q = escape($scope.searchTest);
-        $scope.getSearchTags(id);
+     /*   var q = escape($scope.searchTest);
+        $scope.getSearchTags(id);*/
+        var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&uid="+crm_uid+"&q="+$scope.searchTest;
+        clicked(encodeURI(url));
     }
     $scope.onKeyup = function(event){
         var e = event || window.event || arguments.callee.caller.arguments[0];
@@ -1121,6 +1140,34 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
 myapp.controller("testChatbotController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+
+    if($scope.langId == 1){
+        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/09bcc7b8-3035-4460-8c0f-a080d4815c17.js';
+        var done = false;
+        se.onload = se.onreadystatechange = function() {
+            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+                done = true;
+                /* Place your SonicTeleservices JS API code below */
+                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+            }
+        };
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+    }else{
+        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/43aa2c88-9bbc-474a-9dc0-983ecb3d2d07.js';
+        var done = false;
+        se.onload = se.onreadystatechange = function() {
+            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+                done = true;
+                /* Place your SonicTeleservices JS API code below */
+                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+            }
+        };
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+
+    }
+
     gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
     $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");

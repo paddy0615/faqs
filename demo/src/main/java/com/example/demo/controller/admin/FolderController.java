@@ -55,8 +55,9 @@ public class FolderController {
         long level = Long.parseLong(map.get("level").toString());
         long parenId = Long.parseLong(map.get("parenId").toString());
         long langId = Long.parseLong(map.get("langId").toString());
+        long status = Long.parseLong(map.get("status").toString());
         // 固定显示英文
-        List<Object[]> list = folderService.getFolderPage(level,parenId,6);
+        List<Object[]> list = folderService.getFolderPage(level,parenId,6,status);
         module.putData("list",list);
         module.putData("languages",languageDao.findAll());
         module.putData("tableofContents",folderService.getFolderTableofContents(level,parenId));
@@ -169,6 +170,30 @@ public class FolderController {
                 // 添加日志
                 Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"folderLiaray/delete",id+"","",new Date());
                 logsDao.save(logs);
+            }
+        }
+
+    }
+
+    /* 编辑状态folder*/
+    @ResponseBody
+    @RequestMapping(value = "/editStatusFolder")
+    public void editStatusFolder(HttpServletRequest request,HttpSession session,
+                             @RequestParam(name = "key_random",defaultValue = "0",required = true) long key_random,
+                             @RequestParam(name = "status",defaultValue = "-1",required = true) long status){
+        User user = (User)session.getAttribute("userSession");
+        if(null != user){
+            if("admin".equals(user.getRole())){
+                if(key_random != 0 && status != -1){
+                    System.out.println(key_random);
+                    System.out.println(status);
+                    folderService.editStatusFolder(key_random,status);
+                    // 添加日志
+                    Logs logs = new Logs(user.getId(),ipUtil.getIpAddr(request),"folder/editStatus","key_random="+key_random,"status="+status,new Date());
+                    logsDao.save(logs);
+                }
+
+
             }
         }
 

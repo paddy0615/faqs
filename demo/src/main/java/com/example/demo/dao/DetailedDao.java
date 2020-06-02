@@ -91,4 +91,8 @@ public interface DetailedDao extends JpaRepository<Detailed,Long> {
     @Query(value = "DELETE FROM faqs_detailed WHERE dl_fl_id =:flid",nativeQuery = true)
     void deleteByFlId(@Param("flid")long flid);
 
+    @Query("select d.contentTxt from Detailed d where d.id = :dlId")
+    String getByIdShowContentTxt(@Param("dlId")long dlId);
+
+
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping("appPage3")
+@RequestMapping("appPage")
 public class UrlControllerTest {
     @RequestMapping("/")
     public String index(){return "faqs/index";}

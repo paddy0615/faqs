@@ -220,7 +220,7 @@ public class DetailedController {
                 long maxLevel = folderService.getMaxlevel();
                 Map<String,Object[]> foldermap_Date = new HashMap<>();
                 while(maxLevel > 0){
-                    folderList = folderService.getAllByFolderTags(maxLevel,langId);
+                    folderList = folderService.getAllByFolderTags(maxLevel,langId,s);
                     if(folderList.size() == 0){
                         maxLevel--;
                         continue;
@@ -242,7 +242,7 @@ public class DetailedController {
                     if(maxLevel == 1){
                         // 搜索无结果-显示首层文件夹
                         folderList = new ArrayList<>();
-                        folderList = folderService.getFolderSelectByLevel1(langId);
+                        folderList = folderService.getFolderSelectByLevel1(langId,s);
                         break;
                     }
                     maxLevel--;
@@ -346,12 +346,12 @@ public class DetailedController {
         monitor.setfKey(key);
         folder_monitorDao.save(monitor);
 
-
-        List<Object[]> folderList = folderService.getSearchFolder(langId,key);
         String s = String.valueOf(status);
         if(status == 3 ){
             s = "";
         }
+
+        List<Object[]> folderList = folderService.getSearchFolder(langId,key,s);
         List<DetailedEntity> detaileds = null;
         detaileds = detailedService.getSearchFolderByLibrary(key,langId,s);
         module.putData("folderList",folderList);
@@ -557,13 +557,13 @@ public class DetailedController {
     public String getIndexDetailedNewCRM(HttpServletRequest request, HttpServletResponse response,
                                       @RequestParam(name = "dlId",required = true,defaultValue = "0")long dlId,
                                       @RequestParam(name = "langId",required = true,defaultValue = "0")long langId)throws Exception {
-        String uid = request.getParameter("uid");
-        String url = "/appPage/indexCRM?langId="+langId+"&uid="+uid;;
+        String uid = request.getParameter("crm_uid");
+        String url = "/appPage/indexCRM?langId="+langId+"&crm_uid="+uid;;
         if(dlId > 0){
             String id = detailedService.getIndexDetailedNew(dlId,langId);
             if(null != id){
                 dlId =Long.parseLong(id);
-                url = "/appPage/indexDetailedCRM?dlId="+dlId+"&uid="+uid;
+                url = "/appPage/indexDetailedCRM?dlId="+dlId+"&crm_uid="+uid;
             }
         }
         response.sendRedirect(request.getContextPath()+url);
@@ -737,6 +737,77 @@ public class DetailedController {
         }
         return html;
     }
+
+    /**
+     * 2020-5-12
+     * emailBot API
+     * @param search 内容
+     */
+    @ResponseBody
+    @RequestMapping("/emailBotSearch")
+    public RestResultModule emailBotSearch(HttpServletRequest request,
+                                          @RequestParam(name = "search",required = false,defaultValue = "")String search) throws Exception{
+        System.out.println("emailBotSearch:"+search);
+        RestResultModule module = new RestResultModule();
+        String [] sarr = search.split(" ");
+        List<String> searchs = Arrays.asList(sarr);
+        List<DetailedEntity> detaileds = new ArrayList<>();
+        String s = String.valueOf(1);
+        long langId = 1;
+
+        List<Object[]> folderList = null;
+        Map<String,Integer> foldermap = new LinkedHashMap<>();
+
+        // 第一步:整句话匹配标签
+        detaileds = detailedService.getSearchTags(langId,s,searchs);
+        for (DetailedEntity d:detaileds) {
+            d.setContenttxt(detailedDao.getByIdShowContentTxt(d.getId()));
+        }
+        if(detaileds.size() == 0){
+            // 第二步: 所有标签是否包含再整句话
+            List<Object[]> tagsList = detailedService.getAllTagsBys(langId,s);
+            Map<String,Object[]> map_Date = new HashMap<>();
+            Map<String,Integer> map = new LinkedHashMap<>();
+            for(int i = 0; i < tagsList.size();i++){
+                Object[] os = tagsList.get(i);
+                if(search.toLowerCase().contains(os[0].toString().toLowerCase())){
+                    if(map.containsKey(os[1].toString())){
+                        map.put(os[1].toString(),map.get(os[1].toString())+1);
+                    }else{
+                        map.put(os[1].toString(),1);
+                    }
+                    map_Date.put(os[1].toString(),os);
+                }
+            }
+            System.out.println("搜索："+search);
+            System.out.println("排序前map："+map.toString());
+            List<Map.Entry<String,Integer>> list_Data = new ArrayList<>(map.entrySet());
+            Collections.sort(list_Data, new Comparator<Map.Entry<String, Integer>>() {
+                @Override
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            });
+            System.out.println("排序后map："+list_Data);
+            if(map.size() > 0){
+                DetailedEntity detailedEntity = null;
+                for (Map.Entry<String,Integer> map_key :list_Data){
+                    Object[] os = map_Date.get(map_key.getKey());
+                    detailedEntity = new DetailedEntity();
+                    detailedEntity.setId(Long.parseLong(os[1].toString()));
+                    detailedEntity.setTitle(os[2].toString());
+                    detailedEntity.setStatus(Long.parseLong(os[1].toString()));
+                    detailedEntity.setContenttxt(detailedDao.getByIdShowContentTxt(Long.parseLong(os[1].toString())));
+                    detaileds.add(detailedEntity);
+                }
+            }
+
+        }
+
+        module.putData("detaileds",detaileds);
+        return module;
+    }
+
 
 
 }

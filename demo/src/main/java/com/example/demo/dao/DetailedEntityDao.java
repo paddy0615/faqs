@@ -93,6 +93,7 @@ public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
             " ) a" +
             " ON a.m_dl_id = d.dl_id"+
             " WHERE d.dl_lang_id = :langId"+
+            " AND d.dl_status = 1 \n" +
             " LIMIT 0,5"
             ,nativeQuery = true)
     List<DetailedEntity> getSmartGuide(@Param("dlId")long dlId,@Param("langId") long langId);

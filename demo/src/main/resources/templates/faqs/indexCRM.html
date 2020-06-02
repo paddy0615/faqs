@@ -96,11 +96,11 @@
                     <a href="javascript:void(0);" ng-click="clickCategory(0)"><img th:src="@{/img/faq_top3.png}"></a>
                 </div>
                 <div class="header-lan">
-                    <img style="width: 18px;" th:src="@{/img/diqiu.svg}"/>
-                    <select style="border: 0;background: transparent;appearance:none;-moz-appearance:none; /* Firefox */-webkit-appearance:none; /* Safari 和 Chrome */"
+                    <img class="header-lan-imgdiqiu" th:src="@{/img/diqiu.svg}"/>
+                    <select class="header-lan-select"
                             ng-model="langId" ng-change="clickLanguage()" ng-options=" language.id  as language.title for language in result.languages">
                     </select>
-                    <img class="xiangxia" style="width: 18px;" th:src="@{/img/xiangxia.svg}"/>
+                    <img class="xiangxia" th:src="@{/img/xiangxia.svg}"/>
                 </div>
             </div>
 
@@ -151,7 +151,7 @@
                 <!-- 问题list-->
                 <div class="content-box" style="padding: 0px 12px;">
                     <ul>
-                        <li ng-repeat="detailed in detaileds"><a th:href="@{/appJson/getIndexDetailed?dlId={{detailed.id}}}"><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
+                        <li ng-repeat="detailed in detaileds"><a href="javascript:void(0);"  ng-click="getIndexDetailedCRM(detailed.id)"><span ng-if="detailed.status == 2" style="color: red">(Internal)</span>{{detailed.title}}</a></li>
                     </ul>
                 </div>
 

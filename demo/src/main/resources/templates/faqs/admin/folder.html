@@ -71,6 +71,14 @@
                     </select>
                 </div>-->
 
+                <!-- Status select -->
+                <label style="margin-top: 5px;margin-left: 50px;float: left;">Folder Status: </label>
+                <div class="col-md-2">
+                    <select ng-model="dl_status" class="form-control" ng-change="clickLanguage()"
+                            ng-options="d.id as d.name for d in dl_statuss">
+                    </select>
+                </div>
+
                 <!-- add -->
                 <div>
                     <button class="btn btn-default" ng-click="alertSet(0)">Add Folder</button>
@@ -99,16 +107,28 @@
                           <!--  <th>Folder Title(香港特別行政區（繁體）)</th>-->
                             <th>Language</th>
                             <th>Update Date</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="l in list">
                             <td><a href="javascript:void(0);" ng-click="nextFolder(l[0],level+1,0)">{{l[0]}}</a></td>
-                            <td class="col-md-5">{{l[1]}}</td>
+                            <td class="col-md-3">{{l[1]}}</td>
                             <td>{{l[2]}}</td>
                             <td>{{l[3]}}</td>
+                            <td>
+                                <element ng-if="l[5] == 0">Hide</element>
+                                <element ng-if="l[5] == 2">Show Internal</element>
+                                <element ng-if="l[5] == 1">Show External</element>
+                            </td>
+
                             <td style="text-align: right;">
+                                <element zg-access="access">
+                                    <select style="width: 55%;display: inherit;" ng-model="l[5]" class="form-control" ng-change="editStatus(l[0],l[5])"
+                                            ng-options="d.id as d.name for d in dl_statuss1">
+                                    </select>
+                                </element>
                                 <button class="btn btn-default" ng-click="alertSet(l[0])">Edit</button>
                                 <element zg-access="access">
                                     <button class="btn btn-default" type="button" ng-click="getDelete(l[0])">Delete</button>
@@ -218,7 +238,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title">
-                    <element>{{eventStatus}} Libray</element>
+                    <element>Add Libray</element>
                 </h4>
             </div>
             <div class="modal-body">
@@ -234,7 +254,7 @@
                         </thead>
                         <tbody>
                         <tr ng-repeat="l in librabries">
-                            <td><input type="checkbox" name="checkboxClien"
+                            <td><input type="checkbox" name="checkboxClien" ng-checked="l.isCheckbox"
                                        value="{{l.id}}">{{l.id}}
                             </td>
                             <td class="col-md-5">{{l.title}}</td>

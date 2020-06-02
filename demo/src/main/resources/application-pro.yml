@@ -68,7 +68,8 @@ spring:
     default-encoding: UTF-8
     properties:
       mail.smtp.socketFactory.fallback: true
-      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.enable: false
+    port: 11125
 mybatis:
   mapper-locations: classpath:mapping/*Mapper.xml
   type-aliases-package: com.example.demo.bean

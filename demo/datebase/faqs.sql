@@ -675,3 +675,6 @@ ALTER TABLE e_form_relation ADD er_booking_no INT(11) DEFAULT 0 COMMENT 'form11-
 -- 添加E-form提交的IP地址
 ALTER TABLE e_form_result ADD er_ip VARCHAR(200) NULL COMMENT 'IP';
 
+-- folder 添加 status
+ALTER TABLE folder ADD f_status INT(11) DEFAULT '0' COMMENT '0未发布，1发布External官网，2发布Internal内部';
+

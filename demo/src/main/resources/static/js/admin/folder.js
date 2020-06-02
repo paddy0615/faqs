@@ -11,12 +11,28 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
     // 当前文件夹ID-key
     $scope.parenId = GetUrlParam("parenId")==""?1:GetUrlParam("parenId");
 
+    // 状态下拉
+    $scope.dl_statuss = [
+        {id : -1, name : "All"},
+        {id : 2, name : "Show Internal"},
+        {id : 1, name : "Show External"},
+        {id : 0, name : "Hide"}
+    ];
+    $scope.dl_statuss1 = [
+        {id : 2, name : "Show Internal"},
+        {id : 1, name : "Show External"},
+        {id : 0, name : "Hide"}
+    ];
+    $scope.dl_status = -1;
+
+
     function info(){
         // 数据
         var dataMap = {
             'level' : $scope.level,
             'parenId' : $scope.parenId,
-            'langId' : $scope.langId
+            'langId' : $scope.langId,
+            'status' : $scope.dl_status
         }
         $http({
             method : 'post',
@@ -31,6 +47,15 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
             $scope.languages_show.unshift({'id':0,'title':'All'});
             $scope.tableofContents =  data.result.tableofContents;
             $scope.librabries = data.result.librabries;
+            angular.forEach($scope.librabries,function (value,key) {
+                value.isCheckbox = false;
+                angular.forEach($scope.list_librabries,function (value1,key1) {
+                    if(value.id == value1[1]){
+                        value.isCheckbox = true;
+                    }
+                })
+            })
+
 
         })
     }
@@ -97,7 +122,7 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
     }
 
 
-    // add/update Folder
+    // add/update library
     $scope.alertSet1 = function(key){
         $('#myModalAddLibray').modal();
     }
@@ -237,6 +262,26 @@ myapp.controller("folderController",["$scope","$http",function ($scope, $http) {
         }
 
 
+    }
+
+
+
+    // 修改状态
+    $scope.editStatus = function(key,status){
+        $http({
+            method : 'post',
+            url : ctx + "appJson/admin/editStatusFolder",
+            params:{"key_random": key ,"status" : status}
+        }).success(function (data) {
+            /* 成功*/
+            var index = layer.alert( 'Success', {
+                title:'Information',
+                skin: 'layui-layer-lan'
+                ,closeBtn: 0
+            },function () {
+                window.location.reload();//页面刷新
+            });
+        })
     }
 
 

@@ -37,14 +37,14 @@ public class FolderService {
     public List<Object[]> getFolderSelect(long level,long langId,List<String> searchs){
         return folder_display_relationDao.getFolderSelect(level,langId,searchs);
     }
-    public List<Object[]> getFolderSelectByLevel1(long langId){
-        return folder_display_relationDao.getFolderSelectByLevel1(langId);
+    public List<Object[]> getFolderSelectByLevel1(long langId,String status){
+        return folder_display_relationDao.getFolderSelectByLevel1(langId,status);
     }
-    public List<Object[]> getSearchFolder(long langId,long key){
-        return folder_display_relationDao.getSearchFolder(langId,key);
+    public List<Object[]> getSearchFolder(long langId,long key,String status){
+        return folder_display_relationDao.getSearchFolder(langId,key,status);
     }
-    public List<Object[]> getAllByFolderTags(long level,long langId){
-        return folder_display_relationDao.getAllByFolderTags(level,langId);
+    public List<Object[]> getAllByFolderTags(long level,long langId,String status){
+        return folder_display_relationDao.getAllByFolderTags(level,langId,status);
     }
 
 
@@ -53,8 +53,8 @@ public class FolderService {
      *
      * @return
      */
-    public List<Object[]> getFolderPage(long level, long parenId, long langId) {
-        return folder_display_relationDao.getFolderPage(level, parenId, langId);
+    public List<Object[]> getFolderPage(long level, long parenId, long langId,long status) {
+        return folder_display_relationDao.getFolderPage(level, parenId, langId,status);
     }
     /**
      * folder library 页面初始化
@@ -286,6 +286,11 @@ public class FolderService {
     public void deleteLiaray(long id){
         // 删除library关联
         folder_library_relationDao.deleteById(id);
+    }
+
+    // 编辑状态folder 0未发布，1发布External官网，2发布Internal内部
+    public void editStatusFolder(long key_random,long status){
+        folderDao.editStatusFolder(key_random,status);
     }
 
 }

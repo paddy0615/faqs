@@ -16,10 +16,11 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
     /**
      * folder 页面初始化
      */
-    @Query(value =" SELECT f.f_key_random,f.f_title,l.lang_title,DATE_FORMAT(f.f_createdate, '%Y-%m-%d %H:%i') AS 'createdate',l.lang_id" +
+    @Query(value =" SELECT f.f_key_random,f.f_title,l.lang_title,DATE_FORMAT(f.f_createdate, '%Y-%m-%d %H:%i') AS 'createdate',l.lang_id,f.f_status" +
             "  FROM folder f,faqs_language l" +
             " WHERE l.lang_id = f.f_lang_id " +
             " AND if(:langId > 0,f.f_lang_id = :langId,1=1)" +
+            " AND if(:status >= 0,f.f_status = :status,1=1)"+
             " AND f.f_key_random IN (" +
             "  SELECT d.fdr_f_id" +
             "  FROM folder_display_relation d" +
@@ -29,7 +30,7 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
             ")" +
             " ORDER BY f.f_createdate DESC,l.lang_id"
             ,nativeQuery = true)
-    List<Object[]> getFolderPage(@Param("level") long level, @Param("parenId") long parenId, @Param("langId") long langId);
+    List<Object[]> getFolderPage(@Param("level") long level, @Param("parenId") long parenId, @Param("langId") long langId,@Param("status") long status);
 
 
 
@@ -73,16 +74,20 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
             "   FROM folder f,folder_tags t,folder_tags_relation r" +
             "   WHERE f.f_id = r.ftr_f_id AND  t.ft_id = r.ftr_ft_id" +
             "   AND f.f_lang_id = :langId" +
+            "   AND if(:status != '',f.f_status in (:status),1=1)"+
+            "   AND if(:status = '',f.f_status > 0,1=1)"+
             " ) a,(" +
             "   SELECT k.f_id AS 'k_id',d.fdr_level AS 'fdr_level'" +
             "   FROM folder_display_relation d,folder k" +
             "   WHERE d.fdr_f_id = k.f_key_random" +
             "    AND k.f_lang_id = :langId" +
-            "   AND d.fdr_level = :level"+
+            "    AND d.fdr_level = :level"+
+            "    AND if(:status != '',k.f_status in (:status),1=1)"+
+            "    AND if(:status = '',k.f_status > 0,1=1)"+
             " ) b" +
             " WHERE a.f_id = b.k_id" +
             " ORDER BY b.fdr_level DESC ",nativeQuery = true)
-    List<Object[]> getAllByFolderTags(@Param("level") long level, @Param("langId") long langId);
+    List<Object[]> getAllByFolderTags(@Param("level") long level, @Param("langId") long langId,@Param("status") String status);
 
 
 
@@ -94,9 +99,11 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
             " WHERE d.fdr_f_id = k.f_key_random" +
             " AND d.fdr_level = 1" +
             " AND if(:langId > 0,k.f_lang_id = :langId,1=1)"+
+            " AND if(:status != '',k.f_status in (:status),1=1)"+
+            " AND if(:status = '',k.f_status > 0,1=1)"+
             " ORDER BY k.f_createdate DESC"
             ,nativeQuery = true)
-    List<Object[]> getFolderSelectByLevel1(@Param("langId") long langId);
+    List<Object[]> getFolderSelectByLevel1(@Param("langId") long langId,@Param("status") String status);
 
 
 
@@ -108,9 +115,11 @@ public interface Folder_display_relationDao extends JpaRepository<Folder_display
             " WHERE d.fdr_f_id = k.f_key_random" +
             " AND k.f_lang_id = :langId" +
             " AND d.fdr_parenid = :key"+
+            " AND if(:status != '',k.f_status in (:status),1=1)"+
+            " AND if(:status = '',k.f_status > 0,1=1)"+
             " ORDER BY k.f_createdate DESC"
             ,nativeQuery = true)
-    List<Object[]> getSearchFolder(@Param("langId") long langId, @Param("key") long key);
+    List<Object[]> getSearchFolder(@Param("langId") long langId, @Param("key") long key,@Param("status") String status);
 
 
     @Query(value =" SELECT fdr_f_id FROM folder_display_relation WHERE fdr_parenid = :key"

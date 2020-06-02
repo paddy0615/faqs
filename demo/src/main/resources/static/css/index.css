@@ -20,7 +20,7 @@ body{
     padding: 14px 0px 0px 0px;
 }
 .header-lan-imgdiqiu{
-    width: 18px;
+    width: 18px !important;
     float: left;
     margin-left: -24px;
 }
@@ -33,7 +33,7 @@ body{
     float: left;
 }
 .xiangxia{
-    width: 18px;
+    width: 18px !important;
     float: left;
 }
 

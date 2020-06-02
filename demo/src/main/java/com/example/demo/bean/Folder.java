@@ -34,8 +34,20 @@ public class Folder implements Serializable {
     @Column(name = "f_key_random",columnDefinition="int default 0")
     private int random = 0;
 
+    //f_status
+    @Column(name = "f_status")
+    private long status;   // 修改为（0未发布，1发布External官网，2发布Internal内部）
+
     @Transient
     private String [] tags;  // 装tags
+
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
+    }
 
     public String[] getTags() {
         return tags;

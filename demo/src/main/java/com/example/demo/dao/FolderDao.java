@@ -33,4 +33,8 @@ public interface FolderDao extends JpaRepository<Folder,Long> {
     @Modifying
     @Query(value = " DELETE FROM folder WHERE f_key_random = :key",nativeQuery = true)
     void deleteBykey(@Param("key") long key);
+
+    @Modifying
+    @Query(value = " update folder set f_status = :status where f_key_random = :key_random",nativeQuery = true)
+    void editStatusFolder(@Param("key_random") long key_random,@Param("status") long status);
 }
