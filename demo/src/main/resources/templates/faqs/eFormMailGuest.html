@@ -8,24 +8,33 @@
 <div th:if="${langId == 1}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>此電郵是由系統自動發送，請勿回覆此郵件</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>感謝您選擇乘搭HK Express。</p>
-        <p>此電子郵件是確認我們已收到您的電子表格。此個案的編號為E-IN-<span th:text="${random}"></span>
-            <element th:switch="${eform.type}">
-                <element th:case="11"> </element>
-                <element th:case="*">，我們將儘快處理並回覆您。</element>
+        <p>此為系統發出的訊息，請勿直接回覆。</p>
+        <element th:switch="${eform.type}">
+            <element th:case="1">
+                <p>此電子郵件是確認我們已收到您重發行程單的申請，申請的編號為 E-IN-<span th:text="${random}"></span>
+                    ，我們將儘快處理並會將行程單發送到您的電郵地址。
+                </p>
             </element>
-        </p>
+            <element th:case="3">
+                <p>此電子郵件是確認我們已收到您的申請，申請的編號為 E-IN-<span th:text="${random}"></span>
+                    ，如您所要求的航班證明適用於您的訂單，我們將儘快處理並會將所要求的航班證明發送到您的電郵地址。</p>
+            </element>
+            <element th:case="7">
+                <p>此電子郵件是確認我們已收到您更改航班的申請，申請的編號為 E-IN-<span th:text="${random}"></span>
+                    ，如您所選的航班日期尚有足夠機位，我們將儘快處理並會將更新的行程單發送到您的電郵地址。
+                </p>
+            </element>
+            <element th:case="*">
+                <p>此電子郵件是確認我們已收到您的電子表格。此個案的編號為E-IN-<span th:text="${random}"></span></p>
+            </element>
+        </element>
         <p>如有任何查詢，請致電我們的客戶服務熱線。</p>
-        <p>HK Express Guest Relations</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
@@ -33,24 +42,33 @@
 <div th:if="${langId == 2}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>此电邮是由系统自动发送，请勿回复此邮件</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>感谢您选择乘搭香港快运航空。</p>
-        <p>此电子邮件是确认我们已收到您的电子表格。此个案的编号为E-IN-<span th:text="${random}"></span>
-            <element th:switch="${eform.type}">
-                <element th:case="11"> </element>
-                <element th:case="*">，我们将尽快处理并回复您。</element>
+        <p>此为系统發出的讯息，请勿直接回复。</p>
+        <element th:switch="${eform.type}">
+            <element th:case="1">
+                <p>此电子邮件是确认我们已收到您重發行程单的申请，申请的编号为 E-IN-<span th:text="${random}"></span>
+                    ，我们将儘快处理并会将行程单發送到您的电邮地址。
+                </p>
             </element>
-        </p>
+            <element th:case="3">
+                <p>此电子邮件是确认我们已收到您的申请，申请的编号为 E-IN-<span th:text="${random}"></span>
+                    ，如您所要求的航班证明适用于您的订单，我们将儘快处理并会将所要求的航班证明發送到您的电邮地址。</p>
+            </element>
+            <element th:case="7">
+                <p>此电子邮件是确认我们已收到您更改航班的申请，申请的编号为 E-IN-<span th:text="${random}"></span>
+                    ，如您所选的航班日期尚有足够机位，我们将儘快处理并会将更新的行程单發送到您的电邮地址。
+                </p>
+            </element>
+            <element th:case="*">
+                <p>此电子邮件是确认我们已收到您的电子表格。此个案的编号为E-IN-<span th:text="${random}"></span></p>
+            </element>
+        </element>
         <p>如有任何查询，请致电我们的客户服务热线。</p>
-        <p>HK Express Guest Relations</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288 / (86) 02029106188</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
@@ -58,77 +76,101 @@
 <div th:if="${langId == 4}">
     <span>尊敬なるお客様：</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>このメールはシステムによって自動的に送信されます。このメールに返信しないでください</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>香港エクスプレスをお選びいただいて、誠に有難う御座います！</p>
-        <p> お客様のメールを承りました。番号E-IN-<span th:text="${random}"></span>
-            <element th:switch="${eform.type}">
-                <element th:case="11"> </element>
-                <element th:case="*">の件について、こちらはお客様の用件を対応致して、できるだけ早めに返事いたします。</element>
+        <p>これはシステムによって送信されたメッセージです。直接返信しないでください。</p>
+        <element th:switch="${eform.type}">
+            <element th:case="1">
+                <p>このメールは、旅程の再送信のリクエストを受領したことを確認するものです。 申し込み番号は E-IN-<span th:text="${random}"></span>
+                    です。できるだけ早く処理し、旅程をメールアドレスに送信します。
+                </p>
             </element>
-        </p>
-
-        <p>もし問い合わせがあれば、コールセンター連絡ください。</p>
-
-        <p>HK Express Guest Relations</p>
+            <element th:case="3">
+                <p>このメールは、アプリケーションの受領を確認するものです。アプリケーション番号は E-IN-<span th:text="${random}"></span>
+                    です。リクエストされたフライト証明書がご注文に該当する場合、できるだけ早く処理し、リクエストされたフライト証明書をに送信します メールアドレス。</p>
+            </element>
+            <element th:case="7">
+                <p>このメールは、フライトの変更リクエストを受領したことを確認するものです。 申し込み番号は E-IN-<span th:text="${random}"></span>
+                    です。選択したフライトの日付に十分な座席がある場合は、できるだけ早く処理し、更新された旅程をメールアドレスに送信します。
+                </p>
+            </element>
+            <element th:case="*">
+                <p>お客様のメールを承りました。番号E-IN-<span th:text="${random}"></span></p>
+            </element>
+        </element>
+        <p>お問い合わせはカスタマーサービスホットラインまでご連絡ください。</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">電話番号： <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">メール：<span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
-            <p style="height: 8px;">ウェブサイト：<span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288 / (81) 0345 102 319</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
+            <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
 </div>
 <div th:if="${langId == 5}">
     <span>친애하는 손님,</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>이 이메일은 시스템에 의해 자동으로 전송됩니다.이 이메일에 회신하지 마십시오</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>홍콩 익스프레스 항공을 이용해 주셔서 감사합니다.</p>
-        <p>본 이메일은 귀하의 양식을 접수했음을 확인합니다. 양식 번호는 E-IN-<span th:text="${random}"></span>
-            <element th:switch="${eform.type}">
-                <element th:case="11"> </element>
-                <element th:case="*">이며 가능한 한 빨리 처리하고 답변 해 드리겠습니다.</element>
+        <p>시스템에서 보낸 메시지이므로 직접 회신하지 마십시오.</p>
+        <element th:switch="${eform.type}">
+            <element th:case="1">
+                <p>이 이메일은 여정 재전송 요청이 접수되었음을 확인합니다. 신청서 번호는 E-IN-<span th:text="${random}"></span>
+                    입니다. 가능한 빨리 처리하여 여정을 이메일 주소로 보내드립니다.
+                </p>
             </element>
-        </p>
-        <p>문의 사항은 고객 서비스 센터에 문의하십시오.</p>
-        <p>HK Express Guest Relations</p>
+            <element th:case="3">
+                <p>이 이메일은 신청서가 접수되었음을 확인하고 신청서 번호는 E-IN-<span th:text="${random}"></span>
+                    입니다. 요청한 비행 증명서가 주문에 해당되는 경우 가능한 빨리 처리하여 요청한 비행 증명서를 보내드립니다 귀하의 이메일 주소</p>
+            </element>
+            <element th:case="7">
+                <p>이 이메일은 항공편 변경 요청을 접수했음을 확인합니다. 신청서 번호는 E-IN-<span th:text="${random}"></span>
+                    입니다. 선택한 항공편 날짜에 충분한 좌석이있을 경우 가능한 빨리 처리하여 업데이트 된 일정을 이메일 주소로 보내드립니다.
+                </p>
+            </element>
+            <element th:case="*">
+                <p>본 이메일은 귀하의 양식을 접수했음을 확인합니다. 양식 번호는 E-IN-<span th:text="${random}"></span></p>
+            </element>
+        </element>
+        <p>다른 문의 있으면 콜센터로 연락하시기 바랍니다 .</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline : <span style="color: blue;text-decoration:underline;">(852) 3902-0288 /  (82) 070 7488 3138</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
 </div>
 <div th:if="${langId == 6}">
-    <span>Dear Guest,</span>
+    <span>Dear Customer,</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>This is a system automated email.  Please do not reply to this message.</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>Thank you for choosing HK Express.</p>
-        <p>This email is to confirm that your E-Form has been received and here's your case number E-IN-<span th:text="${random}"></span>
-            <element th:switch="${eform.type}">
-                <element th:case="11"> </element>
-                <element th:case="*">,We will look into the case and get back to you soon.</element>
+        <p>This is an automated email.  Please do not reply to this message.</p>
+        <element th:switch="${eform.type}">
+            <element th:case="1">
+                <p>This email is to confirm that your request has been received. Please note your case number is E-IN-<span th:text="${random}"></span>
+                    . The itinerary for the specific booking would be sent to you by email shortly.
+                </p>
             </element>
-        </p>
-        <p>Should you have any queries, please do not hesitate to contact us.</p>
-        <p>Yours sincerely,</p>
-        <p>HK Express Guest Relations</p>
+            <element th:case="3">
+                <p>This email is to confirm that your request has been received. Please note your case number is E-IN-<span th:text="${random}"></span>
+                    . We will process your request accordingly, provided that the specified certificate is applicable to your booking. You will receive another email with the requested certificate once it is completed. </p>
+            </element>
+            <element th:case="7">
+                <p>This email is to confirm that your request has been received. Please note your case number is E-IN-<span th:text="${random}"></span>
+                    . We will process the flight changes according to your preferences, provided that those days are available. You will receive another email with the updated itinerary once it is completed.
+                </p>
+            </element>
+            <element th:case="*">
+                <p>This email is to confirm that your E-Form has been received and here's your case number E-IN-<span th:text="${random}"></span></p>
+            </element>
+        </element>
+        <p>Should you have any queries, please do not hesitate to contact our services hotline.</p>
+        <p style="height: 8px;">Customer Care</p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>

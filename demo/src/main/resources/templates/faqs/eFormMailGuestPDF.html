@@ -8,19 +8,15 @@
 <div th:if="${langId == 1}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>此電郵是由系統自動發送，請勿回覆此郵件</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
-        <p>感謝您選擇乘搭香港快運航空。</p>
-        <p>就您早前所提交的申請 <span th:text="${random}"></span>，附件為您所需要的航班證明。</p>
-        <p>如有任何查詢，請瀏覽我們的常見問題網頁 <br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=1" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=1</a></p>
-        <p>HK Express Guest Relations</p>
+        <p>感謝您選擇乘搭 HK Express。</p>
+        <p>就您早前所提交的申請 E-IN-<span th:text="${random}"></span>
+            ，附件為您所需要的航班證明。</p>
+        <p>如有任何查詢，歡迎隨時致電熱線聯絡我們。</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
@@ -28,85 +24,63 @@
 <div th:if="${langId == 2}">
     <span>尊敬的客人，</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>此电邮是由系统自动发送，请勿回复此邮件</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>感谢您选择乘搭香港快运航空。</p>
-        <p>就您早前所提交的申请 <span th:text="${random}"></span>，附件为您所需要的航班证明。</p>
-        <p>如有任何查询，请浏览我们的常见问题网页 <br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=2" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=2</a></p>
-        <p>HK Express Guest Relations</p>
+        <p>就您早前所提交的申请 E-IN-<span th:text="${random}"></span>
+            ，附件为您所需要的航班证明。</p>
+        <p>如有任何查询，欢迎随时致电热线联络我们。</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288 / (86) 02029106188</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
 </div>
 <div th:if="${langId == 4}">
-    <span>お客様へ</span>
+    <span>尊敬なるお客様:</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>このメールはシステムによって自動的に送信されます。このメールに返信しないでください</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
-        <p>香港エクスプレスをいつもご利用いただきまして、誠にありがとうございます。</p>
-        <p>申請番号 <span th:text="${random}"></span>の証明書がご用意できましたので、添付でお送りいたします。何かご不明な点がございましたら、遠慮なくお知らせください。</p>
-        <p>また、FAQページもご参照ください。<br><a href="https://www.livedemo.net/hkexpress/appPage/index?langId=4" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index?langId=4</a></p>
-        <P>香港エクスプレス　コールセンター</P>
+        <p>香港エクスプレスをお選びいただいて、誠に有難う御座います！</p>
+        <p>以前に提出した E-IN-<span th:text="${random}"></span>
+            の申請に関して、添付ファイルは必要なフライト証明書です。</p>
+        <p>ご不明な点がございましたら、ホットラインまでお気軽にお問い合わせください。</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">電話：<span style="color: blue;text-decoration:underline;">03-4510-2319</span>（日本語対応）</p>
-            <p style="height: 8px;">メールアドレス: <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
-            <p style="height: 8px;">公式サイト : <span style="color: blue;text-decoration:underline;">www.hkexpress.com/ja</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288 / (81) 0345 102 319</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
+            <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
 </div>
 <div th:if="${langId == 5}">
-    <span>Dear Guest,</span>
+    <span>친애하는 손님,</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>This is a system automated email.  Please do not reply to this message.</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
-        <p>Thank you for choosing HK Express.</p>
-        <p>Please see attached flight certificate for your application <span th:text="${random}"></span>.</p>
-        <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>
-        <p>You can also browse our FAQs for more information:<br><a href="https://www.livedemo.net/hkexpress/appPage/index" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index</a></p>
+        <p>홍콩 익스프레스 항공을 이용해 주셔서 감사합니다.</p>
+        <p>이전에 제출 한 E-IN-<span th:text="${random}"></span>
+            응용 프로그램과 관련하여 첨부 파일은 필요한 비행 증명서입니다.</p>
+        <p>문의 사항이 있으시면 핫라인에 전화하여 언제든지 문의하십시오.</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Yours sincerely,</p>
-            <p style="height: 8px;">Guest Relations</p>
-            <p style="height: 8px;">HK Express</p>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288 / (82) 070 7488 3138</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>
 </div>
 <div th:if="${langId == 6}">
-    <span>Dear Guest,</span>
+    <span>Dear Customer,</span>
     <div class="row" style="margin-bottom: 35px;">
-        <element th:switch="${eform.type}">
-            <element th:case="3">
-                <p>This is a system automated email.  Please do not reply to this message.</p>
-            </element>
-            <element th:case="*"> </element>
-        </element>
         <p>Thank you for choosing HK Express.</p>
-        <p>Please see attached flight certificate for your application <span th:text="${random}"></span>.</p>
-        <p>Should you have any inquiry please do not hesitate to contact our services hotline.</p>
-        <p>You can also browse our FAQs for more information:<br><a href="https://www.livedemo.net/hkexpress/appPage/index" target="_blank" >https://www.livedemo.net/hkexpress/appPage/index</a></p>
+        <p>Please see attached flight certificate for your application E-IN-<span th:text="${random}"></span>
+        </p>
+        <p>Should you have any inquiry, please do not hesitate to contact our services hotline.</p>
+        <p style="height: 8px;">Customer Care </p>
+        <p>HK Express</p>
         <div>
-            <p style="height: 8px;">Yours sincerely,</p>
-            <p style="height: 8px;">Guest Relations</p>
-            <p style="height: 8px;">HK Express</p>
-            <p style="height: 8px;">Tel: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
-            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">guest.relations@hkexpress.com</span></p>
+            <p style="height: 8px;">Hotline: <span style="color: blue;text-decoration:underline;">(852) 3902-0288</span></p>
+            <p style="height: 8px;">E-mail : <span style="color: blue;text-decoration:underline;">customer.care@hkexpress.com</span></p>
             <p style="height: 8px;">Website : <span style="color: blue;text-decoration:underline;">www.hkexpress.com</span></p>
         </div>
     </div>

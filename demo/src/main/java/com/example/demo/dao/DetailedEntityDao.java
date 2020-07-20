@@ -10,6 +10,19 @@ import java.util.List;
 
 @Component(value = "detailedEntityDao")
 public interface DetailedEntityDao extends JpaRepository<DetailedEntity,Long> {
+    /**
+     * 按标题和内容匹配
+     */
+    @Query(value = "SELECT d.dl_id,d.dl_title,d.dl_status" +
+            " FROM  faqs_detailed d" +
+            " WHERE 1=1" +
+            " AND if(:langId > 0,d.dl_lang_id = :langId,1=1)"+
+            " AND if(:status != '',d.dl_status in (:status),1=1)"+
+            " AND if(:status = '',d.dl_status > 0,1=1)"+
+            " AND ( d.dl_title like :searchs"+
+            " or d.dl_contenttxt like :searchs )", nativeQuery = true)
+    List<DetailedEntity> getByTitleAndContenttxt(@Param("langId") long langId,@Param("status") String status,@Param("searchs")String searchs);
+
 
 
     /**

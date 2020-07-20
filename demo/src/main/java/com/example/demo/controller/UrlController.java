@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping("appPage1")
+@RequestMapping("appPage1112")
 public class UrlController {
     @RequestMapping("/")
     public String index(){return "faqs/index";}

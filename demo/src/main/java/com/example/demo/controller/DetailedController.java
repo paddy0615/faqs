@@ -215,6 +215,14 @@ public class DetailedController {
                 }
             }
 
+            // 特殊: 匹配标题和内容是否包含
+            if(detaileds.size() == 0){
+                String newStr = "%"+search.replaceAll(" ","%")+"%";
+                System.out.println("搜索："+newStr);
+                detaileds = detailedService.getByTitleAndContenttxt(langId,s,newStr);
+                System.out.println("存在标题或内容："+detaileds.size());
+            }
+
             // 第三步: 显示文件夹
             if(detaileds.size() == 0){
                 long maxLevel = folderService.getMaxlevel();

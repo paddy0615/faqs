@@ -235,7 +235,7 @@ public class DetailedController {
 
 
                 // 添加日志
-                Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, JSON.toJSONString(tags), "",date);
+                Logs logs = new Logs(user.getId(), ipUtil.getIpAddr(request), t, detailed.getId().toString(), "",date);
                 logsDao.save(logs);
             }
         }

@@ -213,6 +213,10 @@ public class DetailedService {
         //detailedDao.saveTop(dlId,new Date());
     }
 
+    public List<DetailedEntity> getByTitleAndContenttxt(long langId,String status,String srr){
+        return detailedEntityDao.getByTitleAndContenttxt(langId,status,srr);
+    }
+
     /**
      * 按标签查询 Detailed 自定义
      * @param srr

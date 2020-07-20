@@ -348,10 +348,10 @@ public class EformService {
      * @throws
      */
     public void sendSimpleMailUser(Map<String, Object> valueMap) throws Exception {
-        //  Soniccs.Guest.Relations@hkexpress.com
-        String sender = "Soniccs.Guest.Relations@hkexpress.com";
-        //String password = "H+==2GaR";
-        String password = "W34eDSer@Hke";
+        //  sender =  Soniccs.Guest.Relations@hkexpress.com
+        //  password = "W34eDSer@Hke";
+        String sender = "Customer.Care@hkexpress.com";
+        String password = "%7FbY+n$";
 
         // 收件人邮箱地址
         String receiver = valueMap.get("To").toString();
@@ -375,15 +375,16 @@ public class EformService {
             Session session = Session.getInstance(props);
             // 创建邮件对象
             MimeMessage msg = new MimeMessage(session);
-            // 发送人
-            msg.setFrom(new InternetAddress("guest.relations@hkexpress.com"));
+            // 发送人 msg.setFrom(new InternetAddress("guest.relations@hkexpress.com"));
+           // msg.setFrom(new InternetAddress(sender));
+            msg.setFrom(new InternetAddress("HK Express Customer Care"+" <"+sender+">"));
             // 收信人
             //msg.setRecipients(Message.RecipientType.TO,receiver);
             msg.addRecipient(Message.RecipientType.TO,new InternetAddress(receiver));
             // 抄送人
             //msg.setRecipients(Message.RecipientType.CC, "hke_smartform@sonic-teleservices.com");
             // 密抄人
-            msg.setRecipients(Message.RecipientType.BCC, "guest.relations@hkexpress.com");
+            msg.setRecipients(Message.RecipientType.BCC, sender);
             //msg.setRecipients(Message.RecipientType.BCC, "hke_smartform@sonic-teleservices.com");
            /* Address [] a = new Address[2];
             a[0] = new InternetAddress("guest.relations@hkexpress.com");
@@ -465,14 +466,16 @@ public class EformService {
             // 创建邮件对象
             MimeMessage msg = new MimeMessage(session);
             // 发送人
-            msg.setFrom(new InternetAddress("flight.certificate@hkexpress.com"));
+            //msg.setFrom(new InternetAddress(sender));
+            msg.setFrom(new InternetAddress("HK Express"+" <"+sender+">"));
+
             // 收信人
             //msg.setRecipients(Message.RecipientType.TO,receiver);
             msg.addRecipient(Message.RecipientType.TO,new InternetAddress(receiver));
             // 抄送人
             //msg.setRecipients(Message.RecipientType.CC, "hke_smartform@sonic-teleservices.com");
             // 密抄人
-            msg.setRecipients(Message.RecipientType.BCC, "guest.relations@hkexpress.com");
+            msg.setRecipients(Message.RecipientType.BCC, "customer.care@hkexpress.com");
             //msg.setRecipients(Message.RecipientType.BCC, "hke_smartform@sonic-teleservices.com");
            /* Address [] a = new Address[2];
             a[0] = new InternetAddress("guest.relations@hkexpress.com");
@@ -534,7 +537,7 @@ public class EformService {
             helper.setFrom(Sender);
             if("pro".equals(active)){
                 // 设置收件人邮箱- 此邮件已关联zoho.
-                helper.setTo("guest.relations@hkexpress.com");
+                helper.setTo("customer.care@hkexpress.com");
                 // 抄送邮件接收人
                 helper.setCc(Sender);
             }else{

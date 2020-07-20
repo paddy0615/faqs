@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * url- 只对eform系统有关。
  * */
 @Controller
-@RequestMapping("appPage12")
+@RequestMapping("appPage")
 public class UrlControllerEform {
 
     /**
@@ -63,7 +63,7 @@ public class UrlControllerEform {
     }
 
     /**
-     * Typhoon Move Flight 台风移动飞行
+     * Typhoon Move Flight 更改航班
      * @return
      */
     @RequestMapping("/TyphoonMoveFlight")
