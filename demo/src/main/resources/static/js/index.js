@@ -164,22 +164,7 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
                 $scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
-                angular.forEach($scope.result.languages,function (each) {
-                    if($scope.langId == each.id){
-                        $scope.problem = each.problem;
-                        return;
-                    }
-                })
-                angular.forEach(data.result.categories,function (each) {
-                    if(catId == each.id){
-                        $scope.cat_title = each.title;
-                        return;
-                    }
-                })
                 $scope.lang_cout = data.result.categories.length;
-                if($scope.cat_title == ""){
-                    $scope.cat_title = data.result.categories[1].title;
-                }
             }else{
                 /* 失败*/
                 layer.alert( 'Abnormal error, please contact the administrator.', {
@@ -280,6 +265,13 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
         })
     }
 
+    var bot_key = $location.search().bot_key;
+    if(undefined != bot_key && "" != bot_key){
+        var fid = $location.search().fid;
+        var bot_langId = $location.search().bot_langId;
+        $scope.searchShow = true;
+        $scope.getFolderUrl(bot_key,bot_langId,fid);
+    }
 
 
     /**

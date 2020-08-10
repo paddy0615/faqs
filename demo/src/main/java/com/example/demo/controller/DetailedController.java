@@ -812,7 +812,58 @@ public class DetailedController {
 
         }
 
+        // 第三步: 显示文件夹
+        if(detaileds.size() == 0){
+            long maxLevel = folderService.getMaxlevel();
+            Map<String,Object[]> foldermap_Date = new HashMap<>();
+            while(maxLevel > 0){
+                folderList = folderService.getAllByFolderTags(maxLevel,langId,s);
+                if(folderList.size() == 0){
+                    maxLevel--;
+                    continue;
+                }
+                //folderList = folderService.getFolderSelect(maxLevel,langId,searchs);
+                for(Object[] os : folderList){
+                    if(search.toLowerCase().contains(os[4].toString().toLowerCase())){
+                        if(foldermap.containsKey(os[0].toString())){
+                            foldermap.put(os[0].toString(),foldermap.get(os[0].toString())+1);
+                        }else{
+                            foldermap.put(os[0].toString(),1);
+                        }
+                    }
+                    foldermap_Date.put(os[0].toString(),os);
+                }
+                if(foldermap.size() > 0){
+                    break;
+                }
+                if(maxLevel == 1){
+                    // 搜索无结果-显示首层文件夹
+                    folderList = new ArrayList<>();
+                    break;
+                }
+                maxLevel--;
+            }
+            // 有结果-排序
+            if(foldermap.size() > 0){
+                List<Map.Entry<String,Integer>> folder_list_Data = new ArrayList<>(foldermap.entrySet());
+                Collections.sort(folder_list_Data, new Comparator<Map.Entry<String, Integer>>() {
+                    @Override
+                    public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                        return o2.getValue().compareTo(o1.getValue());
+                    }
+                });
+                System.out.println("foldermap排序前："+foldermap.toString());
+                System.out.println("folder_list_Data排序后："+folder_list_Data);
+                folderList = new ArrayList<>();
+                for (Map.Entry<String,Integer> map_key1 : folder_list_Data) {
+                    Object[] os1 = foldermap_Date.get(map_key1.getKey());
+                    folderList.add(os1);
+                }
+            }
+
+        }
         module.putData("detaileds",detaileds);
+        module.putData("folderList",folderList);
         return module;
     }
 

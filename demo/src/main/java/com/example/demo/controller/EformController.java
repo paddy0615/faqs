@@ -71,7 +71,7 @@ public class EformController {
         }else if("6".equals(id)){
             t = "ReconfirmFlight";
         }else if("7".equals(id)){
-            t = "TyphoonMoveFlight";
+            t = "eflightchange";
         }else if("8".equals(id)){
             //t = "RefundWithNewBbooking";
             String s = "en";

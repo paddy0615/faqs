@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping("appPage1112")
+@RequestMapping("appPage8725")
 public class UrlController {
     @RequestMapping("/")
     public String index(){return "faqs/index";}
@@ -201,14 +201,14 @@ public class UrlController {
     }
 
     /**
-     * Typhoon Move Flight 台风移动飞行
+     * eflightchange 台风移动飞行
      * @return
      */
-    @RequestMapping("/TyphoonMoveFlight")
+    @RequestMapping("/eflightchange")
     public String eForm7(@RequestParam(name = "langId",defaultValue = "6",required = true) long langId
             , @RequestParam(name = "dlId",defaultValue = "0",required = true) long dlId
             , @RequestParam(name = "crm_uid",defaultValue = "",required = true) String crm_uid){
-        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/TyphoonMoveFlight?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
+        return "redirect:https://eform.securesettlement.net/hkexpress/appPage/eflightchange?langId="+langId+"&dlId="+dlId+"&crm_uid="+crm_uid;
     }
 
     /**
