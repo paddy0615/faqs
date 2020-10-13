@@ -193,8 +193,7 @@ public class DetailedController {
                     map_Date.put(os[1].toString(),os);
                 }
             }
-            System.out.println("搜索："+search);
-            System.out.println("排序前map："+map.toString());
+            System.out.println(langId+"搜索："+search);
             List<Map.Entry<String,Integer>> list_Data = new ArrayList<>(map.entrySet());
             Collections.sort(list_Data, new Comparator<Map.Entry<String, Integer>>() {
                 @Override
@@ -450,7 +449,10 @@ public class DetailedController {
             return module;
         }
         feedback.setIp(ipUtil.getIpAddr(request));
-        long dfId =  detailedService.addFeedback(feedback);
+        long dfId = 0;
+        if(feedback.getType() == 1){
+            dfId =  detailedService.addFeedback(feedback);
+        }
         module.putData("id",dfId);
         module.putData("type",feedback.getType());
         return module;
@@ -465,7 +467,7 @@ public class DetailedController {
     @RequestMapping(value = "/updateFeedback",method= RequestMethod.POST)
     public RestResultModule updateFeedback(HttpServletRequest request,@RequestBody DetailedFeedback feedback){
         RestResultModule module = new RestResultModule();
-        if("" == feedback.getContent()){
+        if("" == feedback.getContent() && feedback.getType() == 2){
             module.setMessage(400,"内容为空!");
             return module;
         }

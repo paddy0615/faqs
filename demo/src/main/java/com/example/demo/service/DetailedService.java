@@ -311,7 +311,7 @@ public class DetailedService {
      * update反馈信息
      */
     public void updateFeedback(DetailedFeedback feedback){
-        List<DetailedFeedback>  feedbacks = feedbackDao.findAllByTypeAndDlIdAndIp(feedback.getType(),feedback.getDlId(),feedback.getIp());
+        //List<DetailedFeedback>  feedbacks = feedbackDao.findAllByTypeAndDlIdAndIp(feedback.getType(),feedback.getDlId(),feedback.getIp());
       /*  if(feedbacks.size() >= 5 ){
             return;
         }*/

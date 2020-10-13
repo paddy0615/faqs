@@ -1507,7 +1507,69 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
     map.set("2021-3-29",true);
     map.set("2021-3-30",true);
     map.set("2021-3-31",true);
-
+    map.set("2021-4-1",true);
+    map.set("2021-4-2",true);
+    map.set("2021-4-3",true);
+    map.set("2021-4-4",true);
+    map.set("2021-4-5",true);
+    map.set("2021-4-6",true);
+    map.set("2021-4-7",true);
+    map.set("2021-4-8",true);
+    map.set("2021-4-9",true);
+    map.set("2021-4-10",true);
+    map.set("2021-4-11",true);
+    map.set("2021-4-12",true);
+    map.set("2021-4-13",true);
+    map.set("2021-4-14",true);
+    map.set("2021-4-15",true);
+    map.set("2021-4-16",true);
+    map.set("2021-4-17",true);
+    map.set("2021-4-18",true);
+    map.set("2021-4-24",true);
+    map.set("2021-4-25",true);
+    map.set("2021-4-26",true);
+    map.set("2021-4-27",true);
+    map.set("2021-4-28",true);
+    map.set("2021-4-29",true);
+    map.set("2021-4-30",true);
+    map.set("2021-5-1",true);
+    map.set("2021-5-2",true);
+    map.set("2021-5-3",true);
+    map.set("2021-5-4",true);
+    map.set("2021-5-5",true);
+    map.set("2021-5-6",true);
+    map.set("2021-5-7",true);
+    map.set("2021-5-8",true);
+    map.set("2021-5-9",true);
+    map.set("2021-5-14",true);
+    map.set("2021-5-15",true);
+    map.set("2021-5-16",true);
+    map.set("2021-5-17",true);
+    map.set("2021-5-18",true);
+    map.set("2021-5-19",true);
+    map.set("2021-5-20",true);
+    map.set("2021-5-21",true);
+    map.set("2021-5-22",true);
+    map.set("2021-5-23",true);
+    map.set("2021-5-24",true);
+    map.set("2021-6-9",true);
+    map.set("2021-6-10",true);
+    map.set("2021-6-11",true);
+    map.set("2021-6-12",true);
+    map.set("2021-6-13",true);
+    map.set("2021-6-14",true);
+    map.set("2021-6-15",true);
+    map.set("2021-6-16",true);
+    map.set("2021-6-17",true);
+    map.set("2021-6-18",true);
+    map.set("2021-6-19",true);
+    map.set("2021-6-20",true);
+    map.set("2021-6-25",true);
+    map.set("2021-6-26",true);
+    map.set("2021-6-27",true);
+    map.set("2021-6-28",true);
+    map.set("2021-6-29",true);
+    map.set("2021-6-30",true);
 
 
 
@@ -1524,7 +1586,7 @@ myapp.controller("eForm7Controller",["$scope","$http","$location","$translate","
 
     var day3 = new Date();
     //var s3 = (day3.getFullYear())+"-12-31";
-    var s3 = (day3.getFullYear()+1)+"-3-31";
+    var s3 = (day3.getFullYear()+1)+"-6-31";
     // laydate国际版
     laydate.render({
         elem: '#ladate1'

@@ -10,4 +10,6 @@ import java.util.List;
 public interface DetailedMapper {
 
     List<Detailed> getByDetaileds(@Param("langid") long langid, @Param("catid") long catid);
+
+
 }

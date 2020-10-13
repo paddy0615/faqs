@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * paddy 2018/9/17
  * */
 @Controller
-@RequestMapping("appPage")
+@RequestMapping("appPage565")
 public class UrlControllerTest {
     @RequestMapping("/")
     public String index(){return "faqs/index";}
@@ -33,6 +33,9 @@ public class UrlControllerTest {
 
     @RequestMapping("/testChatbot_infosun")
     public String testChatbot_infosun(){return "faqs/testChatbot_infosun";}
+
+    @RequestMapping("/Chatbot")
+    public String Chatbot(){return "faqs/Chatbot";}
 
     @RequestMapping("/indexDetailed")
     public String indexDetailed(){return "faqs/indexDetailed";}

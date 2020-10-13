@@ -1,95 +1,114 @@
-var myapp = angular.module("myapp",['pascalprecht.translate']);
+var myapp = angular.module("myapp", ['pascalprecht.translate']);
+
 // online chat
 function onlineChat(langId) {
-    if(langId == 1){
+    if (langId == 1) {
         // 香港 (繁體)
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/8168ca61-a381-422e-9803-44e04dabc878.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else if(langId == 2){
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else if (langId == 2) {
         // 中国 简体
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/cd66238e-805c-4fd2-b3e1-ccabddaf8a12.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("联络我们!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("透过在线客服与我们联络"); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else if(langId == 3){
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else if (langId == 3) {
         // 台灣 (繁體)
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/8168ca61-a381-422e-9803-44e04dabc878.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("聯絡我們!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("透過線上客服與我們聯絡"); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else if(langId == 4){
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else if (langId == 4) {
         // 日本 (日本語))
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/d1fa9911-1e41-4df1-a090-a1fd9454a030.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("連絡先情報!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("私たちとチャットしましょう"); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else if(langId == 5){
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else if (langId == 5) {
         // 대한민국(한국어)
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/ed84ba43-860a-43fc-87ac-29e1fb8ce6ab.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("연락처!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("연락해 주십시오."); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else{
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else {
         // Hong Kong (EN)
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
         se.src = 'https://storage.googleapis.com/sonic-teleservices/js/ff4b2b7a-dfbb-47d8-9e51-766c426eb3cb.js';
         var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
                 done = true;
                 //SonicTeleservices.setTitle("Contact us!"); // for the pre-chat form
                 //SonicTeleservicesChat.setTitle("Chat with us!"); // for the chat-form
                 //SonicTeleservices.setProactiveAutocloseDelay(0.5);// delay proactive auto close after 30 sec
             }
         };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
     }
 }
 
-myapp.config(['$translateProvider',function($translateProvider){
-    var lang = window.localStorage['lang'] || '6';
+myapp.config(['$translateProvider', function ($translateProvider) {
+    var lang = window.localStorage.lang || '6';
     $translateProvider
         .preferredLanguage(lang)
         .useStaticFilesLoader({
@@ -98,10 +117,10 @@ myapp.config(['$translateProvider',function($translateProvider){
         })
         .useSanitizeValueStrategy('escapeParameters');
 }])
-myapp.factory('T', ['$translate', function($translate) {
+myapp.factory('T', ['$translate', function ($translate) {
     var T = {
-        T:function(key) {
-            if(key){
+        T: function (key) {
+            if (key) {
                 return $translate.instant(key);
             }
             return key;
@@ -113,11 +132,10 @@ myapp.factory('T', ['$translate', function($translate) {
 myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
     return {
         restrict: 'A',
-        link: function(scope,element,attr) {
+        link: function (scope, element, attr) {
             if (scope.$last === true) {
-                var finishFunc=scope.$parent[attr.onFinishRenderFilters];
-                if(finishFunc)
-                {
+                var finishFunc = scope.$parent[attr.onFinishRenderFilters];
+                if (finishFunc) {
                     finishFunc();
                 }
             }
@@ -126,7 +144,7 @@ myapp.directive('onFinishRenderFilters', ['$timeout', function ($timeout) {
 }])
 
 // 路由
-myapp.config(['$locationProvider', function($locationProvider) {
+myapp.config(['$locationProvider', function ($locationProvider) {
     // $locationProvider.html5Mode(true);
     $locationProvider.html5Mode({
         enabled: true,
@@ -135,12 +153,12 @@ myapp.config(['$locationProvider', function($locationProvider) {
 }]);
 
 // index
-myapp.controller("indexController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+myapp.controller("indexController", ["$scope", "$http", "$location", "$translate", function ($scope, $http, $location, $translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
     gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
-    $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
+    $scope.catId = GetUrlParam("catId") == "" ? 0 : GetUrlParam("catId");
     $scope.lang_cout = 5;
     $scope.isGetUrl = false;
     $scope.cat_title = "";
@@ -148,16 +166,17 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
     $scope.indexShow = true;
     $scope.searchShow = false;
     // 初始化
-    into($scope.langId,$scope.catId);
+    into($scope.langId, $scope.catId);
     onlineChat($scope.langId);
-    function into(langID,catId){
+
+    function into(langID, catId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getIndex",
-            params:{"langId": langID,"catId" : catId}
+            method: 'post',
+            url: ctx + "appJson/getIndex",
+            params: {"langId": langID, "catId": catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
@@ -165,83 +184,85 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
                 $scope.lang_cout = data.result.categories.length;
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error, please contact the administrator.', {
+                layer.alert('Abnormal error, please contact the administrator.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
+
     // 改导航宽
-    $scope.completeRepeat= function(){
-        if($scope.lang_cout > 5 ){
-            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
         }
     }
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appPage/index?langId=" + $scope.langId + "&catId=" + 0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
-    $scope.clickCategory = function (idnex,cat) {
-        if(idnex==0){
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
             getHKE($scope.langId);
-        }else{
-            if($scope.isGetUrl){
-                var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/index?langId=" + cat.langId + "&catId=" + cat.id;
                 clicked(url);
             }
         }
     }
 
     /* 搜索框 开始*/
-    $scope.checkSearchTags = function(){
+    $scope.checkSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/checkSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/checkSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
         })
     }
-    $scope.getSearchTags = function(){
+    $scope.getSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
-            $scope.detaileds =  data.result.detaileds;
-            $scope.folderList =  data.result.folderList;
+            $scope.detaileds = data.result.detaileds;
+            $scope.folderList = data.result.folderList;
             $scope.detaileds_length = $scope.detaileds.length;
-            $scope.searchFeedback =  data.result.searchFeedback;
+            $scope.searchFeedback = data.result.searchFeedback;
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function () {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
+        }
+        ;
         $scope.checkSearchTags();
         var q = escape($scope.searchTest);
-        var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0+"&q="+q;
+        var url = ctx + "appPage/index?langId=" + $scope.langId + "&catId=" + 0 + "&q=" + q;
         clicked(encodeURI(url));
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
@@ -253,24 +274,24 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
      * @param key
      * @param langId
      */
-    $scope.getFolderUrl = function (key,langId,fid) {
+    $scope.getFolderUrl = function (key, langId, fid) {
         $scope.folderList = {};
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchFolder",
-            params : {"key": key,"langId" : langId,"status":1,"fid":fid}
+            method: "post",
+            url: ctx + "appJson/getSearchFolder",
+            params: {"key": key, "langId": langId, "status": 1, "fid": fid}
         }).success(function (data) {
-            $scope.folderList =  data.result.folderList;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.folderList = data.result.folderList;
+            $scope.detaileds = data.result.detaileds;
         })
     }
 
     var bot_key = $location.search().bot_key;
-    if(undefined != bot_key && "" != bot_key){
+    if (undefined != bot_key && "" != bot_key) {
         var fid = $location.search().fid;
         var bot_langId = $location.search().bot_langId;
         $scope.searchShow = true;
-        $scope.getFolderUrl(bot_key,bot_langId,fid);
+        $scope.getFolderUrl(bot_key, bot_langId, fid);
     }
 
 
@@ -285,50 +306,52 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
     // 提交搜索反馈信息
     var lock1 = false; //默认未锁定
     $scope.addSelectFeedback = function () {
-        if(!check1()){
+        if (!check1()) {
             return;
         }
-        if(!lock1) {
+        if (!lock1) {
             lock1 = true; // 锁定
             var index = layer.load(0, {shade: false});
             $scope.selectFeedback.langId = $scope.langId;
             $http({
-                method : "post",
-                url : ctx + "appJson/addSelectFeedback",
-                data : JSON.stringify($scope.selectFeedback)
+                method: "post",
+                url: ctx + "appJson/addSelectFeedback",
+                data: JSON.stringify($scope.selectFeedback)
             }).success(function (data) {
                 lock1 = false;
                 layer.close(index);
-                if(data.code == 200){
+                if (data.code == 200) {
                     layer.msg('OK', {icon: 1});
-                    setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                    setTimeout(function () {  //使用  setTimeout（）方法设定定时2000毫秒
                         window.location.reload();//页面刷新
-                    },1000);
-                }else{
+                    }, 1000);
+                } else {
                     layer.msg("Error", {icon: 5});
                 }
             })
         }
     }
+
     function check1() {
         var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-        var reg2 =  /^\d*$/
-        if(undefined != $scope.selectFeedback.email && "" != $scope.selectFeedback.email && !reg1.test($scope.selectFeedback.email)){ //正则验证不通过，格式不对
+        var reg2 = /^\d*$/
+        if (undefined != $scope.selectFeedback.email && "" != $scope.selectFeedback.email && !reg1.test($scope.selectFeedback.email)) { //正则验证不通过，格式不对
             alert(commonLabel8($scope.langId));
             return false;
         }
-        if(undefined != $scope.selectFeedback.number && "" != $scope.selectFeedback.number && !reg2.test($scope.selectFeedback.number)){ //正则验证不通过，格式不对
+        if (undefined != $scope.selectFeedback.number && "" != $scope.selectFeedback.number && !reg2.test($scope.selectFeedback.number)) { //正则验证不通过，格式不对
             alert(commonLabel9($scope.langId));
             return false;
         }
         return true;
     }
+
     /**
      * 搜索反馈弹框
      * 结束
      */
 
-    function info1(){
+    function info1() {
         // 热点数
         /*  $http({
               method : 'post',
@@ -341,22 +364,23 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
           })*/
         // 获取Eform
         $http({
-            method : 'post',
-            url : ctx + "appJson/getEform",
+            method: 'post',
+            url: ctx + "appJson/getEform",
         }).success(function (data) {
-          /*  angular.forEach(data,function (each) {
-                each.img = '/hkexpress/img/eform'+each.id+'.png'
-            })*/
+            /*  angular.forEach(data,function (each) {
+                  each.img = '/hkexpress/img/eform'+each.id+'.png'
+              })*/
             $scope.eFormTypes = data;
         })
 
     }
+
     // 热点初始化
     info1();
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId;
         window.open(url);
     }
 
@@ -364,25 +388,26 @@ myapp.controller("indexController",["$scope","$http","$location","$translate",fu
 }]);
 
 // indexDetailed
-myapp.controller("indexDetailedController",["$scope","$http","$sce","$location","$translate",function ($scope, $http, $sce,$location,$translate) {
+myapp.controller("indexDetailedController", ["$scope", "$http", "$sce", "$location", "$translate", "T", function ($scope, $http, $sce, $location, $translate, T) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
     $scope.catId = 0;
-    $scope.lang_cout = 5 ;
+    $scope.lang_cout = 5;
     $scope.isGetUrl = false;
-    $scope.detailed ={};
+    $scope.detailed = {};
     $scope.searchShow = false;
     // 初始化
     into($scope.dlId);
-    function into(dlId){
+
+    function into(dlId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getByDetailed",
-            params:{"dlId": dlId}
+            method: 'post',
+            url: ctx + "appJson/getByDetailed",
+            params: {"dlId": dlId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
@@ -406,126 +431,129 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
                 $scope.detailed = data.result.detailed;
                 // 显示内容
                 $scope.content = $sce.trustAsHtml($scope.detailed.content);
-                angular.forEach($scope.result.languages,function (each) {
-                    if($scope.langId == each.id){
+                angular.forEach($scope.result.languages, function (each) {
+                    if ($scope.langId == each.id) {
                         $scope.problem = each.problem;
                         return;
                     }
                 })
                 $scope.lang_cout = data.result.categories.length;
                 $scope.eFormTypes = data.result.eFormTypes;
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error.', {
+                layer.alert('Abnormal error.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
 
     // 改导航宽
-    $scope.completeRepeat= function(){
-        if($scope.lang_cout > 5 ){
-            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
         }
     }
 
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appJson/getIndexDetailedNew?dlId="+$scope.dlId+"&langId="+$scope.langId;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appJson/getIndexDetailedNew?dlId=" + $scope.dlId + "&langId=" + $scope.langId;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
-    $scope.clickCategory = function (idnex,cat) {
-        if(idnex==0){
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
             getHKE($scope.langId);
-        }else{
-            if($scope.isGetUrl){
-                var url = ctx + "appPage/index?langId="+cat.langId+"&catId="+cat.id;
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/index?langId=" + cat.langId + "&catId=" + cat.id;
                 clicked(url);
             }
         }
     }
 
     /* 搜索框  开始*/
-    $scope.checkSearchTags = function(){
+    $scope.checkSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/checkSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/checkSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
         })
     }
-    $scope.getSearchTags = function(){
+    $scope.getSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.detaileds = data.result.detaileds;
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function () {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
+        }
+        ;
         /* $scope.checkSearchTags();
          var q = escape($scope.searchTest);
          var url = ctx + "appPage/indexDetailed?dlId="+$scope.dlId+"&langId="+$scope.langId+"&q="+q;
          clicked(encodeURI(url));*/
-        var url = ctx + "appPage/index?langId="+$scope.langId+"&catId="+0+"&q="+$scope.searchTest;
+        var url = ctx + "appPage/index?langId=" + $scope.langId + "&catId=" + 0 + "&q=" + $scope.searchTest;
         clicked(encodeURI(url));
 
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         // $scope.arr1=$filter("filter")(arr,document.getElementById("wei").value);
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
 
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
+
     /* 搜索框  结束*/
 
-    function info1(){
+    function info1() {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getHotspot",
-            params:{"langId": $scope.langId}
+            method: 'post',
+            url: ctx + "appJson/getHotspot",
+            params: {"langId": $scope.langId}
         }).success(function (data) {
-            if(data){
+            if (data) {
                 $scope.hotspots = data.result.detaileds;
             }
         })
         // 智能向导
         $http({
-            method : 'post',
-            url : ctx + "appJson/getSmartGuide",
-            params:{"dlId": $scope.dlId}
+            method: 'post',
+            url: ctx + "appJson/getSmartGuide",
+            params: {"dlId": $scope.dlId}
         }).success(function (data) {
-            if(data){
+            if (data) {
                 $scope.smartGuide = data.result.detaileds;
-                if($scope.smartGuide.length > 0){
+                if ($scope.smartGuide.length > 0) {
                     $scope.smartGuideType = true;
-                }else{
+                } else {
                     $scope.smartGuideType = false;
                 }
             }
         })
     }
+
     // 热点初始化
     info1();
 
@@ -533,128 +561,137 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
     $scope.dfId1 = 0;
     $scope.dfId2 = 0;
     <!-- 反馈:支持-->
-    $("#praise").click(function(){
+    $("#praise").click(function () {
         var praise_img = $("#praise-img");
         var text_box = $("#add-num");
         var praise_txt = $("#praise-txt");
-        var num=parseInt(praise_txt.text());
-        if(praise_img.attr("src") == (ctx + "img/zan1.png")){
-            $(this).html("<img src='"+ctx + "img/hui1.png' id='praise-img' class='animation' />");
+        var num = parseInt(praise_txt.text());
+        if (praise_img.attr("src") == (ctx + "img/zan1.png")) {
+            $(this).html("<img src='" + ctx + "img/hui1.png' id='praise-img' class='animation' />");
             praise_txt.removeClass("hover");
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
-            num -=1;
+            num -= 1;
             praise_txt.text(num);
             $("#praiseNayTest").hide();
             $scope.praiseNayTest = 0;
             delFeedback($scope.dfId1);
             $scope.dfId1 = 0;
-        }else{
-            $(this).html("<img src='"+ctx + "img/zan1.png' id='praise-img' class='animation' />");
+        } else {
+            $(this).html("<img src='" + ctx + "img/zan1.png' id='praise-img' class='animation' />");
             praise_txt.addClass("hover");
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
-            num +=1;
+            num += 1;
             praise_txt.text(num);
             $("#praiseNayTest").show();
             $scope.praiseNayTest = 1;
-            addFeedback(1,"");
+            addFeedback(1, "");
         }
     });
     <!-- 反馈:反对-->
-    $("#praise1").click(function(){
+    $("#praise1").click(function () {
         var praise_img = $("#praise-img1");
         var text_box = $("#add-num1");
         var praise_txt = $("#praise-txt1");
-        var num=parseInt(praise_txt.text());
-        if(praise_img.attr("src") == (ctx + "img/zan2.png")){
-            $(this).html("<img src='"+ctx + "img/hui2.png' id='praise-img1' class='animation' />");
+        var num = parseInt(praise_txt.text());
+        if (praise_img.attr("src") == (ctx + "img/zan2.png")) {
+            $(this).html("<img src='" + ctx + "img/hui2.png' id='praise-img1' class='animation' />");
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
             $("#praiseNayTest").hide();
             $scope.praiseNayTest = 0;
             delFeedback($scope.dfId2);
             $scope.dfId2 = 0;
-        }else{
-            $(this).html("<img src='"+ctx + "img/zan2.png' id='praise-img1' class='animation' />");
+        } else {
+            $(this).html("<img src='" + ctx + "img/zan2.png' id='praise-img1' class='animation' />");
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
             $("#praiseNayTest").show();
             $scope.praiseNayTest = 2;
-            addFeedback(2,"");
+            addFeedback(2, "");
         }
     });
+
     <!-- 反馈:add异步-->
-    function addFeedback(type,content) {
+    function addFeedback(type, content) {
         $http({
-            method : "post",
-            url : ctx + "appJson/addFeedback",
-            data : {"type" : type,"dlId" : $scope.dlId,"content" : content}
+            method: "post",
+            url: ctx + "appJson/addFeedback",
+            data: {"type": type, "dlId": $scope.dlId, "content": content}
         }).success(function (data) {
-            if(data.result.type == 1){
+            if (data.result.type == 1) {
                 $scope.dfId1 = data.result.id;
-            }else{
+            } else {
                 $scope.dfId2 = data.result.id;
             }
         })
     }
+
     function delFeedback(dfId) {
-        if(dfId > 0){
+        if (dfId > 0) {
             $http({
-                method : "post",
-                url : ctx + "appJson/delFeedback",
-                data : {"id" : dfId}
+                method: "post",
+                url: ctx + "appJson/delFeedback",
+                data: {"id": dfId}
             }).success(function (data) {
             })
         }
 
     }
+
     $scope.dfContent = "";
     $scope.dfContentEmail = "";
     $scope.dfContentNumber = "";
+
     $scope.addDfContent = function () {
-        if(!check1()){
+        if (!check1()) {
             return;
         }
         var id = 0;
-        if($scope.praiseNayTest == 1){
+        if ($scope.praiseNayTest == 1) {
             id = $scope.dfId1
-        }else if($scope.praiseNayTest == 2){
+        } else if ($scope.praiseNayTest == 2) {
             id = $scope.dfId2
         }
         var index = layer.load(0, {shade: false});
         $http({
-            method : "post",
-            url : ctx + "appJson/updateFeedback",
-            data : {"id":id,"type" : $scope.praiseNayTest,"dlId" : $scope.dlId,"content" : $scope.dfContent,"email":$scope.dfContentEmail,"number":$scope.dfContentNumber}
+            method: "post",
+            url: ctx + "appJson/updateFeedback",
+            data: {
+                "id": id,
+                "type": $scope.praiseNayTest,
+                "dlId": $scope.dlId,
+                "content": $scope.dfContent,
+                "email": $scope.dfContentEmail,
+                "number": $scope.dfContentNumber
+            }
         }).success(function (data) {
             layer.close(index);
-            if(data.code == 200){
+            if (data.code == 200) {
                 layer.msg('OK', {icon: 1});
                 $scope.dfContent = "";
                 $scope.dfContentEmail = "";
                 $scope.dfContentNumber = "";
-                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                setTimeout(function () {  //使用  setTimeout（）方法设定定时2000毫秒
                     window.location.reload();//页面刷新
-                },1000);
-
-            }else{
-                layer.msg("Error", {icon: 5});
+                }, 1000);
+            } else if (data.code == 400){
+                layer.msg(T.T('lab153'), {icon: 5});
             }
         })
     }
 
 
-
     function check1() {
         var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-        var reg2 =  /^\d*$/
-        if("" != $("#dfContentEmail").val() && !reg1.test($("#dfContentEmail").val())){ //正则验证不通过，格式不对
-            alert(commonLabel8($scope.langId));
+        var reg2 = /^\d*$/
+        if ("" != $("#dfContentEmail").val() && !reg1.test($("#dfContentEmail").val())) { //正则验证不通过，格式不对
+            layer.msg(commonLabel8($scope.langId), {icon: 5});
             return false;
         }
-        if("" != $("#dfContentNumber").val() && !reg2.test($("#dfContentNumber").val())){ //正则验证不通过，格式不对
-            alert(commonLabel9($scope.langId));
+        if ("" != $("#dfContentNumber").val() && !reg2.test($("#dfContentNumber").val())) { //正则验证不通过，格式不对
+            layer.msg(commonLabel9($scope.langId), {icon: 5});
             return false;
         }
         return true;
@@ -662,21 +699,21 @@ myapp.controller("indexDetailedController",["$scope","$http","$sce","$location",
 
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        window.open(ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId);
+    $scope.getEform = function (id) {
+        window.open(ctx + "appJson/eForm" + id + "?langId=" + $scope.langId + "&dlId=" + $scope.dlId);
     }
 
 
 }]);
 
 // indexCRM
-myapp.controller("indexCRMController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+myapp.controller("indexCRMController", ["$scope", "$http", "$location", "$translate", function ($scope, $http, $location, $translate) {
     var crm_uid = decodeURI(GetUrlParam("uid"));
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
     gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
-    $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
+    $scope.catId = GetUrlParam("catId") == "" ? 0 : GetUrlParam("catId");
     $scope.lang_cout = 5;
     $scope.isGetUrl = false;
     $scope.cat_title = "";
@@ -684,106 +721,111 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
     $scope.indexShow = true;
     $scope.searchShow = false;
     // 初始化
-    into($scope.langId,$scope.catId);
-    function into(langID,catId){
+    into($scope.langId, $scope.catId);
+
+    function into(langID, catId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getIndex",
-            params:{"langId": langID,"catId" : catId}
+            method: 'post',
+            url: ctx + "appJson/getIndex",
+            params: {"langId": langID, "catId": catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
                 $scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error, please contact the administrator.', {
+                layer.alert('Abnormal error, please contact the administrator.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
+
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&catId="+0+"&uid="+crm_uid;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appPage/indexCRM?langId=" + $scope.langId + "&catId=" + 0 + "&uid=" + crm_uid;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     /* 搜索框 开始*/
-    $scope.getSearchTags = function(id){
+    $scope.getSearchTags = function (id) {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id,"crm_uid":crm_uid}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId, "status": id, "crm_uid": crm_uid}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;
-            $scope.detaileds =  data.result.detaileds;
-            
-            $scope.folderList =  data.result.folderList;
+            $scope.detaileds = data.result.detaileds;
+
+            $scope.folderList = data.result.folderList;
             $scope.detaileds_length = $scope.detaileds.length;
-            $scope.searchFeedback =  data.result.searchFeedback;
+            $scope.searchFeedback = data.result.searchFeedback;
 
 
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (id){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function (id) {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
+        }
+        ;
         var q = escape($scope.searchTest);
         /*     var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&q="+q;
              clicked(encodeURI(url));*/
         $scope.getSearchTags(id);
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
-    $scope.$watch('searchTest', function(newValue, oldValue) {
+    $scope.$watch('searchTest', function (newValue, oldValue) {
         //当value改变时执行的代码
         $scope.getSearch(3);
     });
+
     /* 搜索框 结束*/
 
 
-    function info1(){
+    function info1() {
         // 获取Eform
         $http({
-            method : 'post',
-            url : ctx + "appJson/getEform",
+            method: 'post',
+            url: ctx + "appJson/getEform",
         }).success(function (data) {
             $scope.eFormTypes = data;
             //$scope.eFormTypes.push({cn: '索取航班证明书',en:'Request for Flight Certificate',hk: '索取航班證明書',id: 11});
         })
 
         $http({
-            method : 'post',
-            url : ctx + "appJson/getDetailedInternal",
-            params:{"langId": $scope.langId}
+            method: 'post',
+            url: ctx + "appJson/getDetailedInternal",
+            params: {"langId": $scope.langId}
         }).success(function (data) {
             $scope.detailedInternal = data;
 
         })
 
     }
+
     // 热点初始化
     info1();
 
@@ -792,27 +834,27 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
      * @param key
      * @param langId
      */
-    $scope.getFolderUrl = function (key,langId,fid) {
+    $scope.getFolderUrl = function (key, langId, fid) {
         $scope.folderList = {};
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchFolder",
-            params : {"key": key,"langId" : langId,"status":3,"fid":fid}
+            method: "post",
+            url: ctx + "appJson/getSearchFolder",
+            params: {"key": key, "langId": langId, "status": 3, "fid": fid}
         }).success(function (data) {
-            $scope.folderList =  data.result.folderList;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.folderList = data.result.folderList;
+            $scope.detaileds = data.result.detaileds;
         })
     }
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&crm_uid="+crm_uid;
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId + "&crm_uid=" + crm_uid;
         clicked(url);
     }
 
     // 跳转getIndexDetailedCRM
-    $scope.getIndexDetailedCRM = function(id){
-        var url = ctx + "appJson/getIndexDetailedCRM?dlId="+id+"&crm_uid="+crm_uid;
+    $scope.getIndexDetailedCRM = function (id) {
+        var url = ctx + "appJson/getIndexDetailedCRM?dlId=" + id + "&crm_uid=" + crm_uid;
         clicked(url);
     }
 
@@ -820,26 +862,27 @@ myapp.controller("indexCRMController",["$scope","$http","$location","$translate"
 }]);
 
 // indexDetailedCRM
-myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$location","$translate",function ($scope, $http, $sce,$location,$translate) {
+myapp.controller("indexDetailedCRMController", ["$scope", "$http", "$sce", "$location", "$translate", function ($scope, $http, $sce, $location, $translate) {
     var crm_uid = decodeURI(GetUrlParam("crm_uid"));
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
     $scope.dlId = GetUrlParam("dlId");
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
     $scope.catId = 0;
-    $scope.lang_cout = 5 ;
+    $scope.lang_cout = 5;
     $scope.isGetUrl = false;
-    $scope.detailed ={};
+    $scope.detailed = {};
     $scope.searchShow = false;
     // 初始化
     into($scope.dlId);
-    function into(dlId){
+
+    function into(dlId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getByDetailed",
-            params:{"dlId": dlId}
+            method: 'post',
+            url: ctx + "appJson/getByDetailed",
+            params: {"dlId": dlId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
@@ -862,120 +905,122 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
                 $scope.detailed = data.result.detailed;
                 // 显示内容
                 $scope.content = $sce.trustAsHtml($scope.detailed.content);
-                angular.forEach($scope.result.languages,function (each) {
-                    if($scope.langId == each.id){
+                angular.forEach($scope.result.languages, function (each) {
+                    if ($scope.langId == each.id) {
                         $scope.problem = each.problem;
                         return;
                     }
                 })
                 $scope.lang_cout = data.result.categories.length;
                 $scope.eFormTypes = data.result.eFormTypes;
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error.', {
+                layer.alert('Abnormal error.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
 
     // 改导航宽
-    $scope.completeRepeat= function(){
-        if($scope.lang_cout > 5 ){
-            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
         }
     }
 
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId="+$scope.dlId+"&langId="+$scope.langId+"&crm_uid="+crm_uid;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appJson/getIndexDetailedNewCRM?dlId=" + $scope.dlId + "&langId=" + $scope.langId + "&crm_uid=" + crm_uid;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
-    $scope.clickCategory = function (idnex,cat) {
-        if(idnex==0){
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
             getHKE($scope.langId);
-        }else{
-            if($scope.isGetUrl){
-                var url = ctx + "appPage/indexCRM?langId="+cat.langId+"&catId="+cat.id;
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/indexCRM?langId=" + cat.langId + "&catId=" + cat.id;
                 clicked(url);
             }
         }
     }
 
     /* 搜索框 开始*/
-    $scope.getSearchTags = function(id){
+    $scope.getSearchTags = function (id) {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId,"status":id,"crm_uid":crm_uid}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId, "status": id, "crm_uid": crm_uid}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.detaileds = data.result.detaileds;
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (id){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function (id) {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
-     /*   var q = escape($scope.searchTest);
-        $scope.getSearchTags(id);*/
-        var url = ctx + "appPage/indexCRM?langId="+$scope.langId+"&uid="+crm_uid+"&q="+$scope.searchTest;
+        }
+        ;
+        /*   var q = escape($scope.searchTest);
+           $scope.getSearchTags(id);*/
+        var url = ctx + "appPage/indexCRM?langId=" + $scope.langId + "&uid=" + crm_uid + "&q=" + $scope.searchTest;
         clicked(encodeURI(url));
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
-    $scope.$watch('searchTest', function(newValue, oldValue) {
+    $scope.$watch('searchTest', function (newValue, oldValue) {
         //当value改变时执行的代码
         $scope.getSearch(3);
     });
+
     /* 搜索框 结束*/
 
 
-
-    function info1(){
+    function info1() {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getHotspot",
-            params:{"langId": $scope.langId}
+            method: 'post',
+            url: ctx + "appJson/getHotspot",
+            params: {"langId": $scope.langId}
         }).success(function (data) {
-            if(data){
+            if (data) {
                 $scope.hotspots = data.result.detaileds;
             }
         })
         // 智能向导
         $http({
-            method : 'post',
-            url : ctx + "appJson/getSmartGuide",
-            params:{"dlId": $scope.dlId}
+            method: 'post',
+            url: ctx + "appJson/getSmartGuide",
+            params: {"dlId": $scope.dlId}
         }).success(function (data) {
-            if(data){
+            if (data) {
                 $scope.smartGuide = data.result.detaileds;
-                if($scope.smartGuide.length > 0){
+                if ($scope.smartGuide.length > 0) {
                     $scope.smartGuideType = true;
-                }else{
+                } else {
                     $scope.smartGuideType = false;
                 }
             }
         })
     }
+
     // 热点初始化
     info1();
 
@@ -983,127 +1028,136 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
     $scope.dfId1 = 0;
     $scope.dfId2 = 0;
     <!-- 反馈:支持-->
-    $("#praise").click(function(){
+    $("#praise").click(function () {
         var praise_img = $("#praise-img");
         var text_box = $("#add-num");
         var praise_txt = $("#praise-txt");
-        var num=parseInt(praise_txt.text());
-        if(praise_img.attr("src") == (ctx + "img/zan1.png")){
-            $(this).html("<img src='"+ctx + "img/hui1.png' id='praise-img' class='animation' />");
+        var num = parseInt(praise_txt.text());
+        if (praise_img.attr("src") == (ctx + "img/zan1.png")) {
+            $(this).html("<img src='" + ctx + "img/hui1.png' id='praise-img' class='animation' />");
             praise_txt.removeClass("hover");
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
-            num -=1;
+            num -= 1;
             praise_txt.text(num);
             $("#praiseNayTest").hide();
             $scope.praiseNayTest = 0;
             delFeedback($scope.dfId1);
             $scope.dfId1 = 0;
-        }else{
-            $(this).html("<img src='"+ctx + "img/zan1.png' id='praise-img' class='animation' />");
+        } else {
+            $(this).html("<img src='" + ctx + "img/zan1.png' id='praise-img' class='animation' />");
             praise_txt.addClass("hover");
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
-            num +=1;
+            num += 1;
             praise_txt.text(num);
             $("#praiseNayTest").show();
             $scope.praiseNayTest = 1;
-            addFeedback(1,"");
+            addFeedback(1, "");
         }
     });
     <!-- 反馈:反对-->
-    $("#praise1").click(function(){
+    $("#praise1").click(function () {
         var praise_img = $("#praise-img1");
         var text_box = $("#add-num1");
         var praise_txt = $("#praise-txt1");
-        var num=parseInt(praise_txt.text());
-        if(praise_img.attr("src") == (ctx + "img/zan2.png")){
-            $(this).html("<img src='"+ctx + "img/hui2.png' id='praise-img1' class='animation' />");
+        var num = parseInt(praise_txt.text());
+        if (praise_img.attr("src") == (ctx + "img/zan2.png")) {
+            $(this).html("<img src='" + ctx + "img/hui2.png' id='praise-img1' class='animation' />");
             text_box.show().html("<em class='add-animation'>-1</em>");
             $(".add-animation").removeClass("hover");
             $("#praiseNayTest").hide();
             $scope.praiseNayTest = 0;
             delFeedback($scope.dfId2);
             $scope.dfId2 = 0;
-        }else{
-            $(this).html("<img src='"+ctx + "img/zan2.png' id='praise-img1' class='animation' />");
+        } else {
+            $(this).html("<img src='" + ctx + "img/zan2.png' id='praise-img1' class='animation' />");
             text_box.show().html("<em class='add-animation'>+1</em>");
             $(".add-animation").addClass("hover");
             $("#praiseNayTest").show();
             $scope.praiseNayTest = 2;
-            addFeedback(2,"");
+            addFeedback(2, "");
         }
     });
+
     <!-- 反馈:add异步-->
-    function addFeedback(type,content) {
+    function addFeedback(type, content) {
         $http({
-            method : "post",
-            url : ctx + "appJson/addFeedback",
-            data : {"type" : type,"dlId" : $scope.dlId,"content" : content}
+            method: "post",
+            url: ctx + "appJson/addFeedback",
+            data: {"type": type, "dlId": $scope.dlId, "content": content}
         }).success(function (data) {
-            if(data.result.type == 1){
+            if (data.result.type == 1) {
                 $scope.dfId1 = data.result.id;
-            }else{
+            } else {
                 $scope.dfId2 = data.result.id;
             }
         })
     }
+
     function delFeedback(dfId) {
-        if(dfId > 0){
+        if (dfId > 0) {
             $http({
-                method : "post",
-                url : ctx + "appJson/delFeedback",
-                data : {"id" : dfId}
+                method: "post",
+                url: ctx + "appJson/delFeedback",
+                data: {"id": dfId}
             }).success(function (data) {
             })
         }
 
     }
+
     $scope.dfContent = "";
     $scope.dfContentEmail = "";
     $scope.dfContentNumber = "";
     $scope.addDfContent = function () {
-        if(!check1()){
+        if (!check1()) {
             return;
         }
         var id = 0;
-        if($scope.praiseNayTest == 1){
+        if ($scope.praiseNayTest == 1) {
             id = $scope.dfId1
-        }else if($scope.praiseNayTest == 2){
+        } else if ($scope.praiseNayTest == 2) {
             id = $scope.dfId2
         }
         var index = layer.load(0, {shade: false});
         $http({
-            method : "post",
-            url : ctx + "appJson/updateFeedback",
-            data : {"id":id,"type" : $scope.praiseNayTest,"dlId" : $scope.dlId,"content" : $scope.dfContent,"email":$scope.dfContentEmail,"number":$scope.dfContentNumber}
+            method: "post",
+            url: ctx + "appJson/updateFeedback",
+            data: {
+                "id": id,
+                "type": $scope.praiseNayTest,
+                "dlId": $scope.dlId,
+                "content": $scope.dfContent,
+                "email": $scope.dfContentEmail,
+                "number": $scope.dfContentNumber
+            }
         }).success(function (data) {
             layer.close(index);
-            if(data.code == 200){
+            if (data.code == 200) {
                 layer.msg('OK', {icon: 1});
                 $scope.dfContent = "";
                 $scope.dfContentEmail = "";
                 $scope.dfContentNumber = "";
-                setTimeout(function(){  //使用  setTimeout（）方法设定定时2000毫秒
+                setTimeout(function () {  //使用  setTimeout（）方法设定定时2000毫秒
                     window.location.reload();//页面刷新
-                },1000);
+                }, 1000);
 
-            }else{
+            } else {
                 layer.msg("Error", {icon: 5});
             }
         })
     }
 
 
-
     function check1() {
         var reg1 = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/
-        var reg2 =  /^\d*$/
-        if("" != $("#dfContentEmail").val() && !reg1.test($("#dfContentEmail").val())){ //正则验证不通过，格式不对
+        var reg2 = /^\d*$/
+        if ("" != $("#dfContentEmail").val() && !reg1.test($("#dfContentEmail").val())) { //正则验证不通过，格式不对
             alert(commonLabel8($scope.langId));
             return false;
         }
-        if("" != $("#dfContentNumber").val() && !reg2.test($("#dfContentNumber").val())){ //正则验证不通过，格式不对
+        if ("" != $("#dfContentNumber").val() && !reg2.test($("#dfContentNumber").val())) { //正则验证不通过，格式不对
             alert(commonLabel9($scope.langId));
             return false;
         }
@@ -1112,14 +1166,14 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
 
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId+"&dlId="+$scope.dlId+"&crm_uid="+crm_uid;
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId + "&dlId=" + $scope.dlId + "&crm_uid=" + crm_uid;
         clicked(url);
     }
 
     // 跳转getIndexDetailedCRM
-    $scope.getIndexDetailedCRM = function(id){
-        var url = ctx + "appJson/getIndexDetailedCRM?dlId="+id+"&crm_uid="+crm_uid;
+    $scope.getIndexDetailedCRM = function (id) {
+        var url = ctx + "appJson/getIndexDetailedCRM?dlId=" + id + "&crm_uid=" + crm_uid;
         clicked(url);
     }
 
@@ -1127,42 +1181,14 @@ myapp.controller("indexDetailedCRMController",["$scope","$http","$sce","$locatio
 }]);
 
 
-
-// testChatbotController
-myapp.controller("testChatbotController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+// ChatbotController
+myapp.controller("ChatbotController", ["$scope", "$http", "$location", "$translate", function ($scope, $http, $location, $translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
-
-    if($scope.langId == 1){
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
-        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/09bcc7b8-3035-4460-8c0f-a080d4815c17.js';
-        var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
-                done = true;
-                /* Place your SonicTeleservices JS API code below */
-                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
-            }
-        };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-    }else{
-        var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
-        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/43aa2c88-9bbc-474a-9dc0-983ecb3d2d07.js';
-        var done = false;
-        se.onload = se.onreadystatechange = function() {
-            if (!done&&(!this.readyState||this.readyState==='loaded'||this.readyState==='complete')) {
-                done = true;
-                /* Place your SonicTeleservices JS API code below */
-                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
-            }
-        };
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
-
-    }
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
 
     gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
-    $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
+    $scope.catId = GetUrlParam("catId") == "" ? 0 : GetUrlParam("catId");
     $scope.lang_cout = 5;
     $scope.isGetUrl = false;
     $scope.cat_title = "";
@@ -1170,119 +1196,123 @@ myapp.controller("testChatbotController",["$scope","$http","$location","$transla
     $scope.indexShow = true;
     $scope.searchShow = false;
     // 初始化
-    into($scope.langId,$scope.catId);
-    function into(langID,catId){
+    into($scope.langId, $scope.catId);
+
+    function into(langID, catId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getIndex",
-            params:{"langId": langID,"catId" : catId}
+            method: 'post',
+            url: ctx + "appJson/getIndex",
+            params: {"langId": langID, "catId": catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
                 $scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
-                angular.forEach($scope.result.languages,function (each) {
-                    if($scope.langId == each.id){
+                angular.forEach($scope.result.languages, function (each) {
+                    if ($scope.langId == each.id) {
                         $scope.problem = each.problem;
                         return;
                     }
                 })
-                angular.forEach(data.result.categories,function (each) {
-                    if(catId == each.id){
+                angular.forEach(data.result.categories, function (each) {
+                    if (catId == each.id) {
                         $scope.cat_title = each.title;
                         return;
                     }
                 })
                 $scope.lang_cout = data.result.categories.length;
-                if($scope.cat_title == ""){
+                if ($scope.cat_title == "") {
                     $scope.cat_title = data.result.categories[1].title;
                 }
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error, please contact the administrator.', {
+                layer.alert('Abnormal error, please contact the administrator.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
+
     // 改导航宽
-    $scope.completeRepeat= function(){
-        if($scope.lang_cout > 5 ){
-            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
         }
     }
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
-    $scope.clickCategory = function (idnex,cat) {
-        if(idnex==0){
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
             getHKE($scope.langId);
-        }else{
-            if($scope.isGetUrl){
-                var url = ctx + "appPage/testChatbot?langId="+cat.langId+"&catId="+cat.id;
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/testChatbot?langId=" + cat.langId + "&catId=" + cat.id;
                 clicked(url);
             }
         }
     }
 
     /* 搜索框 开始*/
-    $scope.checkSearchTags = function(){
+    $scope.checkSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/checkSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/checkSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
         })
     }
-    $scope.getSearchTags = function(){
+    $scope.getSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.detaileds = data.result.detaileds;
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function () {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
+        }
+        ;
         $scope.checkSearchTags();
         var q = escape($scope.searchTest);
-        var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0+"&q="+q;
+        var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0 + "&q=" + q;
         clicked(encodeURI(url));
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
+
     /* 搜索框 结束*/
 
 
-    function info1(){
+    function info1() {
         // 热点数
         /*  $http({
               method : 'post',
@@ -1295,19 +1325,217 @@ myapp.controller("testChatbotController",["$scope","$http","$location","$transla
           })*/
         // 获取Eform
         $http({
-            method : 'post',
-            url : ctx + "appJson/getEform",
+            method: 'post',
+            url: ctx + "appJson/getEform",
         }).success(function (data) {
             $scope.eFormTypes = data;
         })
 
     }
+
     // 热点初始化
     info1();
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId;
+        window.open(url);
+    }
+
+
+}]);
+
+// testChatbotController
+myapp.controller("testChatbotController", ["$scope", "$http", "$location", "$translate", function ($scope, $http, $location, $translate) {
+    // 设置默认,langId==6语言，英文;catId = 0默认选第二个
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
+
+    if ($scope.langId == 1) {
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
+        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/09bcc7b8-3035-4460-8c0f-a080d4815c17.js';
+        var done = false;
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+                done = true;
+                /* Place your SonicTeleservices JS API code below */
+                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+            }
+        };
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+    } else {
+        var se = document.createElement('script');
+        se.type = 'text/javascript';
+        se.async = true;
+        se.src = 'https://storage.googleapis.com/sonic-teleservices/js/43aa2c88-9bbc-474a-9dc0-983ecb3d2d07.js';
+        var done = false;
+        se.onload = se.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')) {
+                done = true;
+                /* Place your SonicTeleservices JS API code below */
+                /* SonicTeleservices.allowChatSound(true); Example JS API: Enable sounds for Visitors. */
+            }
+        };
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(se, s);
+
+    }
+
+    gaixialatu($scope.langId);
+    $translate.use($scope.langId.toString());
+    $scope.catId = GetUrlParam("catId") == "" ? 0 : GetUrlParam("catId");
+    $scope.lang_cout = 5;
+    $scope.isGetUrl = false;
+    $scope.cat_title = "";
+    //indexShow 显示
+    $scope.indexShow = true;
+    $scope.searchShow = false;
+    // 初始化
+    into($scope.langId, $scope.catId);
+
+    function into(langID, catId) {
+        $http({
+            method: 'post',
+            url: ctx + "appJson/getIndex",
+            params: {"langId": langID, "catId": catId}
+        }).success(function (data) {
+            $scope.isGetUrl = true;
+            if (data) {
+                /* 成功*/
+                $scope.result = data.result;
+                $scope.langId = data.result.langId;
+                $scope.selectTest = selectTest($scope.langId);
+                $scope.selectTestUnll = selectTestUnll($scope.langId);
+                $scope.hotspotTest = hotspotTest($scope.langId);
+                angular.forEach($scope.result.languages, function (each) {
+                    if ($scope.langId == each.id) {
+                        $scope.problem = each.problem;
+                        return;
+                    }
+                })
+                angular.forEach(data.result.categories, function (each) {
+                    if (catId == each.id) {
+                        $scope.cat_title = each.title;
+                        return;
+                    }
+                })
+                $scope.lang_cout = data.result.categories.length;
+                if ($scope.cat_title == "") {
+                    $scope.cat_title = data.result.categories[1].title;
+                }
+            } else {
+                /* 失败*/
+                layer.alert('Abnormal error, please contact the administrator.', {
+                    skin: 'layui-layer-lan'
+                    , closeBtn: 0
+                });
+            }
+        })
+    }
+
+    // 改导航宽
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
+        }
+    }
+    // 语言事件
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0;
+            clicked(url);
+        }
+        // 强制更新  $scope.apply();
+    }
+
+    // 类别事件,idnex当前下标，id:类别ID
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
+            getHKE($scope.langId);
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/testChatbot?langId=" + cat.langId + "&catId=" + cat.id;
+                clicked(url);
+            }
+        }
+    }
+
+    /* 搜索框 开始*/
+    $scope.checkSearchTags = function () {
+        $http({
+            method: "post",
+            url: ctx + "appJson/checkSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
+        }).success(function (data) {
+        })
+    }
+    $scope.getSearchTags = function () {
+        $http({
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
+        }).success(function (data) {
+            $scope.searchShow = true;
+            $scope.indexShow = false;
+            $scope.detaileds = data.result.detaileds;
+        })
+    }
+    $scope.searchTest = "";
+    $scope.getSearch = function () {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
+            return;
+        }
+        ;
+        $scope.checkSearchTags();
+        var q = escape($scope.searchTest);
+        var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0 + "&q=" + q;
+        clicked(encodeURI(url));
+    }
+    $scope.onKeyup = function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 13) { // enter 键
+            $scope.getSearch();
+        }
+    }
+    var sq = $location.search().q;
+    if (undefined != sq && "" != sq) {
+        $scope.searchTest = unescape(sq);
+        $scope.getSearchTags();
+    }
+
+    /* 搜索框 结束*/
+
+
+    function info1() {
+        // 热点数
+        /*  $http({
+              method : 'post',
+              url : ctx + "appJson/getHotspot",
+              params:{"langId": $scope.langId}
+          }).success(function (data) {
+              if(data){
+                  $scope.hotspots = data.result.detaileds;
+              }
+          })*/
+        // 获取Eform
+        $http({
+            method: 'post',
+            url: ctx + "appJson/getEform",
+        }).success(function (data) {
+            $scope.eFormTypes = data;
+        })
+
+    }
+
+    // 热点初始化
+    info1();
+
+    // 跳转E-form
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId;
         window.open(url);
     }
 
@@ -1316,12 +1544,12 @@ myapp.controller("testChatbotController",["$scope","$http","$location","$transla
 
 
 // testChatbot_infosunController
-myapp.controller("testChatbot_infosunController",["$scope","$http","$location","$translate",function ($scope, $http,$location,$translate) {
+myapp.controller("testChatbot_infosunController", ["$scope", "$http", "$location", "$translate", function ($scope, $http, $location, $translate) {
     // 设置默认,langId==6语言，英文;catId = 0默认选第二个
-    $scope.langId = GetUrlParam("langId")==""?6:GetUrlParam("langId");
+    $scope.langId = GetUrlParam("langId") == "" ? 6 : GetUrlParam("langId");
     gaixialatu($scope.langId);
     $translate.use($scope.langId.toString());
-    $scope.catId =  GetUrlParam("catId")==""?0:GetUrlParam("catId");
+    $scope.catId = GetUrlParam("catId") == "" ? 0 : GetUrlParam("catId");
     $scope.lang_cout = 5;
     $scope.isGetUrl = false;
     $scope.cat_title = "";
@@ -1329,119 +1557,123 @@ myapp.controller("testChatbot_infosunController",["$scope","$http","$location","
     $scope.indexShow = true;
     $scope.searchShow = false;
     // 初始化
-    into($scope.langId,$scope.catId);
-    function into(langID,catId){
+    into($scope.langId, $scope.catId);
+
+    function into(langID, catId) {
         $http({
-            method : 'post',
-            url : ctx + "appJson/getIndex",
-            params:{"langId": langID,"catId" : catId}
+            method: 'post',
+            url: ctx + "appJson/getIndex",
+            params: {"langId": langID, "catId": catId}
         }).success(function (data) {
             $scope.isGetUrl = true;
-            if(data){
+            if (data) {
                 /* 成功*/
                 $scope.result = data.result;
                 $scope.langId = data.result.langId;
                 $scope.selectTest = selectTest($scope.langId);
                 $scope.selectTestUnll = selectTestUnll($scope.langId);
                 $scope.hotspotTest = hotspotTest($scope.langId);
-                angular.forEach($scope.result.languages,function (each) {
-                    if($scope.langId == each.id){
+                angular.forEach($scope.result.languages, function (each) {
+                    if ($scope.langId == each.id) {
                         $scope.problem = each.problem;
                         return;
                     }
                 })
-                angular.forEach(data.result.categories,function (each) {
-                    if(catId == each.id){
+                angular.forEach(data.result.categories, function (each) {
+                    if (catId == each.id) {
                         $scope.cat_title = each.title;
                         return;
                     }
                 })
                 $scope.lang_cout = data.result.categories.length;
-                if($scope.cat_title == ""){
+                if ($scope.cat_title == "") {
                     $scope.cat_title = data.result.categories[1].title;
                 }
-            }else{
+            } else {
                 /* 失败*/
-                layer.alert( 'Abnormal error, please contact the administrator.', {
+                layer.alert('Abnormal error, please contact the administrator.', {
                     skin: 'layui-layer-lan'
-                    ,closeBtn: 0
+                    , closeBtn: 0
                 });
             }
         })
     }
+
     // 改导航宽
-    $scope.completeRepeat= function(){
-        if($scope.lang_cout > 5 ){
-            $(".nav-li-text").width(Math.round(960/$scope.lang_cout)-12);
+    $scope.completeRepeat = function () {
+        if ($scope.lang_cout > 5) {
+            $(".nav-li-text").width(Math.round(960 / $scope.lang_cout) - 12);
         }
     }
     // 语言事件
-    $scope.clickLanguage = function() {
-        if($scope.isGetUrl){
-            var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0;
+    $scope.clickLanguage = function () {
+        if ($scope.isGetUrl) {
+            var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0;
             clicked(url);
         }
         // 强制更新  $scope.apply();
     }
 
     // 类别事件,idnex当前下标，id:类别ID
-    $scope.clickCategory = function (idnex,cat) {
-        if(idnex==0){
+    $scope.clickCategory = function (idnex, cat) {
+        if (idnex == 0) {
             getHKE($scope.langId);
-        }else{
-            if($scope.isGetUrl){
-                var url = ctx + "appPage/testChatbot?langId="+cat.langId+"&catId="+cat.id;
+        } else {
+            if ($scope.isGetUrl) {
+                var url = ctx + "appPage/testChatbot?langId=" + cat.langId + "&catId=" + cat.id;
                 clicked(url);
             }
         }
     }
 
     /* 搜索框 开始*/
-    $scope.checkSearchTags = function(){
+    $scope.checkSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/checkSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/checkSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
         })
     }
-    $scope.getSearchTags = function(){
+    $scope.getSearchTags = function () {
         $http({
-            method : "post",
-            url : ctx + "appJson/getSearchTags",
-            params : {"search": $scope.searchTest,"langId" : $scope.langId}
+            method: "post",
+            url: ctx + "appJson/getSearchTags",
+            params: {"search": $scope.searchTest, "langId": $scope.langId}
         }).success(function (data) {
             $scope.searchShow = true;
             $scope.indexShow = false;
-            $scope.detaileds =  data.result.detaileds;
+            $scope.detaileds = data.result.detaileds;
         })
     }
     $scope.searchTest = "";
-    $scope.getSearch = function (){
-        if($scope.searchTest == ""){
-            $scope.detaileds =  {};
+    $scope.getSearch = function () {
+        if ($scope.searchTest == "") {
+            $scope.detaileds = {};
             return;
-        };
+        }
+        ;
         $scope.checkSearchTags();
         var q = escape($scope.searchTest);
-        var url = ctx + "appPage/testChatbot?langId="+$scope.langId+"&catId="+0+"&q="+q;
+        var url = ctx + "appPage/testChatbot?langId=" + $scope.langId + "&catId=" + 0 + "&q=" + q;
         clicked(encodeURI(url));
     }
-    $scope.onKeyup = function(event){
+    $scope.onKeyup = function (event) {
         var e = event || window.event || arguments.callee.caller.arguments[0];
-        if(e && e.keyCode==13){ // enter 键
+        if (e && e.keyCode == 13) { // enter 键
             $scope.getSearch();
         }
     }
     var sq = $location.search().q;
-    if(undefined != sq && "" != sq){
+    if (undefined != sq && "" != sq) {
         $scope.searchTest = unescape(sq);
         $scope.getSearchTags();
     }
+
     /* 搜索框 结束*/
 
 
-    function info1(){
+    function info1() {
         // 热点数
         /*  $http({
               method : 'post',
@@ -1454,19 +1686,20 @@ myapp.controller("testChatbot_infosunController",["$scope","$http","$location","
           })*/
         // 获取Eform
         $http({
-            method : 'post',
-            url : ctx + "appJson/getEform",
+            method: 'post',
+            url: ctx + "appJson/getEform",
         }).success(function (data) {
             $scope.eFormTypes = data;
         })
 
     }
+
     // 热点初始化
     info1();
 
     // 跳转E-form
-    $scope.getEform = function(id){
-        var url = ctx + "appJson/eForm"+id+"?langId="+$scope.langId;
+    $scope.getEform = function (id) {
+        var url = ctx + "appJson/eForm" + id + "?langId=" + $scope.langId;
         window.open(url);
     }
 
